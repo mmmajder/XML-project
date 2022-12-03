@@ -1,0 +1,14 @@
+Patent
+TBroj_Prijave
+naziv srpski/engleski
+reference
+drzava - enum
+drzavljanstvo - enum
+drzavljanstvo za pronalazaca, izostaviti?
+broj faksa
+Проналазач не жели да буде наведен у пријави
+Vrsta_punomocnika tip
+nacin dostave
+broj i vrsta prijave
+Broj_ranije_prijave
+----------------------------------

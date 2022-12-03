@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Zahtev_za_priznanje_patenta xmlns="http://www.ftn.uns.ac.rs/patent"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.ftn.uns.ac.rs/patent file:/C:/Users/Korisnik/Desktop/FAKS/XML/Projekat/P_Sema.xsd">
+    <Osnovne_informacije_o_zahtevu_za_priznanje_patenta>
+        <Broj_prijave>P312321</Broj_prijave>
+        <Datum_prijema>2020-01-01</Datum_prijema>
+        <Priznati_datum_podnosenja>2020-01-01</Priznati_datum_podnosenja>
+    </Osnovne_informacije_o_zahtevu_za_priznanje_patenta>
+</Zahtev_za_priznanje_patenta>
