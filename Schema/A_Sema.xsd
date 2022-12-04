@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/patent" xmlns:pat="http://www.ftn.uns.ac.rs/patent">
+
+    <xs:element name="Zahtev_za_unosenje_u_evidenciju_i_deponovanje_autorskih_dela">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="pat:Informacije_o_zahtevu"/>
+                <xs:element ref="pat:Sadrzaj_zahteva"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Sadrzaj_zahteva">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Podnosilac_zahteva" type="pat:TLice"/>
+                <xs:element name="Pseudonim_autora" type="xs:string"/>
+                <xs:element name="Podaci_o_punomoćniku">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="pat:OsnovniLicniPodaci"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Naslov_autorskog_dela" type="xs:string"/>
+                <xs:element name="Naslov_i_autor_zasnivanog_dela"/>
+                <xs:element name="Vrsta_autorskog_dela" type="xs:string"/>
+                <xs:element name="Forma_zapisa_autorskog_dela" type="xs:string"/>
+                <xs:element name="Podaci_o_autoru"/>
+                <xs:element name="Autosko_delo_stvoreno_u_radnom_odnosu" type="xs:boolean"/>
+                <xs:element name="Nacin_koriscenja_autorskog_dela" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Informacije_o_zahtevu">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Broj_prijave"/>
+                <xs:element name="Datum_podnosenja"/>
+                <xs:element name="Lista_priloga_koji_se_podnose_uz_zahtev">
+                    <xs:simpleType>
+                        <xs:list itemType="xs:string"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType abstract="true" name="TLice">
+        <xs:sequence>
+            <xs:element default="+381 61234567" name="Broj_telefona" type="pat:TBroj_telefona"/>
+            <xs:element default="default@gmail.com" name="Email" type="pat:TEmail"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Adresa">
+        <xs:sequence>
+            <xs:element name="Ulica" type="xs:string"/>
+            <xs:element name="Broj_u_ulici" type="xs:positiveInteger"/>
+            <xs:element name="Postanski_broj">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:minInclusive value="11000"/>
+                        <xs:maxInclusive value="40000"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Mesto" type="xs:string"/>
+            <xs:element name="Drzava"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TFizickoLice">
+        <xs:complexContent>
+            <xs:extension base="pat:TLice">
+                <xs:sequence>
+                    <xs:element name="Drzavljanstvo" type="xs:string"/>
+                    <xs:element ref="pat:OsnovniLicniPodaci"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPravnoLice">
+        <xs:complexContent>
+            <xs:extension base="pat:TLice">
+                <xs:sequence>
+                    <xs:element name="PoslovnoIme" type="xs:string"/>
+                    <xs:element name="SedisteNosiocaAutoskogPrava" type="pat:Adresa"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:simpleType name="TBroj_telefona">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\+\d{3} \d{8,9}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TEmail">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[^@]+@[^\.]+\..+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="OsnovniLicniPodaci">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Ime" type="xs:string"/>
+                <xs:element name="Prezime" type="xs:string"/>
+                <xs:element name="Adresa" type="pat:Adresa"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>
