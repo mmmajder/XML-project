@@ -7,4 +7,26 @@
         <Datum_prijema>2020-01-01</Datum_prijema>
         <Priznati_datum_podnosenja>2020-01-01</Priznati_datum_podnosenja>
     </Osnovne_informacije_o_zahtevu_za_priznanje_patenta>
+    <Sadrzaj_zahteva_za_priznanje_patenta>
+ <!--    	<Naziv_pronalaska/>
+        <Naziv_pronalaska/>--> 
+        <Podaci_o_podnosiocu_prijave>
+            <Podnosilac_prijave_je_i_pronalazac>true</Podnosilac_prijave_je_i_pronalazac>
+            <Podnosilac_prijave>
+                <Osnovni_podaci_o_licu>
+                    <Adresa_lica>
+                        <Ulica>Bulevar Evrope</Ulica>
+                        <Broj_u_ulici>3</Broj_u_ulici>
+                        <Postanski_broj>21000</Postanski_broj>
+                        <Mesto>Novi Sad</Mesto>
+                        <Drzava>Srbija</Drzava>
+                    </Adresa_lica>
+                    <Broj_telefona>+381 5461245</Broj_telefona>
+                    <Broj_faksa>4564321</Broj_faksa>
+                    <E_posta>dada@fsdfds.com</E_posta>
+                </Osnovni_podaci_o_licu>
+                <Poslovno_ime>Pera perica najjace</Poslovno_ime>
+            </Podnosilac_prijave>
+        </Podaci_o_podnosiocu_prijave>
+    </Sadrzaj_zahteva_za_priznanje_patenta>
 </Zahtev_za_priznanje_patenta>

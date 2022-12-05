@@ -1,25 +1,22 @@
 package patent;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-//@XmlRootElement(name="Osnovne_informacije_o_zahtevu_za_priznanje_patenta")
-@XmlType(name="personType", propOrder={"brojPrijave", "datumPrijema", "priznatiDatumPodnosenja"})
+@XmlRootElement(name="Osnovne_informacije_o_zahtevu_za_priznanje_patenta")
+@XmlType(name="", propOrder={"brojPrijave", "datumPrijema", "priznatiDatumPodnosenja"})
 public class OsnovneInformacijeOZahtevuZaPriznanjePatenta {
 	@XmlElement(name="Broj_prijave", required=true)
 	private String brojPrijave;
 	
-	@XmlElement(name="Datum_prijema", required=false)
+	@XmlElement(name="Datum_prijema", required=true)
 	@XmlSchemaType(name="date")
 	private Date datumPrijema;
 	
