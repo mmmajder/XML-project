@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Zahtev_za_priznanje_patenta xmlns="http://www.ftn.uns.ac.rs/patent"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.ftn.uns.ac.rs/patent file:/C:/Users/Korisnik/Desktop/FAKS/XML/Projekat/XML-project/Schema/P_Sema.xsd">
+    <Osnovne_informacije_o_zahtevu_za_priznanje_patenta>
+        <Broj_prijave>P123</Broj_prijave>
+        <Datum_prijema>2020-01-01</Datum_prijema>
+        <Priznati_datum_podnosenja>2020-01-01</Priznati_datum_podnosenja>
+    </Osnovne_informacije_o_zahtevu_za_priznanje_patenta>
+    <Sadrzaj_zahteva_za_priznanje_patenta>
+        <Naziv_pronalaska Jezik="SRPSKI">Jako dobar patent</Naziv_pronalaska>
+        <Naziv_pronalaska Jezik="ENGLESKI">Very good patent</Naziv_pronalaska>
+        <Podaci_o_podnosiocu_prijave>
+            <Podnosilac_prijave_je_i_pronalazac>false</Podnosilac_prijave_je_i_pronalazac>
+            <Podnosilac_prijave xsi:type="TFizicko_Lice">
+                <Osnovni_podaci_o_licu>
+                    <Adresa_lica>
+                        <Ulica>Bulevar</Ulica>
+                        <Broj_u_ulici>21</Broj_u_ulici>
+                        <Postanski_broj>22112</Postanski_broj>
+                        <Mesto>Novi Sad</Mesto>
+                        <Drzava>Srbija</Drzava>
+                    </Adresa_lica>
+                    <Broj_telefona>+381 644564651</Broj_telefona>
+                    <Broj_faksa>156465</Broj_faksa>
+                    <E_posta>mail@gmail.com</E_posta>
+                </Osnovni_podaci_o_licu>
+                <Ime>Joca</Ime>
+                <Prezime>Jocic</Prezime>
+                <Drzavljanstvo>Srpsko</Drzavljanstvo>
+            </Podnosilac_prijave>
+        </Podaci_o_podnosiocu_prijave>
+        <Podaci_o_pronalazacu>
+            <Osnovni_podaci_o_licu>
+                <Adresa_lica>
+                    <Ulica>Kisacka</Ulica>
+                    <Broj_u_ulici>23</Broj_u_ulici>
+                    <Postanski_broj>32312</Postanski_broj>
+                    <Mesto>Novi Sad</Mesto>
+                    <Drzava>Srbija</Drzava>
+                </Adresa_lica>
+                <Broj_telefona>+381 13243564</Broj_telefona>
+                <Broj_faksa>468489</Broj_faksa>
+                <E_posta>mail3@gmail.com</E_posta>
+            </Osnovni_podaci_o_licu>
+            <Ime>Pera</Ime>
+            <Prezime>Perica</Prezime>
+            <Drzavljanstvo>Srbija</Drzavljanstvo>
+        </Podaci_o_pronalazacu>
+        <Podaci_o_punomocniku>
+            <Vrsta_punomocnika>PUNOMOCNIK_ZA_ZASTUPANJE</Vrsta_punomocnika>
+            <Zajednicki_predstavnik>false</Zajednicki_predstavnik>
+            <Punomocnik xsi:type="TPravno_lice">
+                <Osnovni_podaci_o_licu>
+                    <Adresa_lica>
+                        <Ulica>Branislava Nusica</Ulica>
+                        <Broj_u_ulici>43</Broj_u_ulici>
+                        <Postanski_broj>21312</Postanski_broj>
+                        <Mesto>Novi Sad</Mesto>
+                        <Drzava>Srbija</Drzava>
+                    </Adresa_lica>
+                    <Broj_telefona>+381 45621348</Broj_telefona>
+                    <Broj_faksa>321321</Broj_faksa>
+                    <E_posta>mail4@gmail.com</E_posta>
+                </Osnovni_podaci_o_licu>
+                <Poslovno_ime>Joca komerc</Poslovno_ime>
+            </Punomocnik>
+        </Podaci_o_punomocniku>
+        <Dostavljanje>
+        	<!-- NIJE OBAVEZNA ADRESA OVDE -->
+            <Nacin_dostave>ELEKTRONSKIM_PUTEM</Nacin_dostave>
+        </Dostavljanje>
+        <Podaci_o_prijavi>
+            <Vrsta_prijave>DOPUNSKA</Vrsta_prijave>
+            <Broj_osnovne_prijave>P1321</Broj_osnovne_prijave>
+            <Datum_podnosenja_prijave>2022-02-02</Datum_podnosenja_prijave>
+        </Podaci_o_prijavi>
+        <Zahtev_za_priznanje_prvenstva_iz_ranijih_prijava>
+        	<Ranija_prijava>
+                <Datum_podnosenja_priave>2022-02-02</Datum_podnosenja_priave>
+                <Broj_ranije_prijave>P4323</Broj_ranije_prijave>
+                <Dvoslovna_oznaka>RS</Dvoslovna_oznaka>
+            </Ranija_prijava>
+        </Zahtev_za_priznanje_prvenstva_iz_ranijih_prijava>
+    </Sadrzaj_zahteva_za_priznanje_patenta>
+</Zahtev_za_priznanje_patenta>

@@ -35,14 +35,7 @@
                         </xs:sequence>
                     </xs:complexType>
                 </xs:element>
-                <xs:element name="Podaci_o_pronalazacu">
-                    <xs:complexType>
-                        <xs:sequence>
-                            <xs:element name="Pronalazac" type="pat:TFizicko_Lice"/>
-                            <xs:element ref="pat:Osnovni_podaci_o_licu"/>
-                        </xs:sequence>
-                    </xs:complexType>
-                </xs:element>
+                <xs:element name="Podaci_o_pronalazacu" type="pat:TFizicko_Lice"> </xs:element>
                 <xs:element name="Podaci_o_punomocniku">
                     <xs:complexType>
                         <xs:sequence>
@@ -105,7 +98,7 @@
     <xs:simpleType name="TBroj_prijave">
         <xs:restriction base="xs:string"/>
     </xs:simpleType>
-    <xs:complexType name="TLice">
+    <xs:complexType name="TLice" abstract="true">
         <xs:sequence>
             <xs:element ref="pat:Osnovni_podaci_o_licu"/>
         </xs:sequence>
