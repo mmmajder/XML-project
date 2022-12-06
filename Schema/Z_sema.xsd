@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
-    targetNamespace="sz" xmlns:sz="sz">
+    targetNamespace="http://www.ftn.uns.ac.rs/zig" xmlns:sz="http://www.ftn.uns.ac.rs/zig">
     <xs:element name="Zahtev_za_priznanje_ziga">
         <xs:complexType>
             <xs:sequence maxOccurs="1">
-                <xs:element name="Podnosilac_prijave" type="sz:TLice"/>
+                <xs:element name="Podnosilac_prijave" type="sz:TLice" maxOccurs="unbounded"/>
                 <xs:element name="Punomocnik" type="sz:TLice"/>
                 <xs:element name="Predstavnik" type="sz:TLice"/>
                 <xs:element name="Zig" type="sz:TZig"/>
-                <xs:sequence>
-                    <xs:element maxOccurs="45" name="Klasa" type="sz:TNicanska_klasa"/>
-                </xs:sequence>
+                <xs:element name="Klase">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element maxOccurs="45" name="Klasa" type="sz:TKlasa"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
                 <xs:element name="Zatrazeno_pravo_prvenstva_i_osnov" type="xs:string"/>
                 <xs:element name="Taksa" type="sz:TTaksa"/>
                 <xs:element name="Datum_podnosenja" type="xs:date"/>
+                <xs:element name="Broj_prijave_ziga" type="sz:TBroj_prijave_ziga"/>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -45,6 +50,23 @@
             <xs:enumeration value="DRUGA_VRSTA_ZNAKA"/>
         </xs:restriction>
     </xs:simpleType>
+    <xs:simpleType name="TBroj_prijave_ziga">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="Z-[0-9]{5}\/[0-9]{3}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:complexType name="TKlasa">
+        <xs:sequence>
+            <xs:element name="Id_klase">
+                <xs:simpleType>
+                    <xs:restriction base="xs:positiveInteger">
+                        <xs:maxInclusive value="45"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Pun_naziv_klase" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
     <xs:complexType name="TZig">
         <xs:sequence>
             <xs:element name="Tip_ziga" type="sz:ETip_ziga"/>
@@ -56,7 +78,7 @@
             <xs:element name="Opis_znaka" type="xs:string"/>
         </xs:sequence>
     </xs:complexType>
-    <xs:complexType name="Fizicko_lice">
+    <xs:complexType name="TFizicko_lice">
         <xs:complexContent>
             <xs:extension base="sz:TLice">
                 <xs:sequence>
@@ -66,7 +88,7 @@
             </xs:extension>
         </xs:complexContent>
     </xs:complexType>
-    <xs:complexType name="Pravno_lice">
+    <xs:complexType name="TPravno_lice">
         <xs:complexContent>
             <xs:extension base="sz:TLice">
                 <xs:sequence>
