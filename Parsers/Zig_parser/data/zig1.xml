@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Zahtev_za_priznanje_ziga xmlns:sz="http://www.ftn.uns.ac.rs/zig"
+                          xmlns:xs="http://www.w3.org/2001/XMLSchema-instance">
+    <Podnosilac_prijave sz:type="TFizicko_Lice">
+        <Adresa sz:type="TAdresa">
+            <Ulica>Petrovgradska</Ulica>
+            <Broj>3</Broj>
+            <Postanski_broj>57680</Postanski_broj>
+            <Mesto>Malenci</Mesto>
+            <Drzava>Srbija</Drzava>
+        </Adresa>
+        <Kontakt sz:type="TKontakt">
+            <Telefon>068778987152</Telefon>
+            <Email>malen.malenci@mail.ml</Email>
+            <Faks> </Faks>
+        </Kontakt>
+        <Ime>Malen</Ime>
+        <Prezime>Malentijevic</Prezime>
+    </Podnosilac_prijave>
+    <Punomocnik sz:type="TPravno_Lice">
+        <Adresa sz:type="TAdresa">
+            <Ulica>Glavna</Ulica>
+            <Broj>44</Broj>
+            <Postanski_broj>57680</Postanski_broj>
+            <Mesto>Malenci</Mesto>
+            <Drzava>Srbija</Drzava>
+        </Adresa>
+        <Kontakt sz:type="TKontakt">
+            <Telefon>0674815998</Telefon>
+            <Email>pravnapomoc.malenci@mail.ml</Email>
+            <Faks> </Faks>
+        </Kontakt>
+        <Poslovno_ime>Pravna pomoc Malenci</Poslovno_ime>
+    </Punomocnik>
+    <Predstavnik sz:type="TPravno_Lice">
+        <Adresa sz:type="TAdresa">
+            <Ulica>Glavna</Ulica>
+            <Broj>44</Broj>
+            <Postanski_broj>57680</Postanski_broj>
+            <Mesto>Malenci</Mesto>
+            <Drzava>Srbija</Drzava>
+        </Adresa>
+        <Kontakt>
+            <Telefon>0674815998</Telefon>
+            <Email>pravnapomoc.malenci@mail.ml</Email>
+            <Faks> </Faks>
+        </Kontakt>
+        <Poslovno_ime>Pravna pomoc Malenci</Poslovno_ime>
+    </Predstavnik>
+    <Zig>
+        <Tip_ziga sz:type="ETip_ziga">INDIVIDUALNI_ZIG</Tip_ziga>
+        <Opis_izgleda_ziga sz:type="EOpis_izgleda_ziga">KOMBINOVANI_ZNAK</Opis_izgleda_ziga>
+        <Izgled_putanja_do_slike>neka/putanja/do/slike</Izgled_putanja_do_slike>
+        <Transliteracija_znaka>Ouch, my ankle!</Transliteracija_znaka>
+        <Prevod_znaka>Oh, moj zglob!</Prevod_znaka>
+        <Opis_znaka>
+            Znak graficki predstavlja nozni zglob koji je otekao usled sportske povrede.
+            Pored se nalazi i prikaz kreme koja ubrzava oporavak od povrede.
+        </Opis_znaka>
+    </Zig>
+    <Klase>
+        <Klasa sz:type="TNicanska_klasa" Pun_naziv_klase="Hemijski proizvodi">1</Klasa>
+        <Klasa sz:type="TNicanska_klasa" Pun_naziv_klase="Vatreno oruzje">13</Klasa>
+    </Klase>
+    <Zatrazeno_pravo_prvenstva_i_osnov>Ja sam jedini na trzistu koji ovo prodaje.</Zatrazeno_pravo_prvenstva_i_osnov>
+    <Taksa sz:type="TTaksa">
+        <Osnovna_taksa>250</Osnovna_taksa>
+        <Taksa_za_sve_klase>500</Taksa_za_sve_klase>
+        <Taksa_za_graficko_resenje>100</Taksa_za_graficko_resenje>
+    </Taksa>
+    <Datum_podnosenja xs:type="date">2022-05-06</Datum_podnosenja>
+    <Broj_prijave_ziga sz:type="TBroj_prijave_ziga">Z-12345/123</Broj_prijave_ziga>
+</Zahtev_za_priznanje_ziga>
