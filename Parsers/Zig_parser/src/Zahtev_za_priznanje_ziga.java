@@ -3,12 +3,11 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name="Klasa", propOrder={"podnosilacPrijave", "punomocnik", "predstavnik", "zig", "klase",
-        "zatrazenoPravoPrvenstvaIOsnov", "taksa", "datumPodnosenja", "brojPrijaveZiga"})
+        "zatrazenoPravoPrvenstvaIOsnov", "taksa", "prilog", "brojPrijaveZiga", "datumPodnosenja"})
 public class Zahtev_za_priznanje_ziga {
     @XmlElement(name="Podnosilac_prijave", required=true)
     private List<Lice> podnosilacPrijave;
@@ -24,10 +23,12 @@ public class Zahtev_za_priznanje_ziga {
     private String zatrazenoPravoPrvenstvaIOsnov;
     @XmlElement(name="Taksa", required=true)
     private Taksa taksa;
-    @XmlElement(name="Datum_podnosenja", required=true)
-    private LocalDate datumPodnosenja;
+    @XmlElement(name="Prilog", required=true)
+    private List<Prilog> prilog;
     @XmlElement(name="Broj_prijave_ziga", required=true)
     private String brojPrijaveZiga;
+    @XmlElement(name="Datum_podnosenja", required=true)
+    private LocalDate datumPodnosenja;
 
     public List<Lice> getPodnosilacPrijave() {
         return podnosilacPrijave;
@@ -99,5 +100,13 @@ public class Zahtev_za_priznanje_ziga {
 
     public void setBrojPrijaveZiga(String brojPrijaveZiga) {
         this.brojPrijaveZiga = brojPrijaveZiga;
+    }
+
+    public List<Prilog> getPrilog() {
+        return prilog;
+    }
+
+    public void setPrilog(List<Prilog> prilog) {
+        this.prilog = prilog;
     }
 }
