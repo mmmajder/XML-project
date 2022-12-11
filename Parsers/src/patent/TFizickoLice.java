@@ -3,11 +3,9 @@ package patent;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="TFizicko_Lice")
 @XmlType(name="TFizicko_Lice", propOrder={"ime", "prezime", "drzavljanstvo"})
 public class TFizickoLice extends TLice{
 	@XmlElement(name="Ime", required=true)
