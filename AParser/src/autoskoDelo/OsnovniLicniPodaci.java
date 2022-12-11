@@ -1,4 +1,4 @@
-package patent;
+package autoskoDelo;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Osnovni_licni_podaci")
-@XmlType(name = "", propOrder = {"adresa", "ime", "prezime"})
+@XmlType(name = "Osnovni_licni_podaci", propOrder = {"adresa", "ime", "prezime"})
 public class OsnovniLicniPodaci {
 
     @XmlElement(name = "Adresa", required = true)
@@ -44,10 +44,10 @@ public class OsnovniLicniPodaci {
 
     @Override
     public String toString() {
-        return "OsnovniLicniPodaci{" +
-                "adresa=" + adresa +
-                ", ime='" + ime + '\'' +
-                ", prezime='" + prezime + '\'' +
-                '}';
+        return "OsnovniLicniPodaci {" +
+                "\n\t\tadresa=" + adresa +
+                ",\n\t\time='" + ime + '\'' +
+                ",\n\t\tprezime='" + prezime + '\'' +
+                "\n\t}";
     }
 }

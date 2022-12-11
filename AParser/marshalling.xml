@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<aut:Zahtev_za_unosenje_u_evidenciju_i_deponovanje_autorskih_dela xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:aut="http://www.ftn.uns.ac.rs/autorskoDelo">
+    <aut:Informacije_o_zahtevu>
+        <aut:Broj_prijave>A-214</aut:Broj_prijave>
+        <aut:Datum_podnosenja>2022-12-11+01:00</aut:Datum_podnosenja>
+        <aut:Lista_priloga_koji_se_podnose_uz_zahtev>papir 1</aut:Lista_priloga_koji_se_podnose_uz_zahtev>
+        <aut:Lista_priloga_koji_se_podnose_uz_zahtev>papir 2</aut:Lista_priloga_koji_se_podnose_uz_zahtev>
+        <aut:Lista_priloga_koji_se_podnose_uz_zahtev>papir 3</aut:Lista_priloga_koji_se_podnose_uz_zahtev>
+    </aut:Informacije_o_zahtevu>
+    <aut:Sadrzaj_zahteva>
+        <aut:Podnosilac_zahteva>
+            <aut:Podnosilac_je_i_autor>true</aut:Podnosilac_je_i_autor>
+        </aut:Podnosilac_zahteva>
+        <aut:Autori>
+            <aut:Anoniman>true</aut:Anoniman>
+            <aut:Podaci_o_autoru>
+                <aut:Pseudonim>autorski pseudonim</aut:Pseudonim>
+                <aut:Autor xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="aut:TFizicko_Lice">
+                    <aut:Broj_telefona>1241424</aut:Broj_telefona>
+                    <aut:Email>pera@gmail.com</aut:Email>
+                    <aut:Drzavljanstvo>srpsko</aut:Drzavljanstvo>
+                    <aut:Osnovni_licni_podaci>
+                        <aut:Adresa>
+                            <aut:Ulica>Bla bla</aut:Ulica>
+                            <aut:Broj_u_ulici>2</aut:Broj_u_ulici>
+                            <aut:Postanski_broj>432423</aut:Postanski_broj>
+                            <aut:Mesto>Niksic</aut:Mesto>
+                            <aut:Drzava>Crna Gora</aut:Drzava>
+                        </aut:Adresa>
+                        <aut:Ime>Pera</aut:Ime>
+                        <aut:Prezime>Peric</aut:Prezime>
+                    </aut:Osnovni_licni_podaci>
+                    <aut:Godina_smrti>1989</aut:Godina_smrti>
+                </aut:Autor>
+            </aut:Podaci_o_autoru>
+        </aut:Autori>
+        <aut:Podaci_o_punomocniku>
+            <aut:Adresa>
+                <aut:Ulica>Bla bla</aut:Ulica>
+                <aut:Broj_u_ulici>2</aut:Broj_u_ulici>
+                <aut:Postanski_broj>432423</aut:Postanski_broj>
+                <aut:Mesto>Niksic</aut:Mesto>
+                <aut:Drzava>Crna Gora</aut:Drzava>
+            </aut:Adresa>
+            <aut:Ime>Pera</aut:Ime>
+            <aut:Prezime>Peric</aut:Prezime>
+        </aut:Podaci_o_punomocniku>
+        <aut:Autorsko_delo>
+            <aut:Naslov_autorskog_dela>NASLOV</aut:Naslov_autorskog_dela>
+            <aut:Vrsta_autorskog_dela>roman</aut:Vrsta_autorskog_dela>
+            <aut:Forma_zapisa_autorskog_dela>format</aut:Forma_zapisa_autorskog_dela>
+            <aut:Autorsko_delo_stvoreno_u_radnom_odnosu>false</aut:Autorsko_delo_stvoreno_u_radnom_odnosu>
+            <aut:Nacin_koriscenja_autorskog_dela>nacin koriscenja</aut:Nacin_koriscenja_autorskog_dela>
+        </aut:Autorsko_delo>
+    </aut:Sadrzaj_zahteva>
+</aut:Zahtev_za_unosenje_u_evidenciju_i_deponovanje_autorskih_dela>

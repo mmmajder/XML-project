@@ -1,4 +1,4 @@
-package patent;
+package autoskoDelo;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -19,7 +19,6 @@ public class Adresa {
     private String mesto;
     @XmlElement(name = "Drzava", required = true)
     private String drzava;
-
 
     public String getUlica() {
         return ulica;
@@ -63,12 +62,12 @@ public class Adresa {
 
     @Override
     public String toString() {
-        return "Adresa{" +
-                "ulica='" + ulica + '\'' +
-                ", brojUUlici=" + brojUUlici +
-                ", postanskiBroj=" + postanskiBroj +
-                ", mesto='" + mesto + '\'' +
-                ", drzava='" + drzava + '\'' +
-                '}';
+        return "Adresa {" +
+                "\n\t\t\tulica='" + ulica + '\'' +
+                ",\n\t\t\tbrojUUlici=" + brojUUlici +
+                ",\n\t\t\tpostanskiBroj=" + postanskiBroj +
+                ",\n\t\t\tmesto='" + mesto + '\'' +
+                ",\n\t\t\tdrzava='" + drzava + '\'' +
+                "\n\t\t}";
     }
 }

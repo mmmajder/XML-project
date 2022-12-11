@@ -1,4 +1,4 @@
-package patent;
+package autoskoDelo;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -46,10 +46,10 @@ public class TPravnoLice extends TLice {
 
     @Override
     public String toString() {
-        return "TPravnoLice{" +
-                "poslovnoIme='" + poslovnoIme + '\'' +
-                ", osnovniLicniPodaci=" + osnovniLicniPodaci +
-                ", sedisteNosiocaAutorskogPrava=" + sedisteNosiocaAutorskogPrava +
-                '}';
+        return "TPravnoLice {" +
+                "\n\tposlovnoIme='" + poslovnoIme + '\'' +
+                ",\n\tosnovniLicniPodaci=" + osnovniLicniPodaci +
+                ",\n\tsedisteNosiocaAutorskogPrava=" + sedisteNosiocaAutorskogPrava +
+                "\n}";
     }
 }

@@ -1,10 +1,10 @@
-package patent;
+package autoskoDelo;
 
 import javax.xml.bind.annotation.*;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name = "Osnovni_licni_podaci")
-@XmlType(name = "Osnovni_licni_podaci", propOrder = {"brojTelefona", "email"})
+@XmlRootElement(name = "TLice")
+@XmlType(name = "TLice", propOrder = {"brojTelefona", "email"})
 public class TLice {
 
     @XmlElement(name = "Broj_telefona", required = true)
@@ -31,9 +31,9 @@ public class TLice {
 
     @Override
     public String toString() {
-        return "TLice{" +
-                "brojTelefona='" + brojTelefona + '\'' +
-                ", email='" + email + '\'' +
-                '}';
+        return "TLice {" +
+                "\n\tbrojTelefona='" + brojTelefona + '\'' +
+                ",\n\temail='" + email + '\'' +
+                "\n}";
     }
 }

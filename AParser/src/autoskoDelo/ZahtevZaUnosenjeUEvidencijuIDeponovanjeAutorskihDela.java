@@ -1,4 +1,4 @@
-package patent;
+package autoskoDelo;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -44,9 +44,9 @@ public class ZahtevZaUnosenjeUEvidencijuIDeponovanjeAutorskihDela {
 
     @Override
     public String toString() {
-        return "ZahtevZaUnosenjeUEvidencijuIDeponovanjeAutorskihDela{" +
-                "informacijeOZahtevu=" + informacijeOZahtevu +
-                ", sadrzajZahteva=" + sadrzajZahteva +
-                '}';
+        return "ZahtevZaUnosenjeUEvidencijuIDeponovanjeAutorskihDela {" +
+                "\ninformacijeOZahtevu=" + informacijeOZahtevu +
+                ",\nsadrzajZahteva=" + sadrzajZahteva +
+                "\n}";
     }
 }

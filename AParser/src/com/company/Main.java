@@ -1,11 +1,11 @@
 package com.company;
 
-import test.TestPatent;
+import test.TestAutorskoDelo;
 
 public class Main {
 
     public static void main(String[] args) {
-        TestPatent testPatent = new TestPatent();
-        testPatent.test();
+        TestAutorskoDelo testAutorskoDelo = new TestAutorskoDelo();
+        testAutorskoDelo.test();
     }
 }
