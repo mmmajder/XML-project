@@ -6,6 +6,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -14,14 +15,13 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name="", propOrder={"nazivPronalaska", "podaciOPodnosiocuPrijave", "podaciOPronalazacu", "podaciOPunomocniku", "dostavljanje", "podaciOPrijavi", "zahtevZaPriznanjePrvenstvaIzRanijihPrijava"})
 public class SadrzajZahtevaZaPriznanjePatenta {
 	@XmlElement(name="Naziv_pronalaska", required=false)
-	private List<String> nazivPronalaska = new ArrayList<String>();
+	private List<NazivPronalaska> nazivPronalaska = new ArrayList<NazivPronalaska>();
 
-	
 	@XmlElement(name="Podaci_o_podnosiocu_prijave", required = true)
 	private PodaciOPodnosiocuPrijave podaciOPodnosiocuPrijave;
 	
 	@XmlElement(name="Podaci_o_pronalazacu", required = true)
-	private TFizickoLice podaciOPronalazacu;
+	private PodaciOPronalazacu podaciOPronalazacu;
 	
 	@XmlElement(name="Podaci_o_punomocniku", required = true)
 	private PodaciOPunomocniku podaciOPunomocniku;
@@ -32,8 +32,9 @@ public class SadrzajZahtevaZaPriznanjePatenta {
 	@XmlElement(name="Podaci_o_prijavi", required = true)
 	private PodaciOPrijavi podaciOPrijavi;
 	
-	@XmlElement(name="Zahtev_za_priznanje_prvenstva_iz_ranijih_prijava", required = true)
-	private ZahtevZaPriznanjePrvenstvaIzRanijihPrijava zahtevZaPriznanjePrvenstvaIzRanijihPrijava;
+	@XmlElementWrapper(name="Zahtev_za_priznanje_prvenstva_iz_ranijih_prijava", required=false)
+	@XmlElement(name="Ranija_prijava", required=false)
+	private List<RanijaPrijava> zahtevZaPriznanjePrvenstvaIzRanijihPrijava;
 	
 	//TODO
 
@@ -45,20 +46,12 @@ public class SadrzajZahtevaZaPriznanjePatenta {
 		this.podaciOPodnosiocuPrijave = podaciOPodnosiocuPrijave;
 	}
 	
-	public List<String> getNazivPronalaska() {
+	public List<NazivPronalaska> getNazivPronalaska() {
 		return nazivPronalaska;
 	}
 
-	public void setNazivPronalaska(List<String> nazivPronalaska) {
+	public void setNazivPronalaska(List<NazivPronalaska> nazivPronalaska) {
 		this.nazivPronalaska = nazivPronalaska;
-	}
-
-	public TFizickoLice getPodaciOPronalazacu() {
-		return podaciOPronalazacu;
-	}
-
-	public void setPodaciOPronalazacu(TFizickoLice podaciOPronalazacu) {
-		this.podaciOPronalazacu = podaciOPronalazacu;
 	}
 
 	public PodaciOPunomocniku getPodaciOPunomocniku() {
@@ -85,12 +78,21 @@ public class SadrzajZahtevaZaPriznanjePatenta {
 		this.podaciOPrijavi = podaciOPrijavi;
 	}
 
-	public ZahtevZaPriznanjePrvenstvaIzRanijihPrijava getZahtevZaPriznanjePrvenstvaIzRanijihPrijava() {
+
+	public PodaciOPronalazacu getPodaciOPronalazacu() {
+		return podaciOPronalazacu;
+	}
+
+	public void setPodaciOPronalazacu(PodaciOPronalazacu podaciOPronalazacu) {
+		this.podaciOPronalazacu = podaciOPronalazacu;
+	}
+
+	public List<RanijaPrijava> getZahtevZaPriznanjePrvenstvaIzRanijihPrijava() {
 		return zahtevZaPriznanjePrvenstvaIzRanijihPrijava;
 	}
 
 	public void setZahtevZaPriznanjePrvenstvaIzRanijihPrijava(
-			ZahtevZaPriznanjePrvenstvaIzRanijihPrijava zahtevZaPriznanjePrvenstvaIzRanijihPrijava) {
+			List<RanijaPrijava> zahtevZaPriznanjePrvenstvaIzRanijihPrijava) {
 		this.zahtevZaPriznanjePrvenstvaIzRanijihPrijava = zahtevZaPriznanjePrvenstvaIzRanijihPrijava;
 	}
 
@@ -99,7 +101,7 @@ public class SadrzajZahtevaZaPriznanjePatenta {
 		StringBuffer buffer = new StringBuffer();
 		buffer.append("- nazivPronalaska: ");
 		buffer.append(nazivPronalaska);
-		buffer.append("- podaciOPodnosiocuPrijave: ");
+		buffer.append("\n- podaciOPodnosiocuPrijave: ");
 		buffer.append(podaciOPodnosiocuPrijave);
 		buffer.append("\n- podaciOPronalazacu: ");
 		buffer.append(podaciOPronalazacu);

@@ -5,15 +5,12 @@ import java.util.Date;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlSchemaType;
 import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.XmlSchemaType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlRootElement(name="TRanijih_prijava_za_priznanje_prvenstva")
 @XmlType(name="", propOrder={"datumPodnosenjaPrijave", "brojRanijePrijave", "dvoslovnaOznaka"})
-public class TRanijihPrijavaZaPriznanjePrvenstva {
-	
+public class RanijaPrijava {
 	@XmlElement(name="Datum_podnosenja_priave", required = true)
 	@XmlSchemaType(name="date")
 	private Date datumPodnosenjaPrijave;
@@ -43,6 +40,7 @@ public class TRanijihPrijavaZaPriznanjePrvenstva {
 	@Override
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();
+		buffer.append("\n- Ranija prijava: ");
 		buffer.append("\n- datumPodnosenjaPrijave: ");
 		buffer.append(datumPodnosenjaPrijave);
 		buffer.append("\n- brojRanijePrijave: ");
