@@ -1,0 +1,22 @@
+img {
+  max-width: 200px;
+  text-align: center;
+}
+
+mat-grid-list {
+  margin: 50px;
+}
+
+.text-center {
+  text-align: center;
+  padding: 40px;
+}
+
+mat-grid-tile {
+  background-color: #fafafa;
+  border-radius: 30px;
+}
+
+mat-grid-tile:hover {
+  border: 3px solid #673a87;
+}
