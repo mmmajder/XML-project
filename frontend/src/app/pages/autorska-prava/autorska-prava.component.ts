@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./autorska-prava.component.css']
 })
 export class AutorskaPravaComponent {
+  tipAutora: string = 'fizickoLice';
+  ime: string = "";
+  prezime: string = "";
+  sediste: string = "";
+  adresa: string = "";
+  telefon: string = "";
+  email: string = "";
+  poslovnoIme: string = "";
+  drzavljanstvo: string = "";
 
 }

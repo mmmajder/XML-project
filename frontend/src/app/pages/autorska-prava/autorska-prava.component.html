@@ -1,1 +1,85 @@
-<p>autorska-prava works!</p>
+<div class="gray-background">
+  <h2>Zahtev za unošenje u evidenciju i deponovanje autorskih prava</h2>
+  <mat-stepper orientation="vertical">
+    <mat-step>
+      <ng-template matStepLabel>Podaci o podnosiocu</ng-template>
+      <ng-template matStepContent>
+
+        <mat-radio-group [(ngModel)]="tipAutora">
+          <mat-radio-button value="fizickoLice">Autor je fizičko lice</mat-radio-button>
+          <mat-radio-button value="pravnoLice">Autor je pravno lice</mat-radio-button>
+        </mat-radio-group>
+
+        <div *ngIf="tipAutora == 'fizickoLice'">
+          <p>
+            <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+              <mat-label>Ime podnosioca</mat-label>
+              <input matInput [(ngModel)]="ime" placeholder="Ime">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="width: 49%; float: right">
+              <mat-label>Prezime podnosioca</mat-label>
+              <input matInput [(ngModel)]="prezime" placeholder="Prezime">
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+              <mat-label>Adresa podnosioca</mat-label>
+              <input matInput [(ngModel)]="adresa" placeholder="Adresa">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="width: 49%; float: right">
+              <mat-label>Državljanstvo podnosioca</mat-label>
+              <input matInput [(ngModel)]="drzavljanstvo" placeholder="Državljanstvo">
+            </mat-form-field>
+          </p>
+
+        </div>
+
+        <div *ngIf="tipAutora == 'pravnoLice'">
+          <p>
+            <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+              <mat-label>Poslovno ime</mat-label>
+              <input matInput [(ngModel)]="poslovnoIme" placeholder="Poslovno ime">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="width: 49%; float: right">
+              <mat-label>Sedište nosioca autorskog dela</mat-label>
+              <input matInput [(ngModel)]="sediste" placeholder="Sedište nosioca autorskog dela">
+            </mat-form-field>
+          </p>
+        </div>
+
+        <p>
+          <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+            <mat-label>Telefon</mat-label>
+            <input matInput [(ngModel)]="telefon" placeholder="Telefon">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 49%; float: right">
+            <mat-label>Email adresa</mat-label>
+            <input matInput [(ngModel)]="email" placeholder="Email adresa">
+          </mat-form-field>
+        </p>
+
+      </ng-template>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Pseudonim autora</ng-template>
+      <ng-template matStepContent>
+        <p>
+          <mat-form-field appearance="outline" style="width: 100%">
+            <mat-label>Pseudonim/Znak autora ukoliko ga ima</mat-label>
+            <input matInput [(ngModel)]="email" placeholder="Pseudonim/Znak autora">
+          </mat-form-field>
+        </p>
+      </ng-template>
+    </mat-step>
+    <mat-step>
+      <ng-template matStepLabel>Step 3</ng-template>
+      <p>This content was rendered eagerly</p>
+      <button mat-button matStepperPrevious>Back</button>
+    </mat-step>
+  </mat-stepper>
+</div>

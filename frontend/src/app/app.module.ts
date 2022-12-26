@@ -12,6 +12,10 @@ import { ZigoviComponent } from './pages/zigovi/zigovi.component';
 import { PatentiComponent } from './pages/patenti/patenti.component';
 import { HomeComponent } from './pages/home/home.component';
 import {MatGridListModule} from "@angular/material/grid-list";
+import {MatInputModule} from "@angular/material/input";
+import {MatStepperModule} from "@angular/material/stepper";
+import {MatRadioModule} from "@angular/material/radio";
+import {FormsModule} from "@angular/forms";
 
 @NgModule({
   declarations: [
@@ -21,15 +25,19 @@ import {MatGridListModule} from "@angular/material/grid-list";
     PatentiComponent,
     HomeComponent
   ],
-    imports: [
-        BrowserModule,
-        AppRoutingModule,
-        BrowserAnimationsModule,
-        MatIconModule,
-        MatButtonModule,
-        MatToolbarModule,
-        MatGridListModule
-    ],
+  imports: [
+    BrowserModule,
+    AppRoutingModule,
+    BrowserAnimationsModule,
+    MatIconModule,
+    MatButtonModule,
+    MatToolbarModule,
+    MatGridListModule,
+    MatInputModule,
+    MatStepperModule,
+    MatRadioModule,
+    FormsModule
+  ],
   providers: [],
   bootstrap: [AppComponent]
 })

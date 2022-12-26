@@ -3,8 +3,8 @@ img {
   text-align: center;
 }
 
-mat-grid-list {
-  margin: 50px;
+.row {
+  margin: 30px;
 }
 
 .text-center {
@@ -12,11 +12,7 @@ mat-grid-list {
   padding: 40px;
 }
 
-mat-grid-tile {
+.tile:hover {
   background-color: #fafafa;
   border-radius: 30px;
-}
-
-mat-grid-tile:hover {
-  border: 3px solid #673a87;
 }
