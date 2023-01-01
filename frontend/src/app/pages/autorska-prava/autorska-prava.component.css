@@ -10,3 +10,11 @@
 p {
   margin-top: 10px;
 }
+
+mat-divider {
+  margin-bottom: 5px;
+}
+
+button:focus {
+  outline: none;
+}
