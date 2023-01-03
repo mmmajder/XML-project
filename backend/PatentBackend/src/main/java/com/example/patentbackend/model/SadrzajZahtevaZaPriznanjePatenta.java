@@ -43,66 +43,6 @@ public class SadrzajZahtevaZaPriznanjePatenta {
     @XmlElement(name = "Ranija_prijava", required = false)
     private List<RanijaPrijava> zahtevZaPriznanjePrvenstvaIzRanijihPrijava;
 
-    //TODO
-
-    public PodaciOPodnosiocuPrijave getPodaciOPodnosiocuPrijave() {
-        return podaciOPodnosiocuPrijave;
-    }
-
-    public void setPodaciOPodnosiocuPrijave(PodaciOPodnosiocuPrijave podaciOPodnosiocuPrijave) {
-        this.podaciOPodnosiocuPrijave = podaciOPodnosiocuPrijave;
-    }
-
-    public List<NazivPronalaska> getNazivPronalaska() {
-        return nazivPronalaska;
-    }
-
-    public void setNazivPronalaska(List<NazivPronalaska> nazivPronalaska) {
-        this.nazivPronalaska = nazivPronalaska;
-    }
-
-    public PodaciOPunomocniku getPodaciOPunomocniku() {
-        return podaciOPunomocniku;
-    }
-
-    public void setPodaciOPunomocniku(PodaciOPunomocniku podaciOPunomocniku) {
-        this.podaciOPunomocniku = podaciOPunomocniku;
-    }
-
-    public Dostavljanje getDostavljanje() {
-        return dostavljanje;
-    }
-
-    public void setDostavljanje(Dostavljanje dostavljanje) {
-        this.dostavljanje = dostavljanje;
-    }
-
-    public PodaciOPrijavi getPodaciOPrijavi() {
-        return podaciOPrijavi;
-    }
-
-    public void setPodaciOPrijavi(PodaciOPrijavi podaciOPrijavi) {
-        this.podaciOPrijavi = podaciOPrijavi;
-    }
-
-
-    public PodaciOPronalazacu getPodaciOPronalazacu() {
-        return podaciOPronalazacu;
-    }
-
-    public void setPodaciOPronalazacu(PodaciOPronalazacu podaciOPronalazacu) {
-        this.podaciOPronalazacu = podaciOPronalazacu;
-    }
-
-    public List<RanijaPrijava> getZahtevZaPriznanjePrvenstvaIzRanijihPrijava() {
-        return zahtevZaPriznanjePrvenstvaIzRanijihPrijava;
-    }
-
-    public void setZahtevZaPriznanjePrvenstvaIzRanijihPrijava(
-            List<RanijaPrijava> zahtevZaPriznanjePrvenstvaIzRanijihPrijava) {
-        this.zahtevZaPriznanjePrvenstvaIzRanijihPrijava = zahtevZaPriznanjePrvenstvaIzRanijihPrijava;
-    }
-
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();

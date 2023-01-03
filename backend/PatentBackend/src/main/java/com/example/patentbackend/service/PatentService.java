@@ -8,6 +8,7 @@ import com.example.patentbackend.repository.PatentRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.List;
 
 
 @Service
@@ -30,8 +31,19 @@ public class PatentService {
         OsnovneInformacijeOZahtevuZaPriznanjePatenta osnovneInformacije = new OsnovneInformacijeOZahtevuZaPriznanjePatenta();
         String brojPrijave = "P-" + LocalDate.now().getYear() + "/" + (patentRepository.getNumberOfRequests() + 1);
         osnovneInformacije.setBrojPrijave(brojPrijave);
+        osnovneInformacije.setStanje("NA_CEKANJU");
         zahtevZaPriznanjePatenta.setOsnovneInformacijeOZahtevuZaPriznanjePatenta(osnovneInformacije);
     }
+
+    public List<ZahtevZaPriznanjePatenta> getAllPending() {
+        return patentRepository.getAllPending();
+    }
+
+    public List<ZahtevZaPriznanjePatenta> getAllAccepted() {
+        return patentRepository.getAllAccepted();
+    }
+
+
 
 //    public List<ZahtevZaPriznanjePatenta> getAllZahtevZaPriznanjePatenta() {
 //        return patentRepository.getAll();

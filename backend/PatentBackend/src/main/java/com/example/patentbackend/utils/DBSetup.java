@@ -11,7 +11,7 @@ public class DBSetup {
         Database database = (Database) cl.newInstance();
         database.setProperty("create-database", "true");
         DatabaseManager.registerDatabase(database);
-        String collectionId = "/db/xws-project/patent";
+        String collectionId = "/db/XWS-PROJECT/patent";
         return collectionId;
     }
 

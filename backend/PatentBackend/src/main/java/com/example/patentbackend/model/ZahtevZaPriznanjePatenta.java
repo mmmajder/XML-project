@@ -24,23 +24,6 @@ public class ZahtevZaPriznanjePatenta {
     @XmlElement(name = "Sadrzaj_zahteva_za_priznanje_patenta", required = true)
     private SadrzajZahtevaZaPriznanjePatenta sadrzajZahtevaZaPriznanjePatenta;
 
-    public OsnovneInformacijeOZahtevuZaPriznanjePatenta getOsnovneInformacijeOZahtevuZaPriznanjePatenta() {
-        return osnovneInformacijeOZahtevuZaPriznanjePatenta;
-    }
-
-    public void setOsnovneInformacijeOZahtevuZaPriznanjePatenta(
-            OsnovneInformacijeOZahtevuZaPriznanjePatenta osnovneInformacijeOZahtevuZaPriznanjePatenta) {
-        this.osnovneInformacijeOZahtevuZaPriznanjePatenta = osnovneInformacijeOZahtevuZaPriznanjePatenta;
-    }
-
-    public SadrzajZahtevaZaPriznanjePatenta getSadrzajZahtevaZaPriznanjePatenta() {
-        return sadrzajZahtevaZaPriznanjePatenta;
-    }
-
-    public void setSadrzajZahtevaZaPriznanjePatenta(SadrzajZahtevaZaPriznanjePatenta sadrzajZahtevaZaPriznanjePatenta) {
-        this.sadrzajZahtevaZaPriznanjePatenta = sadrzajZahtevaZaPriznanjePatenta;
-    }
-
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();

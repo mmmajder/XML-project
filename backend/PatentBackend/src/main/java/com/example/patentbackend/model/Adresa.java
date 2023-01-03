@@ -28,46 +28,6 @@ public class Adresa {
     private String drzava;
 
 
-    public String getUlica() {
-        return ulica;
-    }
-
-    public void setUlica(String ulica) {
-        this.ulica = ulica;
-    }
-
-    public int getBrojUUlici() {
-        return brojUUlici;
-    }
-
-    public void setBrojUUlici(int brojUUlici) {
-        this.brojUUlici = brojUUlici;
-    }
-
-    public int getPostanskiBroj() {
-        return postanskiBroj;
-    }
-
-    public void setPostanskiBroj(int postanskiBroj) {
-        this.postanskiBroj = postanskiBroj;
-    }
-
-    public String getMesto() {
-        return mesto;
-    }
-
-    public void setMesto(String mesto) {
-        this.mesto = mesto;
-    }
-
-    public String getDrzava() {
-        return drzava;
-    }
-
-    public void setDrzava(String drzava) {
-        this.drzava = drzava;
-    }
-
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();

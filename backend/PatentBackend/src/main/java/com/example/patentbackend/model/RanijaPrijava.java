@@ -26,30 +26,6 @@ public class RanijaPrijava {
     @XmlElement(name = "Dvoslovna_oznaka", required = true)
     private String dvoslovnaOznaka;
 
-    public Date getDatumaPodnosenjaPrijave() {
-        return datumPodnosenjaPrijave;
-    }
-
-    public void setDatumaPodnosenjaPrijave(Date datumaPodnosenjaPrijave) {
-        this.datumPodnosenjaPrijave = datumaPodnosenjaPrijave;
-    }
-
-    public String getBrojRanijePrijave() {
-        return brojRanijePrijave;
-    }
-
-    public void setBrojRanijePrijave(String brojRanijePrijave) {
-        this.brojRanijePrijave = brojRanijePrijave;
-    }
-
-    public String getDvoslovnaOznaka() {
-        return dvoslovnaOznaka;
-    }
-
-    public void setDvoslovnaOznaka(String dvoslovnaOznaka) {
-        this.dvoslovnaOznaka = dvoslovnaOznaka;
-    }
-
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();

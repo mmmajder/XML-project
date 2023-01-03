@@ -10,6 +10,8 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @AllArgsConstructor
 @RestController
 @CrossOrigin("*")
@@ -29,4 +31,16 @@ public class PatentController {
         ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = patentService.createZahtevZaPriznanjePatenta(zahtevZaPriznanjePatentaDTO);
         return ResponseEntity.ok(zahtevZaPriznanjePatenta);
     }
+
+    @GetMapping(path="/pending", produces = "application/xml")
+    public ResponseEntity<List<ZahtevZaPriznanjePatenta>> getAllPending() {
+        return ResponseEntity.ok(patentService.getAllPending());
+    }
+
+    @GetMapping(path="/accepted", produces = "application/xml")
+    public ResponseEntity<List<ZahtevZaPriznanjePatenta>> getAllAccepted() {
+        return ResponseEntity.ok(patentService.getAllAccepted());
+    }
+
+//    @PutMapping(path = "/accept", consumes = "application/xml", produces = "application/xml")
 }

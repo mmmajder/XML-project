@@ -22,22 +22,6 @@ public class PodaciOPronalazacu {
     @XmlElement(name = "Pronalazac")
     private TFizickoLice pronalazac;
 
-    public boolean isPronalazacNeZeliDaBudeNaveden() {
-        return pronalazacNeZeliDaBudeNaveden;
-    }
-
-    public void setPronalazacNeZeliDaBudeNaveden(boolean pronalazacNeZeliDaBudeNaveden) {
-        this.pronalazacNeZeliDaBudeNaveden = pronalazacNeZeliDaBudeNaveden;
-    }
-
-    public TFizickoLice getPronalazac() {
-        return pronalazac;
-    }
-
-    public void setPronalazac(TFizickoLice pronalazac) {
-        this.pronalazac = pronalazac;
-    }
-
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();

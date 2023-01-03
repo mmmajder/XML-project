@@ -21,22 +21,6 @@ public class NazivPronalaska {
     @XmlAttribute(name = "Naziv", required = true)
     private String naziv;
 
-    public String getJezik() {
-        return jezik;
-    }
-
-    public void setJezik(String jezik) {
-        this.jezik = jezik;
-    }
-
-    public String getNaziv() {
-        return naziv;
-    }
-
-    public void setNaziv(String naziv) {
-        this.naziv = naziv;
-    }
-
     @Override
     public String toString() {
         return "NazivPronalaska [jezik=" + jezik + ", naziv=" + naziv + "]";

@@ -21,22 +21,6 @@ public class Dostavljanje {
     @XmlElement(name = "Nacin_dostave", required = true)
     private String nacinDostave;
 
-    public Adresa getAdresaZaDostavljanje() {
-        return adresaZaDostavljanje;
-    }
-
-    public void setAdresaZaDostavljanje(Adresa adresaZaDostavljanje) {
-        this.adresaZaDostavljanje = adresaZaDostavljanje;
-    }
-
-    public String getNacinDostave() {
-        return nacinDostave;
-    }
-
-    public void setNacinDostave(String nacinDostave) {
-        this.nacinDostave = nacinDostave;
-    }
-
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();

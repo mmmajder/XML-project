@@ -16,6 +16,15 @@
                 <xs:element name="Broj_prijave" type="pat:TBroj_prijave" default="P-13245/2019"/>
                 <xs:element name="Datum_prijema" type="xs:date"/>
                 <xs:element name="Priznati_datum_podnosenja" type="xs:date"/>
+                <xs:element minOccurs="0" name="Stanje">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="NA_CEKANJU"/>
+                            <xs:enumeration value="USPESNO"/>
+                            <xs:enumeration value="NEUSPESNO"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>

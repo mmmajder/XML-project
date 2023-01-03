@@ -42,6 +42,7 @@ public class Mapper {
         osnovneInformacijeOZahtevuZaPriznanjePatenta.setBrojPrijave(osnovneInformacijeOZahtevuZaPriznanjePatentaDTO.getBrojPrijave());
         osnovneInformacijeOZahtevuZaPriznanjePatenta.setDatumPrijema(osnovneInformacijeOZahtevuZaPriznanjePatentaDTO.getDatumPrijema());
         osnovneInformacijeOZahtevuZaPriznanjePatenta.setPriznatiDatumPodnosenja(osnovneInformacijeOZahtevuZaPriznanjePatentaDTO.getPriznatiDatumPodnosenja());
+        osnovneInformacijeOZahtevuZaPriznanjePatenta.setStanje(osnovneInformacijeOZahtevuZaPriznanjePatentaDTO.getStanje());
         return osnovneInformacijeOZahtevuZaPriznanjePatenta;
     }
 
@@ -85,7 +86,7 @@ public class Mapper {
 
     public static RanijaPrijava mapToRanijaPrijava(RanijaPrijavaDTO ranijaPrijavaDTO) {
         RanijaPrijava ranijaPrijava = new RanijaPrijava();
-        ranijaPrijava.setDatumaPodnosenjaPrijave(ranijaPrijavaDTO.getDatumPodnosenjaPrijave());
+        ranijaPrijava.setDatumPodnosenjaPrijave(ranijaPrijavaDTO.getDatumPodnosenjaPrijave());
         ranijaPrijava.setBrojRanijePrijave(ranijaPrijavaDTO.getBrojRanijePrijave());
         ranijaPrijava.setDvoslovnaOznaka(ranijaPrijava.getDvoslovnaOznaka());
         return ranijaPrijava;
@@ -120,14 +121,14 @@ public class Mapper {
         tFizickoLice.setAdresaLica(mapToAdresa(tFizickoLiceDTO.getAdresaLica()));
         tFizickoLice.setBrojFaksa(tFizickoLiceDTO.getBrojFaksa());
         tFizickoLice.setBrojTelefona(tFizickoLiceDTO.getBrojTelefona());
-        tFizickoLice.setePosta(tFizickoLiceDTO.getEmail());
+        tFizickoLice.setEPosta(tFizickoLiceDTO.getEmail());
         return tFizickoLice;
     }
 
     public static TLice mapToTLice(TLiceDTO tLiceDTO) {
         TLice tLice = new TLice();
         tLice.setAdresaLica(mapToAdresa(tLiceDTO.getAdresaLica()));
-        tLice.setePosta(tLiceDTO.getEmail());
+        tLice.setEPosta(tLiceDTO.getEmail());
         tLice.setBrojFaksa(tLiceDTO.getBrojFaksa());
         tLice.setBrojTelefona(tLiceDTO.getBrojTelefona());
         return tLice;
@@ -138,7 +139,7 @@ public class Mapper {
         tPravnoLice.setPoslovnoIme(tPravnoLiceDTO.getPoslovnoIme());
         tPravnoLice.setAdresaLica(mapToAdresa(tPravnoLiceDTO.getAdresaLica()));
         tPravnoLice.setBrojFaksa(tPravnoLiceDTO.getBrojFaksa());
-        tPravnoLice.setePosta(tPravnoLiceDTO.getEmail());
+        tPravnoLice.setEPosta(tPravnoLiceDTO.getEmail());
         tPravnoLice.setBrojTelefona(tPravnoLiceDTO.getBrojTelefona());
         return tPravnoLice;
     }

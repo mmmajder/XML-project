@@ -22,31 +22,6 @@ public class TFizickoLice extends TLice {
     @XmlElement(name = "Drzavljanstvo", required = true)
     private String drzavljanstvo;
 
-    public String getIme() {
-        return ime;
-    }
-
-    public void setIme(String ime) {
-        this.ime = ime;
-    }
-
-    public String getPrezime() {
-        return prezime;
-    }
-
-    public void setPrezime(String prezime) {
-        this.prezime = prezime;
-    }
-
-    public String getDrzavljanstvo() {
-        return drzavljanstvo;
-    }
-
-    public void setDrzavljanstvo(String drzavljanstvo) {
-        this.drzavljanstvo = drzavljanstvo;
-    }
-
-
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();

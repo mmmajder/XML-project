@@ -4,19 +4,23 @@ import com.example.patentbackend.marshal.Marshal;
 import com.example.patentbackend.model.ZahtevZaPriznanjePatenta;
 import com.example.patentbackend.utils.AuthenticationUtilities;
 import com.example.patentbackend.utils.DBSetup;
+import org.exist.xmldb.EXistResource;
 import org.xmldb.api.DatabaseManager;
-import org.xmldb.api.base.Collection;
-import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.base.*;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
+import org.xmldb.api.modules.XPathQueryService;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 import java.io.OutputStream;
+import java.util.List;
 
 import static com.example.patentbackend.utils.Utils.formatNameOfRequestForPatent;
 
 public class PatentRequestDB {
+
+    private static final String TARGET_NAMESPACE = "com.example.patentbackend.model";
 
     public static int getNumberOfRequests() {
         try {
@@ -29,6 +33,7 @@ public class PatentRequestDB {
         }
         return 0;
     }
+
     public static void save(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) {
         OutputStream marshaledPatent = Marshal.marshalPatent(zahtevZaPriznanjePatenta);
         try {
@@ -49,18 +54,12 @@ public class PatentRequestDB {
             AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
             String collectionId = DBSetup.setupDBConnection(conn);
             Collection col = getOrCreateCollection(collectionId, conn);
-            XMLResource res = (XMLResource)col.getResource(formatNameOfRequestForPatent(brojPrijave));
-            if(res == null) {
-                System.out.println("[WARNING] Document '" + brojPrijave + "' can not be found!");
-            } else {
-
-                System.out.println("[INFO] Showing the document as XML resource: ");
+            XMLResource res = (XMLResource) col.getResource(formatNameOfRequestForPatent(brojPrijave));
+            if (res != null) {
                 System.out.println(res.getContent());
-                JAXBContext context = JAXBContext.newInstance("com.example.patentbackend.model");
-
+                JAXBContext context = JAXBContext.newInstance(TARGET_NAMESPACE);
                 Unmarshaller unmarshaller = context.createUnmarshaller();
-
-                return  (ZahtevZaPriznanjePatenta) unmarshaller.unmarshal(res.getContentAsDOM());
+                return (ZahtevZaPriznanjePatenta) unmarshaller.unmarshal(res.getContentAsDOM());
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -68,7 +67,49 @@ public class PatentRequestDB {
         return null;
     }
 
+    public static List<ZahtevZaPriznanjePatenta> getAllByFilter(String filter) {
+        try {
+            AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+            String collectionId = DBSetup.setupDBConnection(conn);
+            Collection col = getOrCreateCollection(collectionId, conn);
 
+            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            xpathService.setProperty("indent", "yes");
+
+            // make the service aware of namespaces, using the default one
+            xpathService.setNamespace("pat", "http://www.ftn.uns.ac.rs/patent");
+            String xpathExp = "//pat:Stanje[text()='" + filter + "']/ancestor::pat:Zahtev_za_priznanje_patenta";
+
+            // execute xpath expression
+            System.out.println("[INFO] Invoking XPath query service for: " + xpathExp);
+            ResourceSet result = xpathService.query(xpathExp);
+
+            // handle the results
+            System.out.println("[INFO] Handling the results... ");
+
+            ResourceIterator i = result.getIterator();
+            Resource res = null;
+            while (i.hasMoreResources()) {
+
+                try {
+                    res = i.nextResource();
+                    System.out.println(res.getContent());
+
+                } finally {
+
+                    // don't forget to cleanup resources
+                    try {
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
 
     public static org.xmldb.api.base.Collection getOrCreateCollection(String collectionUri, AuthenticationUtilities.ConnectionProperties conn) throws XMLDBException {
@@ -120,7 +161,6 @@ public class PatentRequestDB {
             return col;
         }
     }
-
 
 
 }

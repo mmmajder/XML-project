@@ -21,22 +21,6 @@ public class PodaciOPodnosiocuPrijave {
     @XmlElement(name = "Podnosilac_prijave", required = true)
     private TLice podnosilacPrijave;
 
-    public Boolean getPodnosilacPrijaveJeIPronalazac() {
-        return podnosilacPrijaveJeIPronalazac;
-    }
-
-    public void setPodnosilacPrijaveJeIPronalazac(Boolean podnosilacPrijaveJeIPronalazac) {
-        this.podnosilacPrijaveJeIPronalazac = podnosilacPrijaveJeIPronalazac;
-    }
-
-    public TLice getPodnosilacPrijave() {
-        return podnosilacPrijave;
-    }
-
-    public void setPodnosilacPrijave(TLice podnosilacPrijave) {
-        this.podnosilacPrijave = podnosilacPrijave;
-    }
-
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();

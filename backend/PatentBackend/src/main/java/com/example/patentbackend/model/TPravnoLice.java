@@ -18,14 +18,6 @@ public class TPravnoLice extends TLice {
     @XmlElement(name = "Poslovno_ime", required = true)
     private String poslovnoIme;
 
-    public String getPoslovnoIme() {
-        return poslovnoIme;
-    }
-
-    public void setPoslovnoIme(String poslovnoIme) {
-        this.poslovnoIme = poslovnoIme;
-    }
-
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();

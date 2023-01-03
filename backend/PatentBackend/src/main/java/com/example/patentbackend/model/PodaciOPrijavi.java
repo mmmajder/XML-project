@@ -27,30 +27,6 @@ public class PodaciOPrijavi {
     @XmlSchemaType(name = "date")
     private Date datumPodnosenjaPrijave;
 
-    public String getVrstaPrijave() {
-        return vrstaPrijave;
-    }
-
-    public void setVrstaPrijave(String vrstaPrijave) {
-        this.vrstaPrijave = vrstaPrijave;
-    }
-
-    public String getBrojOsnovnePrijave() {
-        return brojOsnovnePrijave;
-    }
-
-    public void setBrojOsnovnePrijave(String brojOsnovnePrijave) {
-        this.brojOsnovnePrijave = brojOsnovnePrijave;
-    }
-
-    public Date getDatumPodnosenjaPrijave() {
-        return datumPodnosenjaPrijave;
-    }
-
-    public void setDatumPodnosenjaPrijave(Date datumPodnosenjaPrijave) {
-        this.datumPodnosenjaPrijave = datumPodnosenjaPrijave;
-    }
-
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();

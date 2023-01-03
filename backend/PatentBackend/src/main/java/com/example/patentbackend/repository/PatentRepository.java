@@ -22,4 +22,12 @@ public class PatentRepository {
     public ZahtevZaPriznanjePatenta getZahtevZaPriznanjePatenta(String brojPrijave) {
         return PatentRequestDB.getZahtevZaPriznanjePatenta(brojPrijave);
     }
+
+    public List<ZahtevZaPriznanjePatenta> getAllPending() {
+        return PatentRequestDB.getAllByFilter("NA_CEKANJU");
+    }
+
+    public List<ZahtevZaPriznanjePatenta> getAllAccepted() {
+        return PatentRequestDB.getAllByFilter("USPESNO");
+    }
 }

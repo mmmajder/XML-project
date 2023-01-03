@@ -18,7 +18,7 @@ import javax.xml.bind.annotation.XmlType;
 @NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Osnovne_informacije_o_zahtevu_za_priznanje_patenta")
-@XmlType(name = "", propOrder = {"brojPrijave", "datumPrijema", "priznatiDatumPodnosenja"})
+@XmlType(name = "", propOrder = {"brojPrijave", "datumPrijema", "priznatiDatumPodnosenja", "stanje"})
 public class OsnovneInformacijeOZahtevuZaPriznanjePatenta {
     @XmlElement(name = "Broj_prijave", required = true)
     private String brojPrijave;
@@ -31,29 +31,8 @@ public class OsnovneInformacijeOZahtevuZaPriznanjePatenta {
     @XmlSchemaType(name = "date")
     private Date priznatiDatumPodnosenja;
 
-    public String getBrojPrijave() {
-        return brojPrijave;
-    }
-
-    public void setBrojPrijave(String brojPrijave) {
-        this.brojPrijave = brojPrijave;
-    }
-
-    public Date getDatumPrijema() {
-        return datumPrijema;
-    }
-
-    public void setDatumPrijema(Date datumPrijema) {
-        this.datumPrijema = datumPrijema;
-    }
-
-    public Date getPriznatiDatumPodnosenja() {
-        return priznatiDatumPodnosenja;
-    }
-
-    public void setPriznatiDatumPodnosenja(Date priznatiDatumPodnosenja) {
-        this.priznatiDatumPodnosenja = priznatiDatumPodnosenja;
-    }
+    @XmlElement(name = "Stanje", required = true)
+    private String stanje;
 
     @Override
     public String toString() {

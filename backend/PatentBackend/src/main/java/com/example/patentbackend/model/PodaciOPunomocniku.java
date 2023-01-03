@@ -25,29 +25,6 @@ public class PodaciOPunomocniku {
     @XmlElement(name = "Punomocnik", required = true)
     private TLice punomocnik;
 
-    public String getVrstaPunomocnika() {
-        return vrstaPunomocnika;
-    }
-
-    public void setVrstaPunomocnika(String vrstaPunomocnika) {
-        this.vrstaPunomocnika = vrstaPunomocnika;
-    }
-
-    public Boolean getZajednickiPredstavnik() {
-        return zajednickiPredstavnik;
-    }
-
-    public void setZajednickiPredstavnik(Boolean zajednickiPredstavnik) {
-        this.zajednickiPredstavnik = zajednickiPredstavnik;
-    }
-
-    public TLice getPunomocnik() {
-        return punomocnik;
-    }
-
-    public void setPunomocnik(TLice punomocnik) {
-        this.punomocnik = punomocnik;
-    }
 
     @Override
     public String toString() {

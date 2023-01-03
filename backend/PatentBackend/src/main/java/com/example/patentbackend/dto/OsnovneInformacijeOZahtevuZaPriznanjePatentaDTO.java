@@ -15,4 +15,5 @@ public class OsnovneInformacijeOZahtevuZaPriznanjePatentaDTO {
     private String brojPrijave;
     private Date datumPrijema;
     private Date priznatiDatumPodnosenja;
+    private String stanje;
 }

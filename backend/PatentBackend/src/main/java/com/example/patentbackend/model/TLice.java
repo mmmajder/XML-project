@@ -26,38 +26,6 @@ public class TLice {
     @XmlElement(name = "E_posta", required = true)
     private String ePosta;
 
-    public Adresa getAdresaLica() {
-        return adresaLica;
-    }
-
-    public void setAdresaLica(Adresa adresaLica) {
-        this.adresaLica = adresaLica;
-    }
-
-    public String getBrojTelefona() {
-        return brojTelefona;
-    }
-
-    public void setBrojTelefona(String brojTelefona) {
-        this.brojTelefona = brojTelefona;
-    }
-
-    public String getBrojFaksa() {
-        return brojFaksa;
-    }
-
-    public void setBrojFaksa(String brojFaksa) {
-        this.brojFaksa = brojFaksa;
-    }
-
-    public String getePosta() {
-        return ePosta;
-    }
-
-    public void setePosta(String ePosta) {
-        this.ePosta = ePosta;
-    }
-
     @Override
     public String toString() {
         StringBuffer buffer = new StringBuffer();
