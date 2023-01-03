@@ -37,52 +37,43 @@ public class PatentService {
     }
 
     public ZahtevZaPriznanjePatenta createZahtevZaPriznanjePatenta(ZahtevZaPriznanjePatentaDTO zahtevZaPriznanjePatentaDTO) {
-        return marshalPatent(zahtevZaPriznanjePatentaDTO);
+        ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = Mapper.mapToZahtevZaPriznanjePatenta(zahtevZaPriznanjePatentaDTO);
+        OutputStream marshaledPatent = marshalPatent(zahtevZaPriznanjePatenta);
+        savePatentInExistDB(marshaledPatent, zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave());
+        //TODO RDF save
+        return zahtevZaPriznanjePatenta;
     }
 
-    public ZahtevZaPriznanjePatenta marshalPatent(ZahtevZaPriznanjePatentaDTO zahtevZaPriznanjePatentaDTO) {
+    private void savePatentInExistDB(OutputStream marshaledPatent, String brojPrijave) {
         try {
             AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
-            JAXBContext context = JAXBContext.newInstance("com.example.patentbackend.model");
-            // Kreira se novi imenik
-//            ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = kreirajZahtevZaPriznanjePatenta();
-            ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = Mapper.mapToZahtevZaPriznanjePatenta(zahtevZaPriznanjePatentaDTO);
-
-            // Serijalizacija objektnog modela u XML
             Class<?> cl = Class.forName(conn.driver);
-
-
-            // encapsulation of the database driver functionality
             Database database = (Database) cl.newInstance();
             database.setProperty("create-database", "true");
-
-            // entry point for the API which enables you to get the Collection reference
             DatabaseManager.registerDatabase(database);
-
-            // a collection of Resources stored within an XML database
-            Collection col = null;
-            XMLResource res = null;
-
-            String collectionId = "/db/sample/library";
-            String documentId = "5.xml";
-            col = getOrCreateCollection(collectionId, conn);
-            res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
-            OutputStream os = new ByteArrayOutputStream();
-            Marshaller marshaller2 = context.createMarshaller();
-            marshaller2.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-            marshaller2.marshal(zahtevZaPriznanjePatenta, os);
-            res.setContent(os);
+            String collectionId = "/db/xws-project/patent";
+            String documentId = brojPrijave.split("/")[0] + "-" + brojPrijave.split("/")[1] + ".xml";
+            Collection col = getOrCreateCollection(collectionId, conn);
+            XMLResource res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
+            res.setContent(marshaledPatent);
             col.storeResource(res);
-            return zahtevZaPriznanjePatenta;
-        } catch (JAXBException e) {
-            System.out.println("Jaxb exception");
-            e.printStackTrace();
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return null;
     }
 
+    public OutputStream marshalPatent(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) {
+        try {
+            JAXBContext context = JAXBContext.newInstance("com.example.patentbackend.model");
+            OutputStream os = new ByteArrayOutputStream();
+            Marshaller marshaller = context.createMarshaller();
+            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+            marshaller.marshal(zahtevZaPriznanjePatenta, os);
+            return os;
+        } catch (JAXBException e) {
+            throw new RuntimeException(e);
+        }
+    }
 
     private static Collection getOrCreateCollection(String collectionUri, AuthenticationUtilities.ConnectionProperties conn) throws XMLDBException {
         return getOrCreateCollection(collectionUri, 0, conn);
