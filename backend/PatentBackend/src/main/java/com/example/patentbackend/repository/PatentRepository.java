@@ -1,14 +1,25 @@
 package com.example.patentbackend.repository;
 
+import com.example.patentbackend.db.PatentRequestDB;
 import com.example.patentbackend.dto.ZahtevZaPriznanjePatentaDTO;
 import com.example.patentbackend.model.ZahtevZaPriznanjePatenta;
 
+import java.util.List;
+
 public class PatentRepository {
-    public ZahtevZaPriznanjePatenta getZahtevZaPriznanjePatenta(String brojPrijave) {
-        return null;
+//    public List<ZahtevZaPriznanjePatenta> getAll() {
+//
+//    }
+
+    public void createPatentRequest(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) {
+        PatentRequestDB.save(zahtevZaPriznanjePatenta);
     }
 
-    public ZahtevZaPriznanjePatenta createZahtevZaPriznanjePatenta(ZahtevZaPriznanjePatentaDTO zahtevZaPriznanjePatentaDTO) {
-        return null;
+    public int getNumberOfRequests() {
+        return PatentRequestDB.getNumberOfRequests();
+    }
+
+    public ZahtevZaPriznanjePatenta getZahtevZaPriznanjePatenta(String brojPrijave) {
+        return PatentRequestDB.getZahtevZaPriznanjePatenta(brojPrijave);
     }
 }

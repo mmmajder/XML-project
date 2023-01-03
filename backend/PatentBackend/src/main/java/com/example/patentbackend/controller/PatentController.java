@@ -1,5 +1,6 @@
 package com.example.patentbackend.controller;
 
+import com.example.patentbackend.dto.NazivPrijaveDTO;
 import com.example.patentbackend.dto.ZahtevZaPriznanjePatentaDTO;
 import com.example.patentbackend.model.ZahtevZaPriznanjePatenta;
 import com.example.patentbackend.service.PatentService;
@@ -18,9 +19,9 @@ public class PatentController {
     @Autowired
     private PatentService patentService;
 
-    @GetMapping("/{brojPrijave}")
-    public ResponseEntity<ZahtevZaPriznanjePatenta> getZahtevZaPriznanjePatentaBy(@PathVariable String brojPrijave) {
-        return ResponseEntity.ok(patentService.getZahtevZaPriznanjePatenta(brojPrijave));
+    @GetMapping(produces = "application/xml", consumes = "application/xml")
+    public ResponseEntity<ZahtevZaPriznanjePatenta> getZahtevZaPriznanjePatentaBy(@RequestBody NazivPrijaveDTO brojPrijave) {
+        return ResponseEntity.ok(patentService.getZahtevZaPriznanjePatenta(brojPrijave.getNaziv()));
     }
 
     @PostMapping(consumes = "application/xml", produces = "application/xml")
