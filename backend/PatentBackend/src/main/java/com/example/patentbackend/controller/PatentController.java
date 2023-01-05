@@ -51,4 +51,14 @@ public class PatentController {
         }
         return ResponseEntity.ok("Doslo je do greske prilikom generisanja html");
     }
+
+    @PostMapping(path = "/generate-pdf", consumes = "application/xml")
+    public ResponseEntity<String> generatePDF(@RequestBody NazivPrijaveDTO brojPrijave) {
+        if (patentService.generatePDF(brojPrijave)) {
+            return ResponseEntity.ok("Uspesno generisan pdf");
+        }
+        return ResponseEntity.ok("Doslo je do greske prilikom generisanja pdf");
+    }
+
+
 }

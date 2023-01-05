@@ -50,10 +50,19 @@ public class PatentService {
         if (zahtevZaPriznanjePatenta==null) {
             return false;
         }
-
         PatentTransformer.generateHTMLPatent(zahtevZaPriznanjePatenta);
         return true;
     }
+    public boolean generatePDF(NazivPrijaveDTO brojPrijave) {
+        ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = getZahtevZaPriznanjePatenta(brojPrijave.getNaziv());
+        if (zahtevZaPriznanjePatenta==null) {
+            return false;
+        }
+        PatentTransformer.generatePDFPatent(zahtevZaPriznanjePatenta);
+        return true;
+    }
+
+
 
 
 //    public List<ZahtevZaPriznanjePatenta> getAllZahtevZaPriznanjePatenta() {

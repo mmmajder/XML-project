@@ -3,7 +3,6 @@ package com.example.patentbackend.transformer;
 import com.example.patentbackend.model.ZahtevZaPriznanjePatenta;
 import com.example.patentbackend.utils.Utils;
 import com.itextpdf.text.DocumentException;
-import org.w3c.dom.Node;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.util.JAXBSource;
@@ -12,15 +11,14 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.transform.OutputKeys;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-//import com.itextpdf.tool.xml.XMLWorkerHelper;
+import java.io.*;
 
+
+import com.itextpdf.text.Document;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
 
 /**
  * Primer demonstrira koriscenje iText PDF programskog API-a za
@@ -57,46 +55,43 @@ public class PatentTransformer {
 
 
     public static void generateHTMLPatent(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) {
-        File pdfFile = new File(PDF_FOLDER + zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave());
-
-        if (!pdfFile.getParentFile().exists()) {
-            System.out.println("[INFO] A new directory is created: " + pdfFile.getParentFile().getAbsolutePath() + ".");
-            pdfFile.getParentFile().mkdir();
-        }
-
-        PatentTransformer pdfTransformer = new PatentTransformer();
         try {
-            pdfTransformer.generateHTML(zahtevZaPriznanjePatenta, XSL_FILE);
+            PatentTransformer.generateHTML(zahtevZaPriznanjePatenta, XSL_FILE);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
-    /**
-     * Creates a PDF using iText Java API
-     *
-     * @param filePath
-     * @throws IOException
-     * @throws DocumentException
-     */
-//    public void generatePDF(String filePath) throws IOException, DocumentException {
-//
-//    	// Step 1
-//    	Document document = new Document();
-//
-//    	// Step 2
-//        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(filePath));
-//
-//        // Step 3
-//        document.open();
-//
-//        // Step 4
-//        XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream(HTML_FILE));
-//
-//        // Step 5
-//        document.close();
-//
-//    }
+    public static void generatePDFPatent(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) {
+        try {
+            PatentTransformer.generateHTML(zahtevZaPriznanjePatenta, XSL_FILE);
+            String titlePdf = Utils.formatNameOfRequestForPatent(zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave(), ".pdf");
+            String titleHTML = Utils.formatNameOfRequestForPatent(zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave(), ".html");
+            PatentTransformer.generatePDF(titlePdf, titleHTML);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static void generatePDF(String titlePdf, String titleHTML) throws IOException, DocumentException {
+
+        // Step 1
+        Document document = new Document();
+
+        // Step 2
+        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(PDF_FOLDER + titlePdf));
+
+        // Step 3
+        document.open();
+
+        // Step 4
+        XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream(HTML_FOLDER + titleHTML));
+
+        // Step 5
+        document.close();
+
+    }
+
     public org.w3c.dom.Document buildDocument(String filePath) {
 
         org.w3c.dom.Document document = null;
@@ -118,7 +113,7 @@ public class PatentTransformer {
         return document;
     }
 
-    private void generateHTML(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta, String xslPath) throws FileNotFoundException {
+    private static void generateHTML(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta, String xslPath) throws FileNotFoundException {
 
         try {
 
