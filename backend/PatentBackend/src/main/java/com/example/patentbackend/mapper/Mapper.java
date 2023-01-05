@@ -88,7 +88,7 @@ public class Mapper {
         RanijaPrijava ranijaPrijava = new RanijaPrijava();
         ranijaPrijava.setDatumPodnosenjaPrijave(ranijaPrijavaDTO.getDatumPodnosenjaPrijave());
         ranijaPrijava.setBrojRanijePrijave(ranijaPrijavaDTO.getBrojRanijePrijave());
-        ranijaPrijava.setDvoslovnaOznaka(ranijaPrijava.getDvoslovnaOznaka());
+        ranijaPrijava.setDvoslovnaOznaka(ranijaPrijavaDTO.getDvoslovnaOznaka());
         return ranijaPrijava;
     }
 

@@ -39,7 +39,7 @@ public class PatentRequestDB {
         try {
             AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
             String collectionId = DBSetup.setupDBConnection(conn);
-            String documentId = formatNameOfRequestForPatent(zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave());
+            String documentId = formatNameOfRequestForPatent(zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave(), ".xml");
             Collection col = getOrCreateCollection(collectionId, conn);
             XMLResource res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
             res.setContent(marshaledPatent);
@@ -54,7 +54,7 @@ public class PatentRequestDB {
             AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
             String collectionId = DBSetup.setupDBConnection(conn);
             Collection col = getOrCreateCollection(collectionId, conn);
-            XMLResource res = (XMLResource) col.getResource(formatNameOfRequestForPatent(brojPrijave));
+            XMLResource res = (XMLResource) col.getResource(formatNameOfRequestForPatent(brojPrijave, ".xml"));
             if (res != null) {
                 System.out.println(res.getContent());
                 JAXBContext context = JAXBContext.newInstance(TARGET_NAMESPACE);

@@ -2,7 +2,7 @@ package com.example.patentbackend.utils;
 
 public class Utils {
 
-    public static String formatNameOfRequestForPatent(String name) {
+    public static String formatNameOfRequestForPatent(String name, String extension) {
         StringBuilder returnSeparatedWithUnderscore= new StringBuilder();
         for (String word: name.split("/")) {
             if (returnSeparatedWithUnderscore.toString().equals("")) {
@@ -11,7 +11,7 @@ public class Utils {
                 returnSeparatedWithUnderscore.append("-").append(word);
             }
         }
-        returnSeparatedWithUnderscore.append(".xml");
+        returnSeparatedWithUnderscore.append(extension);
         return returnSeparatedWithUnderscore.toString();
     }
 }

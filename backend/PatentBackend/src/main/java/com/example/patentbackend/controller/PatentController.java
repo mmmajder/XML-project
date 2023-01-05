@@ -43,4 +43,12 @@ public class PatentController {
     }
 
 //    @PutMapping(path = "/accept", consumes = "application/xml", produces = "application/xml")
+
+    @PostMapping(path = "/generate-html", consumes = "application/xml")
+    public ResponseEntity<String> generateHTML(@RequestBody NazivPrijaveDTO brojPrijave) {
+        if (patentService.generateHTML(brojPrijave)) {
+            return ResponseEntity.ok("Uspesno generisan html");
+        }
+        return ResponseEntity.ok("Doslo je do greske prilikom generisanja html");
+    }
 }

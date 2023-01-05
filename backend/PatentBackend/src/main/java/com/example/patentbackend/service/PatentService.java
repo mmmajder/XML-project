@@ -1,10 +1,12 @@
 package com.example.patentbackend.service;
 
+import com.example.patentbackend.dto.NazivPrijaveDTO;
 import com.example.patentbackend.dto.ZahtevZaPriznanjePatentaDTO;
 import com.example.patentbackend.mapper.Mapper;
 import com.example.patentbackend.model.OsnovneInformacijeOZahtevuZaPriznanjePatenta;
 import com.example.patentbackend.model.ZahtevZaPriznanjePatenta;
 import com.example.patentbackend.repository.PatentRepository;
+import com.example.patentbackend.transformer.PatentTransformer;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -43,6 +45,15 @@ public class PatentService {
         return patentRepository.getAllAccepted();
     }
 
+    public boolean generateHTML(NazivPrijaveDTO brojPrijave) {
+        ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = getZahtevZaPriznanjePatenta(brojPrijave.getNaziv());
+        if (zahtevZaPriznanjePatenta==null) {
+            return false;
+        }
+
+        PatentTransformer.generateHTMLPatent(zahtevZaPriznanjePatenta);
+        return true;
+    }
 
 
 //    public List<ZahtevZaPriznanjePatenta> getAllZahtevZaPriznanjePatenta() {
