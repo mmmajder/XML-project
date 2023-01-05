@@ -1,9 +1,9 @@
 package com.example.patentbackend.transformer;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.example.patentbackend.model.ZahtevZaPriznanjePatenta;
+import com.example.patentbackend.utils.Utils;
+import com.itextpdf.text.DocumentException;
+import org.w3c.dom.Node;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.util.JAXBSource;
@@ -15,12 +15,10 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
-import com.example.patentbackend.marshal.Marshal;
-import com.example.patentbackend.model.ZahtevZaPriznanjePatenta;
-import com.example.patentbackend.utils.Utils;
-import com.itextpdf.text.DocumentException;
-import org.w3c.dom.Node;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
 //import com.itextpdf.tool.xml.XMLWorkerHelper;
 
 
@@ -43,6 +41,7 @@ public class PatentTransformer {
 
     public static final String PDF_FOLDER = "src/main/resources/gen/pdf/";
 
+
     static {
 
         /* Inicijalizacija DOM fabrike */
@@ -58,7 +57,6 @@ public class PatentTransformer {
 
 
     public static void generateHTMLPatent(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) {
-
         File pdfFile = new File(PDF_FOLDER + zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave());
 
         if (!pdfFile.getParentFile().exists()) {
