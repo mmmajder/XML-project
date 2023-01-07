@@ -24,14 +24,14 @@ public class Mapper {
         return dostavljanje;
     }
 
-    public static List<NazivPronalaska> mapToListNazivPronalaska(NazivPronalaskaDTO nazivPronalaskaDTOS) {
+    public static List<NazivPronalaska> mapToListNazivPronalaska(SadrzajZahtevaZaPriznanjePatentaDTO sadrzaj) {
         List<NazivPronalaska> listNazivPronalaska = new ArrayList<>();
         NazivPronalaska nazivPronalaskaSrpski = new NazivPronalaska();
-        nazivPronalaskaSrpski.setNaziv(nazivPronalaskaDTOS.getNazivSrpski());
+        nazivPronalaskaSrpski.setNaziv(sadrzaj.getNazivSrpski());
         nazivPronalaskaSrpski.setJezik("SRPSKI");
         listNazivPronalaska.add(nazivPronalaskaSrpski);
         NazivPronalaska nazivPronalaskaEngleski = new NazivPronalaska();
-        nazivPronalaskaEngleski.setNaziv(nazivPronalaskaDTOS.getNazivEngleski());
+        nazivPronalaskaEngleski.setNaziv(sadrzaj.getNazivEngleski());
         nazivPronalaskaEngleski.setJezik("ENGLESKI");
         listNazivPronalaska.add(nazivPronalaskaEngleski);
         return listNazivPronalaska;
@@ -104,7 +104,7 @@ public class Mapper {
     public static SadrzajZahtevaZaPriznanjePatenta mapToSadrzajZahtevaZaPriznanjePatenta(SadrzajZahtevaZaPriznanjePatentaDTO sadrzajZahtevaZaPriznanjePatentaDTO) {
         SadrzajZahtevaZaPriznanjePatenta sadrzaj = new SadrzajZahtevaZaPriznanjePatenta();
         sadrzaj.setDostavljanje(mapToDostavljanje(sadrzajZahtevaZaPriznanjePatentaDTO.getDostavljanje()));
-        sadrzaj.setNazivPronalaska(mapToListNazivPronalaska(sadrzajZahtevaZaPriznanjePatentaDTO.getNazivPronalaska()));
+        sadrzaj.setNazivPronalaska(mapToListNazivPronalaska(sadrzajZahtevaZaPriznanjePatentaDTO));
         sadrzaj.setPodaciOPodnosiocuPrijave(mapToPodaciOPodnosiocuPrijave(sadrzajZahtevaZaPriznanjePatentaDTO.getPodaciOPodnosiocuPrijave()));
         sadrzaj.setPodaciOPrijavi(mapToPodaciOPrijavi(sadrzajZahtevaZaPriznanjePatentaDTO.getPodaciOPrijavi()));
         sadrzaj.setPodaciOPronalazacu(mapToPodaciOPronalazacu(sadrzajZahtevaZaPriznanjePatentaDTO.getPodaciOPronalazacu()));

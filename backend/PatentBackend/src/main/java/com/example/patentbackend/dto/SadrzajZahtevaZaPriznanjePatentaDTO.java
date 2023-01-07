@@ -13,7 +13,8 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class SadrzajZahtevaZaPriznanjePatentaDTO {
-    private NazivPronalaskaDTO nazivPronalaska;
+    private String nazivSrpski;
+    private String nazivEngleski;
     private PodaciOPodnosiocuPrijaveDTO podaciOPodnosiocuPrijave;
     private PodaciOPronalazacuDTO podaciOPronalazacu;
     private PodaciOPunomocnikuDTO podaciOPunomocniku;
