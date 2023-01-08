@@ -11,7 +11,8 @@
                 <xs:element maxOccurs="45" name="Klasa" type="sz:TKlasa"/>
                 <xs:element name="Zatrazeno_pravo_prvenstva_i_osnov" type="xs:string"/>
                 <xs:element name="Taksa" type="sz:TTaksa"/>
-                <xs:element maxOccurs="8" minOccurs="8" name="Prilog" type="sz:TPrilog"/>
+                <xs:element maxOccurs="8" minOccurs="5" name="Prilog" type="sz:TPrilog"/>
+                <xs:element name="Prilog_punomocje" type="sz:TPrilog_punomocje"/>
                 <xs:element name="Broj_prijave_ziga" type="sz:TBroj_prijave_ziga"/>
                 <xs:element name="Datum_podnosenja" type="xs:date"/>
             </xs:sequence>
@@ -47,7 +48,7 @@
     </xs:simpleType>
     <xs:simpleType name="TBroj_prijave_ziga">
         <xs:restriction base="xs:string">
-            <xs:pattern value="Z-[0-9]{5}\/[0-9]{3}"/>
+            <xs:pattern value="Z-[0-9]{5}\/[0-9]{2}"/>
         </xs:restriction>
     </xs:simpleType>
     <xs:complexType name="TKlasa">
@@ -119,9 +120,7 @@
             <xs:element name="Telefon" type="xs:string"/>
             <xs:element name="Email">
                 <xs:simpleType>
-                    <xs:restriction base="xs:string">
-                        <xs:pattern value=""/>
-                    </xs:restriction>
+                    <xs:restriction base="xs:string"> </xs:restriction>
                 </xs:simpleType>
             </xs:element>
             <xs:element name="Faks" type="xs:string"/>
@@ -134,9 +133,6 @@
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="PRIMERAK_ZNAKA"/>
                         <xs:enumeration value="SPISAK_ROBE_I_USLUGA"/>
-                        <xs:enumeration value="PUNOMOCJE"/>
-                        <xs:enumeration value="GENERALNO_PUNOMOCJE_RANIJE_PRILOZENO"/>
-                        <xs:enumeration value="PUNOMOCJE_CE_BITI_NAKNADNO_DOSTAVLJENO"/>
                         <xs:enumeration value="OPSTI_AKT_O_ZIGU"/>
                         <xs:enumeration value="DOKAZ_O_PRAVU_PRVENSTVA"/>
                         <xs:enumeration value="DOKAZ_O_UPLATI_TAKSE"/>
@@ -155,6 +151,24 @@
                 </xs:simpleType>
             </xs:element>
             <xs:element name="Putanja_do_priloga" type="xs:string"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TPrilog_punomocje">
+        <xs:sequence>
+            <xs:element name="Punomocje_predato_ranije" type="xs:boolean"/>
+            <xs:element name="Punomocje_ce_biti_naknadno_dostavljeno" type="xs:boolean"/>
+            <xs:element name="Status_priloga" minOccurs="0">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="NIJE_PREDATO"/>
+                        <xs:enumeration value="PREDATO"/>
+                        <xs:enumeration value="PRIHVACENO"/>
+                        <xs:enumeration value="ODBIJENO"/>
+                        <xs:enumeration value="NIJE_POTREBNO"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Putanja_do_priloga" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
 </xs:schema>

@@ -1,3 +1,4 @@
+package zig;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -68,5 +69,22 @@ public class Adresa {
         this.mesto = mesto;
         this.drzava = drzava;
     }
+
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("\n\t\t- ulica: ");
+		buffer.append(ulica);
+		buffer.append("\n\t\t- broj: ");
+		buffer.append(broj);
+		buffer.append("\n\t\t- postanskiBroj: ");
+		buffer.append(postanskiBroj);
+		buffer.append("\n\t\t- mesto: ");
+		buffer.append(mesto);
+		buffer.append("\n\t\t- drzava: ");
+		buffer.append(drzava);
+		return buffer.toString();
+	}
+    
 
 }

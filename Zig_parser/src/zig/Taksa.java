@@ -1,3 +1,4 @@
+package zig;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -36,4 +37,16 @@ public class Taksa {
     public void setTaksaZaGrafickoResenje(int taksaZaGrafickoResenje) {
         this.taksaZaGrafickoResenje = taksaZaGrafickoResenje;
     }
+	
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("\n\t- osnovnaTaksa: ");
+		buffer.append(osnovnaTaksa);
+		buffer.append("\n\t- taksaZaSveKlase: ");
+		buffer.append(taksaZaSveKlase);
+		buffer.append("\n\t- taksaZaGrafickoResenje: ");
+		buffer.append(taksaZaGrafickoResenje);
+		return buffer.toString();
+	}
 }

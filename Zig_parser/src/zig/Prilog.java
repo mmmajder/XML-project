@@ -1,3 +1,4 @@
+package zig;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -36,4 +37,16 @@ public class Prilog {
     public void setPutanjaDoPriloga(String putanjaDoPriloga) {
         this.putanjaDoPriloga = putanjaDoPriloga;
     }
+
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("\n\t- tipPriloga: ");
+		buffer.append(tipPriloga);
+		buffer.append("\n\t- statusPriloga: ");
+		buffer.append(statusPriloga);
+		buffer.append("\n\t- putanjaDoPriloga: ");
+		buffer.append(putanjaDoPriloga);
+		return buffer.toString();
+	}
 }

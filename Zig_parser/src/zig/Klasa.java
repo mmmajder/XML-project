@@ -1,3 +1,4 @@
+package zig;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -26,6 +27,18 @@ public class Klasa {
     public void setPunNazivKlase(String punNazivKlase) {
         this.punNazivKlase = punNazivKlase;
     }
+	
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("\n\t- idKlase: ");
+		buffer.append(idKlase);
+		buffer.append("\n\t- punNazivKlase: ");
+		buffer.append(punNazivKlase);
+		buffer.append("\n\t- punNazivKlase: ");
+		buffer.append(punNazivKlase);
+		return buffer.toString();
+	}
 
 
 }

@@ -1,3 +1,4 @@
+package zig;
 public enum ETip_priloga {
     PRIMERAK_ZNAKA,
     SPISAK_ROBE_I_USLUGA,

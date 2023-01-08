@@ -1,3 +1,4 @@
+package zig;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
@@ -47,4 +48,16 @@ public class Kontakt {
         this.email = email;
         this.faks = faks;
     }
+
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("\n\t\t- telefon: ");
+		buffer.append(telefon);
+		buffer.append("\n\t\t- email: ");
+		buffer.append(email);
+		buffer.append("\n\t\t- faks: ");
+		buffer.append(faks);
+		return buffer.toString();
+	}
 }
