@@ -5,8 +5,8 @@ import java.util.List;
 
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Zahtev_za_priznanje_ziga")
-@XmlType(name="Klasa", propOrder={"podnosilacPrijave", "punomocnik", "predstavnik", "zig", "klasa",
-        "zatrazenoPravoPrvenstvaIOsnov", "taksa", "prilog", "brojPrijaveZiga", "datumPodnosenja"})
+@XmlType(name="ZahtevZaPriznanjeZiga", propOrder={"podnosilacPrijave", "punomocnik", "predstavnik", "zig", "klasa",
+        "zatrazenoPravoPrvenstvaIOsnov", "taksa", "prilog", "prilogPunomocje", "brojPrijaveZiga", "datumPodnosenja"})
 public class ZahtevZaPriznanjeZiga {
     @XmlElement(name="Podnosilac_prijave", required=true)
     private List<Lice> podnosilacPrijave;

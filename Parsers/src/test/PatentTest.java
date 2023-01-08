@@ -10,21 +10,19 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
 
-import com.sun.jndi.cosnaming.IiopUrl.Address;
-
 import patent.Adresa;
 import patent.Dostavljanje;
+import patent.NazivPronalaska;
 import patent.OsnovneInformacijeOZahtevuZaPriznanjePatenta;
-import patent.OsnovniPodaciOLicu;
 import patent.PodaciOPodnosiocuPrijave;
 import patent.PodaciOPrijavi;
+import patent.PodaciOPronalazacu;
 import patent.PodaciOPunomocniku;
+import patent.RanijaPrijava;
 import patent.SadrzajZahtevaZaPriznanjePatenta;
 import patent.TFizickoLice;
 import patent.TPravnoLice;
-import patent.TRanijihPrijavaZaPriznanjePrvenstva;
 import patent.ZahtevZaPriznanjePatenta;
-import patent.ZahtevZaPriznanjePrvenstvaIzRanijihPrijava;
 import util.NSPrefixMapper;
 
 public class PatentTest {
@@ -40,8 +38,8 @@ public class PatentTest {
 			Unmarshaller unmarshaller = context.createUnmarshaller();
 			
 			// Učitavanje XML-a u objektni model
-			ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = (ZahtevZaPriznanjePatenta) unmarshaller.unmarshal(new File("./data/P3.xml"));
-
+			ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = (ZahtevZaPriznanjePatenta) unmarshaller.unmarshal(new File("./data/Patent-primer.xml"));
+			
 			// Ispis sadržaja objekta
 			System.out.println("[INFO] Unmarshalled content:");
 			System.out.println(zahtevZaPriznanjePatenta);
@@ -58,7 +56,7 @@ public class PatentTest {
 
 			// Serijalizacija objektnog modela u XML
 			System.out.println("[INFO] Marshalling customized address book:");
-			marshaller.marshal(zahtevZaPriznanjePatenta, System.out);
+			marshaller.marshal(zahtevZaPriznanjePatenta, new File("marshalling-patent.xml"));
 			
 		} catch (JAXBException e) {
 			e.printStackTrace();
@@ -86,32 +84,35 @@ public class PatentTest {
 		return sadrzajZahtevaZaPriznanjePatenta;
 	}
 
-	private ZahtevZaPriznanjePrvenstvaIzRanijihPrijava kreirajZahtevZaPriznanjePrvenstva() {
-		TRanijihPrijavaZaPriznanjePrvenstva ranijaPrijava = new TRanijihPrijavaZaPriznanjePrvenstva();
-		ranijaPrijava.setBrojRanijePrijave("P1231231");
-		ranijaPrijava.setDatumaPodnosenjaPrijave(new Date(2000,2,2));
-		ranijaPrijava.setDvoslovnaOznaka("NS");
-		ArrayList<TRanijihPrijavaZaPriznanjePrvenstva> listaRanijihPrijava = new ArrayList<>();
-		listaRanijihPrijava.add(ranijaPrijava);
-		ZahtevZaPriznanjePrvenstvaIzRanijihPrijava zahtevZaPriznanjePrvenstvaIzRanijihPrijava = new ZahtevZaPriznanjePrvenstvaIzRanijihPrijava();
-		zahtevZaPriznanjePrvenstvaIzRanijihPrijava.setRanijePrijave(listaRanijihPrijava);
-		return zahtevZaPriznanjePrvenstvaIzRanijihPrijava;
+	private List<RanijaPrijava> kreirajZahtevZaPriznanjePrvenstva() {
+		RanijaPrijava ranijaPrijava1 = new RanijaPrijava();
+		ranijaPrijava1.setBrojRanijePrijave("P-1231/2019");
+		ranijaPrijava1.setDatumaPodnosenjaPrijave(new Date(2000,2,2));
+		ranijaPrijava1.setDvoslovnaOznaka("NS");
+		
+		RanijaPrijava ranijaPrijava2 = new RanijaPrijava();
+		ranijaPrijava2.setBrojRanijePrijave("P-32312/2019");
+		ranijaPrijava2.setDatumaPodnosenjaPrijave(new Date(2000,5,2));
+		ranijaPrijava2.setDvoslovnaOznaka("NS");
+		
+		ArrayList<RanijaPrijava> listaRanijihPrijava = new ArrayList<>();
+		listaRanijihPrijava.add(ranijaPrijava1);
+		listaRanijihPrijava.add(ranijaPrijava2);
+		return listaRanijihPrijava;
 	}
 
 	private PodaciOPunomocniku kreirajPodatkeOPunomocniku() {
 		TPravnoLice punomocnik = new TPravnoLice();
-		OsnovniPodaciOLicu osnovniPodaciOPunomocniku = new OsnovniPodaciOLicu();
 		Adresa adresa = new Adresa();
 		adresa.setBrojUUlici(3);
 		adresa.setDrzava("Srbija");
 		adresa.setMesto("Novi Sad");
 		adresa.setPostanskiBroj(21000);
 		adresa.setUlica("Bulevar Evrope");
-		osnovniPodaciOPunomocniku.setAdresaLica(adresa);
-		osnovniPodaciOPunomocniku.setBrojFaksa("321321");
-		osnovniPodaciOPunomocniku.setBrojTelefona("+381 12315466");
-		osnovniPodaciOPunomocniku.setePosta("Mejlpunomocnika@gmial.com");
-		punomocnik.setOsnovniPodaciOLicu(osnovniPodaciOPunomocniku);
+		punomocnik.setAdresaLica(adresa);
+		punomocnik.setBrojFaksa("321321");
+		punomocnik.setBrojTelefona("+381 12315466");
+		punomocnik.setePosta("Mejlpunomocnika@gmial.com");
 		punomocnik.setPoslovnoIme("Sverc komerc");
 		PodaciOPunomocniku podaciOPunomocniku = new PodaciOPunomocniku();
 		podaciOPunomocniku.setPunomocnik(punomocnik);
@@ -120,38 +121,45 @@ public class PatentTest {
 		return podaciOPunomocniku;
 	}
 
-	private TFizickoLice kreirajPotatkeOPronalazacu() {
+	private PodaciOPronalazacu kreirajPotatkeOPronalazacu() {
+		PodaciOPronalazacu podaciOPronalazacu = new PodaciOPronalazacu();
+		podaciOPronalazacu.setPronalazacNeZeliDaBudeNaveden(false);
 		TFizickoLice pronalazac = new TFizickoLice();
 		pronalazac.setDrzavljanstvo("Srpsko");
 		pronalazac.setIme("Pera");
 		pronalazac.setPrezime("Peric");
-		OsnovniPodaciOLicu osnovniPodaciOLicu = new OsnovniPodaciOLicu();
 		Adresa adresaLica= new Adresa();
 		adresaLica.setBrojUUlici(2);
 		adresaLica.setDrzava("Crna Gora");
 		adresaLica.setMesto("Niksic");
 		adresaLica.setPostanskiBroj(432423);
 		adresaLica.setUlica("Bla bla");
-		osnovniPodaciOLicu.setAdresaLica(adresaLica);
-		osnovniPodaciOLicu.setBrojFaksa("4234234");
-		osnovniPodaciOLicu.setBrojTelefona("+381 1651326");
-		osnovniPodaciOLicu.setePosta("mejlpronalazaca@gmail.com");
-		pronalazac.setOsnovniPodaciOLicu(osnovniPodaciOLicu);
-		return pronalazac;
+		pronalazac.setAdresaLica(adresaLica);
+		pronalazac.setBrojFaksa("4234234");
+		pronalazac.setBrojTelefona("+381 1651326");
+		pronalazac.setePosta("mejlpronalazaca@gmail.com");
+		podaciOPronalazacu.setPronalazac(pronalazac);
+		return podaciOPronalazacu;
 	}
 
 	private PodaciOPrijavi kreirajPodatkeOPrijavi() {
 		PodaciOPrijavi podaciOPrijavi = new PodaciOPrijavi();
-		podaciOPrijavi.setBrojOsnovnePrijave("P4324234");
+		podaciOPrijavi.setBrojOsnovnePrijave("P-432/2022");
 		podaciOPrijavi.setDatumPodnosenjaPrijave(new Date(2000,3,4));
 		podaciOPrijavi.setVrstaPrijave("IZDVOJENA");
 		return podaciOPrijavi;
 	}
 
-	private List<String> kreirajNazivPronalaska() {
-		ArrayList<String> nazivi = new ArrayList<>();
-		nazivi.add("Leteci auto");
-		nazivi.add("Flying car");
+	private List<NazivPronalaska> kreirajNazivPronalaska() {
+		ArrayList<NazivPronalaska> nazivi = new ArrayList<>();
+		NazivPronalaska nazivPronalaska = new NazivPronalaska();
+		nazivPronalaska.setJezik("SRPSKI");
+		nazivPronalaska.setNaziv("Novi izum");
+		NazivPronalaska nazivPronalaska2 = new NazivPronalaska();
+		nazivPronalaska2.setJezik("ENGLESKI");
+		nazivPronalaska2.setNaziv("New invention");
+		nazivi.add(nazivPronalaska);
+		nazivi.add(nazivPronalaska2);
 		return nazivi;
 	}
 
@@ -166,18 +174,16 @@ public class PatentTest {
 		podnosilacPrijave.setDrzavljanstvo("Srpsko");
 		podnosilacPrijave.setIme("Zika");
 		podnosilacPrijave.setPrezime("Zikic");
-		OsnovniPodaciOLicu osnovniPodaciOLicu = new OsnovniPodaciOLicu();
 		Adresa adresa = new Adresa();
 		adresa.setBrojUUlici(3);
 		adresa.setDrzava("Srbija");
 		adresa.setMesto("Novi Sad");
 		adresa.setPostanskiBroj(21000);
 		adresa.setUlica("Bulevar Oslobodjenja");
-		osnovniPodaciOLicu.setAdresaLica(adresa);
-		osnovniPodaciOLicu.setBrojFaksa("33232121321");
-		osnovniPodaciOLicu.setBrojTelefona("+381 1231434");
-		osnovniPodaciOLicu.setePosta("Mejlmejl@gmial.com");
-		podnosilacPrijave.setOsnovniPodaciOLicu(osnovniPodaciOLicu);
+		podnosilacPrijave.setAdresaLica(adresa);
+		podnosilacPrijave.setBrojFaksa("33232121321");
+		podnosilacPrijave.setBrojTelefona("+381 1231434");
+		podnosilacPrijave.setePosta("Mejlmejl@gmial.com");
 		PodaciOPodnosiocuPrijave podaciOPodnosiocuPrijave = new PodaciOPodnosiocuPrijave();
 		podaciOPodnosiocuPrijave.setPodnosilacPrijave(podnosilacPrijave);
 		podaciOPodnosiocuPrijave.setPodnosilacPrijaveJeIPronalazac(false);
@@ -186,7 +192,7 @@ public class PatentTest {
 
 	private OsnovneInformacijeOZahtevuZaPriznanjePatenta kreirajOsnovneInformacije() {
 		OsnovneInformacijeOZahtevuZaPriznanjePatenta osnovneInformacijeOZahtevuZaPriznanjePatenta = new OsnovneInformacijeOZahtevuZaPriznanjePatenta();
-		osnovneInformacijeOZahtevuZaPriznanjePatenta.setBrojPrijave("P1314");
+		osnovneInformacijeOZahtevuZaPriznanjePatenta.setBrojPrijave("P-1314/2019");
 		osnovneInformacijeOZahtevuZaPriznanjePatenta.setDatumPrijema(new Date(2000, 1, 1));
 		osnovneInformacijeOZahtevuZaPriznanjePatenta.setPriznatiDatumPodnosenja(new Date(2000, 4, 5));
 		return osnovneInformacijeOZahtevuZaPriznanjePatenta;

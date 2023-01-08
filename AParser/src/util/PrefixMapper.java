@@ -16,7 +16,7 @@ public class PrefixMapper extends NamespacePrefixMapper {
 
     protected void setDefaultMappings() {
         this.clear();
-        this.addMapping("http://www.ftn.uns.ac.rs/patent", "pat");
+        this.addMapping("http://www.ftn.uns.ac.rs/autorskoDelo", "aut");
         this.addMapping("http://www.w3.org/2001/XMLSchema-instance", "xsi");
         this.addMapping("http://java.sun.com/xml/ns/jaxb", "jaxb");
     }

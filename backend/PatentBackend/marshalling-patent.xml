@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<pat:Zahtev_za_priznanje_patenta xmlns:pat="http://www.ftn.uns.ac.rs/patent" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+    <pat:Osnovne_informacije_o_zahtevu_za_priznanje_patenta>
+        <pat:Broj_prijave>P-1314/2019</pat:Broj_prijave>
+        <pat:Datum_prijema>3900-02-01+01:00</pat:Datum_prijema>
+        <pat:Priznati_datum_podnosenja>3900-05-05+02:00</pat:Priznati_datum_podnosenja>
+    </pat:Osnovne_informacije_o_zahtevu_za_priznanje_patenta>
+    <pat:Sadrzaj_zahteva_za_priznanje_patenta>
+        <pat:Naziv_pronalaska Jezik="SRPSKI" Naziv="Novi izum"/>
+        <pat:Naziv_pronalaska Jezik="ENGLESKI" Naziv="New invention"/>
+        <pat:Podaci_o_podnosiocu_prijave>
+            <pat:Podnosilac_prijave_je_i_pronalazac>false</pat:Podnosilac_prijave_je_i_pronalazac>
+            <pat:Podnosilac_prijave xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="pat:TFizicko_Lice">
+                <pat:Adresa_lica>
+                    <pat:Ulica>Bulevar Oslobodjenja</pat:Ulica>
+                    <pat:Broj_u_ulici>3</pat:Broj_u_ulici>
+                    <pat:Postanski_broj>21000</pat:Postanski_broj>
+                    <pat:Mesto>Novi Sad</pat:Mesto>
+                    <pat:Drzava>Srbija</pat:Drzava>
+                </pat:Adresa_lica>
+                <pat:Broj_telefona>+381 1231434</pat:Broj_telefona>
+                <pat:Broj_faksa>33232121321</pat:Broj_faksa>
+                <pat:E_posta>Mejlmejl@gmial.com</pat:E_posta>
+                <pat:Ime>Zika</pat:Ime>
+                <pat:Prezime>Zikic</pat:Prezime>
+                <pat:Drzavljanstvo>Srpsko</pat:Drzavljanstvo>
+            </pat:Podnosilac_prijave>
+        </pat:Podaci_o_podnosiocu_prijave>
+        <pat:Podaci_o_pronalazacu>
+            <pat:Pronalazac_ne_zeli_da_bude_naveden>false</pat:Pronalazac_ne_zeli_da_bude_naveden>
+            <pat:Pronalazac>
+                <pat:Adresa_lica>
+                    <pat:Ulica>Bla bla</pat:Ulica>
+                    <pat:Broj_u_ulici>2</pat:Broj_u_ulici>
+                    <pat:Postanski_broj>432423</pat:Postanski_broj>
+                    <pat:Mesto>Niksic</pat:Mesto>
+                    <pat:Drzava>Crna Gora</pat:Drzava>
+                </pat:Adresa_lica>
+                <pat:Broj_telefona>+381 1651326</pat:Broj_telefona>
+                <pat:Broj_faksa>4234234</pat:Broj_faksa>
+                <pat:E_posta>mejlpronalazaca@gmail.com</pat:E_posta>
+                <pat:Ime>Pera</pat:Ime>
+                <pat:Prezime>Peric</pat:Prezime>
+                <pat:Drzavljanstvo>Srpsko</pat:Drzavljanstvo>
+            </pat:Pronalazac>
+        </pat:Podaci_o_pronalazacu>
+        <pat:Podaci_o_punomocniku>
+            <pat:Vrsta_punomocnika>PUNOMOCNIK_ZA_PRIJEM_PISMENA</pat:Vrsta_punomocnika>
+            <pat:Zajednicki_predstavnik>false</pat:Zajednicki_predstavnik>
+            <pat:Punomocnik xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="pat:TPravno_Lice">
+                <pat:Adresa_lica>
+                    <pat:Ulica>Bulevar Evrope</pat:Ulica>
+                    <pat:Broj_u_ulici>3</pat:Broj_u_ulici>
+                    <pat:Postanski_broj>21000</pat:Postanski_broj>
+                    <pat:Mesto>Novi Sad</pat:Mesto>
+                    <pat:Drzava>Srbija</pat:Drzava>
+                </pat:Adresa_lica>
+                <pat:Broj_telefona>+381 12315466</pat:Broj_telefona>
+                <pat:Broj_faksa>321321</pat:Broj_faksa>
+                <pat:E_posta>Mejlpunomocnika@gmial.com</pat:E_posta>
+                <pat:Poslovno_ime>Sverc komerc</pat:Poslovno_ime>
+            </pat:Punomocnik>
+        </pat:Podaci_o_punomocniku>
+        <pat:Dostavljanje>
+            <pat:Nacin_dostave>PAPIRNA_FORM</pat:Nacin_dostave>
+        </pat:Dostavljanje>
+        <pat:Podaci_o_prijavi>
+            <pat:Vrsta_prijave>IZDVOJENA</pat:Vrsta_prijave>
+            <pat:Broj_osnovne_prijave>P-432/2022</pat:Broj_osnovne_prijave>
+            <pat:Datum_podnosenja_prijave>3900-04-04+02:00</pat:Datum_podnosenja_prijave>
+        </pat:Podaci_o_prijavi>
+        <pat:Zahtev_za_priznanje_prvenstva_iz_ranijih_prijava>
+            <pat:Ranija_prijava>
+                <pat:Datum_podnosenja_priave>3900-03-02+01:00</pat:Datum_podnosenja_priave>
+                <pat:Broj_ranije_prijave>P-1231/2019</pat:Broj_ranije_prijave>
+                <pat:Dvoslovna_oznaka>NS</pat:Dvoslovna_oznaka>
+            </pat:Ranija_prijava>
+            <pat:Ranija_prijava>
+                <pat:Datum_podnosenja_priave>3900-06-02+02:00</pat:Datum_podnosenja_priave>
+                <pat:Broj_ranije_prijave>P-32312/2019</pat:Broj_ranije_prijave>
+                <pat:Dvoslovna_oznaka>NS</pat:Dvoslovna_oznaka>
+            </pat:Ranija_prijava>
+        </pat:Zahtev_za_priznanje_prvenstva_iz_ranijih_prijava>
+    </pat:Sadrzaj_zahteva_za_priznanje_patenta>
+</pat:Zahtev_za_priznanje_patenta>

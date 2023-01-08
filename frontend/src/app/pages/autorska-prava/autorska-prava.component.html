@@ -1,0 +1,217 @@
+<div class="gray-background">
+  <h2>Zahtev za unošenje u evidenciju i deponovanje autorskih prava</h2>
+  <mat-stepper orientation="vertical">
+    <mat-step>
+      <ng-template matStepLabel>Podaci o podnosiocu zahteva</ng-template>
+      <ng-template matStepContent>
+
+        <mat-checkbox [(ngModel)]="podnosilacJeIAutor" [disabled]="tipPodnosiocaZahteva == 'pravnoLice'">
+          Podnosilac zahteva je i autor dela.
+        </mat-checkbox>
+
+        <mat-radio-group [(ngModel)]="tipPodnosiocaZahteva">
+          <mat-radio-button value="fizickoLice">Podnosilac je fizičko lice</mat-radio-button>
+          <mat-radio-button value="pravnoLice">Podnosilac je pravno lice</mat-radio-button>
+        </mat-radio-group>
+
+        <div *ngIf="tipPodnosiocaZahteva == 'fizickoLice'">
+          <p>
+            <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+              <mat-label>Ime podnosioca</mat-label>
+              <input matInput [(ngModel)]="podnosilac.ime" placeholder="Ime"
+                     [required]="tipPodnosiocaZahteva == 'fizickoLice'">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="width: 49%; float: right">
+              <mat-label>Prezime podnosioca</mat-label>
+              <input matInput [(ngModel)]="podnosilac.prezime" placeholder="Prezime"
+                     [required]="tipPodnosiocaZahteva == 'fizickoLice'">
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+              <mat-label>Adresa podnosioca</mat-label>
+              <input matInput [(ngModel)]="podnosilac.adresa" placeholder="Adresa"
+                     [required]="tipPodnosiocaZahteva == 'fizickoLice'">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="width: 49%; float: right">
+              <mat-label>Državljanstvo podnosioca</mat-label>
+              <input matInput [(ngModel)]="podnosilac.drzavljanstvo" placeholder="Državljanstvo"
+                     [required]="tipPodnosiocaZahteva == 'fizickoLice'">
+            </mat-form-field>
+          </p>
+        </div>
+
+        <div *ngIf="tipPodnosiocaZahteva == 'pravnoLice'">
+          <p>
+            <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+              <mat-label>Poslovno ime</mat-label>
+              <input matInput [(ngModel)]="podnosilac.poslovnoIme" placeholder="Poslovno ime"
+                     [required]="tipPodnosiocaZahteva == 'pravnoLice'">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="width: 49%; float: right">
+              <mat-label>Sedište nosioca autorskog prava</mat-label>
+              <input matInput [(ngModel)]="podnosilac.sediste" placeholder="Sedište nosioca autorskog prava"
+                     [required]="tipPodnosiocaZahteva == 'pravnoLice'">
+            </mat-form-field>
+          </p>
+        </div>
+
+        <p>
+          <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+            <mat-label>Telefon</mat-label>
+            <input matInput [(ngModel)]="podnosilac.telefon" placeholder="Telefon" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 49%; float: right">
+            <mat-label>Email adresa</mat-label>
+            <input matInput [(ngModel)]="podnosilac.email" placeholder="Email adresa" required>
+          </mat-form-field>
+        </p>
+
+      </ng-template>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Podaci o autoru</ng-template>
+      <ng-template matStepContent>
+        <div *ngIf="podnosilacJeIAutor">
+          <p style="float: left"><b>Podnosilac zahteva</b></p>
+          <br>
+          <br>
+          <p>
+            <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+              <mat-label>Ime autora</mat-label>
+              <input matInput [(ngModel)]="podnosilac.ime" placeholder="Ime" disabled>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="width: 49%; float: right">
+              <mat-label>Prezime autora</mat-label>
+              <input matInput [(ngModel)]="podnosilac.prezime" placeholder="Prezime" disabled>
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+              <mat-label>Adresa podnosioca</mat-label>
+              <input matInput [(ngModel)]="podnosilac.adresa" placeholder="Adresa" disabled>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="width: 49%; float: right">
+              <mat-label>Državljanstvo podnosioca</mat-label>
+              <input matInput [(ngModel)]="podnosilac.drzavljanstvo" placeholder="Državljanstvo" disabled>
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field appearance="outline" style="width: 100%; margin-left: 5px">
+              <mat-label>Pseudonim/Znak autora ukoliko ga ima</mat-label>
+              <input matInput [(ngModel)]="podnosilac.pseudonim" placeholder="Pseudonim/Znak autora">
+            </mat-form-field>
+          </p>
+
+          <mat-divider></mat-divider>
+        </div>
+
+        <div *ngFor="let autor of autori">
+          <p style="float: left"><b>{{autori.indexOf(autor) + 1}}. autor</b></p>
+          <button style="float: right" mat-stroked-button color="primary" (click)="ukloniAutora(autori.indexOf(autor))">
+            Ukloni autora broj {{autori.indexOf(autor) + 1}}
+          </button>
+          <br>
+          <app-podaci-o-autoru></app-podaci-o-autoru>
+          <mat-divider></mat-divider>
+        </div>
+
+        <div style="float: left; margin-top: 10px; margin-bottom: 5px">
+          <button style="margin-left: 5px" mat-stroked-button (click)="dodajAutora()" color="primary">
+            Dodaj novog autora
+          </button>
+        </div>
+      </ng-template>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Podaci o punomoćniku</ng-template>
+      <ng-template matStepContent>
+
+        <p>
+          <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+            <mat-label>Ime punomoćnika</mat-label>
+            <input matInput [(ngModel)]="punomocnik.ime" placeholder="Ime">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 49%; float: right">
+            <mat-label>Prezime punomoćnika</mat-label>
+            <input matInput [(ngModel)]="punomocnik.prezime" placeholder="Prezime">
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="outline" style="width: 100%; margin-left: 5px">
+            <mat-label>Adresa punomoćnika</mat-label>
+            <input matInput [(ngModel)]="punomocnik.adresa" placeholder="Adresa punomoćnika">
+          </mat-form-field>
+        </p>
+
+      </ng-template>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Podaci o autorskom delu</ng-template>
+      <ng-template matStepContent>
+        <p>
+          <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+            <mat-label>Naslov autorskog dela/Alternativni naslov</mat-label>
+            <input matInput [(ngModel)]="autorskoDelo.naslov" placeholder="Naslov autorskog dela" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 49%; float: right">
+            <mat-label>Vrsta autorskog dela</mat-label>
+            <input matInput [(ngModel)]="autorskoDelo.vrsta"
+                   placeholder="Književno delo, muzičko delo, kompjuterski program..." required>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+            <mat-label>Forma zapisa autorskog dela</mat-label>
+            <input matInput [(ngModel)]="autorskoDelo.formaZapisa" placeholder="Štampani tekst, optički disk..."
+                   required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 49%; float: right">
+            <mat-label>Način korišćenja autorskog dela</mat-label>
+            <input matInput [(ngModel)]="autorskoDelo.nacinKoriscenja"
+                   placeholder="Trenutni ili nameravani način korišćenja autorskog dela" required>
+          </mat-form-field>
+        </p>
+
+        <p>Ukoliko je autorsko delo zasnovano na nekom drugom delu, obavezno navesti podatke o zasnovanom delu.</p>
+        <p>
+          <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+            <mat-label>Naslov zasnivanog dela</mat-label>
+            <input matInput [(ngModel)]="autorskoDelo.naslovZasnivanogDela" placeholder="Naslov zasnivanog dela">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 49%; float: right">
+            <mat-label>Autor zasnivanog dela</mat-label>
+            <input matInput [(ngModel)]="autorskoDelo.autorZasnivanogDela" placeholder="Autor zasnivanog dela">
+          </mat-form-field>
+        </p>
+
+        <mat-checkbox [(ngModel)]="autorskoDelo.deloStvorenoURadnomOdnosu">Autorsko delo je stvoreno u radnom odnosu</mat-checkbox>
+
+      </ng-template>
+    </mat-step>
+
+  </mat-stepper>
+
+  <button style="width: 100%; margin-top: 10px" color="primary" (click)="podnesiZahtev()" mat-raised-button>
+    Podnesi zahtev
+  </button>
+  <p *ngIf="!valid">Molimo da popunite sva obazna polja.</p>
+</div>
