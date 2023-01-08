@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from "rxjs";
 import {mapCreatePatent} from "../utils/Mapper";
+import {AuthService} from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -17,17 +18,6 @@ export class PatentService {
   public podnesiZahtev(zahtev: any): Observable<Object> {
     let body = mapCreatePatent(zahtev)
     console.log(body)
-    return this.http.post<Object>(this.patentUrl, body, this.getHttpOptions());
+    return this.http.post<Object>(this.patentUrl, body, AuthService.getHttpOptions());
   }
-
-  private getHttpOptions() {
-    return {
-      headers: new HttpHeaders({
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': localStorage.getItem('token') || 'authkey',
-        'Content-Type':  'application/xml',
-      })
-    };
-  }
-
 }

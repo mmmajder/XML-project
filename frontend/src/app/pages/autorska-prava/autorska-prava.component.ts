@@ -1,9 +1,9 @@
-import { Component } from '@angular/core';
+import {Component} from '@angular/core';
 import {Autor} from "../../model/autorskoDelo/Autor";
 import {Punomocnik} from "../../model/autorskoDelo/Punomocnik";
 import {PodnosilacZahteva} from "../../model/autorskoDelo/PodnosilacZahteva";
 import {AutorskaPravaService} from "../../service/autorskaPrava.service";
-import {ZahtevAutorskaPrava} from "../../model/autorskoDelo/ZahtevAutorskaPrava";
+import {SadrzajZahtevaZaAutorskaPrava} from "../../model/autorskoDelo/SadrzajZahtevaZaAutorskaPrava";
 import {PodaciOAutorskomDelu} from "../../model/autorskoDelo/PodaciOAutorskomDelu";
 
 @Component({
@@ -32,11 +32,23 @@ export class AutorskaPravaComponent {
     this.autori.splice(index, 1);
   }
 
+  private static autorIzPodnosioca(p: PodnosilacZahteva): Autor {
+    let autor = new Autor();
+    autor.ime = p.ime;
+    autor.prezime = p.prezime;
+    autor.adresa = p.adresa;
+    autor.drzavljanstvo = p.drzavljanstvo;
+    autor.pseudonim = p.pseudonim;
+    return autor;
+  }
+
   podnesiZahtev() {
-    let zahtev = new ZahtevAutorskaPrava(this.podnosilac, this.autori, this.punomocnik, this.autorskoDelo);
+    if (this.podnosilacJeIAutor)
+      this.autori.push(AutorskaPravaComponent.autorIzPodnosioca(this.podnosilac))
+    let zahtev = new SadrzajZahtevaZaAutorskaPrava(this.podnosilac, this.autori, this.punomocnik, this.autorskoDelo);
     this.valid = zahtev.isValid();
     if (this.valid) {
-      this.servis.podnesiZahtev(zahtev);
+      this.servis.podnesiZahtev(zahtev).subscribe(data => console.log(data));
     }
   }
 }
