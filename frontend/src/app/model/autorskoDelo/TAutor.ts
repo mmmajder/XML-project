@@ -1,10 +1,18 @@
+export class TAutor {
+  podaciOAutoru: PodaciOAutoru = new PodaciOAutoru();
+  anoniman: boolean | undefined;
+}
+
+export class PodaciOAutoru {
+  pseudonim: string = "";
+  autor: Autor = new Autor();
+}
+
 export class Autor {
   ime: string = "";
   prezime: string = "";
   adresa: string = "";
-  pseudonim: string = "";
   drzavljanstvo: string = "";
-  anoniman: boolean | undefined;
   godinaSmrti: number | undefined;
 
   public isValid(): boolean {

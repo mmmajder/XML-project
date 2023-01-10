@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {Autor} from "../../model/autorskoDelo/Autor";
+import {TAutor} from "../../model/autorskoDelo/TAutor";
 import {Punomocnik} from "../../model/autorskoDelo/Punomocnik";
 import {PodnosilacZahteva} from "../../model/autorskoDelo/PodnosilacZahteva";
 import {AutorskaPravaService} from "../../service/autorskaPrava.service";
@@ -17,7 +17,7 @@ export class AutorskaPravaComponent {
   podnosilacJeIAutor: boolean = false;
   pseudonim: string = "";
   autorskoDelo: PodaciOAutorskomDelu = new PodaciOAutorskomDelu();
-  autori: Autor[] = [];
+  autori: TAutor[] = [];
   podnosilac: PodnosilacZahteva = new PodnosilacZahteva();
   valid: boolean = true;
 
@@ -25,20 +25,20 @@ export class AutorskaPravaComponent {
   }
 
   dodajAutora() {
-    this.autori.push(new Autor());
+    this.autori.push(new TAutor());
   }
 
   ukloniAutora(index: number) {
     this.autori.splice(index, 1);
   }
 
-  private static autorIzPodnosioca(p: PodnosilacZahteva): Autor {
-    let autor = new Autor();
-    autor.ime = p.ime;
-    autor.prezime = p.prezime;
-    autor.adresa = p.adresa;
-    autor.drzavljanstvo = p.drzavljanstvo;
-    autor.pseudonim = p.pseudonim;
+  private static autorIzPodnosioca(p: PodnosilacZahteva): TAutor {
+    let autor = new TAutor();
+    autor.podaciOAutoru.pseudonim = p.pseudonim;
+    autor.podaciOAutoru.autor.ime = p.ime;
+    autor.podaciOAutoru.autor.prezime = p.prezime;
+    autor.podaciOAutoru.autor.adresa = p.adresa;
+    autor.podaciOAutoru.autor.drzavljanstvo = p.drzavljanstvo;
     return autor;
   }
 

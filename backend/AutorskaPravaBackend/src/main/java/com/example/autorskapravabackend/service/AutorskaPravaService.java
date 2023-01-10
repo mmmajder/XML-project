@@ -8,6 +8,7 @@ import com.example.autorskapravabackend.repository.AutorskaPravaRepository;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -23,6 +24,7 @@ public class AutorskaPravaService {
         ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = Mapper.dtoToZahtev(dto);
         setBrojPrijave(zahtevZaAutorskaPrava);
         autorskaPravaRepository.createRequest(zahtevZaAutorskaPrava);
+        System.out.println(getZahtev(zahtevZaAutorskaPrava.getInformacijeOZahtevu().getBrojPrijave()));
         return zahtevZaAutorskaPrava;
     }
 
@@ -30,7 +32,7 @@ public class AutorskaPravaService {
         InformacijeOZahtevu osnovneInformacije = new InformacijeOZahtevu();
         String brojPrijave = "A-" + LocalDate.now().getYear() + "/" + (autorskaPravaRepository.getNumberOfRequests() + 1);
         osnovneInformacije.setBrojPrijave(brojPrijave);
-        osnovneInformacije.setDatumPodnosenja(LocalDate.now());
+        osnovneInformacije.setDatumPodnosenja(new Date());
         zahtev.setInformacijeOZahtevu(osnovneInformacije);
     }
 //

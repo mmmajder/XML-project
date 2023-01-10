@@ -1,7 +1,5 @@
-import {Component, Input, Output} from '@angular/core';
-import {Autor} from "../../model/autorskoDelo/Autor";
-import {PodnosilacZahteva} from "../../model/autorskoDelo/PodnosilacZahteva";
-import {A} from "@angular/cdk/keycodes";
+import {Component, Output} from '@angular/core';
+import {TAutor} from "../../model/autorskoDelo/TAutor";
 
 @Component({
   selector: 'app-podaci-o-autoru',
@@ -11,5 +9,5 @@ import {A} from "@angular/cdk/keycodes";
 export class PodaciOAutoruComponent {
   tipAutora: string = "ziv";
 
-  @Output() autor: Autor = new Autor();
+  @Output() autor: TAutor = new TAutor();
 }

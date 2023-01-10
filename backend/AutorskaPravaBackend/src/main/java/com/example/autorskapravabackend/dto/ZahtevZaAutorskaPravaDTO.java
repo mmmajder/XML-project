@@ -3,17 +3,18 @@ package com.example.autorskapravabackend.dto;
 import com.example.autorskapravabackend.model.AutorskoDelo;
 import com.example.autorskapravabackend.model.OsnovniLicniPodaci;
 import com.example.autorskapravabackend.model.PodnosilacZahteva;
-import com.example.autorskapravabackend.model.TAutor;
-import lombok.Builder;
-import lombok.Data;
+import lombok.*;
 
-import java.util.ArrayList;
+import java.util.List;
 
-@Data
 @Builder
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
 public class ZahtevZaAutorskaPravaDTO {
     private PodnosilacZahteva podnosilacZahteva;
     private OsnovniLicniPodaci podaciOPunomocniku;
-    private ArrayList<TAutor> autori;
+    private List<TAutorDTO> autori;
     private AutorskoDelo autorskoDelo;
 }

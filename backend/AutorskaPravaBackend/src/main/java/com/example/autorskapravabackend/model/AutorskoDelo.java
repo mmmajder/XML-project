@@ -1,12 +1,16 @@
 package com.example.autorskapravabackend.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.xml.bind.annotation.*;
 
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Autorsko_delo")
 @XmlType(name = "Autorsko_delo", propOrder = {"naslovAutorskogDela", "zasnivanoDelo", "vrstaAutorskogDela",
