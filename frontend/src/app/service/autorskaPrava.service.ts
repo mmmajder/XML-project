@@ -1,7 +1,8 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
-import {ZahtevAutorskaPrava} from "../model/autorskoDelo/ZahtevAutorskaPrava";
+import {SadrzajZahtevaZaAutorskaPrava} from "../model/autorskoDelo/SadrzajZahtevaZaAutorskaPrava";
+import {AuthService} from "./auth.service";
 
 @Injectable({
   providedIn: 'root'
@@ -11,27 +12,16 @@ export class AutorskaPravaService {
   private readonly autorskaPravaUrl: string;
 
   constructor(private http: HttpClient) {
-    this.autorskaPravaUrl = 'http://localhost:8000/autorskaPrava';
+    this.autorskaPravaUrl = 'http://localhost:8001/autorskaPrava';
   }
 
-  public podnesiZahtev(zahtev: ZahtevAutorskaPrava): Observable<Object> {
-    let body = {
-      'podnosioc': zahtev.podnosioc,
-      'punomocnik': zahtev.punomocnik,
-      'autori': zahtev.autori,
-      'autorskoDelo': zahtev.autorskoDelo
-    }
-    return this.http.post<Object>(this.autorskaPravaUrl + "/podnesiZahtev", body, this.getHttpOptions());
+  public podnesiZahtev(zahtev: SadrzajZahtevaZaAutorskaPrava): Observable<Object> {
+    console.log("PODNOSENJE ZAHTEVA", zahtev)
+    return this.http.post<Object>(this.autorskaPravaUrl, zahtev, AuthService.getHttpOptions());
   }
 
-  private getHttpOptions() {
-    return {
-      headers: new HttpHeaders({
-        'Access-Control-Allow-Origin': '*',
-        'Authorization': localStorage.getItem('token') || 'authkey',
-        'Content-Type':  'application/json',
-      })
-    };
+  public dobaviZahtev(brojPrijave: string): Observable<Object> {
+    return this.http.get<Object>(this.autorskaPravaUrl + "/" + brojPrijave, AuthService.getHttpOptions());
   }
 
 }
