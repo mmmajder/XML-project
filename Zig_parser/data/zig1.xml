@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Zahtev_za_priznanje_ziga xmlns="http://www.ftn.uns.ac.rs/zig"
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.ftn.uns.ac.rs/zig file:/C:/Faks/VII/XML%20i%20veb%20servisi/XML-project/Schema/Z_sema.xsd">
+    xsi:schemaLocation="http://www.ftn.uns.ac.rs/zig file:/C:/Faks/VII/XML%20i%20veb%20servisi/XML-project/Schema/Z_sema.xsd"
+    
+    
+    >
     <Podnosilac_prijave xsi:type="TFizicko_lice">
         <Adresa xsi:type="TAdresa">
             <Ulica>Petrovgradska</Ulica>
@@ -28,7 +31,7 @@
         </Adresa>
         <Kontakt xsi:type="TKontakt">
             <Telefon>0674815998</Telefon>
-            <Email>pravnapomoc.malenci@mail.ml</Email>
+            <Email >pravnapomoc.malenci@mail.ml</Email>
             <Faks> </Faks>
         </Kontakt>
         <Poslovno_ime>Pravna pomoc Malenci</Poslovno_ime>
