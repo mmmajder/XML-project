@@ -35,8 +35,6 @@ public class Klasa {
 		buffer.append(idKlase);
 		buffer.append("\n\t- punNazivKlase: ");
 		buffer.append(punNazivKlase);
-		buffer.append("\n\t- punNazivKlase: ");
-		buffer.append(punNazivKlase);
 		return buffer.toString();
 	}
 

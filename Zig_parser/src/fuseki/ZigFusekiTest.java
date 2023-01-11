@@ -7,8 +7,12 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.xml.bind.JAXBException;
+
 import org.apache.jena.rdf.model.Model;
 
+import db.ZigDB;
+import transformer.ZigTransformer;
 import zig.Adresa;
 import zig.FizickoLice;
 import zig.Klasa;
@@ -22,18 +26,35 @@ import zig.ZahtevZaPriznanjeZiga;
 import zig.Zig;
 
 public class ZigFusekiTest {
-	public static void main(String[] args) throws IOException{
+	public static void main(String[] args) throws IOException, JAXBException{
         test();
     }
 
-    public static void test() throws IOException {
+    public static void test() throws IOException, JAXBException {
     	ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = createZahtevZaPriznanjeZiga();
-    	Model metadataModel = ZigMetadataExtractor.extract(zahtevZaPriznanjeZiga);
     	
+    	// pdf and html
+    	ZigTransformer.generateHTMLZig(zahtevZaPriznanjeZiga);
+    	System.out.println("izgenerisan HTML");
+    	ZigTransformer.generatePDFZig(zahtevZaPriznanjeZiga);
+    	System.out.println("izgenerisan PDF");
+    	
+    	
+    	// database
+//    	ZigDB.save(zahtevZaPriznanjeZiga);
+//    	
+//    	ZahtevZaPriznanjeZiga ucitanZahtevZaPriznanjeZiga = ZigDB.getZahtev(zahtevZaPriznanjeZiga.getBrojPrijaveZiga());
+//    	
+//    	System.out.println("\nIz baze je ucitan zahtev sa brojem prijave: ");
+//    	System.out.println(ucitanZahtevZaPriznanjeZiga.getBrojPrijaveZiga());
+    	
+    	// fuseki
+//    	Model metadataModel = ZigMetadataExtractor.extract(zahtevZaPriznanjeZiga);
+//    	
 //    	printModelAsRdfXml(metadataModel);
-    	
-    	FusekiWriter.saveRdfGraphToDatabase(metadataModel);
-    	FusekiReader.readAllDataFromDatabase();
+//    	
+//    	FusekiWriter.saveRdfGraphToDatabase(metadataModel);
+//    	FusekiReader.readAllDataFromDatabase();
     }
     
     private static void printModelAsRdfXml(Model model) {
@@ -106,6 +127,11 @@ public class ZigFusekiTest {
         k.setIdKlase("1");
         k.setPunNazivKlase("Hemijski proizvodi");
         klase.add(k);
+        
+        Klasa k2 = new Klasa();
+        k2.setIdKlase("2");
+        k2.setPunNazivKlase("Boje lakovi");
+        klase.add(k2);
 
         return klase;
     }
