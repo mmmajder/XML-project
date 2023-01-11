@@ -6,7 +6,7 @@ import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
 public class AutorskaPravaRepository {
 
     public ZahtevZaAutorskaPrava getZahtev(String brojPrijave) {
-        return getZahtev(brojPrijave);
+        return AutorskaPravaRequestDB.getZahtev(brojPrijave);
     }
 
     public int getNumberOfRequests() {

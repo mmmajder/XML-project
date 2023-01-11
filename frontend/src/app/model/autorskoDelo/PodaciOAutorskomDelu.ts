@@ -1,16 +1,21 @@
 export class PodaciOAutorskomDelu {
-  naslov: string = '';
-  vrsta: string = '';
-  formaZapisa: string = '';
-  nacinKoriscenja: string = '';
-  naslovZasnivanogDela: string | undefined;
+  naslovAutorskogDela: string = '';
+  vrstaAutorskogDela: string = '';
+  formaZapisaAutorskogDela: string = '';
+  zasnivanoDelo: ZasnivanoDelo = new ZasnivanoDelo();
   autorZasnivanogDela: string | undefined;
-  deloStvorenoURadnomOdnosu: boolean = false;
+  nacinKoriscenjaAutorskogDela: string = "";
+  autorskoDeloStvorenoURadnomOdnosu: boolean = false;
 
   public isValid(): boolean {
-    return this.naslov.length > 0 &&
-      this.vrsta.length > 0 &&
-      this.formaZapisa.length > 0 &&
-      this.nacinKoriscenja.length > 0;
+    return this.naslovAutorskogDela.length > 0 &&
+      this.vrstaAutorskogDela.length > 0 &&
+      this.formaZapisaAutorskogDela.length > 0 &&
+      this.nacinKoriscenjaAutorskogDela.length > 0;
   }
+}
+
+export class ZasnivanoDelo {
+  naslov: string = '';
+  autor: string = '';
 }

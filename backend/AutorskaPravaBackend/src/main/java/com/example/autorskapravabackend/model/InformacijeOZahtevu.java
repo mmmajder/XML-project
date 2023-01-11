@@ -1,10 +1,12 @@
 package com.example.autorskapravabackend.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -15,6 +17,8 @@ import javax.xml.bind.annotation.XmlType;
 
 @Setter
 @Getter
+@NoArgsConstructor
+@AllArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Informacije_o_zahtevu")
 @XmlType(name = "Informacije_o_zahtevu", propOrder = {"brojPrijave", "datumPodnosenja", "listaPrilogaKojiSePodnoseUzZahtev"})
@@ -23,7 +27,7 @@ public class InformacijeOZahtevu {
     private String brojPrijave;
     @XmlElement(name = "Datum_podnosenja", required = true)
     @XmlSchemaType(name = "date")
-    private LocalDate datumPodnosenja;
+    private Date datumPodnosenja;
     @XmlElement(name = "Lista_priloga_koji_se_podnose_uz_zahtev")
     @XmlSchemaType(name = "list")
     private ArrayList<String> listaPrilogaKojiSePodnoseUzZahtev;

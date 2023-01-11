@@ -3,6 +3,7 @@ import {HttpClient} from '@angular/common/http';
 import {Observable} from "rxjs";
 import {SadrzajZahtevaZaAutorskaPrava} from "../model/autorskoDelo/SadrzajZahtevaZaAutorskaPrava";
 import {AuthService} from "./auth.service";
+import * as JsonToXML from "js2xmlparser";
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +18,13 @@ export class AutorskaPravaService {
 
   public podnesiZahtev(zahtev: SadrzajZahtevaZaAutorskaPrava): Observable<Object> {
     console.log("PODNOSENJE ZAHTEVA", zahtev)
-    return this.http.post<Object>(this.autorskaPravaUrl, zahtev, AuthService.getHttpOptions());
+    // const json = JSON.stringify(zahtev);
+    //
+    // const xml = json2xml(json, {compact: true, spaces: 4});
+    // let xml = this.OBJtoXML(zahtev);
+    const xmlZahtev = JsonToXML.parse("zahtevZaAutorskaPravaDTO", zahtev);
+    console.log(xmlZahtev)
+    return this.http.post<Object>(this.autorskaPravaUrl, xmlZahtev, AuthService.getHttpOptions());
   }
 
   public dobaviZahtev(brojPrijave: string): Observable<Object> {

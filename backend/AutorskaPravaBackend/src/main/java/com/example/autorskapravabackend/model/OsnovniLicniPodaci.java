@@ -1,6 +1,7 @@
 package com.example.autorskapravabackend.model;
 
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -11,6 +12,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 @Setter
 @Getter
+@NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Osnovni_licni_podaci")
 @XmlType(name = "Osnovni_licni_podaci", propOrder = {"adresa", "ime", "prezime"})

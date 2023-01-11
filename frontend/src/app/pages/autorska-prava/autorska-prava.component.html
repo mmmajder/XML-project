@@ -166,12 +166,12 @@
         <p>
           <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
             <mat-label>Naslov autorskog dela/Alternativni naslov</mat-label>
-            <input matInput [(ngModel)]="autorskoDelo.naslov" placeholder="Naslov autorskog dela" required>
+            <input matInput [(ngModel)]="autorskoDelo.naslovAutorskogDela" placeholder="Naslov autorskog dela" required>
           </mat-form-field>
 
           <mat-form-field appearance="outline" style="width: 49%; float: right">
             <mat-label>Vrsta autorskog dela</mat-label>
-            <input matInput [(ngModel)]="autorskoDelo.vrsta"
+            <input matInput [(ngModel)]="autorskoDelo.vrstaAutorskogDela"
                    placeholder="Književno delo, muzičko delo, kompjuterski program..." required>
           </mat-form-field>
         </p>
@@ -179,13 +179,13 @@
         <p>
           <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
             <mat-label>Forma zapisa autorskog dela</mat-label>
-            <input matInput [(ngModel)]="autorskoDelo.formaZapisa" placeholder="Štampani tekst, optički disk..."
+            <input matInput [(ngModel)]="autorskoDelo.formaZapisaAutorskogDela" placeholder="Štampani tekst, optički disk..."
                    required>
           </mat-form-field>
 
           <mat-form-field appearance="outline" style="width: 49%; float: right">
             <mat-label>Način korišćenja autorskog dela</mat-label>
-            <input matInput [(ngModel)]="autorskoDelo.nacinKoriscenja"
+            <input matInput [(ngModel)]="autorskoDelo.nacinKoriscenjaAutorskogDela"
                    placeholder="Trenutni ili nameravani način korišćenja autorskog dela" required>
           </mat-form-field>
         </p>
@@ -194,16 +194,16 @@
         <p>
           <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
             <mat-label>Naslov zasnivanog dela</mat-label>
-            <input matInput [(ngModel)]="autorskoDelo.naslovZasnivanogDela" placeholder="Naslov zasnivanog dela">
+            <input matInput [(ngModel)]="autorskoDelo.zasnivanoDelo.naslov" placeholder="Naslov zasnivanog dela">
           </mat-form-field>
 
           <mat-form-field appearance="outline" style="width: 49%; float: right">
             <mat-label>Autor zasnivanog dela</mat-label>
-            <input matInput [(ngModel)]="autorskoDelo.autorZasnivanogDela" placeholder="Autor zasnivanog dela">
+            <input matInput [(ngModel)]="autorskoDelo.zasnivanoDelo.autor" placeholder="Autor zasnivanog dela">
           </mat-form-field>
         </p>
 
-        <mat-checkbox [(ngModel)]="autorskoDelo.deloStvorenoURadnomOdnosu">Autorsko delo je stvoreno u radnom odnosu</mat-checkbox>
+        <mat-checkbox [(ngModel)]="autorskoDelo.autorskoDeloStvorenoURadnomOdnosu">Autorsko delo je stvoreno u radnom odnosu</mat-checkbox>
 
       </ng-template>
     </mat-step>
