@@ -3,16 +3,14 @@ package com.example.patentbackend.repository;
 import com.example.patentbackend.db.PatentRequestDB;
 import com.example.patentbackend.dto.ZahtevZaPriznanjePatentaDTO;
 import com.example.patentbackend.model.ZahtevZaPriznanjePatenta;
+import com.example.patentbackend.rdf.PatentFusekiDB;
 
 import java.util.List;
 
 public class PatentRepository {
-//    public List<ZahtevZaPriznanjePatenta> getAll() {
-//
-//    }
-
     public void createPatentRequest(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) {
         PatentRequestDB.save(zahtevZaPriznanjePatenta);
+        PatentFusekiDB.save(zahtevZaPriznanjePatenta);
     }
 
     public int getNumberOfRequests() {

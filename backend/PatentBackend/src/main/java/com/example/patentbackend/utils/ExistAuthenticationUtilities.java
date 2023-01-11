@@ -7,7 +7,7 @@ import java.util.Properties;
 /**
  * Utilities to support and simplify examples.
  */
-public class AuthenticationUtilities {
+public class ExistAuthenticationUtilities {
 
     private static String connectionUri = "xmldb:exist://%1$s:%2$s/exist/xmlrpc";
 
@@ -64,7 +64,7 @@ public class AuthenticationUtilities {
      * @throws IOException
      */
     public static InputStream openStream(String fileName) throws IOException {
-        return AuthenticationUtilities.class.getClassLoader().getResourceAsStream(fileName);
+        return ExistAuthenticationUtilities.class.getClassLoader().getResourceAsStream(fileName);
     }
 
 }
