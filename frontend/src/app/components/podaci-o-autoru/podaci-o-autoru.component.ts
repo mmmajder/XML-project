@@ -1,5 +1,5 @@
-import {Component, Output} from '@angular/core';
-import {TAutor} from "../../model/autorskoDelo/TAutor";
+import {Component, EventEmitter, Input, Output} from '@angular/core';
+import {Autor} from "../../model/autorskoDelo/Autor";
 
 @Component({
   selector: 'app-podaci-o-autoru',
@@ -9,5 +9,5 @@ import {TAutor} from "../../model/autorskoDelo/TAutor";
 export class PodaciOAutoruComponent {
   tipAutora: string = "ziv";
 
-  @Output() autor: TAutor = new TAutor();
+  @Input() autor = new Autor();
 }

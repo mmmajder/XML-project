@@ -31,12 +31,35 @@
 
           <p>
             <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
-              <mat-label>Adresa podnosioca</mat-label>
-              <input matInput [(ngModel)]="podnosilac.adresa" placeholder="Adresa"
-                     [required]="tipPodnosiocaZahteva == 'fizickoLice'">
+              <mat-label>Ulica</mat-label>
+              <input matInput [(ngModel)]="podnosilac.adresa.ulica" placeholder="Ulica">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="width: 19%">
+              <mat-label>Broj u ulici</mat-label>
+              <input matInput [(ngModel)]="podnosilac.adresa.brojUUlici" placeholder="Broj">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="width: 29%; float: right">
+              <mat-label>Poštanski broj</mat-label>
+              <input matInput [(ngModel)]="podnosilac.adresa.postanskiBroj" placeholder="Poštanski broj">
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+              <mat-label>Mesto</mat-label>
+              <input matInput [(ngModel)]="podnosilac.adresa.mesto" placeholder="Mesto">
             </mat-form-field>
 
             <mat-form-field appearance="outline" style="width: 49%; float: right">
+              <mat-label>Država</mat-label>
+              <input matInput [(ngModel)]="podnosilac.adresa.drzava" placeholder="Država">
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field appearance="outline" style="width: 100%">
               <mat-label>Državljanstvo podnosioca</mat-label>
               <input matInput [(ngModel)]="podnosilac.drzavljanstvo" placeholder="Državljanstvo"
                      [required]="tipPodnosiocaZahteva == 'fizickoLice'">
@@ -96,11 +119,35 @@
 
           <p>
             <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
-              <mat-label>Adresa podnosioca</mat-label>
-              <input matInput [(ngModel)]="podnosilac.adresa" placeholder="Adresa" disabled>
+              <mat-label>Ulica</mat-label>
+              <input matInput [(ngModel)]="podnosilac.adresa.ulica" placeholder="Ulica" disabled>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="width: 19%">
+              <mat-label>Broj u ulici</mat-label>
+              <input matInput [(ngModel)]="podnosilac.adresa.brojUUlici" placeholder="Broj" disabled>
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="width: 29%; float: right">
+              <mat-label>Poštanski broj</mat-label>
+              <input matInput [(ngModel)]="podnosilac.adresa.postanskiBroj" placeholder="Poštanski broj" disabled>
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+              <mat-label>Mesto</mat-label>
+              <input matInput [(ngModel)]="podnosilac.adresa.mesto" placeholder="Mesto" disabled>
             </mat-form-field>
 
             <mat-form-field appearance="outline" style="width: 49%; float: right">
+              <mat-label>Država</mat-label>
+              <input matInput [(ngModel)]="podnosilac.adresa.drzava" placeholder="Država" disabled>
+            </mat-form-field>
+          </p>
+
+          <p>
+            <mat-form-field appearance="outline" style="width: 100%">
               <mat-label>Državljanstvo podnosioca</mat-label>
               <input matInput [(ngModel)]="podnosilac.drzavljanstvo" placeholder="Državljanstvo" disabled>
             </mat-form-field>
@@ -112,24 +159,87 @@
               <input matInput [(ngModel)]="podnosilac.pseudonim" placeholder="Pseudonim/Znak autora">
             </mat-form-field>
           </p>
-
-          <mat-divider></mat-divider>
         </div>
+        <div *ngIf="!podnosilacJeIAutor">
+          <mat-radio-group [(ngModel)]="tipAutora">
+            <mat-radio-button value="ziv">Autor je živ</mat-radio-button>
+            <mat-radio-button value="mrtav">Autor je mrtav</mat-radio-button>
+            <mat-radio-button value="anoniman">Anoniman autor</mat-radio-button>
+          </mat-radio-group>
 
-        <div *ngFor="let autor of autori">
-          <p style="float: left"><b>{{autori.indexOf(autor) + 1}}. autor</b></p>
-          <button style="float: right" mat-stroked-button color="primary" (click)="ukloniAutora(autori.indexOf(autor))">
-            Ukloni autora broj {{autori.indexOf(autor) + 1}}
-          </button>
-          <br>
-          <app-podaci-o-autoru></app-podaci-o-autoru>
-          <mat-divider></mat-divider>
-        </div>
+          <div *ngIf="tipAutora == 'ziv'">
+            <p>
+              <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+                <mat-label>Ime autora</mat-label>
+                <input matInput [(ngModel)]="autor.podaciOAutoru.lice.ime" placeholder="Ime">
+              </mat-form-field>
 
-        <div style="float: left; margin-top: 10px; margin-bottom: 5px">
-          <button style="margin-left: 5px" mat-stroked-button (click)="dodajAutora()" color="primary">
-            Dodaj novog autora
-          </button>
+              <mat-form-field appearance="outline" style="width: 49%; float: right">
+                <mat-label>Prezime autora</mat-label>
+                <input matInput [(ngModel)]="autor.podaciOAutoru.lice.prezime" placeholder="Prezime">
+              </mat-form-field>
+            </p>
+
+            <p>
+              <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+                <mat-label>Ulica</mat-label>
+                <input matInput [(ngModel)]="autor.podaciOAutoru.lice.adresa.ulica" placeholder="Ulica" disabled>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" style="width: 19%">
+                <mat-label>Broj u ulici</mat-label>
+                <input matInput [(ngModel)]="autor.podaciOAutoru.lice.adresa.brojUUlici" placeholder="Broj" disabled>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" style="width: 29%; float: right">
+                <mat-label>Poštanski broj</mat-label>
+                <input matInput [(ngModel)]="autor.podaciOAutoru.lice.adresa.postanskiBroj" placeholder="Poštanski broj"
+                       disabled>
+              </mat-form-field>
+            </p>
+
+            <p>
+              <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+                <mat-label>Mesto</mat-label>
+                <input matInput [(ngModel)]="autor.podaciOAutoru.lice.adresa.mesto" placeholder="Mesto" disabled>
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" style="width: 49%; float: right">
+                <mat-label>Država</mat-label>
+                <input matInput [(ngModel)]="autor.podaciOAutoru.lice.adresa.drzava" placeholder="Država" disabled>
+              </mat-form-field>
+            </p>
+
+            <p>
+              <mat-form-field appearance="outline" style="width: 100%; float: right">
+                <mat-label>Državljanstvo autora</mat-label>
+                <input matInput [(ngModel)]="autor.podaciOAutoru.lice.drzavljanstvo" placeholder="Državljanstvo">
+              </mat-form-field>
+            </p>
+          </div>
+
+          <div *ngIf="tipAutora == 'mrtav'">
+            <p>
+              <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+                <mat-label>Ime autora</mat-label>
+                <input matInput [(ngModel)]="autor.podaciOAutoru.lice.ime" placeholder="Ime autora">
+              </mat-form-field>
+
+              <mat-form-field appearance="outline" style="width: 49%; float: right">
+                <mat-label>Godina smrti autora</mat-label>
+                <input matInput [(ngModel)]="autor.podaciOAutoru.lice.godinaSmrti" placeholder="Godina smrti autora">
+              </mat-form-field>
+            </p>
+          </div>
+
+          <div>
+            <p>
+              <mat-form-field appearance="outline" style="width: 100%; margin-left: 5px">
+                <mat-label>Pseudonim/Znak autora ukoliko ga ima</mat-label>
+                <input matInput [(ngModel)]="autor.podaciOAutoru.pseudonim" placeholder="Pseudonim/Znak autora">
+              </mat-form-field>
+            </p>
+          </div>
         </div>
       </ng-template>
     </mat-step>
@@ -151,9 +261,31 @@
         </p>
 
         <p>
-          <mat-form-field appearance="outline" style="width: 100%; margin-left: 5px">
-            <mat-label>Adresa punomoćnika</mat-label>
-            <input matInput [(ngModel)]="punomocnik.adresa" placeholder="Adresa punomoćnika">
+          <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+            <mat-label>Ulica</mat-label>
+            <input matInput [(ngModel)]="punomocnik.adresa.ulica" placeholder="Ulica">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 19%">
+            <mat-label>Broj u ulici</mat-label>
+            <input matInput [(ngModel)]="punomocnik.adresa.brojUUlici" placeholder="Broj">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 29%; float: right">
+            <mat-label>Poštanski broj</mat-label>
+            <input matInput [(ngModel)]="punomocnik.adresa.postanskiBroj" placeholder="Poštanski broj">
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+            <mat-label>Mesto</mat-label>
+            <input matInput [(ngModel)]="punomocnik.adresa.mesto" placeholder="Mesto">
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 49%; float: right">
+            <mat-label>Država</mat-label>
+            <input matInput [(ngModel)]="punomocnik.adresa.drzava" placeholder="Država">
           </mat-form-field>
         </p>
 
@@ -179,7 +311,8 @@
         <p>
           <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
             <mat-label>Forma zapisa autorskog dela</mat-label>
-            <input matInput [(ngModel)]="autorskoDelo.formaZapisaAutorskogDela" placeholder="Štampani tekst, optički disk..."
+            <input matInput [(ngModel)]="autorskoDelo.formaZapisaAutorskogDela"
+                   placeholder="Štampani tekst, optički disk..."
                    required>
           </mat-form-field>
 
@@ -203,7 +336,9 @@
           </mat-form-field>
         </p>
 
-        <mat-checkbox [(ngModel)]="autorskoDelo.autorskoDeloStvorenoURadnomOdnosu">Autorsko delo je stvoreno u radnom odnosu</mat-checkbox>
+        <mat-checkbox [(ngModel)]="autorskoDelo.autorskoDeloStvorenoURadnomOdnosu">
+          Autorsko delo je stvoreno u radnom odnosu
+        </mat-checkbox>
 
       </ng-template>
     </mat-step>

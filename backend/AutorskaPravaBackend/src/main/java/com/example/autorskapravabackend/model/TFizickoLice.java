@@ -20,10 +20,8 @@ public class TFizickoLice extends TLice {
 
     @XmlElement(name = "Drzavljanstvo", required = true)
     private String drzavljanstvo;
-
     @XmlElement(name = "Osnovni_licni_podaci", required = true)
     private OsnovniLicniPodaci osnovniLicniPodaci;
-
     @XmlElement(name = "Godina_smrti")
     private int godinaSmrti;
 

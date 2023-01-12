@@ -5,22 +5,21 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.xml.bind.annotation.*;
-import java.util.ArrayList;
 
 @Setter
 @Getter
 @NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Sadrzaj_zahteva")
-@XmlType(name = "Sadrzaj_zahteva", propOrder = {"podnosilacZahteva", "autori", "podaciOPunomocniku", "autorskoDelo"})
+@XmlType(name = "Sadrzaj_zahteva", propOrder = {"podnosilacZahteva", "autor", "podaciOPunomocniku", "autorskoDelo"})
 public class SadrzajZahteva {
 
     @XmlElement(name = "Podnosilac_zahteva", required = true)
     private PodnosilacZahteva podnosilacZahteva;
     @XmlElement(name = "Podaci_o_punomocniku", required = true)
     private OsnovniLicniPodaci podaciOPunomocniku;
-    @XmlElement(name = "Autori", required = true)
-    private ArrayList<TAutor> autori;
+    @XmlElement(name = "Autor", required = true)
+    private Autor autor;
     @XmlElement(name = "Autorsko_delo", required = true)
     private AutorskoDelo autorskoDelo;
 
@@ -29,7 +28,7 @@ public class SadrzajZahteva {
         return "SadrzajZahteva {" +
                 "\n\tpodnosilacZahteva=" + podnosilacZahteva +
                 ",\n\tpodaciOPunomocniku=" + podaciOPunomocniku +
-                ",\n\tautori=" + autori +
+                ",\n\tautori=" + autor +
                 ",\n\tautorskoDelo=" + autorskoDelo +
                 "\n}";
     }

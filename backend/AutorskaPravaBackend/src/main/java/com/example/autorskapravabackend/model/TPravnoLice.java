@@ -22,10 +22,8 @@ public class TPravnoLice extends TLice {
 
     @XmlElement(name = "Poslovno_ime", required = true)
     private String poslovnoIme;
-
     @XmlElement(name = "Osnovni_licni_podaci", required = true)
     private OsnovniLicniPodaci osnovniLicniPodaci;
-
     @XmlElement(name = "Sediste_nosioca_autorskog_prava", required = true)
     private Adresa sedisteNosiocaAutorskogPrava;
 

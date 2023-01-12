@@ -8,24 +8,21 @@
   <p>
     <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
       <mat-label>Ime autora</mat-label>
-      <input matInput [(ngModel)]="autor.podaciOAutoru.autor.ime" placeholder="Ime">
+      <input matInput [(ngModel)]="autor.podaciOAutoru.lice.ime" placeholder="Ime">
     </mat-form-field>
 
     <mat-form-field appearance="outline" style="width: 49%; float: right">
       <mat-label>Prezime autora</mat-label>
-      <input matInput [(ngModel)]="autor.podaciOAutoru.autor.prezime" placeholder="Prezime">
+      <input matInput [(ngModel)]="autor.podaciOAutoru.lice.prezime" placeholder="Prezime">
     </mat-form-field>
   </p>
 
-  <p>
-    <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
-      <mat-label>Adresa podnosioca</mat-label>
-      <input matInput [(ngModel)]="autor.podaciOAutoru.autor.adresa" placeholder="Adresa">
-    </mat-form-field>
+  <app-adresa (adresa)="autor.podaciOAutoru.lice.adresa"></app-adresa>
 
-    <mat-form-field appearance="outline" style="width: 49%; float: right">
-      <mat-label>Državljanstvo podnosioca</mat-label>
-      <input matInput [(ngModel)]="autor.podaciOAutoru.autor.drzavljanstvo" placeholder="Državljanstvo">
+  <p>
+    <mat-form-field appearance="outline" style="width: 100%; float: right">
+      <mat-label>Državljanstvo autora</mat-label>
+      <input matInput [(ngModel)]="autor.podaciOAutoru.lice.drzavljanstvo" placeholder="Državljanstvo">
     </mat-form-field>
   </p>
 </div>
@@ -34,12 +31,12 @@
   <p>
     <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
       <mat-label>Ime autora</mat-label>
-      <input matInput [(ngModel)]="autor.podaciOAutoru.autor.ime" placeholder="Ime autora">
+      <input matInput [(ngModel)]="autor.podaciOAutoru.lice.ime" placeholder="Ime autora">
     </mat-form-field>
 
     <mat-form-field appearance="outline" style="width: 49%; float: right">
       <mat-label>Godina smrti autora</mat-label>
-      <input matInput [(ngModel)]="autor.podaciOAutoru.autor.godinaSmrti" placeholder="Godina smrti autora">
+      <input matInput [(ngModel)]="autor.podaciOAutoru.lice.godinaSmrti" placeholder="Godina smrti autora">
     </mat-form-field>
   </p>
 </div>

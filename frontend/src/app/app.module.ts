@@ -20,6 +20,7 @@ import {PodaciOAutoruComponent} from './components/podaci-o-autoru/podaci-o-auto
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDividerModule} from "@angular/material/divider";
 import {HttpClientModule} from '@angular/common/http';
+import { AdresaComponent } from './components/adresa/adresa.component';
 
 @NgModule({
   declarations: [
@@ -28,7 +29,8 @@ import {HttpClientModule} from '@angular/common/http';
     ZigoviComponent,
     PatentiComponent,
     HomeComponent,
-    PodaciOAutoruComponent
+    PodaciOAutoruComponent,
+    AdresaComponent
   ],
   imports: [
     BrowserModule,

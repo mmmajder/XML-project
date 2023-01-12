@@ -18,7 +18,6 @@ public class TLice {
 
     @XmlElement(name = "Broj_telefona", required = true)
     private String brojTelefona;
-
     @XmlElement(name = "Email", required = true)
     private String email;
 

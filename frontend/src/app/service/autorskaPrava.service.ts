@@ -18,10 +18,6 @@ export class AutorskaPravaService {
 
   public podnesiZahtev(zahtev: SadrzajZahtevaZaAutorskaPrava): Observable<Object> {
     console.log("PODNOSENJE ZAHTEVA", zahtev)
-    // const json = JSON.stringify(zahtev);
-    //
-    // const xml = json2xml(json, {compact: true, spaces: 4});
-    // let xml = this.OBJtoXML(zahtev);
     const xmlZahtev = JsonToXML.parse("zahtevZaAutorskaPravaDTO", zahtev);
     console.log(xmlZahtev)
     return this.http.post<Object>(this.autorskaPravaUrl, xmlZahtev, AuthService.getHttpOptions());
