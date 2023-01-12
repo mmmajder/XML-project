@@ -2,7 +2,7 @@ package com.example.patentbackend.db;
 
 import com.example.patentbackend.marshal.Marshal;
 import com.example.patentbackend.model.ZahtevZaPriznanjePatenta;
-import com.example.patentbackend.utils.AuthenticationUtilities;
+import com.example.patentbackend.utils.ExistAuthenticationUtilities;
 import com.example.patentbackend.utils.DBSetup;
 import org.exist.xmldb.EXistResource;
 import org.xmldb.api.DatabaseManager;
@@ -24,7 +24,7 @@ public class PatentRequestDB {
 
     public static int getNumberOfRequests() {
         try {
-            AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+            ExistAuthenticationUtilities.ConnectionProperties conn = ExistAuthenticationUtilities.loadProperties();
             String collectionId = DBSetup.setupDBConnection(conn);
             Collection col = getOrCreateCollection(collectionId, conn);
             return col.getResourceCount();
@@ -37,7 +37,7 @@ public class PatentRequestDB {
     public static void save(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) {
         OutputStream marshaledPatent = Marshal.marshalPatent(zahtevZaPriznanjePatenta);
         try {
-            AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+            ExistAuthenticationUtilities.ConnectionProperties conn = ExistAuthenticationUtilities.loadProperties();
             String collectionId = DBSetup.setupDBConnection(conn);
             String documentId = formatNameOfRequestForPatent(zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave(), ".xml");
             Collection col = getOrCreateCollection(collectionId, conn);
@@ -51,7 +51,7 @@ public class PatentRequestDB {
 
     public static ZahtevZaPriznanjePatenta getZahtevZaPriznanjePatenta(String brojPrijave) {
         try {
-            AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+            ExistAuthenticationUtilities.ConnectionProperties conn = ExistAuthenticationUtilities.loadProperties();
             String collectionId = DBSetup.setupDBConnection(conn);
             Collection col = getOrCreateCollection(collectionId, conn);
             XMLResource res = (XMLResource) col.getResource(formatNameOfRequestForPatent(brojPrijave, ".xml"));
@@ -69,7 +69,7 @@ public class PatentRequestDB {
 
     public static List<ZahtevZaPriznanjePatenta> getAllByFilter(String filter) {
         try {
-            AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+            ExistAuthenticationUtilities.ConnectionProperties conn = ExistAuthenticationUtilities.loadProperties();
             String collectionId = DBSetup.setupDBConnection(conn);
             Collection col = getOrCreateCollection(collectionId, conn);
 
@@ -112,11 +112,11 @@ public class PatentRequestDB {
     }
 
 
-    public static org.xmldb.api.base.Collection getOrCreateCollection(String collectionUri, AuthenticationUtilities.ConnectionProperties conn) throws XMLDBException {
+    public static org.xmldb.api.base.Collection getOrCreateCollection(String collectionUri, ExistAuthenticationUtilities.ConnectionProperties conn) throws XMLDBException {
         return getOrCreateCollection(collectionUri, 0, conn);
     }
 
-    private static org.xmldb.api.base.Collection getOrCreateCollection(String collectionUri, int pathSegmentOffset, AuthenticationUtilities.ConnectionProperties conn) throws XMLDBException {
+    private static org.xmldb.api.base.Collection getOrCreateCollection(String collectionUri, int pathSegmentOffset, ExistAuthenticationUtilities.ConnectionProperties conn) throws XMLDBException {
 
         org.xmldb.api.base.Collection col = DatabaseManager.getCollection(conn.uri + collectionUri, conn.user, conn.password);
         // create the collection if it does not exist

@@ -17,7 +17,7 @@ public class ZahtevZaPriznanjeZiga {
     private Lice predstavnik;
     @XmlElement(name="Zig", required=true)
     public Zig zig;
-    @XmlElement(name="Klase", required=true)
+    @XmlElement(name="Klasa", required=true)
     private List<Klasa> klasa;
     @XmlElement(name="Zatrazeno_pravo_prvenstva_i_osnov", required=true)
     private String zatrazenoPravoPrvenstvaIOsnov;
