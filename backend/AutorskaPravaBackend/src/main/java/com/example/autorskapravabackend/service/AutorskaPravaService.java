@@ -5,16 +5,16 @@ import com.example.autorskapravabackend.mapper.Mapper;
 import com.example.autorskapravabackend.model.InformacijeOZahtevu;
 import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
 import com.example.autorskapravabackend.repository.AutorskaPravaRepository;
+import com.example.autorskapravabackend.transformer.AutorskaPravaTransformer;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
-import java.util.List;
 
 @Service
 public class AutorskaPravaService {
 
-    private AutorskaPravaRepository autorskaPravaRepository = new AutorskaPravaRepository();
+    private final AutorskaPravaRepository autorskaPravaRepository = new AutorskaPravaRepository();
 
     public ZahtevZaAutorskaPrava getZahtev(String brojPrijave) {
         return autorskaPravaRepository.getZahtev(brojPrijave);
@@ -35,22 +35,22 @@ public class AutorskaPravaService {
         osnovneInformacije.setDatumPodnosenja(new Date());
         zahtev.setInformacijeOZahtevu(osnovneInformacije);
     }
-//
-//    public boolean generateHTML(com.example.patentbackend.dto.NazivPrijaveDTO brojPrijave) {
-//        ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = getZahtevZaPriznanjePatenta(brojPrijave.getNaziv());
-//        if (zahtevZaPriznanjePatenta == null) {
-//            return false;
-//        }
-//        com.example.patentbackend.transformer.PatentTransformer.generateHTMLPatent(zahtevZaPriznanjePatenta);
-//        return true;
-//    }
-//
-//    public boolean generatePDF(com.example.patentbackend.dto.NazivPrijaveDTO brojPrijave) {
-//        ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = getZahtevZaPriznanjePatenta(brojPrijave.getNaziv());
-//        if (zahtevZaPriznanjePatenta == null) {
-//            return false;
-//        }
-//        com.example.patentbackend.transformer.PatentTransformer.generatePDFPatent(zahtevZaPriznanjePatenta);
-//        return true;
-//    }
+
+    public boolean generateHTML(String brojPrijave) {
+        ZahtevZaAutorskaPrava zahtev = getZahtev(brojPrijave);
+        if (zahtev == null) {
+            return false;
+        }
+        AutorskaPravaTransformer.generateHTML(zahtev);
+        return true;
+    }
+
+    public boolean generatePDF(String brojPrijave) {
+        ZahtevZaAutorskaPrava zahtev = getZahtev(brojPrijave);
+        if (zahtev == null) {
+            return false;
+        }
+        AutorskaPravaTransformer.generatePDF(zahtev);
+        return true;
+    }
 }

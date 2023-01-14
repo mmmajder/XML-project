@@ -56,14 +56,14 @@ public class AutorskaPravaRequestDB {
     }
 
     public static void save(ZahtevZaAutorskaPrava zahtev) {
-        OutputStream marshaledPatent = Marshal.marshalPatent(zahtev);
+        OutputStream marshaled = Marshal.marshal(zahtev);
         try {
             AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
             String collectionId = DBSetup.setupDBConnection(conn);
             String documentId = formatNameOfRequest(zahtev.getInformacijeOZahtevu().getBrojPrijave(), ".xml");
             Collection col = getOrCreateCollection(collectionId, conn);
             XMLResource res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
-            res.setContent(marshaledPatent);
+            res.setContent(marshaled);
             col.storeResource(res);
         } catch (Exception e) {
             e.printStackTrace();

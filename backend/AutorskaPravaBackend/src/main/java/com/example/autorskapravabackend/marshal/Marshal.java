@@ -10,7 +10,7 @@ import java.io.OutputStream;
 
 public class Marshal {
 
-    public static OutputStream marshalPatent(ZahtevZaAutorskaPrava zahtev) {
+    public static OutputStream marshal(ZahtevZaAutorskaPrava zahtev) {
         try {
             JAXBContext context = JAXBContext.newInstance("com.example.autorskapravabackend.model");
             OutputStream os = new ByteArrayOutputStream();
