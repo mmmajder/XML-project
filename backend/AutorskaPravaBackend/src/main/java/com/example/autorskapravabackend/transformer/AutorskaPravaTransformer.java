@@ -1,10 +1,10 @@
 package com.example.autorskapravabackend.transformer;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
+import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
+import com.itextpdf.text.Document;
+import com.itextpdf.text.DocumentException;
+import com.itextpdf.text.pdf.PdfWriter;
+import com.itextpdf.tool.xml.XMLWorkerHelper;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.util.JAXBSource;
@@ -14,12 +14,10 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
-import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
-import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
-import com.itextpdf.text.pdf.PdfWriter;
-import com.itextpdf.tool.xml.XMLWorkerHelper;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 
 
 public class AutorskaPravaTransformer {
@@ -47,17 +45,9 @@ public class AutorskaPravaTransformer {
         return "autorskaPrava_" + zahtev.getInformacijeOZahtevu().getBrojPrijave().replace('/', '_');
     }
 
-    public static void generateHTML(ZahtevZaAutorskaPrava zahtev) {
-        try {
-            AutorskaPravaTransformer.generateHTML(zahtev, XSL_FILE);
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
     public static void generatePDF(ZahtevZaAutorskaPrava zahtev) {
         try {
-            AutorskaPravaTransformer.generateHTML(zahtev, XSL_FILE);
+            AutorskaPravaTransformer.generateHTML(zahtev);
             String title = getFileTitle(zahtev);
             String titlePdf = title + ".pdf";
             String titleHTML = title + ".html";
@@ -75,11 +65,11 @@ public class AutorskaPravaTransformer {
         document.close();
     }
 
-    private static void generateHTML(ZahtevZaAutorskaPrava zahtev, String xslPath) throws FileNotFoundException {
+    public static void generateHTML(ZahtevZaAutorskaPrava zahtev) {
         try {
 
             // Initialize Transformer instance
-            StreamSource transformSource = new StreamSource(new File(xslPath));
+            StreamSource transformSource = new StreamSource(new File(XSL_FILE));
             Transformer transformer = transformerFactory.newTransformer(transformSource);
             transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");

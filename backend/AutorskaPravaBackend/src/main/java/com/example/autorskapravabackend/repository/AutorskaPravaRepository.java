@@ -2,6 +2,7 @@ package com.example.autorskapravabackend.repository;
 
 import com.example.autorskapravabackend.db.AutorskaPravaRequestDB;
 import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
+import com.example.autorskapravabackend.rdf.AutorskaPravaFusekiDB;
 
 public class AutorskaPravaRepository {
 
@@ -15,5 +16,6 @@ public class AutorskaPravaRepository {
 
     public void createRequest(ZahtevZaAutorskaPrava zahtev) {
         AutorskaPravaRequestDB.save(zahtev);
+        AutorskaPravaFusekiDB.save(zahtev);
     }
 }
