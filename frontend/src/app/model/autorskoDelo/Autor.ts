@@ -1,13 +1,20 @@
 import {Adresa} from "./Adresa";
 
 export class Autor {
-  podaciOAutoru: PodaciOAutoru = new PodaciOAutoru();
   anoniman: boolean | undefined;
-}
-
-export class PodaciOAutoru {
+  ime: string = "";
+  prezime: string = "";
+  adresa: Adresa = new Adresa();
+  drzavljanstvo: string = "";
+  godinaSmrti: number | undefined;
   pseudonim: string = "";
-  lice: Lice = new Lice();
+
+  public isValid(): boolean {
+    return this.ime.length > 0 &&
+      this.prezime.length > 0 &&
+      this.adresa.isValid() &&
+      this.drzavljanstvo.length > 0;
+  }
 }
 
 export class Lice {

@@ -85,7 +85,7 @@
                     </tr>
                     <xsl:if test="//aut:Podnosilac_zahteva//aut:Ime">
                         <tr>
-                            <th>Ulica</th>
+                            <th colspan="2">Ulica</th>
                             <th>Broj</th>
                             <th>Poštanski broj</th>
                             <th>Mesto</th>
@@ -98,7 +98,7 @@
                             </td>
                             <td>
                                 <xsl:value-of
-                                        select="//aut:Podnosilac_zahteva//aut:Podaci_o_podnosiocu//aut:Adresa//aut:Broj"/>
+                                        select="//aut:Podnosilac_zahteva//aut:Podaci_o_podnosiocu//aut:Adresa//aut:Broj_u_ulici"/>
                             </td>
                             <td>
                                 <xsl:value-of
@@ -116,12 +116,13 @@
                     </xsl:if>
 
                     <tr>
-                        <th>Telefon</th>
-                        <th>Email</th>
+                        <th colspan="3">Telefon</th>
+                        <th colspan="3">Email</th>
                     </tr>
                     <tr>
                         <td colspan="3">
-                            <xsl:value-of select="//aut:Podnosilac_zahteva//aut:Podaci_o_podnosiocu//aut:Telefon"/>
+                            <xsl:value-of
+                                    select="//aut:Podnosilac_zahteva//aut:Podaci_o_podnosiocu//aut:Broj_telefona"/>
                         </td>
                         <td colspan="3">
                             <xsl:value-of select="//aut:Podnosilac_zahteva//aut:Podaci_o_podnosiocu//aut:Email"/>
@@ -141,10 +142,10 @@
                         <th>Državljanstvo</th>
                     </tr>
                     <tr>
-                        <td>
+                        <td colspan="2">
                             <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Ime"/>
                         </td>
-                        <td>
+                        <td colspan="2">
                             <xsl:value-of
                                     select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Prezime"/>
                         </td>
@@ -168,7 +169,7 @@
                         </td>
                         <td>
                             <xsl:value-of
-                                    select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Adresa//aut:Broj"/>
+                                    select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Adresa//aut:Broj_u_ulici"/>
                         </td>
                         <td>
                             <xsl:value-of
@@ -190,71 +191,85 @@
                     </tr>
                     <tr>
                         <td colspan="2">
-                            <xsl:value-of select="//aut:Podnosilac_zahteva//aut:Podaci_o_podnosiocu//aut:Telefon"/>
+                            <xsl:value-of
+                                    select="//aut:Podnosilac_zahteva//aut:Podaci_o_podnosiocu//aut:Broj_telefona"/>
                         </td>
                         <td colspan="3">
                             <xsl:value-of select="//aut:Podnosilac_zahteva//aut:Podaci_o_podnosiocu//aut:Email"/>
                         </td>
                     </tr>
 
-                    <tr>
-                        <th colspan="5">Pseudonim/Znak autora ako ga ima</th>
-                    </tr>
-                    <tr>
-                        <td colspan="5">
-                            <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Pseudonim"/>
-                        </td>
-                    </tr>
+                    <xsl:if test="//aut:Autor//aut:Podaci_o_autoru//aut:Pseudonim">
+                        <tr>
+                            <th colspan="5">Pseudonim/Znak autora</th>
+                        </tr>
+                        <tr>
+                            <td colspan="5">
+                                <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Pseudonim"/>
+                            </td>
+                        </tr>
+                    </xsl:if>
                 </table>
 
                 <br/>
 
                 <table>
-                    <tr>
-                        <th colspan="2">3) Podaci o punomoćniku</th>
-                    </tr>
-                    <tr>
-                        <th>Ime</th>
-                        <th>Prezime</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <xsl:value-of select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Ime"/>
-                        </td>
-                        <td>
-                            <xsl:value-of select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Prezime"/>
-                        </td>
-                    </tr>
+                    <xsl:choose>
+                        <xsl:when test="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Ime">
+                            <tr>
+                                <th colspan="5">3) Podaci o punomocniku</th>
+                            </tr>
+                            <tr>
+                                <th colspan="2">Ime</th>
+                                <th colspan="3">Prezime</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <xsl:value-of
+                                            select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Ime"/>
+                                </td>
+                                <td>
+                                    <xsl:value-of
+                                            select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Prezime"/>
+                                </td>
+                            </tr>
 
-                    <tr>
-                        <th>Ulica</th>
-                        <th>Broj</th>
-                        <th>Poštanski broj</th>
-                        <th>Mesto</th>
-                        <th>Država</th>
-                    </tr>
-                    <tr>
-                        <td>
-                            <xsl:value-of
-                                    select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Ulica"/>
-                        </td>
-                        <td>
-                            <xsl:value-of
-                                    select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Broj"/>
-                        </td>
-                        <td>
-                            <xsl:value-of
-                                    select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Postanski_broj"/>
-                        </td>
-                        <td>
-                            <xsl:value-of
-                                    select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Mesto"/>
-                        </td>
-                        <td>
-                            <xsl:value-of
-                                    select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Drzava"/>
-                        </td>
-                    </tr>
+                            <tr>
+                                <th>Ulica</th>
+                                <th>Broj</th>
+                                <th>Poštanski broj</th>
+                                <th>Mesto</th>
+                                <th>Država</th>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <xsl:value-of
+                                            select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Ulica"/>
+                                </td>
+                                <td>
+                                    <xsl:value-of
+                                            select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Broj_u_ulici"/>
+                                </td>
+                                <td>
+                                    <xsl:value-of
+                                            select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Postanski_broj"/>
+                                </td>
+                                <td>
+                                    <xsl:value-of
+                                            select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Mesto"/>
+                                </td>
+                                <td>
+                                    <xsl:value-of
+                                            select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Drzava"/>
+                                </td>
+                            </tr>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <tr>
+                                <th colspan="5">Zahtev nije podnet preko punomocnika.</th>
+                            </tr>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </table>
 
                 <br/>
@@ -272,23 +287,23 @@
                             <xsl:value-of select="//aut:Autorsko_delo//aut:Naslov_autorskog_dela"/>
                         </td>
                         <td>
-                            <xsl:value-of select="aut:Autorsko_delo//aut:Vrsta_autorskog_dela"/>
+                            <xsl:value-of select="//aut:Autorsko_delo//aut:Vrsta_autorskog_dela"/>
                         </td>
                     </tr>
 
                     <tr>
                         <th>Forma zapisa autorskog dela</th>
-                        <th>Način korišćenja ili planirani način korišćenja</th>
+                        <th>Nacin korišcenja ili planirani nacin korišcenja</th>
                     </tr>
                     <tr>
                         <td>
                             <xsl:value-of select="//aut:Autorsko_delo//aut:Forma_zapisa_autorskog_dela"/>
                         </td>
                         <td>
-                            <xsl:value-of select="aut:Autorsko_delo//aut:Nacin_koriscenja_autorskog_dela"/>
+                            <xsl:value-of select="//aut:Autorsko_delo//aut:Nacin_koriscenja_autorskog_dela"/>
                         </td>
                     </tr>
-                    <xsl:if test="//aut:Autorsko_delo//aut:Zasnivano_delo">
+                    <xsl:if test="//aut:Autorsko_delo//aut:Zasnivano_delo//naslov">
                         <tr>
                             <th>Naslov zasnivanog autorskog dela</th>
                             <th>Autor zasnivanog autorskog dela</th>
@@ -303,12 +318,18 @@
                         </tr>
                     </xsl:if>
 
-                    <tr>
-                        <td>Autorsko delo je stvoreno u radnom odnosu.</td>
-                        <td>
-                            <xsl:value-of select="aut:Autorsko_delo//aut:Autorsko_delo_stvoreno_u_radnom_odnosu"/>
-                        </td>
-                    </tr>
+                    <xsl:choose>
+                        <xsl:when test="aut:Autorsko_delo//aut:Autorsko_delo_stvoreno_u_radnom_odnosu">
+                            <tr>
+                                <th colspan="2">Autorsko delo je stvoreno u radnom odnosu.</th>
+                            </tr>
+                        </xsl:when>
+                        <xsl:otherwise>
+                            <tr>
+                                <th colspan="2">Autorsko delo nije stvoreno u radnom odnosu.</th>
+                            </tr>
+                        </xsl:otherwise>
+                    </xsl:choose>
                 </table>
 
                 <br/>

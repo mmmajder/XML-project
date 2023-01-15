@@ -1,9 +1,6 @@
 package com.example.autorskapravabackend.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
@@ -24,6 +21,11 @@ public class TFizickoLice extends TLice {
     private OsnovniLicniPodaci osnovniLicniPodaci;
     @XmlElement(name = "Godina_smrti")
     private int godinaSmrti;
+
+    public TFizickoLice(String drzavljanstvo, OsnovniLicniPodaci podaci) {
+        this.osnovniLicniPodaci = podaci;
+        this.drzavljanstvo = drzavljanstvo;
+    }
 
     @Override
     public String toString() {

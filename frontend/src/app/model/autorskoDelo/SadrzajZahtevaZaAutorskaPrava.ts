@@ -17,6 +17,6 @@ export class SadrzajZahtevaZaAutorskaPrava {
   }
 
   public isValid(): boolean {
-    return this.podnosilacZahteva.isValid() && this.autor.podaciOAutoru.lice.isValid() && this.autorskoDelo.isValid();
+    return this.podnosilacZahteva.isValid() && this.autor.isValid() && this.autorskoDelo.isValid();
   }
 }

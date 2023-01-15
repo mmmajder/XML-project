@@ -27,11 +27,11 @@ export class AutorskaPravaComponent {
 
   private static autorIzPodnosioca(p: PodnosilacZahteva): Autor {
     let autor = new Autor();
-    autor.podaciOAutoru.pseudonim = p.pseudonim;
-    autor.podaciOAutoru.lice.ime = p.ime;
-    autor.podaciOAutoru.lice.prezime = p.prezime;
-    autor.podaciOAutoru.lice.adresa = p.adresa;
-    autor.podaciOAutoru.lice.drzavljanstvo = p.drzavljanstvo;
+    autor.pseudonim = p.pseudonim;
+    autor.ime = p.ime;
+    autor.prezime = p.prezime;
+    autor.adresa = p.adresa;
+    autor.drzavljanstvo = p.drzavljanstvo;
     return autor;
   }
 
