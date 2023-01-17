@@ -9,9 +9,16 @@
                 <xs:element name="Predstavnik" type="sz:TLice"/>
                 <xs:element name="Zig" type="sz:TZig"/>
                 <xs:element maxOccurs="45" name="Klasa" type="sz:TKlasa"/>
-                <xs:element name="Zatrazeno_pravo_prvenstva_i_osnov" type="xs:string"/>
+                <xs:element name="Zatrazeno_pravo_prvenstva_i_osnov" minOccurs="0">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="KONVENCIJSKO"/>
+                            <xs:enumeration value="SAJAMSKO"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
                 <xs:element name="Taksa" type="sz:TTaksa"/>
-                <xs:element maxOccurs="8" minOccurs="5" name="Prilog" type="sz:TPrilog"/>
+                <xs:element maxOccurs="5" minOccurs="5" name="Prilog" type="sz:TPrilog"/>
                 <xs:element name="Prilog_punomocje" type="sz:TPrilog_punomocje"/>
                 <xs:element name="Broj_prijave_ziga" type="sz:TBroj_prijave_ziga"/>
                 <xs:element name="Datum_podnosenja" type="xs:date"/>
@@ -98,7 +105,7 @@
             </xs:element>
             <xs:element minOccurs="0" name="Transliteracija_znaka" type="xs:string"/>
             <xs:element minOccurs="0" name="Prevod_znaka" type="xs:string"/>
-            <xs:element name="Opis_znaka" type="xs:string"/>
+            <xs:element name="Opis_znaka" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="TFizicko_lice">
@@ -171,26 +178,20 @@
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="NIJE_PREDATO"/>
                         <xs:enumeration value="PREDATO"/>
-                        <xs:enumeration value="PRIHVACENO"/>
-                        <xs:enumeration value="ODBIJENO"/>
                         <xs:enumeration value="NIJE_POTREBNO"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>
-            <xs:element name="Putanja_do_priloga" type="xs:string"/>
+            <xs:element name="Putanja_do_priloga" type="xs:string" minOccurs="0"/>
         </xs:sequence>
     </xs:complexType>
     <xs:complexType name="TPrilog_punomocje">
         <xs:sequence>
-            <xs:element name="Punomocje_predato_ranije" type="xs:boolean"/>
-            <xs:element name="Punomocje_ce_biti_naknadno_dostavljeno" type="xs:boolean"/>
-            <xs:element name="Status_priloga" minOccurs="0">
+            <xs:element name="Status_priloga" minOccurs="1">
                 <xs:simpleType>
                     <xs:restriction base="xs:string">
                         <xs:enumeration value="NIJE_PREDATO"/>
                         <xs:enumeration value="PREDATO"/>
-                        <xs:enumeration value="PRIHVACENO"/>
-                        <xs:enumeration value="ODBIJENO"/>
                         <xs:enumeration value="NIJE_POTREBNO"/>
                         <xs:enumeration value="PREDATO_RANIJE"/>
                         <xs:enumeration value="BICE_NAKNADNO_DOSTAVLJENO"/>

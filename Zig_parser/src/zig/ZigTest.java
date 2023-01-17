@@ -97,7 +97,7 @@ public class ZigTest {
         Zig zig = new Zig();
         zig.setTipZiga(ETip_ziga.INDIVIDUALNI_ZIG);
         zig.setOpisIzgledaZiga(EOpis_izgleda_ziga.KOMBINOVANI_ZNAK);
-        zig.setIzgledPutanjaDoSlike("putanja");
+        zig.setIzgledPutanjaDoSlike("test_logo.jpg");
         
         List<EBoja> boje = new ArrayList<>();
         boje.add(EBoja.PLAVA);
