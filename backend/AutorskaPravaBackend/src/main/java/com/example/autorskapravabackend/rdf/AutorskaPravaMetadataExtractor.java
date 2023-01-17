@@ -10,8 +10,8 @@ public class AutorskaPravaMetadataExtractor {
         Model model = ModelFactory.createDefaultModel();
         Resource resource = model.createResource(AUTORSKO_DELO_NAMESPACE + "/" + zahtev.getInformacijeOZahtevu().getBrojPrijave());
 
-//        addRDFTripletToModel(model, resource, "podnosilac_email", zahtev.getSadrzajZahteva().getPodnosilacZahteva().getPodaciOPodnosiocu().getEmail());
-//        addRDFTripletToModel(model, resource, "autor_email", zahtev.getSadrzajZahteva().getAutor().getPodaciOAutoru().getLice().getEmail());
+        addRDFTripletToModel(model, resource, "podnosilac_email", zahtev.getSadrzajZahteva().getPodnosilacZahteva().getPodaciOPodnosiocu().getEmail());
+        addRDFTripletToModel(model, resource, "naslov", zahtev.getSadrzajZahteva().getAutorskoDelo().getNaslovAutorskogDela());
         addRDFTripletToModel(model, resource, "broj_prijave", zahtev.getInformacijeOZahtevu().getBrojPrijave());
         return model;
     }
