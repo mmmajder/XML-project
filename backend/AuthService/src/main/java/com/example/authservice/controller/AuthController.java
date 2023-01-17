@@ -1,13 +1,11 @@
 package com.example.authservice.controller;
 
-import com.example.authservice.dto.CreateUserDTO;
-import com.example.authservice.dto.LoginResponseDTO;
-import com.example.authservice.dto.UserResponse;
-import com.example.authservice.dto.UserTokenState;
+import com.example.authservice.dto.*;
 import com.example.authservice.model.User;
 import com.example.authservice.service.AuthentificationService;
 import com.example.authservice.service.DTOMapper;
 import com.example.authservice.service.UserService;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -35,17 +33,17 @@ public class AuthController {
     }
 
     @PostMapping("/logout")
-    public void logout(@Valid @RequestBody UserTokenState userTokenState) {
+    public void logout(@RequestBody UserTokenState userTokenState) {
         // TODO
     }
 
     @PostMapping("/register")
-    public ResponseEntity<String> addUser(@Valid @RequestBody CreateUserDTO userDTO) {
+    public ResponseEntity<String> addUser(@RequestBody CreateUserDTO userDTO) {
         User user = authentificationService.addUser(userDTO);
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.CONFLICT);
         }
-        return new ResponseEntity<>("Sent verification email", HttpStatus.CREATED);
+        return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
     @GetMapping("/currently-logged-user")

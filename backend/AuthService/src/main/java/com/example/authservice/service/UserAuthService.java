@@ -2,8 +2,6 @@ package com.example.authservice.service;
 
 import com.example.authservice.model.UserAuth;
 import com.example.authservice.repository.UserAuthRepository;
-import com.example.ubernet.model.UserAuth;
-import com.example.ubernet.repository.UserAuthRepository;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
