@@ -4,7 +4,7 @@
     <xs:element name="Zahtev_za_priznanje_ziga">
         <xs:complexType>
             <xs:sequence maxOccurs="1">
-                <xs:element name="Podnosilac_prijave" type="sz:TLice" maxOccurs="unbounded"/>
+                <xs:element name="Podnosilac_prijave" type="sz:TLice" maxOccurs="1"/>
                 <xs:element name="Punomocnik" type="sz:TLice"/>
                 <xs:element name="Predstavnik" type="sz:TLice"/>
                 <xs:element name="Zig" type="sz:TZig"/>
@@ -15,6 +15,15 @@
                 <xs:element name="Prilog_punomocje" type="sz:TPrilog_punomocje"/>
                 <xs:element name="Broj_prijave_ziga" type="sz:TBroj_prijave_ziga"/>
                 <xs:element name="Datum_podnosenja" type="xs:date"/>
+                <xs:element name="Status">
+                    <xs:simpleType>
+                        <xs:restriction base="xs:string">
+                            <xs:enumeration value="OBUSTAVLJENO"/>
+                            <xs:enumeration value="ODBIJENO"/>
+                            <xs:enumeration value="PREDATO"/>
+                        </xs:restriction>
+                    </xs:simpleType>
+                </xs:element>
             </xs:sequence>
         </xs:complexType>
     </xs:element>
@@ -69,6 +78,24 @@
             <xs:element name="Opis_izgleda_ziga" type="sz:EOpis_izgleda_ziga"/>
             <xs:element minOccurs="0" name="Druga_vrsta_znaka_opis" type="xs:string"/>
             <xs:element name="Izgled_putanja_do_slike" type="xs:string"/>
+            <xs:element maxOccurs="unbounded" minOccurs="0" name="Boja">
+                <xs:simpleType>
+                    <xs:restriction base="xs:string">
+                        <xs:enumeration value="BELA"/>
+                        <xs:enumeration value="CRNA"/>
+                        <xs:enumeration value="PLAVA"/>
+                        <xs:enumeration value="ZELENA"/>
+                        <xs:enumeration value="CRVENA"/>
+                        <xs:enumeration value="ZUTA"/>
+                        <xs:enumeration value="BRAON"/>
+                        <xs:enumeration value="ROZE"/>
+                        <xs:enumeration value="LJUBICASTA"/>
+                        <xs:enumeration value="SIVA"/>
+                        <xs:enumeration value="KREM"/>
+                        <xs:enumeration value="NARANDZASTA"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
             <xs:element minOccurs="0" name="Transliteracija_znaka" type="xs:string"/>
             <xs:element minOccurs="0" name="Prevod_znaka" type="xs:string"/>
             <xs:element name="Opis_znaka" type="xs:string"/>
@@ -165,6 +192,8 @@
                         <xs:enumeration value="PRIHVACENO"/>
                         <xs:enumeration value="ODBIJENO"/>
                         <xs:enumeration value="NIJE_POTREBNO"/>
+                        <xs:enumeration value="PREDATO_RANIJE"/>
+                        <xs:enumeration value="BICE_NAKNADNO_DOSTAVLJENO"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>

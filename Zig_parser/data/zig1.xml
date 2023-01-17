@@ -55,6 +55,9 @@
         <Tip_ziga xsi:type="ETip_ziga">INDIVIDUALNI_ZIG</Tip_ziga>
         <Opis_izgleda_ziga xsi:type="EOpis_izgleda_ziga">KOMBINOVANI_ZNAK</Opis_izgleda_ziga>
         <Izgled_putanja_do_slike>neka/putanja/do/slike</Izgled_putanja_do_slike>
+        <Boja>ZELENA</Boja>
+        <Boja>NARANDZASTA</Boja>
+        <Boja>LJUBICASTA</Boja>
         <Transliteracija_znaka>Ouch, my ankle!</Transliteracija_znaka>
         <Prevod_znaka>Oh, moj zglob!</Prevod_znaka>
         <Opis_znaka>
@@ -110,4 +113,5 @@
     </Prilog_punomocje>
     <Broj_prijave_ziga xsi:type="TBroj_prijave_ziga">Z-12345/22</Broj_prijave_ziga>
     <Datum_podnosenja>2022-05-06</Datum_podnosenja>
+    <Status>PREDATO</Status>
 </Zahtev_za_priznanje_ziga>

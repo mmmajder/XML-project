@@ -13,24 +13,24 @@
                     border-collapse: collapse;
                     margin: 0;
                     width: 100%;
+                    border:0px;
                     }
                     th, td {
                     text-align: left;
                     padding: 3px;
+                    border:0px;
                     border-bottom-width:1px;
                     border-right-width:1px;
+                    border-style: solid;
                     }
+                    
+                    tr{
+                    border:0px;
+                    }
+                    
                     tr:nth-child(even){ background-color: #f2f2f2 }
                     th {
                     font-family: sans-serif;
-                    }
-                    
-                    .leftBorder{
-                    	border-left-width:1px;
-                    }
-                    
-                    .topBorder{
-                    	border-top-width:1px;
                     }
                     
                     body { font-family: sans-serif; }
@@ -47,7 +47,7 @@
             <body>
                 
                 <center>
-                	<h3>Zahtev za priznanje Ziga</h3>
+                	<h3>Zahtev za priznanje HTML Ziga</h3>
                 	<h5>Zavod za intelektualnu svojinu, Kneginje Ljubice broj 5, 11000 Beograd</h5>
                 </center>
                 
@@ -164,8 +164,11 @@
 				 	</xsl:choose>
 				 	<td colspan="2" rowspan="5">
 				 		<xsl:element name="img">
+			 				<xsl:attribute name="width">100%</xsl:attribute>
+			 				<xsl:attribute name="maxWidth">250px</xsl:attribute>
+			 				<xsl:attribute name="maxHeight">250px</xsl:attribute>
 			              	<xsl:attribute name="src">
-			                	data\<xsl:value-of select="//sz:Zig//sz:Izgled_putanja_do_slike"/>
+			                C:\Faks\VII\XML i veb servisi\XML-project\Zig_parser\data\<xsl:value-of select="//sz:Zig//sz:Izgled_putanja_do_slike"/>
 			              	</xsl:attribute>
 			            </xsl:element>
 				 	</td>

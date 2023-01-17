@@ -50,6 +50,9 @@
         <sz:Tip_ziga>INDIVIDUALNI_ZIG</sz:Tip_ziga>
         <sz:Opis_izgleda_ziga>KOMBINOVANI_ZNAK</sz:Opis_izgleda_ziga>
         <sz:Izgled_putanja_do_slike>putanja</sz:Izgled_putanja_do_slike>
+        <sz:Boja>PLAVA</sz:Boja>
+        <sz:Boja>ZUTA</sz:Boja>
+        <sz:Boja>ROZE</sz:Boja>
         <sz:Transliteracija_znaka>Oh yes!</sz:Transliteracija_znaka>
         <sz:Prevod_znaka>Oh da!</sz:Prevod_znaka>
         <sz:Opis_znaka>Znak predstavlja zadovoljnu musteriju koja pokazuje palcem ka gore i smeje se. Oko musterijine glave je ispisan uzvik Oh yes!</sz:Opis_znaka>
@@ -97,4 +100,5 @@
     </sz:Prilog_punomocje>
     <sz:Broj_prijave_ziga>Z-12345/22</sz:Broj_prijave_ziga>
     <sz:Datum_podnosenja>2022-05-06T00:00:00+02:00</sz:Datum_podnosenja>
+    <sz:Status>PREDATO</sz:Status>
 </sz:Zahtev_za_priznanje_ziga>
