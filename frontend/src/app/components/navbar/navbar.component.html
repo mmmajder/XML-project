@@ -1,15 +1,32 @@
 <mat-toolbar color="primary">
   <span>Obrada zahteva za prava intelektualne svojine</span>
   <span class="example-spacer"></span>
-  <a mat-button href="/search"><mat-icon>search</mat-icon></a>
+  <button mat-icon-button (click)='goToPage("/search")'>
+    <mat-icon>search</mat-icon>
+  </button>
   <button mat-icon-button [matMenuTriggerFor]="menu">
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">
-    <a mat-button href="/autorska-prava">Autorska prava</a>
-    <a mat-button href="/patenti">Patenti</a>
-    <a mat-button href="/zigovi">Žigovi</a>
-    <a mat-button href="/home"><mat-icon>home</mat-icon></a>
-    <a mat-button href="/"><mat-icon>logout</mat-icon></a>
+    <button mat-menu-item (click)='goToPage("/autorska-prava")'>
+      <mat-icon>library_books</mat-icon>
+      Autorska prava
+    </button>
+    <button mat-menu-item (click)='goToPage("/patenti")'>
+      <mat-icon>construction</mat-icon>
+      Patenti
+    </button>
+    <button mat-menu-item (click)='goToPage("/zigovi")'>
+      <mat-icon>image</mat-icon>
+      Žigovi
+    </button>
+    <button mat-menu-item (click)='goToPage("/home")'>
+      <mat-icon>home</mat-icon>
+      Početna strana
+    </button>
+    <button mat-menu-item (click)='goToPage("/")'>
+      <mat-icon>logout</mat-icon>
+      Odjavi se
+    </button>
   </mat-menu>
 </mat-toolbar>

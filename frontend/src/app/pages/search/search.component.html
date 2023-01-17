@@ -1,1 +1,19 @@
-<p>search works!</p>
+<app-navbar></app-navbar>
+
+<div style="margin: 10px">
+  <h3>Pretražite dokumente po tekstualnom sadržaju ili po metapodacima</h3>
+
+  <mat-form-field appearance="outline" style="width: 50%; min-width: 200px">
+    <mat-label>Pretraži dokumente</mat-label>
+    <input matInput type="text" [(ngModel)]="search">
+    <button *ngIf="search" matSuffix mat-icon-button aria-label="Clear" (click)="search=''">
+      <mat-icon>close</mat-icon>
+    </button>
+  </mat-form-field>
+</div>
+
+<mat-tab-group>
+  <mat-tab label="Autorska dela"></mat-tab>
+  <mat-tab label="Patenti"> Content 2</mat-tab>
+  <mat-tab label="Žigovi"> Content 3</mat-tab>
+</mat-tab-group>

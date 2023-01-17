@@ -12,31 +12,15 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {CommonModule} from "@angular/common";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {MatMenuModule} from "@angular/material/menu";
-import {AutorskaPravaComponent} from "./autorska-prava/autorska-prava.component";
-import {HomeComponent} from "./home/home.component";
-import {LoginComponent} from "./login/login.component";
-import {LoginFormComponent} from "./login-form/login-form.component";
-import {RegistrationFormComponent} from "./registration-form/registration-form.component";
-import {SearchComponent} from "./search/search.component";
-import {ZigoviComponent} from "./zigovi/zigovi.component";
-import {PatentiComponent} from "./patenti/patenti.component";
 import {MatSelectModule} from "@angular/material/select";
 import {MatStepperModule} from "@angular/material/stepper";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatCheckboxModule} from "@angular/material/checkbox";
-import {ComponentsModule} from "../components/components.module";
-import {MatTabsModule} from "@angular/material/tabs";
+import {NavbarComponent} from "./navbar/navbar.component";
 
 @NgModule({
   declarations: [
-    AutorskaPravaComponent,
-    HomeComponent,
-    LoginComponent,
-    LoginFormComponent,
-    RegistrationFormComponent,
-    SearchComponent,
-    ZigoviComponent,
-    PatentiComponent
+    NavbarComponent
   ],
   imports: [
     MatToolbarModule,
@@ -56,14 +40,12 @@ import {MatTabsModule} from "@angular/material/tabs";
     MatSelectModule,
     MatStepperModule,
     MatRadioModule,
-    MatCheckboxModule,
-    ComponentsModule,
-    MatTabsModule
+    MatCheckboxModule
   ],
   exports: [
-    HomeComponent
+    NavbarComponent
   ],
   bootstrap: []
 })
-export class PagesModule {
+export class ComponentsModule {
 }

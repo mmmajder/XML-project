@@ -16,14 +16,12 @@ import {MatDividerModule} from "@angular/material/divider";
 import {HttpClientModule} from '@angular/common/http';
 import {MatCardModule} from "@angular/material/card";
 import {MatSelectModule} from "@angular/material/select";
-import {NavbarComponent} from './components/navbar/navbar.component';
 import {MatMenuModule} from "@angular/material/menu";
 import {PagesModule} from "./pages/pages.module";
 
 @NgModule({
   declarations: [
     AppComponent,
-    NavbarComponent
   ],
   imports: [
     BrowserModule,
@@ -47,6 +45,8 @@ import {PagesModule} from "./pages/pages.module";
     PagesModule
   ],
   providers: [],
+  exports: [
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
