@@ -1,0 +1,32 @@
+<mat-card style="padding: 30px; border-radius: 20px">
+  <mat-card-title>Dobro došli</mat-card-title>
+  <mat-card-subtitle>Molimo vas unesite email adresu i lozinku</mat-card-subtitle>
+  <mat-card-content>
+    <mat-form-field style="width: 100%; margin-top: 20px" appearance="outline">
+      <mat-label>Unesite email adresu</mat-label>
+      <input type="email" matInput [formControl]="emailFormControl" [(ngModel)]="email"
+             placeholder="Npr. pat@example.com">
+      <mat-error *ngIf="emailFormControl.hasError('email') && !emailFormControl.hasError('required')">
+        Molimo vas unesite validnu email adresu.
+      </mat-error>
+      <mat-error *ngIf="emailFormControl.hasError('required')">
+        Email adresa je <strong>obavezna</strong>.
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field style="width: 100%; margin-top: 20px" appearance="outline">
+      <mat-label>Unesite lozinku</mat-label>
+      <input matInput [type]="hide ? 'password' : 'text'" [formControl]="passwordFormControl" [(ngModel)]="password">
+      <button mat-icon-button matSuffix (click)="hide = !hide" [attr.aria-label]="'Hide password'"
+              [attr.aria-pressed]="hide">
+        <mat-icon>{{hide ? 'visibility_off' : 'visibility'}}</mat-icon>
+      </button>
+      <mat-error *ngIf="passwordFormControl.hasError('required')">
+        Lozinka je <strong>obavezna</strong>
+      </mat-error>
+    </mat-form-field>
+    <button mat-raised-button color="primary" style="width: 100%; margin-top: 20px; margin-bottom: 10px"
+            (click)="login()">Uloguj se
+    </button>
+    <a mat-button style="width: 100%" (click)="switchToRegisterForm()">Kreiraj nalog <i class="material-icons">arrow_forward</i></a>
+  </mat-card-content>
+</mat-card>

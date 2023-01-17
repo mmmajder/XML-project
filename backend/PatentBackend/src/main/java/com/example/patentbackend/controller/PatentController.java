@@ -32,12 +32,12 @@ public class PatentController {
         return ResponseEntity.ok(zahtevZaPriznanjePatenta);
     }
 
-    @GetMapping(path="/pending", produces = "application/xml")
+    @GetMapping(path = "/pending", produces = "application/xml")
     public ResponseEntity<List<ZahtevZaPriznanjePatenta>> getAllPending() {
         return ResponseEntity.ok(patentService.getAllPending());
     }
 
-    @GetMapping(path="/accepted", produces = "application/xml")
+    @GetMapping(path = "/accepted", produces = "application/xml")
     public ResponseEntity<List<ZahtevZaPriznanjePatenta>> getAllAccepted() {
         return ResponseEntity.ok(patentService.getAllAccepted());
     }

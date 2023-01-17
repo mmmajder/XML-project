@@ -21,7 +21,7 @@ public class FusekiReader {
         QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);
         ResultSet results = query.execSelect();
         ResultSetFormatter.out(System.out, results);
-        query.close() ;
+        query.close();
     }
 
 //	public static ArrayList<String> run(Map<String, String> params) throws IOException{

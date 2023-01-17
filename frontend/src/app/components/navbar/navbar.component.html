@@ -1,0 +1,15 @@
+<mat-toolbar color="primary">
+  <span>Obrada zahteva za prava intelektualne svojine</span>
+  <span class="example-spacer"></span>
+  <a mat-button href="/search"><mat-icon>search</mat-icon></a>
+  <button mat-icon-button [matMenuTriggerFor]="menu">
+    <mat-icon>more_vert</mat-icon>
+  </button>
+  <mat-menu #menu="matMenu">
+    <a mat-button href="/autorska-prava">Autorska prava</a>
+    <a mat-button href="/patenti">Patenti</a>
+    <a mat-button href="/zigovi">Žigovi</a>
+    <a mat-button href="/home"><mat-icon>home</mat-icon></a>
+    <a mat-button href="/"><mat-icon>logout</mat-icon></a>
+  </mat-menu>
+</mat-toolbar>
