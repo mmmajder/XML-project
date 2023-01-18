@@ -26,6 +26,8 @@ import {MatRadioModule} from "@angular/material/radio";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {ComponentsModule} from "../components/components.module";
 import {MatTabsModule} from "@angular/material/tabs";
+import {MatListModule} from "@angular/material/list";
+import {MatButtonToggleModule} from "@angular/material/button-toggle";
 
 @NgModule({
   declarations: [
@@ -58,7 +60,9 @@ import {MatTabsModule} from "@angular/material/tabs";
     MatRadioModule,
     MatCheckboxModule,
     ComponentsModule,
-    MatTabsModule
+    MatTabsModule,
+    MatListModule,
+    MatButtonToggleModule
   ],
   exports: [
     HomeComponent

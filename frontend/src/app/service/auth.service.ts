@@ -5,6 +5,7 @@ import {Observable} from "rxjs";
 import {LoginCredentials} from "../model/shared/LoginCredentials";
 import {RegisterCredentials} from "../model/shared/RegisterCredentials";
 import {User} from "../model/shared/User";
+import * as JsonToXML from "js2xmlparser";
 
 @Injectable({
   providedIn: 'root'
@@ -22,7 +23,9 @@ export class AuthService {
       "email": user.email,
       "password": user.password
     }
-    return this.http.post<LoginResponseDto>(this.authUrl + '/login', body, AuthService.getHttpOptions());
+    const xmlZahtev = JsonToXML.parse("authenticationRequest", body);
+    console.log(xmlZahtev)
+    return this.http.post<LoginResponseDto>(this.authUrl + '/login', xmlZahtev, AuthService.getHttpOptions());
   }
 
   public register(user: RegisterCredentials): Observable<string> {

@@ -5,7 +5,6 @@ import com.example.authservice.model.User;
 import com.example.authservice.service.AuthentificationService;
 import com.example.authservice.service.DTOMapper;
 import com.example.authservice.service.UserService;
-import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -13,17 +12,19 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+
 @RestController
 @AllArgsConstructor
 @CrossOrigin(origins = "*")
-@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
 public class AuthController {
     private final AuthentificationService authentificationService;
     private final UserService userService;
 
-    @PostMapping("/login")
+    @PostMapping(path="/login", produces = "application/xml", consumes = "application/xml;charset=UTF-8")
     public ResponseEntity<LoginResponseDTO> createAuthenticationToken(
-            @Valid @RequestBody JwtAuthenticationRequest authenticationRequest) {
+            @RequestBody JwtAuthenticationRequest authenticationRequest) {
 
         LoginResponseDTO loginResponseDTO = authentificationService.login(authenticationRequest);
         if (loginResponseDTO == null) {
@@ -37,7 +38,7 @@ public class AuthController {
         // TODO
     }
 
-    @PostMapping("/register")
+    @PostMapping(path="/register", produces = "application/xml", consumes = "application/xml")
     public ResponseEntity<String> addUser(@RequestBody CreateUserDTO userDTO) {
         User user = authentificationService.addUser(userDTO);
         if (user == null) {

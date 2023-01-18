@@ -2,6 +2,8 @@ package com.example.authservice.config;
 
 import com.example.authservice.service.UserService;
 import com.example.authservice.utils.TokenUtils;
+import com.example.authservice.utils.auth.RestAuthenticationEntryPoint;
+import com.example.authservice.utils.auth.TokenAuthenticationFilter;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

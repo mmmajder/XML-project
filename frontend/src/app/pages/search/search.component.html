@@ -1,16 +1,45 @@
 <app-navbar></app-navbar>
 
-<div style="margin: 10px">
-  <h3>Pretražite dokumente po tekstualnom sadržaju ili po metapodacima</h3>
+<mat-tab-group backgroundColor="primary" color="accent">
+  <mat-tab label="Pretraga">
+    <div style="margin: 20px">
+      <mat-form-field appearance="outline" style="width: 50%; min-width: 200px">
+        <mat-label>Pretraži dokumente po jednoj ili više ključnih reči odvojenim razmakom</mat-label>
+        <input matInput type="text" [(ngModel)]="search">
+        <button *ngIf="search" matSuffix mat-icon-button aria-label="Clear" (click)="search=''">
+          <mat-icon>close</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+  </mat-tab>
 
-  <mat-form-field appearance="outline" style="width: 50%; min-width: 200px">
-    <mat-label>Pretraži dokumente</mat-label>
-    <input matInput type="text" [(ngModel)]="search">
-    <button *ngIf="search" matSuffix mat-icon-button aria-label="Clear" (click)="search=''">
-      <mat-icon>close</mat-icon>
-    </button>
-  </mat-form-field>
-</div>
+  <mat-tab label="Napredna pretraga">
+    <div style="=overflow-y: scroll; min-height: 250px; margin: 20px">
+      <div style="display: inline" *ngFor="let i in metapodaci">
+        <mat-button-toggle-group [(ngModel)]="metapodaci[i].operator">
+          <mat-button-toggle value="i">I</mat-button-toggle>
+          <mat-button-toggle value="ili">ILI</mat-button-toggle>
+          <mat-button-toggle value="ne">NE</mat-button-toggle>
+        </mat-button-toggle-group>
+
+        <mat-label>Vrsta metapodatka</mat-label>
+        <mat-select [(ngModel)]="metapodaci[i].vrsta">
+          <mat-option *ngFor="let meta of sviMetapodaci" [value]="meta">{{meta}}</mat-option>
+        </mat-select>
+
+        <mat-form-field appearance="outline" style="width: 50%; min-width: 200px">
+          <mat-label>Vrednost metapodatka</mat-label>
+          <input matInput type="text" [(ngModel)]="metapodaci[i].vrednost">
+        </mat-form-field>
+
+        <button mat-stroked-button color="warn" (click)="removeMeta(i)">Ukloni</button>
+
+        <mat-divider></mat-divider>
+      </div>
+      <button mat-stroked-button color="primary" (click)="addMeta()">Dodaj novi metapodatak</button>
+    </div>
+  </mat-tab>
+</mat-tab-group>
 
 <mat-tab-group>
   <mat-tab label="Autorska dela"></mat-tab>
