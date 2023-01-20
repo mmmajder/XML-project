@@ -12,7 +12,7 @@ export class Zahtev {
 }
 
 export class DetaljiOZahtevu {
-  zahtev!: Zahtev;
+  zahtev: Zahtev = new Zahtev();
   obrada: ObradaZahteva | undefined;
 }
 

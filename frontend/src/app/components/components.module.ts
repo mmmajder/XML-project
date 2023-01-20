@@ -17,44 +17,43 @@ import {MatStepperModule} from "@angular/material/stepper";
 import {MatRadioModule} from "@angular/material/radio";
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {NavbarComponent} from "./navbar/navbar.component";
-import { RequestCardComponent } from './request-card/request-card.component';
+import {RequestCardComponent} from './request-card/request-card.component';
 import {MatDividerModule} from "@angular/material/divider";
-import { RazlogOdbijanjaDialogComponent } from './razlog-odbijanja-dialog/razlog-odbijanja-dialog.component';
-import { ZahtevHtmlComponent } from './zahtev-html/zahtev-html.component';
+import {RazlogOdbijanjaDialogComponent} from './razlog-odbijanja-dialog/razlog-odbijanja-dialog.component';
+import {DetailsComponent} from "./details/details.component";
 
 @NgModule({
   declarations: [
     NavbarComponent,
     RequestCardComponent,
     RazlogOdbijanjaDialogComponent,
-    ZahtevHtmlComponent
+    DetailsComponent
   ],
-    imports: [
-        MatToolbarModule,
-        MatIconModule,
-        MatButtonModule,
-        MatTableModule,
-        MatCardModule,
-        MatSortModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDialogModule,
-        FormsModule,
-        CommonModule,
-        MatSnackBarModule,
-        ReactiveFormsModule,
-        MatMenuModule,
-        MatSelectModule,
-        MatStepperModule,
-        MatRadioModule,
-        MatCheckboxModule,
-        MatDividerModule
-    ],
-    exports: [
-        NavbarComponent,
-        RequestCardComponent,
-        ZahtevHtmlComponent
-    ],
+  imports: [
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTableModule,
+    MatCardModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    FormsModule,
+    CommonModule,
+    MatSnackBarModule,
+    ReactiveFormsModule,
+    MatMenuModule,
+    MatSelectModule,
+    MatStepperModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatDividerModule
+  ],
+  exports: [
+    NavbarComponent,
+    RequestCardComponent,
+  ],
   bootstrap: []
 })
 export class ComponentsModule {

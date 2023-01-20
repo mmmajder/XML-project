@@ -28,7 +28,6 @@ import {ComponentsModule} from "../components/components.module";
 import {MatTabsModule} from "@angular/material/tabs";
 import {MatListModule} from "@angular/material/list";
 import {MatButtonToggleModule} from "@angular/material/button-toggle";
-import { DetailsComponent } from './details/details.component';
 import {MatGridListModule} from "@angular/material/grid-list";
 
 @NgModule({
@@ -41,33 +40,32 @@ import {MatGridListModule} from "@angular/material/grid-list";
     SearchComponent,
     ZigoviComponent,
     PatentiComponent,
-    DetailsComponent
   ],
-    imports: [
-        MatToolbarModule,
-        MatIconModule,
-        MatButtonModule,
-        MatTableModule,
-        MatCardModule,
-        MatSortModule,
-        MatFormFieldModule,
-        MatInputModule,
-        MatDialogModule,
-        FormsModule,
-        CommonModule,
-        MatSnackBarModule,
-        ReactiveFormsModule,
-        MatMenuModule,
-        MatSelectModule,
-        MatStepperModule,
-        MatRadioModule,
-        MatCheckboxModule,
-        ComponentsModule,
-        MatTabsModule,
-        MatListModule,
-        MatButtonToggleModule,
-        MatGridListModule
-    ],
+  imports: [
+    MatToolbarModule,
+    MatIconModule,
+    MatButtonModule,
+    MatTableModule,
+    MatCardModule,
+    MatSortModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatDialogModule,
+    FormsModule,
+    CommonModule,
+    MatSnackBarModule,
+    ReactiveFormsModule,
+    MatMenuModule,
+    MatSelectModule,
+    MatStepperModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    ComponentsModule,
+    MatTabsModule,
+    MatListModule,
+    MatButtonToggleModule,
+    MatGridListModule
+  ],
   exports: [
     HomeComponent
   ],

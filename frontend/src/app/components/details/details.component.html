@@ -1,8 +1,7 @@
-<app-navbar></app-navbar>
 <div style="margin: 20px">
-  <h1>{{detaljiOZahtevu.zahtev.brojPrijave}}</h1>
   <div *ngIf="!detaljiOZahtevu.zahtev.obradjen">
-    <h2>OBRAĐEN ZAHTEV</h2>
+    <h4 style="color: gray">OBRAĐEN ZAHTEV</h4>
+    <h1>{{brojPrijave}}</h1>
     <p>Datum obrade: {{detaljiOZahtevu.obrada?.datumObrade}}</p>
     <p>Službenik: {{detaljiOZahtevu.obrada?.sluzbenik?.name}} {{detaljiOZahtevu.obrada?.sluzbenik?.surname}}
       <span style="color: gray">({{detaljiOZahtevu.obrada?.sluzbenik?.email}})</span>
@@ -12,14 +11,35 @@
       <span *ngIf="detaljiOZahtevu.obrada?.odbijen" style="color: darkred; font-weight: 500">ODBIJEN</span>
     </p>
     <p *ngIf="detaljiOZahtevu.obrada?.odbijen">Razlog odbijanja:
-      <span style="color:gray;">{{detaljiOZahtevu.obrada?.razlogOdbijanja}}</span>
+      <span style="color:gray">{{detaljiOZahtevu.obrada?.razlogOdbijanja}}</span>
     </p>
   </div>
   <div *ngIf="detaljiOZahtevu.zahtev.obradjen">
-    <h2>NEOBRAĐEN ZAHTEV</h2>
+    <h4 style="color: gray">NEOBRAĐEN ZAHTEV</h4>
+    <h1>{{brojPrijave}}</h1>
     <button mat-raised-button color="primary" (click)="prihvatiZahtev()">PRIHVATI ZAHTEV</button>
     <button mat-raised-button color="warn" (click)="odbijanjeZahteva()">ODBIJ ZAHTEV</button>
   </div>
-
-  <app-zahtev-html [brojPrijave]="brojPrijave"></app-zahtev-html>
+  <button mat-flat-button style="width: 100%" [matMenuTriggerFor]="menu" color="primary">
+    <mat-icon>download</mat-icon>
+    Preuzimanje
+  </button>
+  <mat-menu #menu="matMenu">
+    <button mat-menu-item>
+      <mat-icon color="primary">picture_as_pdf</mat-icon>
+      PDF format
+    </button>
+    <button mat-menu-item>
+      <mat-icon color="primary">html</mat-icon>
+      HTML format
+    </button>
+    <button mat-menu-item>
+      <mat-icon color="primary">data_object</mat-icon>
+      JSON format
+    </button>
+    <button mat-menu-item>
+      <mat-icon color="primary">filter_3</mat-icon>
+      RDF format
+    </button>
+  </mat-menu>
 </div>

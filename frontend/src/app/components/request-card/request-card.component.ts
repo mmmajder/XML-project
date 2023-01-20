@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {Zahtev} from "../../model/shared/Zahtev";
-import {Router} from "@angular/router";
+import {MatDialog} from "@angular/material/dialog";
+import {DetailsComponent} from "../details/details.component";
 
 @Component({
   selector: 'app-request-card',
@@ -10,10 +11,14 @@ import {Router} from "@angular/router";
 export class RequestCardComponent {
   @Input() zahtev: Zahtev = new Zahtev();
 
-  constructor(private route: Router) {
+  constructor(private dialog: MatDialog) {
+    console.log(this.zahtev)
   }
 
   detaljiOZahtevu() {
-    this.route.navigate(["/zahtev/" + this.zahtev.brojPrijave]);
+    this.dialog.open(DetailsComponent, {
+      width: '400px',
+      data: this.zahtev.brojPrijave
+    });
   }
 }
