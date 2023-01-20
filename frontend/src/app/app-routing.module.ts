@@ -6,6 +6,7 @@ import {ZigoviComponent} from "./pages/zigovi/zigovi.component";
 import {HomeComponent} from "./pages/home/home.component";
 import {LoginComponent} from "./pages/login/login.component";
 import {SearchComponent} from "./pages/search/search.component";
+import {DetailsComponent} from "./pages/details/details.component";
 
 const routes: Routes = [
   {path: '', component: LoginComponent},
@@ -14,6 +15,7 @@ const routes: Routes = [
   {path: 'autorska-prava', component: AutorskaPravaComponent},
   {path: 'patenti', component: PatentiComponent},
   {path: 'zigovi', component: ZigoviComponent},
+  {path: 'zahtev/:brojPrijave', component: DetailsComponent},
 ];
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

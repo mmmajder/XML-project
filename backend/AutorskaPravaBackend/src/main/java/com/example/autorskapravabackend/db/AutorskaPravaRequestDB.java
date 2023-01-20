@@ -4,16 +4,18 @@ import com.example.autorskapravabackend.marshal.Marshal;
 import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
 import com.example.autorskapravabackend.utils.AuthenticationUtilities;
 import com.example.autorskapravabackend.utils.DBSetup;
+import org.exist.xmldb.EXistResource;
 import org.xmldb.api.DatabaseManager;
-import org.xmldb.api.base.Collection;
-import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.base.*;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
+import org.xmldb.api.modules.XPathQueryService;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
 
 import java.io.OutputStream;
+import java.util.List;
 
 import static com.example.autorskapravabackend.utils.Utils.formatNameOfRequest;
 
@@ -114,5 +116,48 @@ public class AutorskaPravaRequestDB {
         } else {
             return col;
         }
+    }
+
+    public static List<ZahtevZaAutorskaPrava> getZahtevi() {
+        try {
+            AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+            String collectionId = DBSetup.setupDBConnection(conn);
+            Collection col = getOrCreateCollection(collectionId, conn);
+
+            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            xpathService.setProperty("indent", "yes");
+
+            // make the service aware of namespaces, using the default one
+            xpathService.setNamespace("aut", "http://www.ftn.uns.ac.rs/autorskoDelo");
+            String xpathExp = "aut:Zahtev_za_autorska_prava";
+
+            // execute xpath expression
+            System.out.println("[INFO] Invoking XPath query service for: " + xpathExp);
+            ResourceSet result = xpathService.query(xpathExp);
+
+            // handle the results
+            System.out.println("[INFO] Handling the results... ");
+
+            ResourceIterator i = result.getIterator();
+            Resource res = null;
+            while (i.hasMoreResources()) {
+
+                try {
+                    res = i.nextResource();
+                    System.out.println(res.getContent());
+
+                } finally {
+                    try {
+                        assert res != null;
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

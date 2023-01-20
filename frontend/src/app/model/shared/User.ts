@@ -5,3 +5,9 @@ export class User {
   phoneNumber!: string;
   role!: string;
 }
+
+export class SimpleUser {
+  email!: string;
+  name!: string;
+  surname!: string;
+}

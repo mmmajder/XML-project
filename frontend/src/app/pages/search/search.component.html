@@ -2,47 +2,104 @@
 
 <mat-tab-group backgroundColor="primary" color="accent">
   <mat-tab label="Pretraga">
-    <div style="margin: 20px">
-      <mat-form-field appearance="outline" style="width: 50%; min-width: 200px">
-        <mat-label>Pretraži dokumente po jednoj ili više ključnih reči odvojenim razmakom</mat-label>
-        <input matInput type="text" [(ngModel)]="search">
-        <button *ngIf="search" matSuffix mat-icon-button aria-label="Clear" (click)="search=''">
-          <mat-icon>close</mat-icon>
-        </button>
-      </mat-form-field>
+    <div style="margin: 20px" class="text-center">
+      <p style="margin-bottom: 20px">
+        <span (click)="selected = 'A'" style="margin-right: 5px" class="nonSelectedButton"
+              [ngClass]="{'selectedButton' : selected == 'A'}">Zahtevi za Autorska prava
+        </span>
+        <span (click)="selected = 'P'" style="margin-right: 5px" class="nonSelectedButton"
+              [ngClass]="{'selectedButton' : selected == 'P'}">Zahtevi za Patente
+        </span>
+        <span (click)="selected = 'Z'" style="margin-right: 5px" class="nonSelectedButton"
+              [ngClass]="{'selectedButton' : selected == 'Z'}">Zahtevi za Žigove
+        </span>
+      </p>
+      <p>
+        <mat-form-field appearance="outline" style="width: 50%; min-width: 200px">
+          <mat-label>Pretraži dokumente po jednoj ili više ključnih reči odvojenim razmakom</mat-label>
+          <input matInput type="text" [(ngModel)]="simpleSearchText">
+          <button matSuffix mat-icon-button color="primary" (click)="search()">
+            <mat-icon>search</mat-icon>
+          </button>
+        </mat-form-field>
+      </p>
     </div>
   </mat-tab>
 
   <mat-tab label="Napredna pretraga">
-    <div style="=overflow-y: scroll; min-height: 250px; margin: 20px">
-      <div style="display: inline" *ngFor="let i in metapodaci">
-        <mat-button-toggle-group [(ngModel)]="metapodaci[i].operator">
-          <mat-button-toggle value="i">I</mat-button-toggle>
-          <mat-button-toggle value="ili">ILI</mat-button-toggle>
-          <mat-button-toggle value="ne">NE</mat-button-toggle>
-        </mat-button-toggle-group>
-
-        <mat-label>Vrsta metapodatka</mat-label>
-        <mat-select [(ngModel)]="metapodaci[i].vrsta">
-          <mat-option *ngFor="let meta of sviMetapodaci" [value]="meta">{{meta}}</mat-option>
-        </mat-select>
-
-        <mat-form-field appearance="outline" style="width: 50%; min-width: 200px">
-          <mat-label>Vrednost metapodatka</mat-label>
-          <input matInput type="text" [(ngModel)]="metapodaci[i].vrednost">
-        </mat-form-field>
-
-        <button mat-stroked-button color="warn" (click)="removeMeta(i)">Ukloni</button>
-
-        <mat-divider></mat-divider>
-      </div>
+    <div style="margin: 20px" class="text-center">
+      <p style="margin-bottom: 20px">
+        <span (click)="selected = 'A'" style="margin-right: 5px" class="nonSelectedButton"
+              [ngClass]="{'selectedButton' : selected == 'A'}">Zahtevi za Autorska prava
+        </span>
+        <span (click)="selected = 'P'" style="margin-right: 5px" class="nonSelectedButton"
+              [ngClass]="{'selectedButton' : selected == 'P'}">Zahtevi za Patente
+        </span>
+        <span (click)="selected = 'Z'" style="margin-right: 5px" class="nonSelectedButton"
+              [ngClass]="{'selectedButton' : selected == 'Z'}">Zahtevi za Žigove
+        </span>
+      </p>
       <button mat-stroked-button color="primary" (click)="addMeta()">Dodaj novi metapodatak</button>
+      <button mat-raised-button color="primary" (click)="search()" style="margin-left: 5px">
+        <mat-icon>search</mat-icon> Pretraži
+      </button>
+
+      <div style="margin: 20px">
+        <div style="display: inline" *ngFor="let item of metapodaci; let i = index" [attr.data-index]="i">
+          <mat-button-toggle-group [(ngModel)]="metapodaci[i].operator" style="margin-right: 5px">
+            <mat-button-toggle value="i">I</mat-button-toggle>
+            <mat-button-toggle value="ili">ILI</mat-button-toggle>
+            <mat-button-toggle value="ne">NE</mat-button-toggle>
+          </mat-button-toggle-group>
+
+          <mat-form-field appearance="outline" style="margin-right: 5px; min-width: 250px">
+            <mat-label>Vrsta metapodatka</mat-label>
+            <mat-select [(ngModel)]="metapodaci[i].vrsta" required>
+              <mat-option *ngFor="let meta of sviMetapodaci" [value]="meta">{{meta}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="margin-right: 5px; min-width: 250px">
+            <mat-label>Vrednost metapodatka</mat-label>
+            <input matInput type="text" [(ngModel)]="metapodaci[i].vrednost" required>
+          </mat-form-field>
+
+          <button mat-button color="warn" (click)="removeMeta(i)" [disabled]="metapodaci.length == 1">
+            Ukloni metapodatak
+          </button>
+          <mat-divider style="margin-bottom: 10px; margin-top: -10px"></mat-divider>
+        </div>
+      </div>
     </div>
   </mat-tab>
 </mat-tab-group>
 
-<mat-tab-group>
-  <mat-tab label="Autorska dela"></mat-tab>
-  <mat-tab label="Patenti"> Content 2</mat-tab>
-  <mat-tab label="Žigovi"> Content 3</mat-tab>
-</mat-tab-group>
+<div *ngIf="searched">
+  <div *ngIf="rezultatiPretrage.length == 0" style="text-align: center;">
+    <img src="assets/nemaRezultata.png" style="height: 350px" alt="no-results">
+  </div>
+  <div *ngIf="rezultatiPretrage.length > 0">
+    <div *ngFor="let i of fifthIndexesOfResults" class="row" style="margin: 10px">
+      <div class="col-md-2 text-center">
+        <app-request-card [zahtev]="rezultatiPretrage[i]"></app-request-card>
+      </div>
+      <div class="col-md-2 text-center">
+        <app-request-card *ngIf="i * 5 + 1 < rezultatiPretrage.length"
+                          [zahtev]="rezultatiPretrage[i + 1]"></app-request-card>
+      </div>
+      <div class="col-md-2 text-center">
+        <app-request-card *ngIf="i * 5 + 2 < rezultatiPretrage.length"
+                          [zahtev]="rezultatiPretrage[i + 2]"></app-request-card>
+      </div>
+      <div class="col-md-2 text-center">
+        <app-request-card *ngIf="i * 5 + 3 < rezultatiPretrage.length"
+                          [zahtev]="rezultatiPretrage[i + 3]"></app-request-card>
+      </div>
+
+      <div class="col-md-2 text-center">
+        <app-request-card *ngIf="i * 5 + 4 < rezultatiPretrage.length"
+                          [zahtev]="rezultatiPretrage[i + 4]"></app-request-card>
+      </div>
+    </div>
+  </div>
+</div>

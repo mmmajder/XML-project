@@ -1,0 +1,25 @@
+<app-navbar></app-navbar>
+<div style="margin: 20px">
+  <h1>{{detaljiOZahtevu.zahtev.brojPrijave}}</h1>
+  <div *ngIf="!detaljiOZahtevu.zahtev.obradjen">
+    <h2>OBRAĐEN ZAHTEV</h2>
+    <p>Datum obrade: {{detaljiOZahtevu.obrada?.datumObrade}}</p>
+    <p>Službenik: {{detaljiOZahtevu.obrada?.sluzbenik?.name}} {{detaljiOZahtevu.obrada?.sluzbenik?.surname}}
+      <span style="color: gray">({{detaljiOZahtevu.obrada?.sluzbenik?.email}})</span>
+    </p>
+    <p>Status zahteva:
+      <span *ngIf="!detaljiOZahtevu.obrada?.odbijen" style="color: darkgreen; font-weight: 500">PRIHVAĆEN</span>
+      <span *ngIf="detaljiOZahtevu.obrada?.odbijen" style="color: darkred; font-weight: 500">ODBIJEN</span>
+    </p>
+    <p *ngIf="detaljiOZahtevu.obrada?.odbijen">Razlog odbijanja:
+      <span style="color:gray;">{{detaljiOZahtevu.obrada?.razlogOdbijanja}}</span>
+    </p>
+  </div>
+  <div *ngIf="detaljiOZahtevu.zahtev.obradjen">
+    <h2>NEOBRAĐEN ZAHTEV</h2>
+    <button mat-raised-button color="primary" (click)="prihvatiZahtev()">PRIHVATI ZAHTEV</button>
+    <button mat-raised-button color="warn" (click)="odbijanjeZahteva()">ODBIJ ZAHTEV</button>
+  </div>
+
+  <app-zahtev-html [brojPrijave]="brojPrijave"></app-zahtev-html>
+</div>

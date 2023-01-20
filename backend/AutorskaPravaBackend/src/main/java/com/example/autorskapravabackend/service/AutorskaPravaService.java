@@ -1,15 +1,18 @@
 package com.example.autorskapravabackend.service;
 
-import com.example.autorskapravabackend.dto.ZahtevZaAutorskaPravaDTO;
+import com.example.autorskapravabackend.dto.*;
 import com.example.autorskapravabackend.mapper.Mapper;
 import com.example.autorskapravabackend.model.InformacijeOZahtevu;
+import com.example.autorskapravabackend.model.ResenjeZahteva;
 import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
 import com.example.autorskapravabackend.repository.AutorskaPravaRepository;
 import com.example.autorskapravabackend.transformer.AutorskaPravaTransformer;
+import com.example.autorskapravabackend.utils.Utils;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.List;
 
 @Service
 public class AutorskaPravaService {
@@ -18,6 +21,10 @@ public class AutorskaPravaService {
 
     public ZahtevZaAutorskaPrava getZahtev(String brojPrijave) {
         return autorskaPravaRepository.getZahtev(brojPrijave);
+    }
+
+    public List<ZahtevZaAutorskaPrava> getZahtevi() {
+        return autorskaPravaRepository.getZahtevi();
     }
 
     public ZahtevZaAutorskaPrava createZahtevZaAutorskaPrava(ZahtevZaAutorskaPravaDTO dto) {

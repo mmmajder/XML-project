@@ -1,0 +1,12 @@
+<h1 mat-dialog-title>Odbijanje zahteva {{brojPrijave}}</h1>
+<div mat-dialog-content>
+  <mat-form-field style="width: 100%;">
+    <mat-label>Unesite razlog odbijanja</mat-label>
+    <textarea matInput placeholder="Npr. nije priložen dokument o..." required></textarea>
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button mat-dialog-close>Odustani</button>
+  <button mat-raised-button color="warn" (click)="odbijZahtev()" mat-dialog-close cdkFocusInitial>ODBIJANJE ZAHTEVA
+  </button>
+</div>

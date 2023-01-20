@@ -1,6 +1,7 @@
 package com.example.autorskapravabackend.controller;
 
 import com.example.autorskapravabackend.dto.BrojPrijaveDTO;
+import com.example.autorskapravabackend.dto.DetaljiOZahtevu;
 import com.example.autorskapravabackend.dto.ZahtevZaAutorskaPravaDTO;
 import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
 import com.example.autorskapravabackend.service.AutorskaPravaService;
@@ -42,4 +43,5 @@ public class ZahtevController {
         }
         return ResponseEntity.ok("Doslo je do greske prilikom generisanja pdf");
     }
+
 }
