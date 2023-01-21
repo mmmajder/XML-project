@@ -1,15 +1,16 @@
 package com.example.autorskapravabackend.service;
 
-import com.example.autorskapravabackend.dto.*;
+import com.example.autorskapravabackend.dto.ZahtevZaAutorskaPravaDTO;
 import com.example.autorskapravabackend.mapper.Mapper;
 import com.example.autorskapravabackend.model.InformacijeOZahtevu;
-import com.example.autorskapravabackend.model.ResenjeZahteva;
 import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
 import com.example.autorskapravabackend.repository.AutorskaPravaRepository;
 import com.example.autorskapravabackend.transformer.AutorskaPravaTransformer;
-import com.example.autorskapravabackend.utils.Utils;
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
@@ -43,21 +44,27 @@ public class AutorskaPravaService {
         zahtev.setInformacijeOZahtevu(osnovneInformacije);
     }
 
-    public boolean generateHTML(String brojPrijave) {
-        ZahtevZaAutorskaPrava zahtev = getZahtev(brojPrijave);
-        if (zahtev == null) {
-            return false;
+    public ByteArrayInputStream generateHTML(String brojPrijave) {
+        ByteArrayInputStream byteArrayInputStream;
+        try {
+            AutorskaPravaTransformer.generateHTML(getZahtev(brojPrijave));
+            File htmlFile = new File("src/main/resources/gen/xhtml/autorskaPrava_" + brojPrijave.replace('/', '_') + ".html");
+            byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(htmlFile));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        AutorskaPravaTransformer.generateHTML(zahtev);
-        return true;
+        return byteArrayInputStream;
     }
 
-    public boolean generatePDF(String brojPrijave) {
-        ZahtevZaAutorskaPrava zahtev = getZahtev(brojPrijave);
-        if (zahtev == null) {
-            return false;
+    public ByteArrayInputStream generatePDF(String brojPrijave) {
+        ByteArrayInputStream byteArrayInputStream;
+        try {
+            AutorskaPravaTransformer.generatePDF(getZahtev(brojPrijave));
+            File pdfFile = new File("src/main/resources/gen/pdf/autorskaPrava_" + brojPrijave.replace('/', '_') + ".pdf");
+            byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(pdfFile));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
-        AutorskaPravaTransformer.generatePDF(zahtev);
-        return true;
+        return byteArrayInputStream;
     }
 }

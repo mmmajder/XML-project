@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*;
 @AllArgsConstructor
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value = "/autorskaPrava", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/autorskaPrava", produces = MediaType.APPLICATION_XML_VALUE)
 public class ZahtevController {
 
     private AutorskaPravaService autorskaPravaService;
@@ -26,22 +26,6 @@ public class ZahtevController {
     @PostMapping(consumes = "application/xml", produces = "application/xml")
     public ResponseEntity<ZahtevZaAutorskaPrava> createZahtev(@RequestBody ZahtevZaAutorskaPravaDTO dto) {
         return ResponseEntity.ok(autorskaPravaService.createZahtevZaAutorskaPrava(dto));
-    }
-
-    @PostMapping(path = "/generate-html", consumes = "application/xml")
-    public ResponseEntity<String> generateHTML(@RequestBody BrojPrijaveDTO brojPrijave) {
-        if (autorskaPravaService.generateHTML(brojPrijave.getBroj())) {
-            return ResponseEntity.ok("Uspesno generisan html");
-        }
-        return ResponseEntity.ok("Doslo je do greske prilikom generisanja html");
-    }
-
-    @PostMapping(path = "/generate-pdf", consumes = "application/xml")
-    public ResponseEntity<String> generatePDF(@RequestBody BrojPrijaveDTO brojPrijave) {
-        if (autorskaPravaService.generatePDF(brojPrijave.getBroj())) {
-            return ResponseEntity.ok("Uspesno generisan pdf");
-        }
-        return ResponseEntity.ok("Doslo je do greske prilikom generisanja pdf");
     }
 
 }

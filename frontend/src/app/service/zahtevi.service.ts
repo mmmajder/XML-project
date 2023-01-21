@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpEvent, HttpHeaders} from '@angular/common/http';
 import {Observable} from "rxjs";
 import {AuthService} from "./auth.service";
 import * as JsonToXML from "js2xmlparser";
@@ -43,5 +43,37 @@ export class ZahteviService {
 
   odbij(brojPrijave: string | null, razlogOdbijanja: string) {
     // TODO
+  }
+
+  public downloadPDF(brojPrijave: string): Observable<Blob> {
+    const xmlZahtev = JsonToXML.parse("brojPrijave", {'broj': brojPrijave});
+    return this.http.post<Blob>(this.getUrl(brojPrijave) + "/download/pdf", xmlZahtev, this.getDownloadHttpOptions());
+  }
+
+  public downloadHTML(brojPrijave: string): Observable<Blob> {
+    const xmlZahtev = JsonToXML.parse("brojPrijave", {'broj': brojPrijave});
+    return this.http.post<Blob>(this.getUrl(brojPrijave) + "/download/html", xmlZahtev, this.getDownloadHttpOptions());
+  }
+
+  //
+  // public downloadRDF(brojPrijave: string): Observable<Blob> {
+  //   const xmlZahtev = JsonToXML.parse("brojPrijave", brojPrijave);
+  //   return this.http.post<Blob>(this.getUrl(brojPrijave) + "/download/rdf", xmlZahtev, this.getDownloadHttpOptions());
+  // }
+  //
+  // public downloadJSON(brojPrijave: string): Observable<Blob> {
+  //   const xmlZahtev = JsonToXML.parse("brojPrijave", brojPrijave);
+  //   return this.http.post<Blob>(this.getUrl(brojPrijave) + "/download/json", xmlZahtev, this.getDownloadHttpOptions());
+  // }
+
+  public getDownloadHttpOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': localStorage.getItem('token') || 'authkey',
+        'Content-Type': 'application/xml',
+      }),
+      responseType: 'blob' as 'json'
+    };
   }
 }

@@ -13,7 +13,7 @@ import java.io.IOException;
 @AllArgsConstructor
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value = "/autorskaPravaResenje", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/autorskaPravaResenje", produces = MediaType.APPLICATION_XML_VALUE)
 public class ResenjeZahtevaController {
 
     private ResenjeService resenjeService;

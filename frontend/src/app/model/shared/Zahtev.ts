@@ -1,7 +1,7 @@
 import {SimpleUser} from "./User";
 
 export class Zahtev {
-  brojPrijave: string = "A-200/2019";
+  brojPrijave: string = "A-2023/27";
   datumPodnosenja: string = "20.01.2023.";
   podnosioc: SimpleUser = {
     "name": "Pera",

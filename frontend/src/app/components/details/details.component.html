@@ -25,21 +25,21 @@
     Preuzimanje
   </button>
   <mat-menu #menu="matMenu">
-    <button mat-menu-item>
+    <button mat-menu-item (click)="downloadPDF()">
       <mat-icon color="primary">picture_as_pdf</mat-icon>
-      PDF format
+      Zahtev u PDF formatu
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item (click)="downloadHTML()">
       <mat-icon color="primary">html</mat-icon>
-      HTML format
+      Zahtev u HTML formatu
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item (click)="downloadJSON()">
       <mat-icon color="primary">data_object</mat-icon>
-      JSON format
+      Metapodaci u JSON formatu
     </button>
-    <button mat-menu-item>
+    <button mat-menu-item (click)="downloadRDF()">
       <mat-icon color="primary">filter_3</mat-icon>
-      RDF format
+      Metapodaci u RDF formatu
     </button>
   </mat-menu>
 </div>
