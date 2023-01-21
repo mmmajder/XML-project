@@ -3,19 +3,23 @@
 <mat-tab-group backgroundColor="primary" color="accent">
   <mat-tab label="Pretraga">
     <div style="margin: 20px" class="text-center">
-      <p style="margin-bottom: 20px">
-        <span (click)="selected = 'A'" style="margin-right: 5px" class="nonSelectedButton"
-              [ngClass]="{'selectedButton' : selected == 'A'}">Zahtevi za Autorska prava
-        </span>
-        <span (click)="selected = 'P'" style="margin-right: 5px" class="nonSelectedButton"
-              [ngClass]="{'selectedButton' : selected == 'P'}">Zahtevi za Patente
-        </span>
-        <span (click)="selected = 'Z'" style="margin-right: 5px" class="nonSelectedButton"
-              [ngClass]="{'selectedButton' : selected == 'Z'}">Zahtevi za Žigove
-        </span>
-      </p>
-      <p>
-        <mat-form-field appearance="outline" style="width: 50%; min-width: 200px">
+      <p style="margin-bottom: -5px">
+        <mat-form-field appearance="outline" style="width: 250px">
+          <mat-label>Izaberite vrstu prava</mat-label>
+          <mat-select [(ngModel)]="vrstaZahteva">
+            <mat-option value="A">Zahtevi za autorska prava</mat-option>
+            <mat-option value="P">Zahtevi za patente</mat-option>
+            <mat-option value="Z">Zahtevi za žigove</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="margin-left: 5px">
+          <mat-label>Izaberite status zahteva</mat-label>
+          <mat-select [(ngModel)]="statusZahteva">
+            <mat-option value="obradjeni">Obrađeni zahtevi</mat-option>
+            <mat-option value="neobradjeni">Neobrađeni zahtevi</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="width: 50%; min-width: 200px; margin-left: 5px">
           <mat-label>Pretraži dokumente po jednoj ili više ključnih reči odvojenim razmakom</mat-label>
           <input matInput type="text" [(ngModel)]="simpleSearchText">
           <button matSuffix mat-icon-button color="primary" (click)="search()">
@@ -28,21 +32,29 @@
 
   <mat-tab label="Napredna pretraga">
     <div style="margin: 20px" class="text-center">
-      <p style="margin-bottom: 20px">
-        <span (click)="selected = 'A'" style="margin-right: 5px" class="nonSelectedButton"
-              [ngClass]="{'selectedButton' : selected == 'A'}">Zahtevi za Autorska prava
-        </span>
-        <span (click)="selected = 'P'" style="margin-right: 5px" class="nonSelectedButton"
-              [ngClass]="{'selectedButton' : selected == 'P'}">Zahtevi za Patente
-        </span>
-        <span (click)="selected = 'Z'" style="margin-right: 5px" class="nonSelectedButton"
-              [ngClass]="{'selectedButton' : selected == 'Z'}">Zahtevi za Žigove
-        </span>
+      <p style="margin-bottom: -5px">
+        <mat-form-field appearance="outline" style="width: 250px">
+          <mat-label>Izaberite vrstu prava</mat-label>
+          <mat-select [(ngModel)]="vrstaZahteva">
+            <mat-option value="A">Zahtevi za autorska prava</mat-option>
+            <mat-option value="P">Zahtevi za patente</mat-option>
+            <mat-option value="Z">Zahtevi za žigove</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="outline" style="margin-left: 5px; margin-right: 5px">
+          <mat-label>Izaberite status zahteva</mat-label>
+          <mat-select [(ngModel)]="statusZahteva">
+            <mat-option value="obradjeni">Obrađeni zahtevi</mat-option>
+            <mat-option value="neobradjeni">Neobrađeni zahtevi</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <button mat-stroked-button color="primary" (click)="addMeta()">Dodaj novi metapodatak</button>
+        <button mat-raised-button color="primary" (click)="search()" style="margin-left: 5px">
+          <mat-icon>search</mat-icon>
+          Pretraži
+        </button>
       </p>
-      <button mat-stroked-button color="primary" (click)="addMeta()">Dodaj novi metapodatak</button>
-      <button mat-raised-button color="primary" (click)="search()" style="margin-left: 5px">
-        <mat-icon>search</mat-icon> Pretraži
-      </button>
 
       <div style="margin: 20px">
         <div style="display: inline" *ngFor="let item of metapodaci; let i = index" [attr.data-index]="i">

@@ -22,4 +22,9 @@ public class ResenjeZahtevaController {
     public DetaljiOZahtevu getResenjeZahteva(@RequestBody BrojPrijaveDTO brojPrijave) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
         return resenjeService.getResenjeZahteva(brojPrijave.getBroj());
     }
+
+//    @PostMapping(path = "/obrada", consumes = "application/xml", produces = "application/xml")
+//    public DetaljiOZahtevu obradiResenje(@RequestBody BrojPrijaveDTO brojPrijave) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+//        return resenjeService.getResenjeZahteva(brojPrijave.getBroj());
+//    }
 }

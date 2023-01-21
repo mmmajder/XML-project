@@ -20,6 +20,8 @@ export class SearchComponent {
   fifthIndexesOfResults = [0];
   searched = false;
   selected: string = "A";
+  vrstaZahteva: string = "A";
+  statusZahteva: string = "obradjeni";
 
   removeMeta(i: number) {
     this.metapodaci.splice(i, 1);
