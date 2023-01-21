@@ -18,10 +18,10 @@ public class SparqlUtil {
     /* Insert RDF data to an arbitrary named graph */
     private static final String UPDATE_TEMPLATE_NAMED_GRAPH = "INSERT DATA { GRAPH <%1$s> { %2$s } }";
 
-
     /* Simple SPARQL query on a named graph */
     private static final String SELECT_NAMED_GRAPH_TEMPLATE = "SELECT * FROM <%1$s> WHERE { %2$s }";
 
+    private static final String SELECT_BY_BROJ_PRIJAVE = "SELECT * FROM <%1$s> WHERE { FILTER( ?broj_prijave = \"%2$s\" ) }";
 
     /* Plain text RDF serialization format */
     public static final String NTRIPLES = "N-TRIPLES";
@@ -50,4 +50,7 @@ public class SparqlUtil {
         return String.format(SELECT_NAMED_GRAPH_TEMPLATE, graphURI, sparqlCondition);
     }
 
+    public static String selectDataByBrojPrijave(String graphURI, String brojPrijave) {
+        return String.format(SELECT_BY_BROJ_PRIJAVE, graphURI, brojPrijave);
+    }
 }

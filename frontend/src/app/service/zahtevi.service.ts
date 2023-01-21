@@ -55,16 +55,15 @@ export class ZahteviService {
     return this.http.post<Blob>(this.getUrl(brojPrijave) + "/download/html", xmlZahtev, this.getDownloadHttpOptions());
   }
 
-  //
-  // public downloadRDF(brojPrijave: string): Observable<Blob> {
-  //   const xmlZahtev = JsonToXML.parse("brojPrijave", brojPrijave);
-  //   return this.http.post<Blob>(this.getUrl(brojPrijave) + "/download/rdf", xmlZahtev, this.getDownloadHttpOptions());
-  // }
-  //
-  // public downloadJSON(brojPrijave: string): Observable<Blob> {
-  //   const xmlZahtev = JsonToXML.parse("brojPrijave", brojPrijave);
-  //   return this.http.post<Blob>(this.getUrl(brojPrijave) + "/download/json", xmlZahtev, this.getDownloadHttpOptions());
-  // }
+  public downloadRDF(brojPrijave: string): Observable<Blob> {
+    const xmlZahtev = JsonToXML.parse("brojPrijave", {'broj': brojPrijave});
+    return this.http.post<Blob>(this.getUrl(brojPrijave) + "/download/rdf", xmlZahtev, this.getDownloadHttpOptions());
+  }
+
+  public downloadJSON(brojPrijave: string): Observable<Blob> {
+    const xmlZahtev = JsonToXML.parse("brojPrijave", {'broj': brojPrijave});
+    return this.http.post<Blob>(this.getUrl(brojPrijave) + "/download/json", xmlZahtev, this.getDownloadHttpOptions());
+  }
 
   public getDownloadHttpOptions() {
     return {

@@ -33,39 +33,36 @@ export class DetailsComponent {
   downloadPDF() {
     this.servis.downloadPDF(this.detaljiOZahtevu.zahtev.brojPrijave)
       .subscribe({
-        next: (data) => {
-          this.blob = new Blob([data], {type: 'application/pdf'});
-          var downloadURL = window.URL.createObjectURL(data);
-          var link = document.createElement('a');
-          link.href = downloadURL;
-          link.download = this.brojPrijave + ".pdf";
-          link.click();
-        }
+        next: (data) => this.downloadFile(data, 'pdf', 'pdf')
       });
   }
 
   downloadHTML() {
     this.servis.downloadHTML(this.detaljiOZahtevu.zahtev.brojPrijave)
       .subscribe({
-        next: (data) => {
-          this.blob = new Blob([data], {type: 'application/xhtml'});
-          var downloadURL = window.URL.createObjectURL(data);
-          var link = document.createElement('a');
-          link.href = downloadURL;
-          link.download = this.brojPrijave + ".html";
-          link.click();
-        }
+        next: (data) => this.downloadFile(data, 'html', 'xhtml')
       });
   }
 
   downloadJSON() {
-    // this.servis.downloadHTML(this.detaljiOZahtevu.zahtev.brojPrijave)
-    //   .subscribe({
+    this.servis.downloadJSON(this.detaljiOZahtevu.zahtev.brojPrijave)
+      .subscribe({
+        next: (data) => this.downloadFile(data, 'json', 'pdf')
+      });
   }
 
   downloadRDF() {
-    // this.servis.downloadHTML(this.detaljiOZahtevu.zahtev.brojPrijave)
-    //   .subscribe({
+    this.servis.downloadRDF(this.detaljiOZahtevu.zahtev.brojPrijave)
+      .subscribe({
+        next: (data) => this.downloadFile(data, 'rdf', 'pdf')
+      });
   }
 
+  downloadFile(data: Blob, ekstenzija: string, applicationType: string) {
+    this.blob = new Blob([data], {type: 'application/' + applicationType});
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(data);
+    link.download = this.brojPrijave + "." + ekstenzija;
+    link.click();
+  }
 }

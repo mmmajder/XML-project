@@ -7,6 +7,7 @@ import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
 import com.example.autorskapravabackend.repository.AutorskaPravaRepository;
 import com.example.autorskapravabackend.transformer.AutorskaPravaTransformer;
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -45,26 +46,40 @@ public class AutorskaPravaService {
     }
 
     public ByteArrayInputStream generateHTML(String brojPrijave) {
-        ByteArrayInputStream byteArrayInputStream;
         try {
             AutorskaPravaTransformer.generateHTML(getZahtev(brojPrijave));
             File htmlFile = new File("src/main/resources/gen/xhtml/autorskaPrava_" + brojPrijave.replace('/', '_') + ".html");
-            byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(htmlFile));
+            return new ByteArrayInputStream(FileUtils.readFileToByteArray(htmlFile));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return byteArrayInputStream;
     }
 
     public ByteArrayInputStream generatePDF(String brojPrijave) {
-        ByteArrayInputStream byteArrayInputStream;
         try {
             AutorskaPravaTransformer.generatePDF(getZahtev(brojPrijave));
             File pdfFile = new File("src/main/resources/gen/pdf/autorskaPrava_" + brojPrijave.replace('/', '_') + ".pdf");
-            byteArrayInputStream = new ByteArrayInputStream(FileUtils.readFileToByteArray(pdfFile));
+            return new ByteArrayInputStream(FileUtils.readFileToByteArray(pdfFile));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-        return byteArrayInputStream;
+    }
+
+    public ByteArrayInputStream generateRDF(String brojPrijave) {
+        try {
+            String rdf = autorskaPravaRepository.generateRDF(brojPrijave);
+            return new ByteArrayInputStream(rdf.getBytes());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ByteArrayInputStream generateJSON(String brojPrijave) {
+        try {
+            String json = autorskaPravaRepository.generateJSON(brojPrijave);
+            return new ByteArrayInputStream(json.getBytes());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -38,19 +38,21 @@ public class DownloadController {
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
     }
 
-//    @PostMapping(path = "/rdf", consumes = "application/xml")
-//    public ResponseEntity<String> generateRDF(@RequestBody BrojPrijaveDTO brojPrijave) {
-//        if (autorskaPravaService.generateRDF(brojPrijave.getBroj())) {
-//            return ResponseEntity.ok("Uspesno generisan rdf");
-//        }
-//        return ResponseEntity.ok("Doslo je do greske prilikom generisanja rdf");
-//    }
-//
-//    @PostMapping(path = "/json", consumes = "application/xml")
-//    public ResponseEntity<String> generateJSON(@RequestBody BrojPrijaveDTO brojPrijave) {
-//        if (autorskaPravaService.generateJSON(brojPrijave.getBroj())) {
-//            return ResponseEntity.ok("Uspesno generisan json-a");
-//        }
-//        return ResponseEntity.ok("Doslo je do greske prilikom generisanja json-a");
-//    }
+    @PostMapping(path = "/rdf", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> generateRDF(@RequestBody BrojPrijaveDTO brojPrijave) {
+        ByteArrayInputStream byteFile = autorskaPravaService.generateRDF(brojPrijave.getBroj());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=metadata-" + brojPrijave.getBroj() + ".rdf");
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
+    }
+
+    @PostMapping(path = "/json", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> generateJSON(@RequestBody BrojPrijaveDTO brojPrijave) {
+        ByteArrayInputStream byteFile = autorskaPravaService.generateJSON(brojPrijave.getBroj());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=metadata-" + brojPrijave.getBroj() + ".json");
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
+    }
 }
