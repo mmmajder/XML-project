@@ -3,7 +3,7 @@ import {HttpClient, HttpEvent, HttpHeaders} from '@angular/common/http';
 import {Observable} from "rxjs";
 import {AuthService} from "./auth.service";
 import * as JsonToXML from "js2xmlparser";
-import {DetaljiOZahtevu} from "../model/shared/Zahtev";
+import {DetaljiOZahtevu, ObradaZahteva, ObradaZahtevaDTO} from "../model/shared/Zahtev";
 
 @Injectable({
   providedIn: 'root'
@@ -21,8 +21,8 @@ export class ZahteviService {
   }
 
   public getZahtev(brojPrijave: string | null): Observable<DetaljiOZahtevu> {
-    const xmlZahtev = JsonToXML.parse("brojPrijave", brojPrijave);
-    return this.http.post<DetaljiOZahtevu>(this.getUrl(brojPrijave), xmlZahtev, AuthService.getHttpOptions());
+    const xmlZahtev = JsonToXML.parse("brojPrijave", {'brojPrijave': brojPrijave});
+    return this.http.post<DetaljiOZahtevu>(this.getUrl(brojPrijave) + "/autorskaPravaResenje/resenjeZahteva", xmlZahtev, AuthService.getHttpOptions());
   }
 
   private getUrl(brojPrijave: string | null): string {
@@ -37,12 +37,10 @@ export class ZahteviService {
     }
   }
 
-  prihvati(brojPrijave: string | null) {
-    // TODO
-  }
-
-  odbij(brojPrijave: string | null, razlogOdbijanja: string) {
-    // TODO
+  obradiZahtev(obradaZahteva: ObradaZahtevaDTO) {
+    const xmlZahtev = JsonToXML.parse("obradaZahteva", obradaZahteva);
+    console.log(xmlZahtev);
+    return this.http.post<Blob>(this.getUrl(obradaZahteva.brojPrijave) + "/autorskaPravaResenje/obradiZahtev", xmlZahtev, AuthService.getHttpOptions());
   }
 
   public downloadPDF(brojPrijave: string): Observable<Blob> {
@@ -63,6 +61,11 @@ export class ZahteviService {
   public downloadJSON(brojPrijave: string): Observable<Blob> {
     const xmlZahtev = JsonToXML.parse("brojPrijave", {'broj': brojPrijave});
     return this.http.post<Blob>(this.getUrl(brojPrijave) + "/download/json", xmlZahtev, this.getDownloadHttpOptions());
+  }
+
+  public generisiIzvestaj(start: string, end: string): Observable<Blob> {
+    const xmlZahtev = JsonToXML.parse("dateRange", {'start': start, 'end': end});
+    return this.http.post<Blob>(this.getUrl('A') + "/download/json", xmlZahtev, this.getDownloadHttpOptions());
   }
 
   public getDownloadHttpOptions() {

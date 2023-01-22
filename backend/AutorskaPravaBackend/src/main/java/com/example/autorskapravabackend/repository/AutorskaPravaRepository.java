@@ -5,7 +5,6 @@ import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
 import com.example.autorskapravabackend.rdf.AutorskaPravaFusekiDB;
 import com.example.autorskapravabackend.rdf.FusekiReader;
 
-import java.io.ByteArrayInputStream;
 import java.util.List;
 
 public class AutorskaPravaRepository {

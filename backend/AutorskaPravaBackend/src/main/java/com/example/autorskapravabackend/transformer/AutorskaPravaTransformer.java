@@ -1,8 +1,8 @@
 package com.example.autorskapravabackend.transformer;
 
 import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
+import com.example.autorskapravabackend.resenje.ResenjeZahteva;
 import com.itextpdf.text.Document;
-import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
 import com.itextpdf.tool.xml.XMLWorkerHelper;
 
@@ -17,7 +17,6 @@ import javax.xml.transform.stream.StreamSource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 
 
 public class AutorskaPravaTransformer {
@@ -25,10 +24,13 @@ public class AutorskaPravaTransformer {
     private static final TransformerFactory transformerFactory;
 
     public static final String XSL_FILE = "src/main/java/com/example/autorskapravabackend/transformer/Zahtev.xsl";
+    public static final String XSL_RESENJE_FILE = "src/main/java/com/example/autorskapravabackend/transformer/Resenje.xsl";
 
     public static final String HTML_FOLDER = "src/main/resources/gen/xhtml/";
 
     public static final String PDF_FOLDER = "src/main/resources/gen/pdf/";
+    public static final String HTML_RESENJA_FOLDER = "src/main/resources/gen/resenjaHTML/";
+    public static final String PDF_RESENJA_FOLDER = "src/main/resources/gen/resenjaPDF/";
 
     static {
         /* Inicijalizacija DOM fabrike */
@@ -45,29 +47,37 @@ public class AutorskaPravaTransformer {
         return "autorskaPrava_" + zahtev.getInformacijeOZahtevu().getBrojPrijave().replace('/', '_');
     }
 
-    public static void generatePDF(ZahtevZaAutorskaPrava zahtev) {
+    public static void generateZahtevPDF(ZahtevZaAutorskaPrava zahtev) {
         try {
-            AutorskaPravaTransformer.generateHTML(zahtev);
+            AutorskaPravaTransformer.generateZahtevHTML(zahtev);
             String title = getFileTitle(zahtev);
             String titlePdf = title + ".pdf";
             String titleHTML = title + ".html";
-            AutorskaPravaTransformer.generatePDF(titlePdf, titleHTML);
+            Document document = new Document();
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(PDF_FOLDER + titlePdf));
+            document.open();
+            XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream(HTML_FOLDER + titleHTML));
+            document.close();
         } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
-    private static void generatePDF(String titlePdf, String titleHTML) throws IOException, DocumentException {
-        Document document = new Document();
-        PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(PDF_FOLDER + titlePdf));
-        document.open();
-        XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream(HTML_FOLDER + titleHTML));
-        document.close();
+    public static void generateResenjePDF(ResenjeZahteva resenjeZahteva, String title) {
+        try {
+            AutorskaPravaTransformer.generateResenjeHTML(resenjeZahteva, title);
+            Document document = new Document();
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(PDF_RESENJA_FOLDER + title + ".pdf"));
+            document.open();
+            XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream(HTML_RESENJA_FOLDER + title + ".html"));
+            document.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void generateHTML(ZahtevZaAutorskaPrava zahtev) {
+    public static void generateZahtevHTML(ZahtevZaAutorskaPrava zahtev) {
         try {
-
             // Initialize Transformer instance
             StreamSource transformSource = new StreamSource(new File(XSL_FILE));
             Transformer transformer = transformerFactory.newTransformer(transformSource);
@@ -80,12 +90,31 @@ public class AutorskaPravaTransformer {
             // Transform DOM to HTML
             JAXBContext context = JAXBContext.newInstance("com.example.autorskapravabackend.model");
             JAXBSource source = new JAXBSource(context, zahtev);
-            StreamResult result = new StreamResult(new FileOutputStream(HTML_FOLDER + getFileTitle(zahtev) + ".html"));
+            StreamResult result = new StreamResult(new FileOutputStream(HTML_RESENJA_FOLDER + getFileTitle(zahtev) + ".html"));
             transformer.transform(source, result);
-
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
 
+    public static void generateResenjeHTML(ResenjeZahteva resenjeZahteva, String title) {
+        try {
+            // Initialize Transformer instance
+            StreamSource transformSource = new StreamSource(new File(XSL_RESENJE_FILE));
+            Transformer transformer = transformerFactory.newTransformer(transformSource);
+            transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+            // Generate XHTML
+            transformer.setOutputProperty(OutputKeys.METHOD, "gen/xhtml");
+
+            // Transform DOM to HTML
+            JAXBContext context = JAXBContext.newInstance("com.example.autorskapravabackend.resenje");
+            JAXBSource source = new JAXBSource(context, resenjeZahteva);
+            StreamResult result = new StreamResult(new FileOutputStream(HTML_RESENJA_FOLDER + title + ".html"));
+            transformer.transform(source, result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

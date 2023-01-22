@@ -18,6 +18,7 @@ import {MatCardModule} from "@angular/material/card";
 import {MatSelectModule} from "@angular/material/select";
 import {MatMenuModule} from "@angular/material/menu";
 import {PagesModule} from "./pages/pages.module";
+import {MatNativeDateModule} from '@angular/material/core';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {PagesModule} from "./pages/pages.module";
     ReactiveFormsModule,
     MatSelectModule,
     MatMenuModule,
-    PagesModule
+    PagesModule,
+    MatNativeDateModule
   ],
   providers: [],
   exports: [

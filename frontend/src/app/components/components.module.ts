@@ -19,15 +19,17 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
 import {NavbarComponent} from "./navbar/navbar.component";
 import {RequestCardComponent} from './request-card/request-card.component';
 import {MatDividerModule} from "@angular/material/divider";
-import {RazlogOdbijanjaDialogComponent} from './razlog-odbijanja-dialog/razlog-odbijanja-dialog.component';
 import {DetailsComponent} from "./details/details.component";
+import {MatTooltipModule} from "@angular/material/tooltip";
+import {GenerateReportsDialogComponent} from './generate-reports-dialog/generate-reports-dialog.component';
+import {MatDatepickerModule} from "@angular/material/datepicker";
 
 @NgModule({
   declarations: [
     NavbarComponent,
     RequestCardComponent,
-    RazlogOdbijanjaDialogComponent,
-    DetailsComponent
+    DetailsComponent,
+    GenerateReportsDialogComponent
   ],
   imports: [
     MatToolbarModule,
@@ -48,7 +50,9 @@ import {DetailsComponent} from "./details/details.component";
     MatStepperModule,
     MatRadioModule,
     MatCheckboxModule,
-    MatDividerModule
+    MatDividerModule,
+    MatTooltipModule,
+    MatDatepickerModule
   ],
   exports: [
     NavbarComponent,

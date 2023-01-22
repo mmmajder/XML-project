@@ -1,10 +1,9 @@
 package com.example.autorskapravabackend.db;
 
 import com.example.autorskapravabackend.marshal.Marshal;
-import com.example.autorskapravabackend.model.ResenjeZahteva;
-import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
+import com.example.autorskapravabackend.resenje.ResenjeZahteva;
 import com.example.autorskapravabackend.utils.AuthenticationUtilities;
-import com.example.autorskapravabackend.utils.DBSetup;
+import org.xml.sax.SAXException;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.*;
 import org.xmldb.api.modules.CollectionManagementService;
@@ -13,11 +12,8 @@ import org.xmldb.api.modules.XPathQueryService;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
 import javax.xml.bind.Unmarshaller;
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,10 +24,8 @@ public class ResenjeZahtevaDB {
     }
 
     private static Collection getOrCreateCollection(String collectionUri, int pathSegmentOffset, AuthenticationUtilities.ConnectionProperties conn) throws XMLDBException {
-
         Collection col = DatabaseManager.getCollection(conn.uri + collectionUri, conn.user, conn.password);
 
-        // create the collection if it does not exist
         if (col == null) {
 
             if (collectionUri.startsWith("/")) {
@@ -50,8 +44,6 @@ public class ResenjeZahtevaDB {
                 Collection startCol = DatabaseManager.getCollection(conn.uri + path, conn.user, conn.password);
 
                 if (startCol == null) {
-
-                    // child collection does not exist
 
                     String parentPath = path.substring(0, path.lastIndexOf("/"));
                     Collection parentCol = DatabaseManager.getCollection(conn.uri + parentPath, conn.user, conn.password);
@@ -74,27 +66,14 @@ public class ResenjeZahtevaDB {
         }
     }
 
-
-    public ResenjeZahteva write(String collectionName, String documentName, ResenjeZahteva resenjeZahteva) throws IOException, ClassNotFoundException, XMLDBException, InstantiationException, IllegalAccessException {
+    public static ResenjeZahteva write(ResenjeZahteva resenjeZahteva) throws ClassNotFoundException, XMLDBException, InstantiationException, IllegalAccessException, IOException {
         AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
 
-        // initialize collection and document identifiers
-        String collectionId;
-        String documentId;
-
-        System.out.println("[INFO] Using defaults.");
-
-        collectionId = "/db/xml-project/" + collectionName;
-        documentId = documentName;
-
-
-        System.out.println("\t- collection ID: " + collectionId);
-        System.out.println("\t- document ID: " + documentId);
+        String collectionId = "/db/XWS-PROJECT/resenja";
 
         // initialize database driver
         System.out.println("[INFO] Loading driver class: " + conn.driver);
         Class<?> cl = Class.forName(conn.driver);
-
 
         // encapsulation of the database driver functionality
         Database database = (Database) cl.newInstance();
@@ -106,36 +85,17 @@ public class ResenjeZahtevaDB {
         // a collection of Resources stored within an XML database
         Collection col = null;
         XMLResource res;
-        OutputStream os = new ByteArrayOutputStream();
         try {
 
             System.out.println("[INFO] Retrieving the collection: " + collectionId);
             col = getOrCreateCollection(collectionId, conn);
-
-            /*
-             *  create new XMLResource with a given id
-             *  an id is assigned to the new resource if left empty (null)
-             */
-            System.out.println("[INFO] Inserting the document: " + documentId);
-            res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
-
-            System.out.println("[INFO] Unmarshalling XML document to an JAXB instance: ");
-            JAXBContext context = JAXBContext.newInstance(ResenjeZahteva.class);
-
-            Marshaller marshaller = context.createMarshaller();
-            marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
-
-            // marshal the contents to an output stream
-            marshaller.marshal(resenjeZahteva, os);
-
-            // link the stream to the XML resource
-            res.setContent(os);
+            String documentName = "resenjeAutorskoPravo_" + resenjeZahteva.getBrojPrijave().replace('/', '_');
+            res = (XMLResource) col.createResource(documentName, XMLResource.RESOURCE_TYPE);
+            res.setContent(Marshal.marshal(resenjeZahteva));
             System.out.println("[INFO] Storing the document: " + res.getId());
-
             col.storeResource(res);
             System.out.println("[INFO] Done.");
-
-        } catch (JAXBException e) {
+        } catch (SAXException e) {
             e.printStackTrace();
         } finally {
             if (col != null) {
@@ -149,13 +109,9 @@ public class ResenjeZahtevaDB {
         return resenjeZahteva;
     }
 
-    public ResenjeZahteva dobaviPoBrojuPrijave(String brojPrijave) throws IOException, ClassNotFoundException, XMLDBException, InstantiationException, IllegalAccessException {
+    public static ResenjeZahteva dobaviPoBrojuPrijave(String brojPrijave) throws IOException, ClassNotFoundException, XMLDBException, InstantiationException, IllegalAccessException {
         AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
-
-        // initialize collection and document identifiers
-        String collectionId = "/db/xml-project/resenje-zahteva-autorska";
-
-        System.out.println("[INFO] Loading driver class: " + conn.driver);
+        String collectionId = "/db/XWS-PROJECT/resenja";
         Class<?> cl = Class.forName(conn.driver);
 
         Database database = (Database) cl.newInstance();
@@ -172,7 +128,7 @@ public class ResenjeZahtevaDB {
             XPathQueryService xPathQueryService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
             xPathQueryService.setProperty("indent", "yes");
 
-            String xPathExp = "//resenje_zahteva[referenca='" + brojPrijave + "']";
+            String xPathExp = "//resenje_zahteva[brojPrijave='" + brojPrijave + "']";
             ResourceSet result = xPathQueryService.query(xPathExp);
             XMLResource res = (XMLResource) result.getIterator().nextResource();
             JAXBContext context = JAXBContext.newInstance(ResenjeZahteva.class);
@@ -192,14 +148,10 @@ public class ResenjeZahtevaDB {
         return resenjeZahteva;
     }
 
-    public List<ResenjeZahteva> dobaviSve() throws ClassNotFoundException, IOException, InstantiationException, IllegalAccessException, XMLDBException {
+    public static List<ResenjeZahteva> dobaviSvaResenja() throws ClassNotFoundException, IOException, InstantiationException, IllegalAccessException, XMLDBException {
         AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
 
-        // initialize collection and document identifiers
-        String collectionId = "/db/xml-project/resenje-zahteva-autorska";
-
-        System.out.println("\t- collection ID: " + collectionId);
-        System.out.println("[INFO] Loading driver class: " + conn.driver);
+        String collectionId = "/db/XWS-PROJECT/resenja";
         Class<?> cl = Class.forName(conn.driver);
 
         Database database = (Database) cl.newInstance();

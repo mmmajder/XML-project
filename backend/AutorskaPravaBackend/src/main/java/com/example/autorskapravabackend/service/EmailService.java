@@ -1,6 +1,6 @@
 package com.example.autorskapravabackend.service;
 
-import com.example.autorskapravabackend.model.ResenjeZahteva;
+import com.example.autorskapravabackend.resenje.ResenjeZahteva;
 import jakarta.mail.Message;
 import jakarta.mail.internet.InternetAddress;
 import lombok.AllArgsConstructor;
@@ -28,7 +28,7 @@ public class EmailService {
 
             FileSystemResource file = new FileSystemResource(new File(resenjePDF));
             MimeMessageHelper helper = new MimeMessageHelper(mimeMessage, true);
-            helper.addAttachment("logo.jpg", file);
+            helper.addAttachment("resenje.pdf", file);
         };
 
         try {

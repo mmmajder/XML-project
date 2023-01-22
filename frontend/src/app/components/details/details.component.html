@@ -1,5 +1,5 @@
 <div style="margin: 20px">
-  <div *ngIf="!detaljiOZahtevu.zahtev.obradjen">
+  <div *ngIf="detaljiOZahtevu.zahtev.obradjen">
     <h4 style="color: gray">OBRAĐEN ZAHTEV</h4>
     <h1>{{brojPrijave}}</h1>
     <p>Datum obrade: {{detaljiOZahtevu.obrada?.datumObrade}}</p>
@@ -14,10 +14,18 @@
       <span style="color:gray">{{detaljiOZahtevu.obrada?.razlogOdbijanja}}</span>
     </p>
   </div>
-  <div *ngIf="detaljiOZahtevu.zahtev.obradjen">
+  <div *ngIf="!detaljiOZahtevu.zahtev.obradjen">
     <h4 style="color: gray">NEOBRAĐEN ZAHTEV</h4>
     <h1>{{brojPrijave}}</h1>
-    <button mat-raised-button color="primary" (click)="prihvatiZahtev()">PRIHVATI ZAHTEV</button>
+    <div mat-dialog-content>
+      <mat-form-field style="width: 100%;">
+        <mat-label>Unesite razlog odbijanja</mat-label>
+        <textarea [(ngModel)]="razlogOdbijanja" matInput placeholder="Npr. nije priložen dokument o..."
+                  required></textarea>
+      </mat-form-field>
+    </div>
+    <p *ngIf="odbija && razlogOdbijanja == ''">Molimo unesite razlog odbijanja.</p>
+    <button mat-raised-button color="primary" (click)="obradiZahtev(false)">PRIHVATI ZAHTEV</button>
     <button mat-raised-button color="warn" (click)="odbijanjeZahteva()">ODBIJ ZAHTEV</button>
   </div>
   <button mat-flat-button style="width: 100%" [matMenuTriggerFor]="menu" color="primary">

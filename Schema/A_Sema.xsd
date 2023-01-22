@@ -142,4 +142,18 @@
             </xs:sequence>
         </xs:complexType>
     </xs:element>
+    <xs:element name="resenje_zahteva">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="broj_prijave" type="xs:string"/>
+                <xs:element name="ime_sluzbenika" type="xs:string"/>
+                <xs:element name="prezime_sluzbenika" type="xs:string"/>
+                <xs:element name="email_sluzbenika" type="xs:string"/>
+                <xs:element name="odbijen" type="xs:boolean"/>
+                <xs:element name="datum_obrade" type="xs:date"/>
+                <xs:element name="razlog_odbijanja" type="xs:string"/>
+                <xs:element name="sifra" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
 </xs:schema>

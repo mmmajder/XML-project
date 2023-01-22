@@ -22,3 +22,11 @@ export class ObradaZahteva {
   odbijen: boolean = false;
   razlogOdbijanja: string = "";
 }
+
+export class ObradaZahtevaDTO {
+  sluzbenik!: SimpleUser;
+  datumObrade!: string;
+  odbijen: boolean = false;
+  razlogOdbijanja: string = "";
+  brojPrijave!: string;
+}

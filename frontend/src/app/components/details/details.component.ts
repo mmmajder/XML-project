@@ -1,5 +1,5 @@
 import {Component, Inject} from '@angular/core';
-import {DetaljiOZahtevu} from "../../model/shared/Zahtev";
+import {DetaljiOZahtevu, ObradaZahtevaDTO} from "../../model/shared/Zahtev";
 import {ZahteviService} from "../../service/zahtevi.service";
 import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
@@ -10,6 +10,8 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 })
 export class DetailsComponent {
   detaljiOZahtevu: DetaljiOZahtevu = new DetaljiOZahtevu();
+  razlogOdbijanja: string = "";
+  odbija: boolean = false;
   blob: Blob = new Blob();
 
   constructor(@Inject(MAT_DIALOG_DATA) public brojPrijave: string, private servis: ZahteviService) {
@@ -19,15 +21,25 @@ export class DetailsComponent {
     // })
   }
 
-  prihvatiZahtev() {
-    this.servis.prihvati(this.brojPrijave);
+  public obradiZahtev(odbijen: boolean) {
+    let dto = new ObradaZahtevaDTO();
+    dto.brojPrijave = this.brojPrijave;
+    dto.sluzbenik = {'name': 'Pera', 'surname': 'Peric', 'email': 'pera@gmail.com'}
+    dto.odbijen = odbijen;
+    if (odbijen)
+      dto.razlogOdbijanja = this.razlogOdbijanja;
+    this.servis.obradiZahtev(dto).subscribe({
+      next: value => console.log(value),
+      error: err => console.log(err)
+    })
   }
 
-  odbijanjeZahteva() {
-    // this.dialog.open(RazlogOdbijanjaDialogComponent, {
-    //   width: '400px',
-    //   data: this.brojPrijave
-    // });
+  public odbijanjeZahteva() {
+    if (this.odbija && this.razlogOdbijanja != "") {
+      this.obradiZahtev(true);
+    } else {
+      this.odbija = true;
+    }
   }
 
   downloadPDF() {
@@ -65,4 +77,5 @@ export class DetailsComponent {
     link.download = this.brojPrijave + "." + ekstenzija;
     link.click();
   }
+
 }

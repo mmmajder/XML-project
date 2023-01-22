@@ -12,6 +12,7 @@ public class AutorskaPravaMetadataExtractor {
 
         addRDFTripletToModel(model, resource, "podnosilac_email", zahtev.getSadrzajZahteva().getPodnosilacZahteva().getPodaciOPodnosiocu().getEmail());
         addRDFTripletToModel(model, resource, "naslov", zahtev.getSadrzajZahteva().getAutorskoDelo().getNaslovAutorskogDela());
+        addRDFTripletToModel(model, resource, "vrsta_autorskog_dela", zahtev.getSadrzajZahteva().getAutorskoDelo().getVrstaAutorskogDela());
         addRDFTripletToModel(model, resource, "broj_prijave", zahtev.getInformacijeOZahtevu().getBrojPrijave());
         return model;
     }

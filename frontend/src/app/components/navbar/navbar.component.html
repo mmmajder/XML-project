@@ -1,10 +1,13 @@
 <mat-toolbar color="primary">
   <span>Obrada zahteva za prava intelektualne svojine</span>
   <span class="example-spacer"></span>
-  <button mat-icon-button (click)='goToPage("/search")'>
+  <button mat-icon-button (click)="generateReport()" [matTooltip]="'Generisanje izveštaja'">
+    <mat-icon>event_note</mat-icon>
+  </button>
+  <button mat-icon-button (click)='goToPage("/search")' [matTooltip]="'Pretraga zahteva'">
     <mat-icon>search</mat-icon>
   </button>
-  <button mat-icon-button [matMenuTriggerFor]="menu">
+  <button mat-icon-button [matMenuTriggerFor]="menu" [matTooltip]="'Ostale opcije'">
     <mat-icon>more_vert</mat-icon>
   </button>
   <mat-menu #menu="matMenu">

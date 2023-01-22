@@ -7,7 +7,6 @@ import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
 import com.example.autorskapravabackend.repository.AutorskaPravaRepository;
 import com.example.autorskapravabackend.transformer.AutorskaPravaTransformer;
 import org.apache.commons.io.FileUtils;
-import org.apache.commons.io.IOUtils;
 import org.springframework.stereotype.Service;
 
 import java.io.ByteArrayInputStream;
@@ -47,7 +46,7 @@ public class AutorskaPravaService {
 
     public ByteArrayInputStream generateHTML(String brojPrijave) {
         try {
-            AutorskaPravaTransformer.generateHTML(getZahtev(brojPrijave));
+            AutorskaPravaTransformer.generateZahtevHTML(getZahtev(brojPrijave));
             File htmlFile = new File("src/main/resources/gen/xhtml/autorskaPrava_" + brojPrijave.replace('/', '_') + ".html");
             return new ByteArrayInputStream(FileUtils.readFileToByteArray(htmlFile));
         } catch (Exception e) {
@@ -57,7 +56,7 @@ public class AutorskaPravaService {
 
     public ByteArrayInputStream generatePDF(String brojPrijave) {
         try {
-            AutorskaPravaTransformer.generatePDF(getZahtev(brojPrijave));
+            AutorskaPravaTransformer.generateZahtevPDF(getZahtev(brojPrijave));
             File pdfFile = new File("src/main/resources/gen/pdf/autorskaPrava_" + brojPrijave.replace('/', '_') + ".pdf");
             return new ByteArrayInputStream(FileUtils.readFileToByteArray(pdfFile));
         } catch (Exception e) {

@@ -10,6 +10,7 @@ import lombok.Setter;
 @Data
 @Builder
 public class ObradaZahteva {
+    private String brojPrijave;
     private SimpleUser sluzbenik;
     private String datumObrade;
     private boolean odbijen;
