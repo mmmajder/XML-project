@@ -29,36 +29,4 @@ public class FusekiWriter {
 		UpdateProcessor processor = UpdateExecutionFactory.createRemote(update, conn.updateEndpoint);
 		processor.execute();
 	}
-	
-	public static void saveRDF() throws IOException {
-//		AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
-//		
-//		Model model = ModelFactory.createDefaultModel();
-//		model.read(RDF_FILE);
-//		
-//		ByteArrayOutputStream out = new ByteArrayOutputStream();
-//		model.write(out, SparqlUtil.NTRIPLES);
-//		System.out.println("[INFO] Rendering model as RDF/XML...");
-//		model.write(System.out, SparqlUtil.RDF_XML);
-//		
-//		// Delete all of the triples in all of the named graphs 
-////		UpdateRequest request = UpdateFactory.create() ;
-////        request.add(SparqlUtil.dropAll());
-//        
-//        UpdateRequest request = UpdateFactory.create() ;
-//        UpdateProcessor processor = UpdateExecutionFactory.createRemote(request, conn.updateEndpoint);
-//        processor.execute();
-//        
-//     // Creating the first named graph and updating it with RDF data
-//     	System.out.println("[INFO] Writing the triples to a named graph \"" + GRAPH_URI + "\".");
-//		String sparqlUpdate = SparqlUtil.insertData(conn.dataEndpoint + GRAPH_URI, new String(out.toByteArray()));
-//		System.out.println(sparqlUpdate);
-//		
-//		// UpdateRequest represents a unit of execution
-//		UpdateRequest update = UpdateFactory.create(sparqlUpdate);
-//		processor = UpdateExecutionFactory.createRemote(update, conn.updateEndpoint);
-//		processor.execute();
-//		
-//		// ovo iznad je za jedan graf, treba ponoviti za vise grafova
-	}
 }

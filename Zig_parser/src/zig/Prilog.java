@@ -8,25 +8,25 @@ import javax.xml.bind.annotation.XmlType;
 @XmlType(name="Prilog", propOrder={"tipPriloga", "statusPriloga", "putanjaDoPriloga"})
 public class Prilog {
     @XmlElement(name="Tip_priloga", required=true)
-    private String tipPriloga;
+    private ETip_priloga tipPriloga;
     @XmlElement(name="Status_priloga", required=true)
-    private String statusPriloga;
+    private EStatus_priloga statusPriloga;
     @XmlElement(name="Putanja_do_priloga")
     private String putanjaDoPriloga;
 
-    public String getTipPriloga() {
+    public ETip_priloga getTipPriloga() {
         return tipPriloga;
     }
 
-    public void setTipPriloga(String tipPriloga) {
+    public void setTipPriloga(ETip_priloga tipPriloga) {
         this.tipPriloga = tipPriloga;
     }
 
-    public String getStatusPriloga() {
+    public EStatus_priloga getStatusPriloga() {
         return statusPriloga;
     }
 
-    public void setStatusPriloga(String statusPriloga) {
+    public void setStatusPriloga(EStatus_priloga statusPriloga) {
         this.statusPriloga = statusPriloga;
     }
 

@@ -1,8 +1,6 @@
 package zig;
 public enum EStatus_priloga {
+	PREDATO,
     NIJE_PREDATO,
-    PREDATO,
-    PRIHVACENO,
-    ODBIJENO,
     NIJE_POTREBNO
 }

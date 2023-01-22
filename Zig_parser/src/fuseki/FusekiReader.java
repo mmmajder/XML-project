@@ -34,41 +34,4 @@ public class FusekiReader {
 		ResultSetFormatter.out(System.out, results);
 		query.close() ;
 	}
-	
-//	public static ArrayList<String> run(Map<String, String> params) throws IOException{
-//		AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
-//		
-//		String queryTemplate = readFile(QUERY_FILE);
-//		String sparqlQuery = StringSubstitutor.replace(queryTemplate, params, "{{", "}}");
-//		QueryExecution execution = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);
-//		ResultSet results = execution.execSelect();
-//		
-//		String varName;
-//		RDFNode varValue;
-//		ArrayList<String> foundQueries = new ArrayList<>();
-//		
-//		
-//		while(results.hasNext()) {
-//			QuerySolution querySolution = results.next();
-//			Iterator<String> variableBindings = querySolution.varNames();
-//			
-//			while(variableBindings.hasNext()) {
-//				varName = variableBindings.next();
-//				varValue = querySolution.get(varName);
-//				System.out.println(varName + " : " + varValue);
-//			}
-//		}
-//		
-//		ResultSetFormatter.outputAsXML(System.out, results);
-//		execution.close();
-//		
-//		return foundQueries;
-//	}
-//	
-//	public static String readFile(String path) throws IOException {
-//		byte[] encoded = Files.readAllBytes(Paths.get(path));
-//		
-//		// izmeniti UTF 8 ukoliko bude pravilo problema
-//		return new String(encoded, StandardCharsets.UTF_8);
-//	}
 }
