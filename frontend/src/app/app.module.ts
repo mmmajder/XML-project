@@ -20,6 +20,8 @@ import {PodaciOAutoruComponent} from './components/podaci-o-autoru/podaci-o-auto
 import {MatCheckboxModule} from "@angular/material/checkbox";
 import {MatDividerModule} from "@angular/material/divider";
 import {HttpClientModule} from '@angular/common/http';
+import {MatSelectModule} from '@angular/material/select';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -45,6 +47,8 @@ import {HttpClientModule} from '@angular/common/http';
     MatCheckboxModule,
     MatDividerModule,
     HttpClientModule,
+    MatSelectModule,
+    MatListModule
   ],
   providers: [],
   bootstrap: [AppComponent]
