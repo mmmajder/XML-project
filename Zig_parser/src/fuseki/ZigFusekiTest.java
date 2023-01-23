@@ -5,11 +5,13 @@ import java.io.IOException;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import javax.xml.bind.JAXBException;
 
 import org.apache.jena.rdf.model.Model;
+import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import db.ZigDB;
@@ -35,19 +37,19 @@ import zig.ZahtevZaPriznanjeZiga;
 import zig.Zig;
 
 public class ZigFusekiTest {
-	public static void main(String[] args) throws IOException, JAXBException{
+	public static void main(String[] args) throws IOException, JAXBException, XMLDBException{
         test();
     }
 
-    public static void test() throws IOException, JAXBException {
-    	ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = createZahtevZaPriznanjeZiga();
+    public static void test() throws IOException, JAXBException, XMLDBException {
+//    	ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = createZahtevZaPriznanjeZiga();
 //    	
-////    	// pdf and html
-////    	ZigTransformer.generateHTMLZig(zahtevZaPriznanjeZiga);
-////    	System.out.println("izgenerisan HTML");
-////    	ZigTransformer.generatePDFZig(zahtevZaPriznanjeZiga);
-////    	System.out.println("izgenerisan PDF"); 
-//  	
+//    	// pdf and html
+//    	ZigTransformer.generateHTMLZig(zahtevZaPriznanjeZiga);
+//    	System.out.println("izgenerisan HTML");
+//    	ZigTransformer.generatePDFZig(zahtevZaPriznanjeZiga);
+//    	System.out.println("izgenerisan PDF"); 
+  	
 //    	// cuvanje u bazu
 //    	ZigDB.save(zahtevZaPriznanjeZiga);
 //    	
@@ -58,19 +60,19 @@ public class ZigFusekiTest {
 //    	
 //    	FusekiWriter.saveRdfGraphToDatabase(metadataModel);
 //    	FusekiReader.readAllDataFromDatabase();
-//    	
-//    	// ucitavanje iz baze
-    	ZahtevZaPriznanjeZiga ucitanZahtevZaPriznanjeZiga = ZigDB.getZahtev(zahtevZaPriznanjeZiga.getBrojPrijaveZiga());
-
-    	System.out.println("\nIz baze je ucitan zahtev sa brojem prijave: ");
-    	System.out.println(ucitanZahtevZaPriznanjeZiga.getBrojPrijaveZiga());
-//    	
+////    	
+////    	// ucitavanje iz baze
+//    	ZahtevZaPriznanjeZiga ucitanZahtevZaPriznanjeZiga = ZigDB.getZahtev(zahtevZaPriznanjeZiga.getBrojPrijaveZiga());
+//
+//    	System.out.println("\nIz baze je ucitan zahtev sa brojem prijave: ");
+//    	System.out.println(ucitanZahtevZaPriznanjeZiga.getBrojPrijaveZiga());
+////    	
 ////    	 pdf and html
 //    	ZigTransformer.generateHTMLZig(ucitanZahtevZaPriznanjeZiga);
 //    	System.out.println("izgenerisan HTML");
 //    	ZigTransformer.generatePDFZig(ucitanZahtevZaPriznanjeZiga);
 //    	System.out.println("izgenerisan PDF");
-    	
+//    	
 //    	// metadata search
 //    	MetadataSearchParams params0 = new MetadataSearchParams("tip_ziga", "INDIVIDUALNI_ZIG", "");
 //    	FusekiReader.findByMetadata(params0);
@@ -86,7 +88,17 @@ public class ZigFusekiTest {
     	
     	//db search by text
     	try {
-			List<XMLResource> resources = ZigDB.searchResources("jovan", false);
+			List<XMLResource> resources = ZigDB.searchResources("jovangrad", false);
+			System.out.println(resources);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    	
+    	String[] words_ = {"jovangrad", "33000"};
+    	List<String> words = Arrays.asList(words_);
+    	try {
+			List<XMLResource> resources = ZigDB.searchResources(words, false);
 			System.out.println(resources);
 		} catch (Exception e) {
 			// TODO Auto-generated catch block

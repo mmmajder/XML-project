@@ -12,9 +12,6 @@ import java.io.IOException;
 public class ZigBackendApplication {
 
 	public static void main(String[] args) throws JAXBException, IOException {
-//		SpringApplication.run(ZigBackendApplication.class, args);
-
-		ZigTest.test();
-//		ZigFusekiTest.test();
+		SpringApplication.run(ZigBackendApplication.class, args);
 	}
 }

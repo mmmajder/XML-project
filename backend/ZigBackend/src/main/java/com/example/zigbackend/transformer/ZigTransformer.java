@@ -47,23 +47,31 @@ public class ZigTransformer {
         transformerFactory = TransformerFactory.newInstance();
     }
     
-    public static void generateHTMLZig(ZahtevZaPriznanjeZiga zahtev) {
+    public static String generateHTMLZig(ZahtevZaPriznanjeZiga zahtev) {
+        String filename = null;
+
         try {
-            ZigTransformer.generateHTML(zahtev, HTML_XSL_FILE, false);
+            filename = ZigTransformer.generateHTML(zahtev, HTML_XSL_FILE, false);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
+
+        return filename;
     }
 
-    public static void generatePDFZig(ZahtevZaPriznanjeZiga zahtev) {
+    public static String generatePDFZig(ZahtevZaPriznanjeZiga zahtev) {
+        String titlePdf = null;
+
         try {
         	ZigTransformer.generateHTML(zahtev, PDF_XSL_FILE, true);
-            String titlePdf = "zig_" + zahtev.getBrojPrijaveZiga().replace('/', '_') + ".pdf";
-            String titleHTML = "zig_" + zahtev.getBrojPrijaveZiga().replace('/', '_') + "_for_pdf" + ".html";
+            titlePdf = getSupposedFileName(zahtev.getBrojPrijaveZiga()) + ".pdf";
+            String titleHTML = getSupposedFileName(zahtev.getBrojPrijaveZiga()) + "_for_pdf" + ".html";
             ZigTransformer.generatePDF(titlePdf, titleHTML);
         } catch (Exception e) {
             e.printStackTrace();
         }
+
+        return titlePdf;
     }
     
     private static void generatePDF(String titlePdf, String titleHTML) throws IOException, DocumentException {
@@ -84,7 +92,8 @@ public class ZigTransformer {
         document.close();
     }
     
-    private static void generateHTML(ZahtevZaPriznanjeZiga zahtev, String xslPath, boolean forPdf) throws FileNotFoundException {
+    private static String generateHTML(ZahtevZaPriznanjeZiga zahtev, String xslPath, boolean forPdf) throws FileNotFoundException {
+        String fileName = null;
 
         try {
 
@@ -102,18 +111,24 @@ public class ZigTransformer {
             JAXBContext context = JAXBContext.newInstance("zig");
             JAXBSource source = new JAXBSource(context, zahtev);
             StreamResult result;
-            
+
             if (forPdf) {
-            	result = new StreamResult(new FileOutputStream(HTML_FOLDER + "zig_" + zahtev.getBrojPrijaveZiga().replace('/', '_') + "_for_pdf" + ".html"));
+                fileName = HTML_FOLDER + getSupposedFileName(zahtev.getBrojPrijaveZiga()) + "_for_pdf" + ".html";
             } else {
-            	result = new StreamResult(new FileOutputStream(HTML_FOLDER + "zig_" + zahtev.getBrojPrijaveZiga().replace('/', '_') + ".html"));
+                fileName = HTML_FOLDER + getSupposedFileName(zahtev.getBrojPrijaveZiga()) + ".html";
             }
-            
+
+            result = new StreamResult(new FileOutputStream(fileName));
             transformer.transform(source, result);
 
         } catch (Exception e) {
             e.printStackTrace();
         }
 
+        return fileName;
+    }
+
+    public static String getSupposedFileName(String brojPrijave){
+        return "zig_" + brojPrijave.replace('/', '_');
     }
 }

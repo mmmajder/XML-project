@@ -17,12 +17,14 @@ import com.example.zigbackend.model.ZahtevZaPriznanjeZiga;
 import com.example.zigbackend.transformer.ZigTransformer;
 import com.example.zigbackend.utils.SparqlUtil;
 import org.apache.jena.rdf.model.Model;
+import org.xmldb.api.base.XMLDBException;
+
 public class ZigFusekiTest {
-	public static void main(String[] args) throws IOException, JAXBException{
+	public static void main(String[] args) throws IOException, JAXBException, XMLDBException {
         test();
     }
 
-    public static void test() throws IOException, JAXBException {
+    public static void test() throws IOException, JAXBException, XMLDBException {
     	ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = KTZig.createZahtevZaPriznanjeZiga();
     	
 //    	// pdf and html
