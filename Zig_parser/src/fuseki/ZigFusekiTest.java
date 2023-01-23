@@ -39,36 +39,50 @@ public class ZigFusekiTest {
     }
 
     public static void test() throws IOException, JAXBException {
-    	ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = createZahtevZaPriznanjeZiga();
-    	
-//    	// pdf and html
-//    	ZigTransformer.generateHTMLZig(zahtevZaPriznanjeZiga);
+//    	ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = createZahtevZaPriznanjeZiga();
+//    	
+////    	// pdf and html
+////    	ZigTransformer.generateHTMLZig(zahtevZaPriznanjeZiga);
+////    	System.out.println("izgenerisan HTML");
+////    	ZigTransformer.generatePDFZig(zahtevZaPriznanjeZiga);
+////    	System.out.println("izgenerisan PDF"); 
+//  	
+//    	// cuvanje u bazu
+//    	ZigDB.save(zahtevZaPriznanjeZiga);
+//    	
+//    	// fuseki
+//    	Model metadataModel = ZigMetadataExtractor.extract(zahtevZaPriznanjeZiga);
+//    	
+//    	printModelAsRdfXml(metadataModel);
+//    	
+//    	FusekiWriter.saveRdfGraphToDatabase(metadataModel);
+//    	FusekiReader.readAllDataFromDatabase();
+//    	
+//    	// ucitavanje iz baze
+//    	ZahtevZaPriznanjeZiga ucitanZahtevZaPriznanjeZiga = ZigDB.getZahtev(zahtevZaPriznanjeZiga.getBrojPrijaveZiga());
+//
+//    	System.out.println("\nIz baze je ucitan zahtev sa brojem prijave: ");
+//    	System.out.println(ucitanZahtevZaPriznanjeZiga.getBrojPrijaveZiga());
+//    	
+////    	 pdf and html
+//    	ZigTransformer.generateHTMLZig(ucitanZahtevZaPriznanjeZiga);
 //    	System.out.println("izgenerisan HTML");
-//    	ZigTransformer.generatePDFZig(zahtevZaPriznanjeZiga);
-//    	System.out.println("izgenerisan PDF"); 
-  	
-    	// cuvanje u bazu
-    	ZigDB.save(zahtevZaPriznanjeZiga);
+//    	ZigTransformer.generatePDFZig(ucitanZahtevZaPriznanjeZiga);
+//    	System.out.println("izgenerisan PDF");
     	
-    	// fuseki
-    	Model metadataModel = ZigMetadataExtractor.extract(zahtevZaPriznanjeZiga);
+    	// metadata search
+    	MetadataSearchParams params0 = new MetadataSearchParams("tip_ziga", "INDIVIDUALNI_ZIG", "");
+    	FusekiReader.findByMetadata(params0);
+//    	 combined metadata search
+    	MetadataSearchParams params1 = new MetadataSearchParams("tip_ziga", "INDIVIDUALNI_ZIG", "&&");
+    	MetadataSearchParams params2 = new MetadataSearchParams("predstavnik_email", "Predstavnik2@jovan.com", "!");
+    	MetadataSearchParams params3 = new MetadataSearchParams("predstavnik_email", "Predstavnik2@jovan.com", "OR");
+    	List<MetadataSearchParams> params = new ArrayList<>();
+    	params.add(params1);
+    	params.add(params2);
+    	params.add(params3);
+    	FusekiReader.findByCombinedMetadata(params);
     	
-    	printModelAsRdfXml(metadataModel);
-    	
-    	FusekiWriter.saveRdfGraphToDatabase(metadataModel);
-    	FusekiReader.readAllDataFromDatabase();
-    	
-    	// ucitavanje iz baze
-    	ZahtevZaPriznanjeZiga ucitanZahtevZaPriznanjeZiga = ZigDB.getZahtev(zahtevZaPriznanjeZiga.getBrojPrijaveZiga());
-
-    	System.out.println("\nIz baze je ucitan zahtev sa brojem prijave: ");
-    	System.out.println(ucitanZahtevZaPriznanjeZiga.getBrojPrijaveZiga());
-    	
-//    	 pdf and html
-    	ZigTransformer.generateHTMLZig(ucitanZahtevZaPriznanjeZiga);
-    	System.out.println("izgenerisan HTML");
-    	ZigTransformer.generatePDFZig(ucitanZahtevZaPriznanjeZiga);
-    	System.out.println("izgenerisan PDF");
     }
     
     private static void printModelAsRdfXml(Model model) {
