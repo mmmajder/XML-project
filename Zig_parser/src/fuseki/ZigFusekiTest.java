@@ -10,6 +10,7 @@ import java.util.List;
 import javax.xml.bind.JAXBException;
 
 import org.apache.jena.rdf.model.Model;
+import org.xmldb.api.modules.XMLResource;
 
 import db.ZigDB;
 import transformer.ZigTransformer;
@@ -39,7 +40,7 @@ public class ZigFusekiTest {
     }
 
     public static void test() throws IOException, JAXBException {
-//    	ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = createZahtevZaPriznanjeZiga();
+    	ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = createZahtevZaPriznanjeZiga();
 //    	
 ////    	// pdf and html
 ////    	ZigTransformer.generateHTMLZig(zahtevZaPriznanjeZiga);
@@ -59,10 +60,10 @@ public class ZigFusekiTest {
 //    	FusekiReader.readAllDataFromDatabase();
 //    	
 //    	// ucitavanje iz baze
-//    	ZahtevZaPriznanjeZiga ucitanZahtevZaPriznanjeZiga = ZigDB.getZahtev(zahtevZaPriznanjeZiga.getBrojPrijaveZiga());
-//
-//    	System.out.println("\nIz baze je ucitan zahtev sa brojem prijave: ");
-//    	System.out.println(ucitanZahtevZaPriznanjeZiga.getBrojPrijaveZiga());
+    	ZahtevZaPriznanjeZiga ucitanZahtevZaPriznanjeZiga = ZigDB.getZahtev(zahtevZaPriznanjeZiga.getBrojPrijaveZiga());
+
+    	System.out.println("\nIz baze je ucitan zahtev sa brojem prijave: ");
+    	System.out.println(ucitanZahtevZaPriznanjeZiga.getBrojPrijaveZiga());
 //    	
 ////    	 pdf and html
 //    	ZigTransformer.generateHTMLZig(ucitanZahtevZaPriznanjeZiga);
@@ -70,18 +71,27 @@ public class ZigFusekiTest {
 //    	ZigTransformer.generatePDFZig(ucitanZahtevZaPriznanjeZiga);
 //    	System.out.println("izgenerisan PDF");
     	
-    	// metadata search
-    	MetadataSearchParams params0 = new MetadataSearchParams("tip_ziga", "INDIVIDUALNI_ZIG", "");
-    	FusekiReader.findByMetadata(params0);
-//    	 combined metadata search
-    	MetadataSearchParams params1 = new MetadataSearchParams("tip_ziga", "INDIVIDUALNI_ZIG", "&&");
-    	MetadataSearchParams params2 = new MetadataSearchParams("predstavnik_email", "Predstavnik2@jovan.com", "!");
-    	MetadataSearchParams params3 = new MetadataSearchParams("predstavnik_email", "Predstavnik2@jovan.com", "OR");
-    	List<MetadataSearchParams> params = new ArrayList<>();
-    	params.add(params1);
-    	params.add(params2);
-    	params.add(params3);
-    	FusekiReader.findByCombinedMetadata(params);
+//    	// metadata search
+//    	MetadataSearchParams params0 = new MetadataSearchParams("tip_ziga", "INDIVIDUALNI_ZIG", "");
+//    	FusekiReader.findByMetadata(params0);
+////    	 combined metadata search
+//    	MetadataSearchParams params1 = new MetadataSearchParams("tip_ziga", "INDIVIDUALNI_ZIG", "&&");
+//    	MetadataSearchParams params2 = new MetadataSearchParams("predstavnik_email", "Predstavnik2@jovan.com", "!");
+//    	MetadataSearchParams params3 = new MetadataSearchParams("predstavnik_email", "Predstavnik2@jovan.com", "OR");
+//    	List<MetadataSearchParams> params = new ArrayList<>();
+//    	params.add(params1);
+//    	params.add(params2);
+//    	params.add(params3);
+//    	FusekiReader.findByCombinedMetadata(params);
+    	
+    	//db search by text
+    	try {
+			List<XMLResource> resources = ZigDB.searchResources("jovan", false);
+			System.out.println(resources);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
     	
     }
     
