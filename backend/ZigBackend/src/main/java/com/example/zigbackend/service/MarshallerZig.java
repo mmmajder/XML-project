@@ -16,7 +16,7 @@ public class MarshallerZig {
     private static final String TARGET_NAMESPACE = "com.example.zigbackend.model";
 
     public static void marshalToFile(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(TARGET_NAMESPACE);
+        JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjeZiga.class);
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         marshaller.marshal(zahtevZaPriznanjeZiga, new File("marshalled/" + zahtevZaPriznanjeZiga.getBrojPrijaveZiga() + ".xml"));
@@ -24,7 +24,7 @@ public class MarshallerZig {
 
     public static OutputStream marshal(ZahtevZaPriznanjeZiga zahtev) throws JAXBException, XMLDBException {
         OutputStream marshaledZahtev = new ByteArrayOutputStream();
-        JAXBContext context = JAXBContext.newInstance(TARGET_NAMESPACE);
+        JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjeZiga.class);
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         marshaller.marshal(zahtev, marshaledZahtev);
@@ -33,7 +33,7 @@ public class MarshallerZig {
     }
 
     public static ZahtevZaPriznanjeZiga unmarshal(XMLResource res) throws JAXBException, XMLDBException {
-        JAXBContext context = JAXBContext.newInstance(TARGET_NAMESPACE);
+        JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjeZiga.class);
         System.out.println("2");
         Unmarshaller unmarshaller = context.createUnmarshaller();
         System.out.println("3");

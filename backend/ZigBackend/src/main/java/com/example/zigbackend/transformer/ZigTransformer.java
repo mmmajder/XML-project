@@ -108,7 +108,7 @@ public class ZigTransformer {
 
             // Transform DOM to HTML
 
-            JAXBContext context = JAXBContext.newInstance("zig");
+            JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjeZiga.class);
             JAXBSource source = new JAXBSource(context, zahtev);
             StreamResult result;
 

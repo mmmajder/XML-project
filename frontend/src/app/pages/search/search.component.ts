@@ -54,6 +54,8 @@ export class SearchComponent {
   }
 
   addMeta() {
+    let metadata = new MetadataSearchParams();
+    metadata.operator = "AND";
     this.metapodaci.push(new MetadataSearchParams());
     console.log(this.metapodaci.length)
   }

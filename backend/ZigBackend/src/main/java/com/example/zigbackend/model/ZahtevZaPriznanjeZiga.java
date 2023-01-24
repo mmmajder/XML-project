@@ -13,7 +13,7 @@ import java.util.List;
 @NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Zahtev_za_priznanje_ziga")
-@XmlType(name="ZahtevZaPriznanjeZiga", propOrder={"podnosilacPrijave", "punomocnik", "predstavnik", "zig", "klasa",
+@XmlType(name="", propOrder={"podnosilacPrijave", "punomocnik", "predstavnik", "zig", "klasa",
         "zatrazenoPravoPrvenstvaIOsnov", "taksa", "prilog", "prilogPunomocje", "brojPrijaveZiga", "datumPodnosenja", "status"})
 public class ZahtevZaPriznanjeZiga {
     @XmlElement(name="Podnosilac_prijave", required=true)

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <sz:Zahtev_za_priznanje_ziga xmlns:sz="http://www.ftn.uns.ac.rs/zig" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <sz:Podnosilac_prijave xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="sz:TFizicko_Lice">
+    <sz:Podnosilac_prijave>
         <sz:Adresa>
             <sz:Ulica>Jovanova ulica</sz:Ulica>
             <sz:Broj>3</sz:Broj>
@@ -13,10 +13,8 @@
             <sz:Email>jovanovemail@jovan.com</sz:Email>
             <sz:Faks>233452153</sz:Faks>
         </sz:Kontakt>
-        <sz:Ime>Jovan</sz:Ime>
-        <sz:Prezime>Jovic</sz:Prezime>
     </sz:Podnosilac_prijave>
-    <sz:Punomocnik xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="sz:TPravno_lice">
+    <sz:Punomocnik>
         <sz:Adresa>
             <sz:Ulica>Company ulica</sz:Ulica>
             <sz:Broj>56</sz:Broj>
@@ -29,9 +27,8 @@
             <sz:Email>JovanovPunomocnik@jovan.com</sz:Email>
             <sz:Faks>8416816854</sz:Faks>
         </sz:Kontakt>
-        <sz:Poslovno_ime>JovanovPunomocnik Company</sz:Poslovno_ime>
     </sz:Punomocnik>
-    <sz:Predstavnik xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="sz:TPravno_lice">
+    <sz:Predstavnik>
         <sz:Adresa>
             <sz:Ulica>Predstavnik ulica</sz:Ulica>
             <sz:Broj>78</sz:Broj>
@@ -44,7 +41,6 @@
             <sz:Email>Predstavnik@jovan.com</sz:Email>
             <sz:Faks>77878788778</sz:Faks>
         </sz:Kontakt>
-        <sz:Poslovno_ime>PredstavnikJovanov Company</sz:Poslovno_ime>
     </sz:Predstavnik>
     <sz:Zig>
         <sz:Tip_ziga>INDIVIDUALNI_ZIG</sz:Tip_ziga>

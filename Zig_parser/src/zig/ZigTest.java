@@ -23,7 +23,7 @@ public class ZigTest {
         try {
             System.out.println("[INFO] Zig: JAXB XML Schema validation.\n");
 
-            JAXBContext context = JAXBContext.newInstance("zig");
+            JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjeZiga.class);
 
             Unmarshaller unmarshaller = context.createUnmarshaller();
 

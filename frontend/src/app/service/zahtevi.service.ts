@@ -84,6 +84,8 @@ export class ZahteviService {
 
   public searchByMetadata(metaParams:MultipleMetadataSearchParams, endpointChar:string): Observable<any> {
     const xmlZahtev = JsonToXML.parse("MetadataSearchParamsDTO", metaParams);
+    console.log(metaParams);
+    console.log(xmlZahtev);
     return this.http.put<any>(this.getUrl(endpointChar) + "/metadata-search", xmlZahtev, AuthService.getHttpOptions());
   }
 }
