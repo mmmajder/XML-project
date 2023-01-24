@@ -1,7 +1,5 @@
 package com.example.zigbackend;
 
-import com.example.zigbackend.ktvalidators.ZigFusekiTest;
-import com.example.zigbackend.ktvalidators.ZigTest;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
