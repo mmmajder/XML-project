@@ -43,7 +43,7 @@ public class AuthenticationUtilitiesFuseki {
 	 * @return the configuration object
 	 */
 	public static ConnectionProperties loadProperties() throws IOException {
-		String propsName = "fuseki/connection.properties";
+		String propsName = "connection.properties";
 
 		InputStream propsStream = openStream(propsName);
 		if (propsStream == null)

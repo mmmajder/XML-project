@@ -1,9 +1,16 @@
 package com.example.zigbackend.model;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name="Prilog", propOrder={"tipPriloga", "statusPriloga", "putanjaDoPriloga"})
 public class Prilog {
@@ -13,30 +20,6 @@ public class Prilog {
     private EStatus_priloga statusPriloga;
     @XmlElement(name="Putanja_do_priloga")
     private String putanjaDoPriloga;
-
-    public ETip_priloga getTipPriloga() {
-        return tipPriloga;
-    }
-
-    public void setTipPriloga(ETip_priloga tipPriloga) {
-        this.tipPriloga = tipPriloga;
-    }
-
-    public EStatus_priloga getStatusPriloga() {
-        return statusPriloga;
-    }
-
-    public void setStatusPriloga(EStatus_priloga statusPriloga) {
-        this.statusPriloga = statusPriloga;
-    }
-
-    public String getPutanjaDoPriloga() {
-        return putanjaDoPriloga;
-    }
-
-    public void setPutanjaDoPriloga(String putanjaDoPriloga) {
-        this.putanjaDoPriloga = putanjaDoPriloga;
-    }
 
 	@Override
 	public String toString() {

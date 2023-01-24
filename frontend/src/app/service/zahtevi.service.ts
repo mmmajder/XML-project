@@ -4,6 +4,7 @@ import {Observable} from "rxjs";
 import {AuthService} from "./auth.service";
 import * as JsonToXML from "js2xmlparser";
 import {DetaljiOZahtevu} from "../model/shared/Zahtev";
+import {MultipleMetadataSearchParams, TextSearchDTO} from "../model/search/SearchParams";
 
 @Injectable({
   providedIn: 'root'
@@ -17,17 +18,17 @@ export class ZahteviService {
   constructor(private http: HttpClient) {
     this.patentiUrl = 'http://localhost:8000';
     this.autorskaPravaUrl = 'http://localhost:8001';
-    this.zigoviUrl = 'http://localhost:8002';
+    this.zigoviUrl = 'http://localhost:8002/zig';
   }
 
-  public getZahtev(brojPrijave: string | null): Observable<DetaljiOZahtevu> {
+  public getZahtev(brojPrijave: string | null): Observable<any> {
     const xmlZahtev = JsonToXML.parse("brojPrijave", brojPrijave);
     return this.http.post<DetaljiOZahtevu>(this.getUrl(brojPrijave), xmlZahtev, AuthService.getHttpOptions());
   }
 
-  private getUrl(brojPrijave: string | null): string {
-    if (brojPrijave == null) return "";
-    switch (brojPrijave.at(0)) {
+  private getUrl(endpointChar: string | null): string {
+    if (endpointChar == null) return "";
+    switch (endpointChar.at(0)) {
       case "A":
         return this.autorskaPravaUrl;
       case "P":
@@ -74,5 +75,15 @@ export class ZahteviService {
       }),
       responseType: 'blob' as 'json'
     };
+  }
+
+  public searchByText(textSearchParams:TextSearchDTO, endpointChar:string): Observable<any> {
+    const xmlZahtev = JsonToXML.parse("TextSearchDTO", textSearchParams);
+    return this.http.put<any>(this.getUrl(endpointChar) + "/text-search", xmlZahtev, AuthService.getHttpOptions());
+  }
+
+  public searchByMetadata(metaParams:MultipleMetadataSearchParams, endpointChar:string): Observable<any> {
+    const xmlZahtev = JsonToXML.parse("MetadataSearchParamsDTO", metaParams);
+    return this.http.put<any>(this.getUrl(endpointChar) + "/metadata-search", xmlZahtev, AuthService.getHttpOptions());
   }
 }

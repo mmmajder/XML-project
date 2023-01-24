@@ -11,4 +11,5 @@ import java.util.List;
 @NoArgsConstructor
 public class MetadataSearchParamsDTO {
     private List<MetadataSearchParams> params;
+    private boolean searchForNeobradjeni;
 }

@@ -1,9 +1,16 @@
 package com.example.zigbackend.model;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.xml.bind.annotation.*;
 import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Zahtev_za_priznanje_ziga")
 @XmlType(name="ZahtevZaPriznanjeZiga", propOrder={"podnosilacPrijave", "punomocnik", "predstavnik", "zig", "klasa",
@@ -33,102 +40,6 @@ public class ZahtevZaPriznanjeZiga {
     private Date datumPodnosenja;
     @XmlElement(name="Status", required=true)
     private EStatus status;
-
-    public Lice getPodnosilacPrijave() {
-        return podnosilacPrijave;
-    }
-
-    public void setPodnosilacPrijave(Lice podnosilacPrijave) {
-        this.podnosilacPrijave = podnosilacPrijave;
-    }
-
-    public Lice getPunomocnik() {
-        return punomocnik;
-    }
-
-    public void setPunomocnik(Lice punomocnik) {
-        this.punomocnik = punomocnik;
-    }
-
-    public Lice getPredstavnik() {
-        return predstavnik;
-    }
-
-    public void setPredstavnik(Lice predstavnik) {
-        this.predstavnik = predstavnik;
-    }
-
-    public Zig getZig() {
-        return zig;
-    }
-
-    public void setZig(Zig zig) {
-        this.zig = zig;
-    }
-
-    public List<Klasa> getKlasa() {
-        return klasa;
-    }
-
-    public void setKlasa(List<Klasa> klasa) {
-        this.klasa = klasa;
-    }
-
-    public EZatrazeno_pravo_prvenstva_i_osnov getZatrazenoPravoPrvenstvaIOsnov() {
-        return zatrazenoPravoPrvenstvaIOsnov;
-    }
-
-    public void setZatrazenoPravoPrvenstvaIOsnov(EZatrazeno_pravo_prvenstva_i_osnov zatrazenoPravoPrvenstvaIOsnov) {
-        this.zatrazenoPravoPrvenstvaIOsnov = zatrazenoPravoPrvenstvaIOsnov;
-    }
-
-    public Taksa getTaksa() {
-        return taksa;
-    }
-
-    public void setTaksa(Taksa taksa) {
-        this.taksa = taksa;
-    }
-
-    public List<Prilog> getPrilog() {
-        return prilog;
-    }
-
-    public void setPrilog(List<Prilog> prilog) {
-        this.prilog = prilog;
-    }
-
-    public PrilogPunomocje getPrilogPunomocje() {
-        return prilogPunomocje;
-    }
-
-    public void setPrilogPunomocje(PrilogPunomocje prilogPunomocje) {
-        this.prilogPunomocje = prilogPunomocje;
-    }
-
-    public String getBrojPrijaveZiga() {
-        return brojPrijaveZiga;
-    }
-
-    public void setBrojPrijaveZiga(String brojPrijaveZiga) {
-        this.brojPrijaveZiga = brojPrijaveZiga;
-    }
-
-    public Date getDatumPodnosenja() {
-        return datumPodnosenja;
-    }
-
-    public void setDatumPodnosenja(Date datumPodnosenja) {
-        this.datumPodnosenja = datumPodnosenja;
-    }
-	
-	public EStatus getStatus() {
-		return status;
-	}
-
-	public void setStatus(EStatus status) {
-		this.status = status;
-	}
 
 	@Override
 	public String toString() {

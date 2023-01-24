@@ -1,4 +1,8 @@
 package com.example.zigbackend.model;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import java.util.List;
 
 import javax.xml.bind.annotation.XmlAccessType;
@@ -6,6 +10,9 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name="Zig", propOrder={"tipZiga", "opisIzgledaZiga", "drugaVrstaZnakaOpis", "izgledPutanjaDoSlike", "boja",
         "transliteracijaZnaka", "prevodZnaka", "opisZnaka"})
@@ -27,70 +34,6 @@ public class Zig {
     private String prevodZnaka;
     @XmlElement(name="Opis_znaka", required=true)
     private String opisZnaka;
-
-    public ETip_ziga getTipZiga() {
-        return tipZiga;
-    }
-
-    public void setTipZiga(ETip_ziga tipZiga) {
-        this.tipZiga = tipZiga;
-    }
-
-    public EOpis_izgleda_ziga getOpisIzgledaZiga() {
-        return opisIzgledaZiga;
-    }
-
-    public void setOpisIzgledaZiga(EOpis_izgleda_ziga opisIzgledaZiga) {
-        this.opisIzgledaZiga = opisIzgledaZiga;
-    }
-
-    public String getDrugaVrstaZnakaOpis() {
-        return drugaVrstaZnakaOpis;
-    }
-
-    public void setDrugaVrstaZnakaOpis(String drugaVrstaZnakaOpis) {
-        this.drugaVrstaZnakaOpis = drugaVrstaZnakaOpis;
-    }
-
-    public String getIzgledPutanjaDoSlike() {
-        return izgledPutanjaDoSlike;
-    }
-
-    public void setIzgledPutanjaDoSlike(String izgledPutanjaDoSlike) {
-        this.izgledPutanjaDoSlike = izgledPutanjaDoSlike;
-    }
-
-    public String getTransliteracijaZnaka() {
-        return transliteracijaZnaka;
-    }
-
-    public void setTransliteracijaZnaka(String transliteracijaZnaka) {
-        this.transliteracijaZnaka = transliteracijaZnaka;
-    }
-
-    public String getPrevodZnaka() {
-        return prevodZnaka;
-    }
-
-    public void setPrevodZnaka(String prevodZnaka) {
-        this.prevodZnaka = prevodZnaka;
-    }
-
-    public String getOpisZnaka() {
-        return opisZnaka;
-    }
-
-    public void setOpisZnaka(String opisZnaka) {
-        this.opisZnaka = opisZnaka;
-    }
-	
-	public List<EBoja> getBoja() {
-		return boja;
-	}
-
-	public void setBoja(List<EBoja> boja) {
-		this.boja = boja;
-	}
 
 	@Override
 	public String toString() {

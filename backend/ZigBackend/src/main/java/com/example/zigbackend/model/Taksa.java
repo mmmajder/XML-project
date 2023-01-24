@@ -1,9 +1,16 @@
 package com.example.zigbackend.model;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name="Taksa", propOrder={"osnovnaTaksa", "taksaZaSveKlase", "taksaZaGrafickoResenje"})
 public class Taksa {
@@ -13,26 +20,6 @@ public class Taksa {
     private int taksaZaSveKlase;
     @XmlElement(name="Taksa_za_graficko_resenje", required=true)
     private int taksaZaGrafickoResenje;
-
-    public int getOsnovnaTaksa() {
-        return osnovnaTaksa;
-    }
-
-    public void setOsnovnaTaksa(int osnovnaTaksa) {
-        this.osnovnaTaksa = osnovnaTaksa;
-    }
-
-    public int getTaksaZaSveKlase() {
-        return taksaZaSveKlase;
-    }
-
-    public void setTaksaZaSveKlase(int taksaZaSveKlase) {
-        this.taksaZaSveKlase = taksaZaSveKlase;
-    }
-
-    public int getTaksaZaGrafickoResenje() {
-        return taksaZaGrafickoResenje;
-    }
 
     public void setTaksaZaGrafickoResenje(int taksaZaGrafickoResenje) {
         this.taksaZaGrafickoResenje = taksaZaGrafickoResenje;

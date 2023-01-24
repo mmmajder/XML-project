@@ -44,7 +44,7 @@ public class AuthenticationUtilitiesDB {
      * @return the configuration object
      */
     public static ConnectionProperties loadProperties() throws IOException {
-        String propsName = "db/exist.properties";
+        String propsName = "exist.properties";
 
         InputStream propsStream = openStream(propsName);
         if (propsStream == null)

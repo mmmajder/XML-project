@@ -1,19 +1,18 @@
 package com.example.zigbackend.model;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.xml.bind.annotation.*;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name= "TPravno_lice", propOrder={"poslovnoIme"})
 public class PravnoLice extends Lice {
     @XmlElement(name="Poslovno_ime", required=true)
     private String poslovnoIme;
-
-    public String getPoslovnoIme() {
-        return poslovnoIme;
-    }
-
-    public void setPoslovnoIme(String poslovnoIme) {
-        this.poslovnoIme = poslovnoIme;
-    }
 	
 	@Override
 	public String toString() {

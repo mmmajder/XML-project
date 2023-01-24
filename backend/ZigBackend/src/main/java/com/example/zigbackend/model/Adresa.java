@@ -1,9 +1,16 @@
 package com.example.zigbackend.model;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name="Adresa", propOrder={"ulica", "broj", "postanskiBroj", "mesto", "drzava"})
 public class Adresa {
@@ -18,49 +25,6 @@ public class Adresa {
     private String mesto;
     @XmlElement(name="Drzava", required=true)
     private String drzava;
-
-    public String getUlica() {
-        return ulica;
-    }
-
-    public void setUlica(String ulica) {
-        this.ulica = ulica;
-    }
-
-    public int getBroj() {
-        return broj;
-    }
-
-    public void setBroj(int broj) {
-        this.broj = broj;
-    }
-
-    public int getPostanskiBroj() {
-        return postanskiBroj;
-    }
-
-    public void setPostanskiBroj(int postanskiBroj) {
-        this.postanskiBroj = postanskiBroj;
-    }
-
-    public String getMesto() {
-        return mesto;
-    }
-
-    public void setMesto(String mesto) {
-        this.mesto = mesto;
-    }
-
-    public String getDrzava() {
-        return drzava;
-    }
-
-    public void setDrzava(String drzava) {
-        this.drzava = drzava;
-    }
-
-    public Adresa() {
-    }
 
     public Adresa(String ulica, int broj, int postanskiBroj, String mesto, String drzava) {
         this.ulica = ulica;

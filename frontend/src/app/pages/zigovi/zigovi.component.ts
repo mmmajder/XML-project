@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import {LiceZahtevaZig} from "../../model/zigModels/LiceZahtevaZig";
 import {Adresa} from "../../model/zigModels/Adresa";
-import {Zig} from "../../model/zigModels/zig";
+import {Zig} from "../../model/zigModels/Zig";
 import {SadrzajZahtevaZaAutorskaPrava} from "../../model/autorskoDelo/SadrzajZahtevaZaAutorskaPrava";
 
 

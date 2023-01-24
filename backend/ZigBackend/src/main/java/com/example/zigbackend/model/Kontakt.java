@@ -1,9 +1,16 @@
 package com.example.zigbackend.model;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name="Kontakt", propOrder={"telefon", "email", "faks"})
 public class Kontakt {
@@ -15,33 +22,6 @@ public class Kontakt {
     private String email;
     @XmlElement(name="Faks", required=true)
     private String faks;
-
-    public String getTelefon() {
-        return telefon;
-    }
-
-    public void setTelefon(String telefon) {
-        this.telefon = telefon;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getFaks() {
-        return faks;
-    }
-
-    public void setFaks(String faks) {
-        this.faks = faks;
-    }
-
-    public Kontakt() {
-    }
 
     public Kontakt(String telefon, String email, String faks) {
         this.telefon = telefon;

@@ -16,7 +16,7 @@ public class MarshallerZig {
     private static final String TARGET_NAMESPACE = "com.example.zigbackend.model";
 
     public static void marshalToFile(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance("zig");
+        JAXBContext context = JAXBContext.newInstance(TARGET_NAMESPACE);
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         marshaller.marshal(zahtevZaPriznanjeZiga, new File("marshalled/" + zahtevZaPriznanjeZiga.getBrojPrijaveZiga() + ".xml"));
@@ -34,7 +34,9 @@ public class MarshallerZig {
 
     public static ZahtevZaPriznanjeZiga unmarshal(XMLResource res) throws JAXBException, XMLDBException {
         JAXBContext context = JAXBContext.newInstance(TARGET_NAMESPACE);
+        System.out.println("2");
         Unmarshaller unmarshaller = context.createUnmarshaller();
+        System.out.println("3");
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = (ZahtevZaPriznanjeZiga) unmarshaller.unmarshal(res.getContentAsDOM());
 
         return zahtevZaPriznanjeZiga;

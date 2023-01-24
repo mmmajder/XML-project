@@ -23,7 +23,7 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value = "/zig", produces = MediaType.APPLICATION_JSON_VALUE)
+@RequestMapping(value = "/zig")
 public class ZigController {
 
     @Autowired
@@ -83,7 +83,7 @@ public class ZigController {
         return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
     }
 
-    @GetMapping(path = "/metadata-search", produces = "application/xml", consumes = "application/xml")
+    @PutMapping(path = "/metadata-search", produces = "application/xml", consumes = "application/xml")
     public ResponseEntity<List<ZahtevZaPriznanjeZiga>> getZahteviByMetadata(@RequestBody MetadataSearchParamsDTO metadataSearchParamsDTO) throws IOException {
         if (metadataSearchParamsDTO.getParams().size() == 0){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -92,7 +92,7 @@ public class ZigController {
         return ResponseEntity.ok(zigService.getByMetadata(metadataSearchParamsDTO));
     }
 
-    @GetMapping(path = "/text-search", produces = "application/xml", consumes = "application/xml")
+    @PutMapping(path = "/text-search", produces = "application/xml", consumes = "application/xml")
     public ResponseEntity<List<ZahtevZaPriznanjeZiga>> getZahteviByTextSearch(@RequestBody TextSearchDTO textSearchDTO) throws Exception {
         String stripped = textSearchDTO.getTextSearch().strip();
 

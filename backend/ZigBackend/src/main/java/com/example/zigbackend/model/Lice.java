@@ -1,9 +1,16 @@
 package com.example.zigbackend.model;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlType;
 
+@Getter
+@Setter
+@NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name= "", propOrder={"adresa", "kontakt"})
 public class Lice {
@@ -11,22 +18,6 @@ public class Lice {
     public Adresa adresa;
     @XmlElement(name="Kontakt", required=true)
     public Kontakt kontakt;
-
-    public Adresa getAdresa() {
-        return adresa;
-    }
-
-    public void setAdresa(Adresa adresa) {
-        this.adresa = adresa;
-    }
-
-    public Kontakt getKontakt() {
-        return kontakt;
-    }
-
-    public void setKontakt(Kontakt kontakt) {
-        this.kontakt = kontakt;
-    }
 
 	@Override
 	public String toString() {

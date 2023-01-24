@@ -12,4 +12,5 @@ import java.util.List;
 public class TextSearchDTO {
     private String textSearch;
     private boolean casesensitive;
+    private boolean searchForNeobradjeni;
 }

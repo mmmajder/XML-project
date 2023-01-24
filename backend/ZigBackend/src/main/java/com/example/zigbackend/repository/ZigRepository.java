@@ -80,6 +80,7 @@ public class ZigRepository {
     // search vvv
     public List<ZahtevZaPriznanjeZiga> getByText(List<String> words, boolean casesensitive) throws Exception {
         List<XMLResource> resources = ZigDB.searchResourcesForText(words, casesensitive);
+        System.out.println(resources);
         List<ZahtevZaPriznanjeZiga> zahtevi = getZahteviFromResources(resources);
 
         return zahtevi;
@@ -89,6 +90,7 @@ public class ZigRepository {
         List<ZahtevZaPriznanjeZiga> zahtevi = new ArrayList<>();
 
         for (XMLResource resource : resources){
+            System.out.println("1");
             ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = MarshallerZig.unmarshal(resource);
             zahtevi.add(zahtevZaPriznanjeZiga);
         }
