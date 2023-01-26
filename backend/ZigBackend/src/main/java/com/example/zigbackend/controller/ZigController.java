@@ -1,11 +1,9 @@
 package com.example.zigbackend.controller;
 
-import com.example.zigbackend.dto.MetadataSearchParamsDTO;
-import com.example.zigbackend.dto.NazivPrijaveDTO;
-import com.example.zigbackend.dto.TextSearchDTO;
-import com.example.zigbackend.dto.ZahtevZaPriznanjeZigaDTO;
+import com.example.zigbackend.dto.*;
 import com.example.zigbackend.model.ZahtevZaPriznanjeZiga;
 import com.example.zigbackend.service.ZigService;
+import com.itextpdf.text.Meta;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -85,16 +83,20 @@ public class ZigController {
 
     @PutMapping(path = "/metadata-search", produces = "application/xml", consumes = "application/xml")
     public ResponseEntity<List<ZahtevZaPriznanjeZiga>> getZahteviByMetadata(@RequestBody MetadataSearchParamsDTO metadataSearchParamsDTO) throws IOException {
-        if (metadataSearchParamsDTO.getParams().size() == 0){
+        List<MetadataSearchParams> parsedSearchParams = zigService.parseMetadataDTO(metadataSearchParamsDTO);
+
+        System.out.println(metadataSearchParamsDTO);
+
+        if (parsedSearchParams == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return ResponseEntity.ok(zigService.getByMetadata(metadataSearchParamsDTO));
+        return ResponseEntity.ok(zigService.getByMetadata(parsedSearchParams));
     }
 
     @PutMapping(path = "/text-search", produces = "application/xml", consumes = "application/xml")
     public ResponseEntity<List<ZahtevZaPriznanjeZiga>> getZahteviByTextSearch(@RequestBody TextSearchDTO textSearchDTO) throws Exception {
-        String stripped = textSearchDTO.getTextSearch().strip();
+        String stripped = textSearchDTO.getTextSearch().trim();
 
         if ("".equals(stripped)){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -106,6 +108,7 @@ public class ZigController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
+//        return ResponseEntity.ok(zigService.mapToZahtevi(zahtevi));
         return ResponseEntity.ok(zahtevi);
     }
 }

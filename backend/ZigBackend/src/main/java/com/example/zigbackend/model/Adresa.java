@@ -16,15 +16,15 @@ import javax.xml.bind.annotation.XmlType;
 public class Adresa {
 
     @XmlElement(name="Ulica", required=true)
-    private String ulica;
+    public String ulica;
     @XmlElement(name="Broj", required=true)
-    private int broj;
+    public int broj;
     @XmlElement(name="Postanski_broj", required=true)
-    private int postanskiBroj;
+    public int postanskiBroj;
     @XmlElement(name="Mesto", required=true)
-    private String mesto;
+    public String mesto;
     @XmlElement(name="Drzava", required=true)
-    private String drzava;
+    public String drzava;
 
     public Adresa(String ulica, int broj, int postanskiBroj, String mesto, String drzava) {
         this.ulica = ulica;

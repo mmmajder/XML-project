@@ -4,7 +4,10 @@ import {Observable} from "rxjs";
 import {AuthService} from "./auth.service";
 import * as JsonToXML from "js2xmlparser";
 import {DetaljiOZahtevu} from "../model/shared/Zahtev";
-import {MultipleMetadataSearchParams, TextSearchDTO} from "../model/search/SearchParams";
+// import {MetadataSearchParams, MultipleMetadataSearchParams, TextSearchDTO} from "../model/search/SearchParams";
+import {MetadataSearchParamsDTO, TextSearchDTO} from "../model/search/SearchParams";
+import { map } from 'rxjs/operators';
+import {xml2js} from "xml-js";
 
 @Injectable({
   providedIn: 'root'
@@ -79,13 +82,26 @@ export class ZahteviService {
 
   public searchByText(textSearchParams:TextSearchDTO, endpointChar:string): Observable<any> {
     const xmlZahtev = JsonToXML.parse("TextSearchDTO", textSearchParams);
-    return this.http.put<any>(this.getUrl(endpointChar) + "/text-search", xmlZahtev, AuthService.getHttpOptions());
+    console.log(textSearchParams);
+    console.log(xmlZahtev);
+    return this.http.put<any>(this.getUrl(endpointChar) + "/text-search", xmlZahtev, this.getXmlHttpOptions());
   }
 
-  public searchByMetadata(metaParams:MultipleMetadataSearchParams, endpointChar:string): Observable<any> {
+  public searchByMetadata(metaParams:MetadataSearchParamsDTO, endpointChar:string): Observable<any> {
+    // const xmlZahtev = JsonToXML.parse("MetadataSearchParamsDTO", metaParams);
     const xmlZahtev = JsonToXML.parse("MetadataSearchParamsDTO", metaParams);
-    console.log(metaParams);
     console.log(xmlZahtev);
-    return this.http.put<any>(this.getUrl(endpointChar) + "/metadata-search", xmlZahtev, AuthService.getHttpOptions());
+    return this.http.put<any>(this.getUrl(endpointChar) + "/metadata-search", xmlZahtev, this.getXmlHttpOptions());
+  }
+
+  public getXmlHttpOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': localStorage.getItem('token') || 'authkey',
+        'Content-Type': 'application/xml',
+      }),
+      responseType: 'document' as 'json'
+    };
   }
 }

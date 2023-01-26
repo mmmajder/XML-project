@@ -19,6 +19,11 @@ import com.example.zigbackend.service.MarshallerZig;
 import com.example.zigbackend.utils.AuthenticationUtilitiesDB;
 import com.example.zigbackend.utils.DBSetup;
 import org.exist.xmldb.EXistResource;
+import org.exist.xmldb.RemoteXMLResource;
+import org.w3c.dom.Node;
+import org.xml.sax.ContentHandler;
+import org.xml.sax.SAXNotRecognizedException;
+import org.xml.sax.SAXNotSupportedException;
 import org.xmldb.api.DatabaseManager;
 import org.xmldb.api.base.*;
 import org.xmldb.api.modules.CollectionManagementService;
@@ -133,8 +138,27 @@ public class ZigDB {
             ResourceIterator iter = xPathQueryService.query(xPathExp).getIterator();
 
             while (iter.hasMoreResources()) {
-                resource = (XMLResource) iter.nextResource();
-                resources.add(resource);
+                Resource res =  iter.nextResource();
+                System.out.println(res.getContent());
+                RemoteXMLResource resxml = (RemoteXMLResource) res;
+
+//                System.out.println(res);
+//                Object content  = res.getContent();
+//                System.out.println(content);
+//
+//                System.out.println(resxml);
+//                Node n = resxml.getContentAsDOM();
+//                System.out.println(n);
+//                System.out.println(n.getChildNodes());
+//
+//                resources.add(resource);
+//                System.out.println(res);
+//                System.out.println(res.getContent());
+//                resource = (XMLResource) iter.nextResource();
+//                System.out.println(resource);
+//                System.out.println(resource.toString());
+//                System.out.println(resource.getContentAsDOM());
+                resources.add(resxml);
             }
 
             return resources;

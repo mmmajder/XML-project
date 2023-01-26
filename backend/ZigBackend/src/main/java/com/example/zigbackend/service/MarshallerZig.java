@@ -1,6 +1,9 @@
 package com.example.zigbackend.service;
 
+import com.example.zigbackend.model.ObjectFactory;
 import com.example.zigbackend.model.ZahtevZaPriznanjeZiga;
+import org.exist.xmldb.RemoteXMLResource;
+import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
@@ -16,7 +19,7 @@ public class MarshallerZig {
     private static final String TARGET_NAMESPACE = "com.example.zigbackend.model";
 
     public static void marshalToFile(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjeZiga.class);
+        JAXBContext context = JAXBContext.newInstance(TARGET_NAMESPACE);
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         marshaller.marshal(zahtevZaPriznanjeZiga, new File("marshalled/" + zahtevZaPriznanjeZiga.getBrojPrijaveZiga() + ".xml"));
@@ -24,7 +27,7 @@ public class MarshallerZig {
 
     public static OutputStream marshal(ZahtevZaPriznanjeZiga zahtev) throws JAXBException, XMLDBException {
         OutputStream marshaledZahtev = new ByteArrayOutputStream();
-        JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjeZiga.class);
+        JAXBContext context = JAXBContext.newInstance(TARGET_NAMESPACE);
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
         marshaller.marshal(zahtev, marshaledZahtev);
@@ -33,11 +36,14 @@ public class MarshallerZig {
     }
 
     public static ZahtevZaPriznanjeZiga unmarshal(XMLResource res) throws JAXBException, XMLDBException {
-        JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjeZiga.class);
+        JAXBContext context = JAXBContext.newInstance(TARGET_NAMESPACE);
         System.out.println("2");
         Unmarshaller unmarshaller = context.createUnmarshaller();
         System.out.println("3");
-        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = (ZahtevZaPriznanjeZiga) unmarshaller.unmarshal(res.getContentAsDOM());
+        System.out.println(res);
+        RemoteXMLResource r = (RemoteXMLResource) res;
+        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = (ZahtevZaPriznanjeZiga) unmarshaller.unmarshal(r.getStreamContent());
+        System.out.println(zahtevZaPriznanjeZiga);
 
         return zahtevZaPriznanjeZiga;
     }

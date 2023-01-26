@@ -3,6 +3,7 @@ package com.example.zigbackend.service;
 import com.example.zigbackend.dto.MetadataSearchParams;
 import com.example.zigbackend.dto.MetadataSearchParamsDTO;
 import com.example.zigbackend.dto.ZahtevZaPriznanjeZigaDTO;
+import com.example.zigbackend.dto.ZahteviZaPriznanjeZigaDTO;
 import com.example.zigbackend.mapper.ZigMapper;
 import com.example.zigbackend.model.ZahtevZaPriznanjeZiga;
 import com.example.zigbackend.repository.ZigRepository;
@@ -14,6 +15,7 @@ import org.xmldb.api.modules.XMLResource;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -103,9 +105,7 @@ public class ZigService {
         return zigRepository.getByText(searchWords, casesensitive);
     }
 
-    public List<ZahtevZaPriznanjeZiga> getByMetadata(MetadataSearchParamsDTO metadataSearchParamsDTO) throws IOException {
-        List<MetadataSearchParams> params = metadataSearchParamsDTO.getParams();
-
+    public List<ZahtevZaPriznanjeZiga> getByMetadata(List<MetadataSearchParams> params) throws IOException {
         if (params.size() == 1){
             return zigRepository.getByMetadata(params.get(0));
         } else {
@@ -127,5 +127,47 @@ public class ZigService {
 
     public List<ZahtevZaPriznanjeZiga> getAllDenied() throws JAXBException, XMLDBException {
         return zigRepository.getAllDenied();
+    }
+
+    public ZahteviZaPriznanjeZigaDTO mapToZahtevi(List<ZahtevZaPriznanjeZiga> zahteviList){
+        ZahteviZaPriznanjeZigaDTO zahtevi = new ZahteviZaPriznanjeZigaDTO();
+        zahtevi.setZahtevi(zahteviList);
+
+        return zahtevi;
+    }
+
+    public boolean isMetadataDTOEmpty(MetadataSearchParamsDTO metadataSearchParamsDTO){
+        String strippedProperty = metadataSearchParamsDTO.getProperty().trim();
+        String strippedValue = metadataSearchParamsDTO.getValue().trim();
+        String strippedOperator = metadataSearchParamsDTO.getOperator().trim();
+
+        return "".equals(strippedProperty) || "".equals(strippedValue) || "".equals(strippedOperator);
+    }
+
+    public boolean isMetadataDTOOfInequalLength(MetadataSearchParamsDTO metadataSearchParamsDTO){
+        String strippedProperty = metadataSearchParamsDTO.getProperty().trim();
+        String strippedValue = metadataSearchParamsDTO.getValue().trim();
+        String strippedOperator = metadataSearchParamsDTO.getOperator().trim();
+
+        return "".equals(strippedProperty) || "".equals(strippedValue) || "".equals(strippedOperator);
+    }
+
+    public List<MetadataSearchParams> parseMetadataDTO(MetadataSearchParamsDTO metadataSearchParamsDTO){
+        String[] properties = metadataSearchParamsDTO.getProperty().trim().split("\\|");
+        String[] values = metadataSearchParamsDTO.getValue().trim().split("\\|");
+        String[] operators = metadataSearchParamsDTO.getOperator().trim().split("\\|");
+
+        if ( this.isMetadataDTOOfInequalLength(metadataSearchParamsDTO) || (properties.length != values.length || properties.length != operators.length)){
+            return null;
+        }
+
+        List<MetadataSearchParams> parsedSearchParams = new ArrayList<>();
+
+        for (int i = 0 ; i < properties.length ; i++){
+            MetadataSearchParams mp = new MetadataSearchParams(properties[i], values[i], operators[i]);
+            parsedSearchParams.add(mp);
+        }
+
+        return parsedSearchParams;
     }
 }
