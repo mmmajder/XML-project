@@ -19,6 +19,7 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatMenuModule} from "@angular/material/menu";
 import {PagesModule} from "./pages/pages.module";
 import {MatNativeDateModule} from '@angular/material/core';
+import {MatListModule} from '@angular/material/list';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import {MatNativeDateModule} from '@angular/material/core';
     MatSelectModule,
     MatMenuModule,
     PagesModule,
-    MatNativeDateModule
+    MatNativeDateModule,
+    MatListModule,
   ],
   providers: [],
   exports: [

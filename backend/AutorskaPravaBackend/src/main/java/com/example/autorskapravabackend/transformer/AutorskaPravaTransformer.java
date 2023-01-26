@@ -23,8 +23,9 @@ public class AutorskaPravaTransformer {
 
     private static final TransformerFactory transformerFactory;
 
-    public static final String XSL_FILE = "src/main/java/com/example/autorskapravabackend/transformer/Zahtev.xsl";
     public static final String XSL_RESENJE_FILE = "src/main/java/com/example/autorskapravabackend/transformer/Resenje.xsl";
+    public static final String PDF_XSL_FILE = "src/main/java/com/example/autorskapravabackend/transformer/Zahtev_A_PDF.xsl";
+    public static final String HTML_XSL_FILE = "src/main/java/com/example/autorskapravabackend/transformer/Zahtev_A_HTML.xsl";
 
     public static final String HTML_FOLDER = "src/main/resources/gen/xhtml/";
 
@@ -49,10 +50,10 @@ public class AutorskaPravaTransformer {
 
     public static void generateZahtevPDF(ZahtevZaAutorskaPrava zahtev) {
         try {
-            AutorskaPravaTransformer.generateZahtevHTML(zahtev);
+            AutorskaPravaTransformer.generateZahtevHTML(zahtev, true);
             String title = getFileTitle(zahtev);
             String titlePdf = title + ".pdf";
-            String titleHTML = title + ".html";
+            String titleHTML = title + "_for_pdf.html";
             Document document = new Document();
             PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(PDF_FOLDER + titlePdf));
             document.open();
@@ -76,10 +77,18 @@ public class AutorskaPravaTransformer {
         }
     }
 
-    public static void generateZahtevHTML(ZahtevZaAutorskaPrava zahtev) {
+    public static void generateZahtevHTML(ZahtevZaAutorskaPrava zahtev, boolean forPdf) {
         try {
+            String xslFile;
+
+            if (forPdf){
+                xslFile = PDF_XSL_FILE;
+            } else {
+                xslFile = HTML_XSL_FILE;
+            }
+
             // Initialize Transformer instance
-            StreamSource transformSource = new StreamSource(new File(XSL_FILE));
+            StreamSource transformSource = new StreamSource(new File(xslFile));
             Transformer transformer = transformerFactory.newTransformer(transformSource);
             transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
@@ -90,7 +99,14 @@ public class AutorskaPravaTransformer {
             // Transform DOM to HTML
             JAXBContext context = JAXBContext.newInstance("com.example.autorskapravabackend.model");
             JAXBSource source = new JAXBSource(context, zahtev);
-            StreamResult result = new StreamResult(new FileOutputStream(HTML_RESENJA_FOLDER + getFileTitle(zahtev) + ".html"));
+            StreamResult result;
+
+            if (forPdf) {
+                result = new StreamResult(new FileOutputStream(HTML_FOLDER + getFileTitle(zahtev) + "_for_pdf" + ".html"));
+            } else {
+                result = new StreamResult(new FileOutputStream(HTML_FOLDER + getFileTitle(zahtev) + ".html"));
+            }
+
             transformer.transform(source, result);
         } catch (Exception e) {
             e.printStackTrace();

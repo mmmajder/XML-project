@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <sz:Zahtev_za_priznanje_ziga xmlns:sz="http://www.ftn.uns.ac.rs/zig" xmlns:xs="http://www.w3.org/2001/XMLSchema">
-    <sz:Podnosilac_prijave xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="sz:TFizicko_Lice">
+    <sz:Podnosilac_prijave>
         <sz:Adresa>
             <sz:Ulica>Jovanova ulica</sz:Ulica>
             <sz:Broj>3</sz:Broj>
@@ -13,10 +13,8 @@
             <sz:Email>jovanovemail@jovan.com</sz:Email>
             <sz:Faks>233452153</sz:Faks>
         </sz:Kontakt>
-        <sz:Ime>Jovan</sz:Ime>
-        <sz:Prezime>Jovic</sz:Prezime>
     </sz:Podnosilac_prijave>
-    <sz:Punomocnik xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="sz:TPravno_lice">
+    <sz:Punomocnik>
         <sz:Adresa>
             <sz:Ulica>Company ulica</sz:Ulica>
             <sz:Broj>56</sz:Broj>
@@ -29,9 +27,8 @@
             <sz:Email>JovanovPunomocnik@jovan.com</sz:Email>
             <sz:Faks>8416816854</sz:Faks>
         </sz:Kontakt>
-        <sz:Poslovno_ime>JovanovPunomocnik Company</sz:Poslovno_ime>
     </sz:Punomocnik>
-    <sz:Predstavnik xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:type="sz:TPravno_lice">
+    <sz:Predstavnik>
         <sz:Adresa>
             <sz:Ulica>Predstavnik ulica</sz:Ulica>
             <sz:Broj>78</sz:Broj>
@@ -44,12 +41,14 @@
             <sz:Email>Predstavnik@jovan.com</sz:Email>
             <sz:Faks>77878788778</sz:Faks>
         </sz:Kontakt>
-        <sz:Poslovno_ime>PredstavnikJovanov Company</sz:Poslovno_ime>
     </sz:Predstavnik>
     <sz:Zig>
         <sz:Tip_ziga>INDIVIDUALNI_ZIG</sz:Tip_ziga>
         <sz:Opis_izgleda_ziga>KOMBINOVANI_ZNAK</sz:Opis_izgleda_ziga>
-        <sz:Izgled_putanja_do_slike>putanja</sz:Izgled_putanja_do_slike>
+        <sz:Izgled_putanja_do_slike>test_logo.jpg</sz:Izgled_putanja_do_slike>
+        <sz:Boja>PLAVA</sz:Boja>
+        <sz:Boja>ZUTA</sz:Boja>
+        <sz:Boja>ROZE</sz:Boja>
         <sz:Transliteracija_znaka>Oh yes!</sz:Transliteracija_znaka>
         <sz:Prevod_znaka>Oh da!</sz:Prevod_znaka>
         <sz:Opis_znaka>Znak predstavlja zadovoljnu musteriju koja pokazuje palcem ka gore i smeje se. Oko musterijine glave je ispisan uzvik Oh yes!</sz:Opis_znaka>
@@ -58,7 +57,7 @@
         <sz:Id_klase>1</sz:Id_klase>
         <sz:Pun_naziv_klase>Hemijski proizvodi</sz:Pun_naziv_klase>
     </sz:Klasa>
-    <sz:Zatrazeno_pravo_prvenstva_i_osnov>Ja sam prvi pronalazac ovog magicnog praska.</sz:Zatrazeno_pravo_prvenstva_i_osnov>
+    <sz:Zatrazeno_pravo_prvenstva_i_osnov>KONVENCIJSKO</sz:Zatrazeno_pravo_prvenstva_i_osnov>
     <sz:Taksa>
         <sz:Osnovna_taksa>550</sz:Osnovna_taksa>
         <sz:Taksa_za_sve_klase>300</sz:Taksa_za_sve_klase>
@@ -66,35 +65,31 @@
     </sz:Taksa>
     <sz:Prilog>
         <sz:Tip_priloga>PRIMERAK_ZNAKA</sz:Tip_priloga>
-        <sz:Status_priloga>PREDAT</sz:Status_priloga>
+        <sz:Status_priloga>PREDATO</sz:Status_priloga>
         <sz:Putanja_do_priloga>putanja1</sz:Putanja_do_priloga>
     </sz:Prilog>
     <sz:Prilog>
         <sz:Tip_priloga>SPISAK_ROBE_I_USLUGA</sz:Tip_priloga>
-        <sz:Status_priloga>PREDAT</sz:Status_priloga>
+        <sz:Status_priloga>PREDATO</sz:Status_priloga>
         <sz:Putanja_do_priloga>putanja2</sz:Putanja_do_priloga>
     </sz:Prilog>
     <sz:Prilog>
         <sz:Tip_priloga>OPSTI_AKT_O_ZIGU</sz:Tip_priloga>
-        <sz:Status_priloga>PREDAT</sz:Status_priloga>
-        <sz:Putanja_do_priloga>putanja3</sz:Putanja_do_priloga>
+        <sz:Status_priloga>NIJE_POTREBNO</sz:Status_priloga>
     </sz:Prilog>
     <sz:Prilog>
         <sz:Tip_priloga>DOKAZ_O_PRAVU_PRVENSTVA</sz:Tip_priloga>
-        <sz:Status_priloga>PREDAT</sz:Status_priloga>
-        <sz:Putanja_do_priloga>putanja4</sz:Putanja_do_priloga>
+        <sz:Status_priloga>NIJE_PREDATO</sz:Status_priloga>
     </sz:Prilog>
     <sz:Prilog>
         <sz:Tip_priloga>DOKAZ_O_UPLATI_TAKSE</sz:Tip_priloga>
-        <sz:Status_priloga>PREDAT</sz:Status_priloga>
-        <sz:Putanja_do_priloga>putanja5</sz:Putanja_do_priloga>
+        <sz:Status_priloga>NIJE_PREDATO</sz:Status_priloga>
     </sz:Prilog>
     <sz:Prilog_punomocje>
-        <sz:Punomocje_predato_ranije>false</sz:Punomocje_predato_ranije>
-        <sz:Punomocje_ce_biti_naknadno_dostavljeno>false</sz:Punomocje_ce_biti_naknadno_dostavljeno>
-        <sz:Status_priloga>PREDAT</sz:Status_priloga>
+        <sz:Status_priloga>PREDATO</sz:Status_priloga>
         <sz:Putanja_do_priloga>putanja</sz:Putanja_do_priloga>
     </sz:Prilog_punomocje>
     <sz:Broj_prijave_ziga>Z-12345/22</sz:Broj_prijave_ziga>
     <sz:Datum_podnosenja>2022-05-06T00:00:00+02:00</sz:Datum_podnosenja>
+    <sz:Status>PREDATO</sz:Status>
 </sz:Zahtev_za_priznanje_ziga>

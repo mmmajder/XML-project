@@ -54,7 +54,10 @@
     <Zig>
         <Tip_ziga xsi:type="ETip_ziga">INDIVIDUALNI_ZIG</Tip_ziga>
         <Opis_izgleda_ziga xsi:type="EOpis_izgleda_ziga">KOMBINOVANI_ZNAK</Opis_izgleda_ziga>
-        <Izgled_putanja_do_slike>neka/putanja/do/slike</Izgled_putanja_do_slike>
+        <Izgled_putanja_do_slike>test_logo.jpg</Izgled_putanja_do_slike>
+        <Boja>ZELENA</Boja>
+        <Boja>NARANDZASTA</Boja>
+        <Boja>LJUBICASTA</Boja>
         <Transliteracija_znaka>Ouch, my ankle!</Transliteracija_znaka>
         <Prevod_znaka>Oh, moj zglob!</Prevod_znaka>
         <Opis_znaka>
@@ -71,7 +74,6 @@
         <Pun_naziv_klase>Vatreno oruzje</Pun_naziv_klase>
     </Klasa>
     
-    <Zatrazeno_pravo_prvenstva_i_osnov>Ja sam jedini na trzistu koji ovo prodaje.</Zatrazeno_pravo_prvenstva_i_osnov>
     <Taksa xsi:type="TTaksa">
         <Osnovna_taksa>250</Osnovna_taksa>
         <Taksa_za_sve_klase>500</Taksa_za_sve_klase>
@@ -103,11 +105,10 @@
         <Putanja_do_priloga>putanja</Putanja_do_priloga>
     </Prilog>
     <Prilog_punomocje xsi:type="TPrilog_punomocje">
-        <Punomocje_predato_ranije>false</Punomocje_predato_ranije>
-        <Punomocje_ce_biti_naknadno_dostavljeno>false</Punomocje_ce_biti_naknadno_dostavljeno>
         <Status_priloga>NIJE_PREDATO</Status_priloga>
         <Putanja_do_priloga></Putanja_do_priloga>
     </Prilog_punomocje>
     <Broj_prijave_ziga xsi:type="TBroj_prijave_ziga">Z-12345/22</Broj_prijave_ziga>
     <Datum_podnosenja>2022-05-06</Datum_podnosenja>
+    <Status>PREDATO</Status>
 </Zahtev_za_priznanje_ziga>

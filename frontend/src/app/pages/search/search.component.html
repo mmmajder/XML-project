@@ -4,9 +4,9 @@
   <mat-tab label="Pretraga">
     <div style="margin: 20px" class="text-center">
       <p style="margin-bottom: -5px">
-        <mat-form-field appearance="outline" style="width: 250px">
+        <mat-form-field appearance="outline" style="width: 250px" >
           <mat-label>Izaberite vrstu prava</mat-label>
-          <mat-select [(ngModel)]="vrstaZahteva">
+          <mat-select [(ngModel)]="vrstaZahteva" (selectionChange)="resetChosenParamsAndResultsAndPutPropperPossibleMetadata()">
             <mat-option value="A">Zahtevi za autorska prava</mat-option>
             <mat-option value="P">Zahtevi za patente</mat-option>
             <mat-option value="Z">Zahtevi za žigove</mat-option>
@@ -22,7 +22,7 @@
         <mat-form-field appearance="outline" style="width: 50%; min-width: 200px; margin-left: 5px">
           <mat-label>Pretraži dokumente po jednoj ili više ključnih reči odvojenim razmakom</mat-label>
           <input matInput type="text" [(ngModel)]="simpleSearchText">
-          <button matSuffix mat-icon-button color="primary" (click)="search()">
+          <button matSuffix mat-icon-button color="primary" (click)="searchText()">
             <mat-icon>search</mat-icon>
           </button>
         </mat-form-field>
@@ -33,9 +33,9 @@
   <mat-tab label="Napredna pretraga">
     <div style="margin: 20px" class="text-center">
       <p style="margin-bottom: -5px">
-        <mat-form-field appearance="outline" style="width: 250px">
+        <mat-form-field appearance="outline" style="width: 250px" >
           <mat-label>Izaberite vrstu prava</mat-label>
-          <mat-select [(ngModel)]="vrstaZahteva">
+          <mat-select [(ngModel)]="vrstaZahteva" (selectionChange)="resetChosenParamsAndResultsAndPutPropperPossibleMetadata()">
             <mat-option value="A">Zahtevi za autorska prava</mat-option>
             <mat-option value="P">Zahtevi za patente</mat-option>
             <mat-option value="Z">Zahtevi za žigove</mat-option>
@@ -50,7 +50,7 @@
         </mat-form-field>
 
         <button mat-stroked-button color="primary" (click)="addMeta()">Dodaj novi metapodatak</button>
-        <button mat-raised-button color="primary" (click)="search()" style="margin-left: 5px">
+        <button mat-raised-button color="primary" (click)="searchMeta()" style="margin-left: 5px">
           <mat-icon>search</mat-icon>
           Pretraži
         </button>
@@ -59,21 +59,21 @@
       <div style="margin: 20px">
         <div style="display: inline" *ngFor="let item of metapodaci; let i = index" [attr.data-index]="i">
           <mat-button-toggle-group [(ngModel)]="metapodaci[i].operator" style="margin-right: 5px">
-            <mat-button-toggle value="i">I</mat-button-toggle>
-            <mat-button-toggle value="ili">ILI</mat-button-toggle>
-            <mat-button-toggle value="ne">NE</mat-button-toggle>
+            <mat-button-toggle value="AND">I</mat-button-toggle>
+            <mat-button-toggle value="OR">ILI</mat-button-toggle>
+            <mat-button-toggle value="NOT">NE</mat-button-toggle>
           </mat-button-toggle-group>
 
           <mat-form-field appearance="outline" style="margin-right: 5px; min-width: 250px">
             <mat-label>Vrsta metapodatka</mat-label>
-            <mat-select [(ngModel)]="metapodaci[i].vrsta" required>
+            <mat-select [(ngModel)]="metapodaci[i].property" required>
               <mat-option *ngFor="let meta of sviMetapodaci" [value]="meta">{{meta}}</mat-option>
             </mat-select>
           </mat-form-field>
 
           <mat-form-field appearance="outline" style="margin-right: 5px; min-width: 250px">
             <mat-label>Vrednost metapodatka</mat-label>
-            <input matInput type="text" [(ngModel)]="metapodaci[i].vrednost" required>
+            <input matInput type="text" [(ngModel)]="metapodaci[i].value" required>
           </mat-form-field>
 
           <button mat-button color="warn" (click)="removeMeta(i)" [disabled]="metapodaci.length == 1">

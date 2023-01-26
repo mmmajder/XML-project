@@ -28,7 +28,8 @@ public class ZigTransformer {
 
     private static TransformerFactory transformerFactory;
 
-    public static final String XSL_FILE = "src/transformer/Zahtev.xsl";
+    public static final String PDF_XSL_FILE = "src/transformer/Zig_zahtev_pdf.xsl";
+    public static final String HTML_XSL_FILE = "src/transformer/Zig_zahtev_html.xsl";
 
     public static final String HTML_FOLDER = "data/gen/xhtml/";
 
@@ -48,7 +49,7 @@ public class ZigTransformer {
     
     public static void generateHTMLZig(ZahtevZaPriznanjeZiga zahtev) {
         try {
-            ZigTransformer.generateHTML(zahtev, XSL_FILE);
+            ZigTransformer.generateHTML(zahtev, HTML_XSL_FILE, false);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -56,9 +57,9 @@ public class ZigTransformer {
 
     public static void generatePDFZig(ZahtevZaPriznanjeZiga zahtev) {
         try {
-        	ZigTransformer.generateHTML(zahtev, XSL_FILE);
+        	ZigTransformer.generateHTML(zahtev, PDF_XSL_FILE, true);
             String titlePdf = "zig_" + zahtev.getBrojPrijaveZiga().replace('/', '_') + ".pdf";
-            String titleHTML = "zig_" + zahtev.getBrojPrijaveZiga().replace('/', '_') + ".html";
+            String titleHTML = "zig_" + zahtev.getBrojPrijaveZiga().replace('/', '_') + "_for_pdf" + ".html";
             ZigTransformer.generatePDF(titlePdf, titleHTML);
         } catch (Exception e) {
             e.printStackTrace();
@@ -83,7 +84,7 @@ public class ZigTransformer {
         document.close();
     }
     
-    private static void generateHTML(ZahtevZaPriznanjeZiga zahtev, String xslPath) throws FileNotFoundException {
+    private static void generateHTML(ZahtevZaPriznanjeZiga zahtev, String xslPath, boolean forPdf) throws FileNotFoundException {
 
         try {
 
@@ -100,7 +101,14 @@ public class ZigTransformer {
 
             JAXBContext context = JAXBContext.newInstance("zig");
             JAXBSource source = new JAXBSource(context, zahtev);
-            StreamResult result = new StreamResult(new FileOutputStream(HTML_FOLDER + "zig_" + zahtev.getBrojPrijaveZiga().replace('/', '_') + ".html"));
+            StreamResult result;
+            
+            if (forPdf) {
+            	result = new StreamResult(new FileOutputStream(HTML_FOLDER + "zig_" + zahtev.getBrojPrijaveZiga().replace('/', '_') + "_for_pdf" + ".html"));
+            } else {
+            	result = new StreamResult(new FileOutputStream(HTML_FOLDER + "zig_" + zahtev.getBrojPrijaveZiga().replace('/', '_') + ".html"));
+            }
+            
             transformer.transform(source, result);
 
         } catch (Exception e) {

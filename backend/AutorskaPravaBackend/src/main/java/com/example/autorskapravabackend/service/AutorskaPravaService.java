@@ -46,7 +46,7 @@ public class AutorskaPravaService {
 
     public ByteArrayInputStream generateHTML(String brojPrijave) {
         try {
-            AutorskaPravaTransformer.generateZahtevHTML(getZahtev(brojPrijave));
+            AutorskaPravaTransformer.generateZahtevHTML(getZahtev(brojPrijave), false);
             File htmlFile = new File("src/main/resources/gen/xhtml/autorskaPrava_" + brojPrijave.replace('/', '_') + ".html");
             return new ByteArrayInputStream(FileUtils.readFileToByteArray(htmlFile));
         } catch (Exception e) {

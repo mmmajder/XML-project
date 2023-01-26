@@ -5,6 +5,8 @@ import {PodnosilacZahteva} from "../../model/autorskoDelo/PodnosilacZahteva";
 import {AutorskaPravaService} from "../../service/autorskaPrava.service";
 import {SadrzajZahtevaZaAutorskaPrava} from "../../model/autorskoDelo/SadrzajZahtevaZaAutorskaPrava";
 import {PodaciOAutorskomDelu} from "../../model/autorskoDelo/PodaciOAutorskomDelu";
+import {xml2js} from "xml-js";
+import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-autorska-prava',
