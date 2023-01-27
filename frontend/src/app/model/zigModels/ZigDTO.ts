@@ -1,23 +1,21 @@
-export class Zig {
+export class ZigDTO {
   tipZiga: string = "";
   opisIzgledaZiga: string = "";
   drugaVrstaZnakaOpis: string = "";
   izgledPutanjaDoSlike: string = "";
-  // boja: string[]= [];
-  // bojaConcatenated: string = "";
   transliteracijaZnaka: string = "";
   prevodZnaka: string = "";
   opisZnaka: string = "";
+  bojaConcatenated: string = "";
 
-  public Zig(){
+  public ZigDTO(){
     this.tipZiga = "";
     this.opisIzgledaZiga = "";
     this.drugaVrstaZnakaOpis = "";
     this.izgledPutanjaDoSlike= "";
-    // this.boja = [];
-    // this.bojaConcatenated = "";
     this.transliteracijaZnaka = "";
     this.prevodZnaka = "";
     this.opisZnaka = "";
+    this.bojaConcatenated = "";
   }
 }

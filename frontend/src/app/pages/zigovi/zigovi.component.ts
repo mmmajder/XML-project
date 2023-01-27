@@ -1,8 +1,13 @@
-import { Component } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
+import {ZahtevZaPriznanjeZigaDTO} from "../../model/zigModels/ZahtevZaPriznanjeZigaDTO";
+import {Klasa} from "../../model/zigModels/Klasa";
 import {LiceZahtevaZig} from "../../model/zigModels/LiceZahtevaZig";
-import {Adresa} from "../../model/zigModels/Adresa";
 import {Zig} from "../../model/zigModels/Zig";
-import {SadrzajZahtevaZaAutorskaPrava} from "../../model/autorskoDelo/SadrzajZahtevaZaAutorskaPrava";
+import {Lice} from "../../model/autorskoDelo/Autor";
+import {Adresa} from "../../model/zigModels/Adresa";
+import {Kontakt} from "../../model/zigModels/Kontakt";
+import {AutorskaPravaService} from "../../service/autorskaPrava.service";
+import {ZigService} from "../../service/zig.service";
 
 
 @Component({
@@ -10,15 +15,11 @@ import {SadrzajZahtevaZaAutorskaPrava} from "../../model/autorskoDelo/SadrzajZah
   templateUrl: './zigovi.component.html',
   styleUrls: ['./zigovi.component.css']
 })
-export class ZigoviComponent {
-  tipPodnosioca: string = 'fizickoLice';
-  podnosilac: LiceZahtevaZig = new LiceZahtevaZig();
-  tipPunomocnika: string = 'fizickoLice';
-  punomocnik: LiceZahtevaZig = new LiceZahtevaZig();
-  tipPredstavnika: string = 'fizickoLice';
-  predstavnik: LiceZahtevaZig = new LiceZahtevaZig();
-  zig: Zig = new Zig();
-  zatrazenoPravoPrvenstvaIOsnov: string = '';
+export class ZigoviComponent implements OnInit  {
+  zahtevZaPriznanjeZigaDTO: ZahtevZaPriznanjeZigaDTO = new ZahtevZaPriznanjeZigaDTO();
+  chosenKlasas: string[] = [];
+  izabraneBoje: string[] = [];
+  neededPrilogs: string[] = [];
   valid: boolean = true;
   moguceBoje: string[] = ['BELA', 'CRNA', 'PLAVA', 'ZELENA', 'CRVENA', 'ZUTA', 'BRAON', 'ROZE', 'LJUBICASTA', 'SIVA', 'KREM', 'NARANDZASTA'];
   moguceKlase: string[] = ['1 - Hemijski proizvodi u industriji, nauci i poljoprivredi',
@@ -66,8 +67,114 @@ export class ZigoviComponent {
     '43 - Obezbeđivanje hrane i pića',
     '44 - Medicinske usluge',
     '45 - Pravne usluge' ]
-  whatever: any = null;
+  etipPrilogaPRIMERAK_ZNAKA = "PRIMERAK_ZNAKA";
+  etipPrilogaSPISAK_ROBE_I_USLUGA = "SPISAK_ROBE_I_USLUGA";
+  etipPrilogaDOKAZ_O_UPLATI_TAKSE = "DOKAZ_O_UPLATI_TAKSE";
+  etipPrilogaOPSTI_AKT_O_ZIGU = "OPSTI_AKT_O_ZIGU";
+  etipPrilogaDOKAZ_O_PRAVU_PRVENSTVA = "DOKAZ_O_PRAVU_PRVENSTVA";
+
+
+  constructor(private servis: ZigService) {
+  }
+
+  ngOnInit(){
+    this.zahtevZaPriznanjeZigaDTO = new ZahtevZaPriznanjeZigaDTO();
+    this.chosenKlasas = [];
+    this.izabraneBoje = [];
+    this.neededPrilogs = [];
+    this.addAlwaysNeededPrilogTypes();
+  }
+
+  resetEverything(){
+    this.zahtevZaPriznanjeZigaDTO = new ZahtevZaPriznanjeZigaDTO();
+    //TODO uploads
+  }
+
+  addNeededPrilogType(prilogType:string){
+    this.neededPrilogs.push(prilogType);
+  }
+
+  addAlwaysNeededPrilogTypes(){
+    this.addNeededPrilogType(this.etipPrilogaPRIMERAK_ZNAKA);
+    this.addNeededPrilogType( this.etipPrilogaSPISAK_ROBE_I_USLUGA);
+    this.addNeededPrilogType( this.etipPrilogaDOKAZ_O_UPLATI_TAKSE);
+  }
+
+  removedNeededPrilogType(prilogType:string){
+    this.neededPrilogs = this.neededPrilogs.filter(type => type !== prilogType);
+  }
+
+  onTipZigSelectionChange(type:string){
+    if (type === "INDIVIDUALNI_ZIG"){
+      this.removedNeededPrilogType(this.etipPrilogaOPSTI_AKT_O_ZIGU);
+    } else {
+      this.addNeededPrilogType( this.etipPrilogaOPSTI_AKT_O_ZIGU);
+    }
+  }
+
+  onPravoPrvenstvaSelectionChange(type:string){
+    if (type === ""){
+      this.removedNeededPrilogType( this.etipPrilogaDOKAZ_O_PRAVU_PRVENSTVA);
+    } else {
+      this.addNeededPrilogType( this.etipPrilogaDOKAZ_O_PRAVU_PRVENSTVA);
+    }
+  }
+
+  concatenateKlase(){
+    return this.concatenate(this.chosenKlasas);
+  }
+
+  concatenateBoje(){
+    return this.concatenate(this.izabraneBoje);
+  }
+
+  concatenateNeededPrilogs(){
+    return this.concatenate(this.neededPrilogs);
+  }
+
+  concatenate(elemsToConcatenate:string[]){
+    let concatenated = "";
+
+    for (let word of elemsToConcatenate){
+      concatenated += "|" + word;
+    }
+
+    if (concatenated.length > 0){
+      concatenated.slice(1);
+    }
+
+    return concatenated;
+  }
 
   podnesiZahtev() {
+    // let zahtev = this.servis.createTestZahtev();
+    let zahtev = this.zahtevZaPriznanjeZigaDTO;
+    this.addAlwaysNeededPrilogTypes();
+    // this.isValidConsoleLog(testZahtev);
+    console.log("Valid filled: " +  this.isValid(zahtev));
+
+    if (! this.servis.isValidFilled(zahtev)){
+      return;
+    }
+
+    zahtev.klasaConcatenated = this.concatenateKlase();
+    zahtev.neededPrilogsConcatenated = this.concatenateNeededPrilogs();
+    zahtev.zigDTO.bojaConcatenated = this.concatenateBoje();
+
+    this.servis.postZahtev(zahtev).subscribe(data => {
+      console.log(data);
+    });
+    // podnesi zahtev
+    // subscribe i unutar subscribe upload dokumenata
   }
+
+  isValid(zahtev:ZahtevZaPriznanjeZigaDTO){
+    this.servis.isValidConsoleLog(zahtev);
+    let valid = this.servis.isValidFilled(zahtev);
+    valid &&= this.chosenKlasas.length > 0;
+
+    return valid;
+  }
+
+
 }

@@ -73,7 +73,8 @@ public class ZigDB {
     }
 
     public static List<XMLResource> getAllByYear(String yy) {
-        String xpathExp = "//sz:Broj_prijave_ziga[text()='" + "\\" + yy + "']/ancestor::sz:Zahtev_za_priznanje_ziga";
+//        String xpathExp = "//sz:Broj_prijave_ziga[text()='" + "/" + yy + "']/ancestor::sz:Zahtev_za_priznanje_ziga";
+        String xpathExp = "//sz:Zahtev_za_priznanje_ziga//sz:Broj_prijave_ziga[contains(.,'/" + yy + "')]";// /ancestor::sz:Zahtev_za_priznanje_ziga";
 
         return getAllByFilter(xpathExp);
     }

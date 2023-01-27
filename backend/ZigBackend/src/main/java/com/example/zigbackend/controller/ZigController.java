@@ -34,6 +34,7 @@ public class ZigController {
 
     @PostMapping(consumes = "application/xml", produces = "application/xml")
     public ResponseEntity<ZahtevZaPriznanjeZiga> createZahtevZaPriznanjePatenta(@RequestBody ZahtevZaPriznanjeZigaDTO zahtevZaPriznanjeZigaDTO) throws JAXBException, XMLDBException, IOException {
+        System.out.println("UUSAO U CONTROLLER");
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = zigService.createZahtevZaPriznanjeZiga(zahtevZaPriznanjeZigaDTO);
 
         return ResponseEntity.ok(zahtevZaPriznanjeZiga);

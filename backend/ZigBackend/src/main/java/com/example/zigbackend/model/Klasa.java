@@ -18,7 +18,12 @@ public class Klasa {
     private String idKlase;
     @XmlElement(name="Pun_naziv_klase", required=true)
     private String punNazivKlase;
-	
+
+    public Klasa(String idKlase, String punNazivKlase){
+    	this.idKlase = idKlase;
+    	this.punNazivKlase = punNazivKlase;
+	}
+
 	@Override
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();

@@ -36,9 +36,16 @@ public class ZigService {
     }
 
     public ZahtevZaPriznanjeZiga createZahtevZaPriznanjeZiga(ZahtevZaPriznanjeZigaDTO zahtevZaPriznanjeZigaDTO) throws JAXBException, IOException, XMLDBException {
+        System.out.println("zahtevZaPriznanjeZigaDTO");
+        System.out.println(zahtevZaPriznanjeZigaDTO);
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = ZigMapper.createZahtev(zahtevZaPriznanjeZigaDTO);
+        System.out.println("\n zahtevZaPriznanjeZiga");
+        System.out.println(zahtevZaPriznanjeZiga);
         zahtevZaPriznanjeZiga.setBrojPrijaveZiga(getNewBrojPrijave());
+        System.out.println("\n setBrojPrijaveZiga");
+        System.out.println(zahtevZaPriznanjeZiga.getBrojPrijaveZiga());
         saveZahtev(zahtevZaPriznanjeZiga);
+        System.out.println("\n sacuvao");
 
         return zahtevZaPriznanjeZiga;
     }

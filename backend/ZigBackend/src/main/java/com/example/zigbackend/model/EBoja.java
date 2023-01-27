@@ -1,5 +1,9 @@
 package com.example.zigbackend.model;
 
+import com.fasterxml.jackson.annotation.JsonCreator;
+import com.fasterxml.jackson.annotation.JsonFormat;
+
+@JsonFormat(shape = JsonFormat.Shape.OBJECT)
 public enum EBoja {
 	BELA,
 	CRNA,
@@ -12,5 +16,11 @@ public enum EBoja {
 	BRAON,
 	KREM,
 	NARANDZASTA,
-	SIVA
+	SIVA;
+
+	@JsonCreator
+	public static EBoja forValue(String value) {
+		System.out.println("eee");
+		return EBoja.valueOf(value);
+	}
 }

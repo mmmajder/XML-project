@@ -1,9 +1,11 @@
 package com.example.zigbackend.mapper;
 
-import com.example.zigbackend.dto.ZahtevZaPriznanjeZigaDTO;
+import com.example.zigbackend.dto.*;
 import com.example.zigbackend.model.*;
 import com.example.zigbackend.repository.ZigRepository;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -21,18 +23,103 @@ public class ZigMapper {
 
     private static ZahtevZaPriznanjeZiga copyFromDTO(ZahtevZaPriznanjeZigaDTO zahtevZaPriznanjeZigaDTO){
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = new ZahtevZaPriznanjeZiga();
-        zahtevZaPriznanjeZiga.setPodnosilacPrijave(zahtevZaPriznanjeZigaDTO.getPodnosilacPrijave());
-        zahtevZaPriznanjeZiga.setPunomocnik(zahtevZaPriznanjeZigaDTO.getPunomocnik());
-        zahtevZaPriznanjeZiga.setPredstavnik(zahtevZaPriznanjeZigaDTO.getPredstavnik());
-        zahtevZaPriznanjeZiga.setZig(zahtevZaPriznanjeZigaDTO.getZig());
-        zahtevZaPriznanjeZiga.setKlasa(zahtevZaPriznanjeZigaDTO.getKlasa());
+        zahtevZaPriznanjeZiga.setPodnosilacPrijave(copyFromLiceDTO(zahtevZaPriznanjeZigaDTO.getPodnosilacPrijave()));
+        zahtevZaPriznanjeZiga.setPunomocnik(copyFromLiceDTO(zahtevZaPriznanjeZigaDTO.getPunomocnik()));
+        zahtevZaPriznanjeZiga.setPredstavnik(copyFromLiceDTO(zahtevZaPriznanjeZigaDTO.getPredstavnik()));
+        zahtevZaPriznanjeZiga.setZig(getMappedZig(zahtevZaPriznanjeZigaDTO.getZigDTO()));
+        zahtevZaPriznanjeZiga.setKlasa(getMappedKlasa(zahtevZaPriznanjeZigaDTO.getKlasaConcatenated()));
         zahtevZaPriznanjeZiga.setZatrazenoPravoPrvenstvaIOsnov(zahtevZaPriznanjeZigaDTO.getZatrazenoPravoPrvenstvaIOsnov());
-        zahtevZaPriznanjeZiga.setPrilog(zahtevZaPriznanjeZigaDTO.getPrilog());
-        zahtevZaPriznanjeZiga.setPrilogPunomocje(zahtevZaPriznanjeZigaDTO.getPrilogPunomocje());
+        zahtevZaPriznanjeZiga.setPrilog(getStatusedPrilogs(zahtevZaPriznanjeZigaDTO.getNeededPrilogsConcatenated()));
+        zahtevZaPriznanjeZiga.setPrilogPunomocje(getStatusedPrilogPunomocje(zahtevZaPriznanjeZigaDTO.getStatusPrilogPunomocje()));
 
         return zahtevZaPriznanjeZiga;
     }
 
+    private static Lice copyFromLiceDTO(LiceDTO liceDTO){
+        Lice lice;
 
+        if ("fizickoLice".equals(liceDTO.tipLica)){
+            lice = new FizickoLice();
+            ((FizickoLice) lice).setIme(liceDTO.ime);
+            ((FizickoLice) lice).setPrezime(liceDTO.prezime);
+        } else {
+            lice = new PravnoLice();
+            ((PravnoLice) lice).setPoslovnoIme(liceDTO.poslovnoIme);
+        }
 
+        lice.adresa = liceDTO.adresa;
+        lice.kontakt = liceDTO.kontakt;
+
+        return lice;
+    }
+
+    private static Zig getMappedZig(ZigDTO zigDTO){
+        Zig zig = new Zig();
+        zig.setTipZiga(zigDTO.getTipZiga());
+        zig.setOpisIzgledaZiga(zigDTO.getOpisIzgledaZiga());
+        zig.setDrugaVrstaZnakaOpis(zigDTO.getDrugaVrstaZnakaOpis());
+        zig.setPrevodZnaka(zigDTO.getPrevodZnaka());
+        zig.setTransliteracijaZnaka(zigDTO.getTransliteracijaZnaka());
+        zig.setOpisZnaka(zigDTO.getOpisZnaka());
+
+        List<String> bojeStr = Arrays.asList(zigDTO.getBojaConcatenated().split("\\|"));
+        List<EBoja> boje = new ArrayList<>();
+
+        for (String bojaStr : bojeStr){
+            if (!"".equals(bojaStr)){
+                boje.add(EBoja.valueOf(bojaStr));
+            }
+        }
+
+        zig.setBoja(boje);
+
+        return zig;
+    }
+
+    private static List<Prilog> getStatusedPrilogs(String neededPrilogsConcatenated){
+//        List<String> neededPrilogs = neededPrilogsDTO.getNeededPrilogs();
+        List<String> neededPrilogs = Arrays.asList(neededPrilogsConcatenated.split("\\|"));
+        List<Prilog> prilogs  = new ArrayList<>();
+
+        for (ETip_priloga tip : ETip_priloga.values()){
+            Prilog p = new Prilog();
+            p.setTipPriloga(tip);
+
+            if (neededPrilogs.contains(p)){
+                p.setStatusPriloga(EStatus_priloga.NIJE_PREDATO);
+            } else {
+                p.setStatusPriloga(EStatus_priloga.NIJE_PREDATO);
+            }
+
+            prilogs.add(p);
+        }
+
+        return prilogs;
+    }
+
+    private static PrilogPunomocje getStatusedPrilogPunomocje(String status){
+        PrilogPunomocje prilogPunomocje  = new PrilogPunomocje();
+        prilogPunomocje.setStatusPriloga(EStatus_prilog_punomocje.valueOf(status));
+
+        return prilogPunomocje;
+    }
+
+    private static List<Klasa> getMappedKlasa(String klasaConcatenated){
+        List<String> klaseStr = Arrays.asList(klasaConcatenated.split("\\|"));
+        List<Klasa> klase  = new ArrayList<>();
+
+        for (String klasaStr : klaseStr){
+            if (!"".equals(klasaStr)){
+                String[] klasaParts = klasaStr.split(" - ");
+                String id = klasaParts[0];
+                String naziv = klasaParts[1];
+                Klasa klasa = new Klasa();
+                klasa.setIdKlase(id);
+                klasa.setPunNazivKlase(naziv);
+                klase.add(klasa);
+            }
+        }
+
+        return klase;
+    }
 }
