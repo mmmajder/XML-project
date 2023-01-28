@@ -138,7 +138,7 @@ export class ZigService {
     zahtev.zigDTO = this.createTestZig();
     zahtev.statusPrilogPunomocje = "NIJE_PREDATO";
     zahtev.klasaConcatenated = "1 - Oruzje|2 - Malkarasa";
-    zahtev.neededPrilogsConcatenated = "PRIMERAK_ZNAKA|SPISAK_ROBE_I_USLUGA|DOKAZ_O_UPLATI_TAKSE"
+    // zahtev.neededPrilogsConcatenated = "PRIMERAK_ZNAKA|SPISAK_ROBE_I_USLUGA|DOKAZ_O_UPLATI_TAKSE"
     zahtev.zatrazenoPravoPrvenstvaIOsnov = "SAJAMSKO";
 
     return zahtev;
@@ -170,5 +170,24 @@ export class ZigService {
     zig.bojaConcatenated = "PLAVA|ZELENA";
 
     return zig;
+  }
+
+  public postPrilog(brojPrijaveZiga: string, tipPrilog: string, file: any) {
+    let formData = new FormData();
+    let brojPrijaveZigaParts:string[] = brojPrijaveZiga.split("/");
+    // formData.append("brojPrijaveZiga", brojPrijaveZiga);
+    // formData.append("tipPrilog", tipPrilog);
+    formData.append("file", file);
+
+    return this.http.post<Object>(this.zigUrl + "/file-upload/" +brojPrijaveZigaParts[0] +"-" + brojPrijaveZigaParts[1] + "-" + tipPrilog, formData, this.getNoContentTypeHttpOptions()); // do not change for AuthService.getHttpOptions() because of 'Content-Type' header
+  }
+
+  public getNoContentTypeHttpOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': localStorage.getItem('token') || 'authkey',
+      })
+    };
   }
 }

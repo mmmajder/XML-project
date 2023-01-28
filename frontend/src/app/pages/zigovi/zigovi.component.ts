@@ -20,6 +20,7 @@ export class ZigoviComponent implements OnInit  {
   chosenKlasas: string[] = [];
   izabraneBoje: string[] = [];
   neededPrilogs: string[] = [];
+
   valid: boolean = true;
   moguceBoje: string[] = ['BELA', 'CRNA', 'PLAVA', 'ZELENA', 'CRVENA', 'ZUTA', 'BRAON', 'ROZE', 'LJUBICASTA', 'SIVA', 'KREM', 'NARANDZASTA'];
   moguceKlase: string[] = ['1 - Hemijski proizvodi u industriji, nauci i poljoprivredi',
@@ -72,6 +73,12 @@ export class ZigoviComponent implements OnInit  {
   etipPrilogaDOKAZ_O_UPLATI_TAKSE = "DOKAZ_O_UPLATI_TAKSE";
   etipPrilogaOPSTI_AKT_O_ZIGU = "OPSTI_AKT_O_ZIGU";
   etipPrilogaDOKAZ_O_PRAVU_PRVENSTVA = "DOKAZ_O_PRAVU_PRVENSTVA";
+  prilogPRIMERAK_ZNAKA: any;
+  prilogSPISAK_ROBE_I_USLUGA: any;
+  prilogDOKAZ_O_UPLATI_TAKSE: any;
+  prilogOPSTI_AKT_O_ZIGU: any;
+  prilogDOKAZ_O_PRAVU_PRVENSTVA: any;
+  prilogPUNOMOCJE: any;
 
 
   constructor(private servis: ZigService) {
@@ -147,8 +154,9 @@ export class ZigoviComponent implements OnInit  {
   }
 
   podnesiZahtev() {
-    // let zahtev = this.servis.createTestZahtev();
-    let zahtev = this.zahtevZaPriznanjeZigaDTO;
+
+    let zahtev = this.servis.createTestZahtev();
+    // let zahtev = this.zahtevZaPriznanjeZigaDTO;
     this.addAlwaysNeededPrilogTypes();
     // this.isValidConsoleLog(testZahtev);
     console.log("Valid filled: " +  this.isValid(zahtev));
@@ -157,16 +165,43 @@ export class ZigoviComponent implements OnInit  {
       return;
     }
 
-    zahtev.klasaConcatenated = this.concatenateKlase();
+    // zahtev.klasaConcatenated = this.concatenateKlase();
     zahtev.neededPrilogsConcatenated = this.concatenateNeededPrilogs();
-    zahtev.zigDTO.bojaConcatenated = this.concatenateBoje();
+    // zahtev.zigDTO.bojaConcatenated = this.concatenateBoje();
 
     this.servis.postZahtev(zahtev).subscribe(data => {
-      console.log(data);
+      let brojPrijaveZiga = data.getElementsByTagName("brojPrijaveZiga")[0].textContent;
+      console.log(brojPrijaveZiga);
+      console.log(this.prilogPUNOMOCJE);
+      this.servis.postPrilog(brojPrijaveZiga, "PUNOMOCJE", this.prilogPUNOMOCJE).subscribe(data => {
+        console.log(data);
+      });
     });
     // podnesi zahtev
     // subscribe i unutar subscribe upload dokumenata
   }
+
+  // podnesiZahtevBACKUP() {
+  //   // let zahtev = this.servis.createTestZahtev();
+  //   let zahtev = this.zahtevZaPriznanjeZigaDTO;
+  //   this.addAlwaysNeededPrilogTypes();
+  //   // this.isValidConsoleLog(testZahtev);
+  //   console.log("Valid filled: " +  this.isValid(zahtev));
+  //
+  //   if (! this.servis.isValidFilled(zahtev)){
+  //     return;
+  //   }
+  //
+  //   zahtev.klasaConcatenated = this.concatenateKlase();
+  //   zahtev.neededPrilogsConcatenated = this.concatenateNeededPrilogs();
+  //   zahtev.zigDTO.bojaConcatenated = this.concatenateBoje();
+  //
+  //   this.servis.postZahtev(zahtev).subscribe(data => {
+  //     console.log(data);
+  //   });
+  //   // podnesi zahtev
+  //   // subscribe i unutar subscribe upload dokumenata
+  // }
 
   isValid(zahtev:ZahtevZaPriznanjeZigaDTO){
     this.servis.isValidConsoleLog(zahtev);
@@ -175,6 +210,13 @@ export class ZigoviComponent implements OnInit  {
 
     return valid;
   }
+
+  selectFileUpload(event:any){
+    console.log("event:::")
+    console.log(event.target.files[0]);
+    this.prilogPUNOMOCJE = event.target.files[0];
+  }
+
 
 
 }

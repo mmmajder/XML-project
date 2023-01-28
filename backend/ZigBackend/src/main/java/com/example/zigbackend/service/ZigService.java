@@ -8,12 +8,18 @@ import com.example.zigbackend.mapper.ZigMapper;
 import com.example.zigbackend.model.ZahtevZaPriznanjeZiga;
 import com.example.zigbackend.repository.ZigRepository;
 import com.example.zigbackend.transformer.ZigTransformer;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import javax.xml.bind.JAXBException;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -176,5 +182,17 @@ public class ZigService {
         }
 
         return parsedSearchParams;
+    }
+
+    public boolean writeFile(String fileName, MultipartFile uploadedFile) throws IOException {
+        File file = new File("C:\\Faks\\VII\\XML i veb servisi\\XML-project\\uploadedFiles\\" + fileName + ".pdf" );
+
+        try (OutputStream os = new FileOutputStream(file)) {
+            os.write(uploadedFile.getBytes());
+            System.out.println("Saved new file: " + fileName);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
     }
 }

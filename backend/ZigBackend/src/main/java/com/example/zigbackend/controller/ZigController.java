@@ -7,10 +7,10 @@ import com.itextpdf.text.Meta;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.xmldb.api.base.XMLDBException;
 
 import javax.xml.bind.JAXBException;
@@ -111,5 +111,32 @@ public class ZigController {
 
 //        return ResponseEntity.ok(zigService.mapToZahtevi(zahtevi));
         return ResponseEntity.ok(zahtevi);
+    }
+
+    @PostMapping("/file-upload/{brojPrijaveZigaId}-{brojPrijaveZigaGodina}-{tipPriloga}")
+    public ResponseEntity<String> uploadPrilog(@PathVariable("brojPrijaveZigaId") String brojPrijaveZigaId,
+       @PathVariable("brojPrijaveZigaGodina") String brojPrijaveZigaGodina, @PathVariable("tipPriloga") String tipPriloga, @RequestParam("file") MultipartFile file) {
+        try {
+            String brojPrijaveZiga = brojPrijaveZigaId.trim().concat("/").concat(brojPrijaveZigaGodina.trim());
+
+            if ("/".equals(brojPrijaveZiga ) || "".equals(tipPriloga)){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = zigService.getZahtev(brojPrijaveZiga);
+            if (zahtevZaPriznanjeZiga == null)
+                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+
+            String fileName = brojPrijaveZiga.replace('/', '_').concat("_").concat(tipPriloga);
+
+            boolean isOkay = zigService.writeFile(fileName, file);
+
+            if (!isOkay)
+                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
     }
 }

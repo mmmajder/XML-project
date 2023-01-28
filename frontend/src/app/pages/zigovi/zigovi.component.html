@@ -173,8 +173,11 @@
           </mat-select>
         </mat-form-field>
 
-        <div *ngIf="zahtevZaPriznanjeZigaDTO.statusPrilogPunomocje == 'PREDATO_RANIJE' || zahtevZaPriznanjeZigaDTO.statusPrilogPunomocje == 'BICE_NAKNADNO_PREDATO'">
-          <!--          TODO upload priloga PUNOMOCJE-->
+        <div *ngIf="zahtevZaPriznanjeZigaDTO.statusPrilogPunomocje == 'NIJE_PREDATO'">
+          <label>
+            Priložite ugovor o punomoćju u PDF formatu.
+            <input #fileUploaderPunomocje type="file" (input)="selectFileUpload($event)" accept="application/pdf"/>
+          </label>
         </div>
 
       </ng-template>
