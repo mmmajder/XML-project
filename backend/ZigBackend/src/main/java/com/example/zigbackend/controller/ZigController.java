@@ -135,4 +135,29 @@ public class ZigController {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
         }
     }
+
+    @GetMapping("/save/{brojPrijaveZigaId}-{brojPrijaveZigaGodina}")
+    public ResponseEntity<String> saveAfterPrilogAddition(@PathVariable("brojPrijaveZigaId") String brojPrijaveZigaId,
+                                               @PathVariable("brojPrijaveZigaGodina") String brojPrijaveZigaGodina) {
+        try {
+            String brojPrijaveZiga = brojPrijaveZigaId.trim().concat("/").concat(brojPrijaveZigaGodina.trim());
+
+            if (!zigService.saveZahtevAfterPrilogAddition(brojPrijaveZiga)){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @GetMapping("/empty")
+    public ResponseEntity<String> saveAfterPrilogAddition(){
+        try {
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
 }

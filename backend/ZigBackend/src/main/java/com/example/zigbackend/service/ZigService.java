@@ -22,7 +22,12 @@ import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReadWriteLock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
 
 @Service
 public class ZigService {
@@ -35,6 +40,9 @@ public class ZigService {
     private final int osnovnaTaksa = 300;
     private final int taksaPoKlasi = 150;
     private final int taksaZaGrafickoResenje = 500;
+
+    private static HashMap<String, ZahtevZaPriznanjeZiga> prilogUpdatingZahtevs = new HashMap<>();
+    private final Lock prilogUpdatingZahtevsLock = new ReentrantLock();
 
     private ZigRepository zigRepository = new ZigRepository();
 
@@ -204,7 +212,7 @@ public class ZigService {
     }
 
     public boolean addPrilog(String brojPrijaveZiga, String prilogType,  MultipartFile uploadedFile) throws IOException, JAXBException, XMLDBException {
-        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = getZahtev(brojPrijaveZiga);
+        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = getZahtevForPrilogAddition(brojPrijaveZiga);
         if (zahtevZaPriznanjeZiga == null) {
             return false;
         }
@@ -233,9 +241,48 @@ public class ZigService {
             zahtevZaPriznanjeZiga.getTaksa().setTaksaZaGrafickoResenje(0);
         }
 
-        saveZahtev(zahtevZaPriznanjeZiga);
+//        saveZahtev(zahtevZaPriznanjeZiga);
 
         return true;
+    }
+
+    public boolean saveZahtevAfterPrilogAddition(String brojPrijaveZiga) throws JAXBException, XMLDBException, IOException {
+        if (!prilogUpdatingZahtevs.containsKey(brojPrijaveZiga)){
+            return false;
+        }
+
+        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = prilogUpdatingZahtevs.get(brojPrijaveZiga);
+        if (zahtevZaPriznanjeZiga == null){
+            return false;
+        }
+
+        saveZahtev(zahtevZaPriznanjeZiga);
+        prilogUpdatingZahtevs.remove(brojPrijaveZiga);
+
+        return true;
+    }
+
+    private ZahtevZaPriznanjeZiga getZahtevForPrilogAddition(String brojPrijaveZiga){
+        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = null;
+
+        prilogUpdatingZahtevsLock.lock();
+        try{
+            if (!prilogUpdatingZahtevs.containsKey(brojPrijaveZiga)){
+                zahtevZaPriznanjeZiga = getZahtev(brojPrijaveZiga);
+
+                if (zahtevZaPriznanjeZiga == null){
+                    return null;
+                }
+
+                prilogUpdatingZahtevs.put(brojPrijaveZiga, zahtevZaPriznanjeZiga);
+            } else {
+                zahtevZaPriznanjeZiga = prilogUpdatingZahtevs.get(brojPrijaveZiga);
+            }
+        } finally {
+            prilogUpdatingZahtevsLock.unlock();
+        }
+
+        return zahtevZaPriznanjeZiga;
     }
 
     private void setPrilogDetails(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga, String fileName, ETip_priloga prilogType){

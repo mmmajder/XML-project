@@ -82,16 +82,18 @@ public class ZigMapper {
         List<Prilog> prilogs  = new ArrayList<>();
 
         for (ETip_priloga tip : ETip_priloga.values()){
-            Prilog p = new Prilog();
-            p.setTipPriloga(tip);
+            if (tip != ETip_priloga.PUNOMOCJE){
+                Prilog p = new Prilog();
+                p.setTipPriloga(tip);
 
-            if (doesNeededPrilogsContainPrilogType(neededPrilogs, tip)){
-                p.setStatusPriloga(EStatus_priloga.NIJE_PREDATO);
-            } else {
-                p.setStatusPriloga(EStatus_priloga.NIJE_POTREBNO);
+                if (doesNeededPrilogsContainPrilogType(neededPrilogs, tip)){
+                    p.setStatusPriloga(EStatus_priloga.NIJE_PREDATO);
+                } else {
+                    p.setStatusPriloga(EStatus_priloga.NIJE_POTREBNO);
+                }
+
+                prilogs.add(p);
             }
-
-            prilogs.add(p);
         }
 
         return prilogs;

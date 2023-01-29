@@ -164,8 +164,9 @@ export class ZigService {
   createTestZig(){
     let zig = new ZigDTO();
     zig.tipZiga = "INDIVIDUALNI_ZIG";
-    zig.opisZnaka = "DRUGA_VRSTA_ZNAKA";
-    zig.drugaVrstaZnakaOpis = "Lep znak";
+    zig.opisIzgledaZiga = "DRUGA_VRSTA_ZNAKA";
+    zig.drugaVrstaZnakaOpis = "4D";
+    zig.opisZnaka = "Znak pokazuje to to to i to";
     zig.prevodZnaka = "Prevod";
     zig.bojaConcatenated = "PLAVA|ZELENA";
 
@@ -175,11 +176,19 @@ export class ZigService {
   public postPrilog(brojPrijaveZiga: string, tipPrilog: string, file: any) {
     let formData = new FormData();
     let brojPrijaveZigaParts:string[] = brojPrijaveZiga.split("/");
-    // formData.append("brojPrijaveZiga", brojPrijaveZiga);
-    // formData.append("tipPrilog", tipPrilog);
     formData.append("file", file);
 
     return this.http.post<Object>(this.zigUrl + "/file-upload/" +brojPrijaveZigaParts[0] +"-" + brojPrijaveZigaParts[1] + "-" + tipPrilog, formData, this.getNoContentTypeHttpOptions()); // do not change for AuthService.getHttpOptions() because of 'Content-Type' header
+  }
+
+  public saveAfterPrilogAddition(brojPrijaveZiga: string) {
+    let brojPrijaveZigaParts:string[] = brojPrijaveZiga.split("/");
+
+    return this.http.get<Object>(this.zigUrl + "/save/" +brojPrijaveZigaParts[0] +"-" + brojPrijaveZigaParts[1], AuthService.getHttpOptions());
+  }
+
+  public empty() {
+    return this.http.get<Object>(this.zigUrl + "/empty", AuthService.getHttpOptions());
   }
 
   public getNoContentTypeHttpOptions() {

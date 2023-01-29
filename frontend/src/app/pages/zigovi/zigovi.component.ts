@@ -8,6 +8,7 @@ import {Adresa} from "../../model/zigModels/Adresa";
 import {Kontakt} from "../../model/zigModels/Kontakt";
 import {AutorskaPravaService} from "../../service/autorskaPrava.service";
 import {ZigService} from "../../service/zig.service";
+import {forkJoin, Observable} from "rxjs";
 
 
 @Component({
@@ -156,8 +157,8 @@ export class ZigoviComponent implements OnInit  {
 
   podnesiZahtev() {
 
-    let zahtev = this.servis.createTestZahtev();
-    // let zahtev = this.zahtevZaPriznanjeZigaDTO;
+    // let zahtev = this.servis.createTestZahtev();
+    let zahtev = this.zahtevZaPriznanjeZigaDTO;
     this.addAlwaysNeededPrilogTypes();
     console.log("Valid filled: " +  this.isValid(zahtev));
 
@@ -166,9 +167,9 @@ export class ZigoviComponent implements OnInit  {
     }
     console.log("???")
 
-    // zahtev.klasaConcatenated = this.concatenateKlase();
+    zahtev.klasaConcatenated = this.concatenateKlase();
     zahtev.neededPrilogsConcatenated = this.concatenateNeededPrilogs();
-    // zahtev.zigDTO.bojaConcatenated = this.concatenateBoje();
+    zahtev.zigDTO.bojaConcatenated = this.concatenateBoje();
 
     console.log(zahtev.neededPrilogsConcatenated)
 
@@ -176,74 +177,63 @@ export class ZigoviComponent implements OnInit  {
       let brojPrijaveZiga = data.getElementsByTagName("brojPrijaveZiga")[0].textContent;
       console.log(brojPrijaveZiga);
       console.log(this.prilogPUNOMOCJE);
-      this.uploadPrilogs(brojPrijaveZiga);
-      // this.servis.postPrilog(brojPrijaveZiga, "PUNOMOCJE", this.prilogPUNOMOCJE).subscribe(data => {
-      //   console.log(data);
-      //   this.resetEverything();
-      // });
+      this.uploadPrilogsForkJoin(brojPrijaveZiga);
     });
   }
 
   isValid(zahtev:ZahtevZaPriznanjeZigaDTO){
     this.servis.isValidConsoleLog(zahtev);
     let valid = this.servis.isValidFilled(zahtev);
-    // valid &&= this.chosenKlasas.length > 0;
-    // zahtevZaPriznanjeZigaDTO.statusPrilogPunomocje != null or undefined or ""
+    valid &&= this.chosenKlasas.length > 0;
+    valid &&= zahtev.statusPrilogPunomocje !== null && zahtev.statusPrilogPunomocje !== undefined && zahtev.statusPrilogPunomocje !== "";
 
     return valid;
   }
 
-  uploadPrilogs(brojPrijaveZiga:string){
-    // this.uploadPunomocje(brojPrijaveZiga);
-    this.uploadPrimerZnaka(brojPrijaveZiga);
-    // this.uploadOpstiAkt(brojPrijaveZiga);
-    // this.uploadSpisakRobe(brojPrijaveZiga);
-    // this.uploadDokazOPrvenstvu(brojPrijaveZiga);
-    // this.uploadDokazTakse(brojPrijaveZiga);
+  uploadPrilogsForkJoin(brojPrijaveZiga:string){
+    forkJoin(
+      this.uploadPunomocje(brojPrijaveZiga),
+      this.uploadPrimerZnaka(brojPrijaveZiga),
+      this.uploadOpstiAkt(brojPrijaveZiga),
+      this.uploadSpisakRobe(brojPrijaveZiga),
+      this.uploadDokazOPrvenstvu(brojPrijaveZiga),
+      this.uploadDokazTakse(brojPrijaveZiga)
+    ).subscribe(data => {
+      console.log("sad jos samo da se sacuva");
+      this.servis.saveAfterPrilogAddition(brojPrijaveZiga).subscribe(data => {
+        console.log("sacuvali smo");
+      });
+    });
   }
 
   uploadPunomocje(brojPrijaveZiga:string){
     let isStatusOkay:boolean = this.zahtevZaPriznanjeZigaDTO.statusPrilogPunomocje === "NIJE_PREDATO";
-    this.uploadPrilog("PUNOMOCJE", brojPrijaveZiga, isStatusOkay, this.prilogPUNOMOCJE);
-    // if (this.zahtevZaPriznanjeZigaDTO.statusPrilogPunomocje === "NIJE_PREDATO" && this.prilogPUNOMOCJE !== null){
-    //   this.servis.postPrilog(brojPrijaveZiga, "PUNOMOCJE", this.prilogPUNOMOCJE).subscribe(data => {
-    //     console.log(data);
-    //     // this.resetEverything();
-    //     this.prilogPUNOMOCJE = null;
-    //   });
-    // }
+    return this.uploadPrilogNoSub("PUNOMOCJE", brojPrijaveZiga, isStatusOkay, this.prilogPUNOMOCJE);
   }
 
   uploadOpstiAkt(brojPrijaveZiga:string){
     let isStatusOkay:boolean = this.zahtevZaPriznanjeZigaDTO.statusPrilogPunomocje === "KOLEKTIVNI_ZIG" || this.zahtevZaPriznanjeZigaDTO.statusPrilogPunomocje === "ZIG_GARANCIJE";
-    this.uploadPrilog("OPSTI_AKT_O_ZIGU", brojPrijaveZiga, isStatusOkay, this.prilogOPSTI_AKT_O_ZIGU);
-    // if ((this.zahtevZaPriznanjeZigaDTO.statusPrilogPunomocje === "KOLEKTIVNI_ZIG" || this.zahtevZaPriznanjeZigaDTO.statusPrilogPunomocje === "ZIG_GARANCIJE") && this.prilogOPSTI_AKT_O_ZIGU !== null){
-    //   this.servis.postPrilog(brojPrijaveZiga, "OPSTI_AKT_O_ZIGU", this.prilogOPSTI_AKT_O_ZIGU).subscribe(data => {
-    //     console.log(data);
-    //     // this.resetEverything();
-    //     this.prilogOPSTI_AKT_O_ZIGU = null;
-    //   });
-    // }
+    return  this.uploadPrilogNoSub("OPSTI_AKT_O_ZIGU", brojPrijaveZiga, isStatusOkay, this.prilogOPSTI_AKT_O_ZIGU);
   }
 
   uploadSpisakRobe(brojPrijaveZiga:string){
     let isStatusOkay:boolean = true;
-    this.uploadPrilog("SPISAK_ROBE_I_USLUGA", brojPrijaveZiga, isStatusOkay, this.prilogSPISAK_ROBE_I_USLUGA);
+    return this.uploadPrilogNoSub("SPISAK_ROBE_I_USLUGA", brojPrijaveZiga, isStatusOkay, this.prilogSPISAK_ROBE_I_USLUGA);
   }
 
   uploadDokazOPrvenstvu(brojPrijaveZiga:string){
     let isStatusOkay:boolean = this.zahtevZaPriznanjeZigaDTO.zatrazenoPravoPrvenstvaIOsnov == 'KONVENCIJSKO' || this.zahtevZaPriznanjeZigaDTO.zatrazenoPravoPrvenstvaIOsnov == 'SAJAMSKO';
-    this.uploadPrilog("DOKAZ_O_PRAVU_PRVENSTVA", brojPrijaveZiga, isStatusOkay, this.prilogDOKAZ_O_PRAVU_PRVENSTVA);
+    return this.uploadPrilogNoSub("DOKAZ_O_PRAVU_PRVENSTVA", brojPrijaveZiga, isStatusOkay, this.prilogDOKAZ_O_PRAVU_PRVENSTVA);
   }
 
   uploadDokazTakse(brojPrijaveZiga:string){
     let isStatusOkay:boolean = true;
-    this.uploadPrilog("DOKAZ_O_UPLATI_TAKSE", brojPrijaveZiga, isStatusOkay, this.prilogDOKAZ_O_UPLATI_TAKSE);
+    return  this.uploadPrilogNoSub("DOKAZ_O_UPLATI_TAKSE", brojPrijaveZiga, isStatusOkay, this.prilogDOKAZ_O_UPLATI_TAKSE);
   }
 
   uploadPrimerZnaka(brojPrijaveZiga:string){
     let isStatusOkay:boolean = true;
-    this.uploadPrilog("PRIMERAK_ZNAKA", brojPrijaveZiga, isStatusOkay, this.prilogPRIMERAK_ZNAKA);
+    return this.uploadPrilogNoSub("PRIMERAK_ZNAKA", brojPrijaveZiga, isStatusOkay, this.prilogPRIMERAK_ZNAKA);
   }
 
   uploadPrilog(prilogType:string, brojPrijaveZiga:string, isStatusOkay:boolean, prilogUploadRef:any){
@@ -253,6 +243,14 @@ export class ZigoviComponent implements OnInit  {
         // this.resetEverything();
         prilogUploadRef = null;
       });
+    }
+  }
+
+  uploadPrilogNoSub(prilogType:string, brojPrijaveZiga:string, isStatusOkay:boolean, prilogUploadRef:any){
+    if ((isStatusOkay) && prilogUploadRef !== null){
+      return this.servis.postPrilog(brojPrijaveZiga, prilogType, prilogUploadRef);
+    } else {
+      return this.servis.empty();
     }
   }
 
