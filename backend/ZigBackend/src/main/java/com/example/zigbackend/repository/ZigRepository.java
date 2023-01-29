@@ -113,4 +113,11 @@ public class ZigRepository {
     }
     // search ^^^
 
+    public String generateRDF(String brojPrijave) throws Exception {
+        return ZigFusekiDB.getRdfString(brojPrijave);
+    }
+
+    public String generateJSON(String brojPrijave) throws Exception {
+        return ZigFusekiDB.getJsonString(brojPrijave);
+    }
 }

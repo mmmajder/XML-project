@@ -21,7 +21,7 @@ public class SparqlUtil {
     /* Simple SPARQL query on a named graph */
     private static final String SELECT_NAMED_GRAPH_TEMPLATE = "SELECT * FROM <%1$s> WHERE { %2$s }";
 
-    private static final String SELECT_BY_BROJ_PRIJAVE = "SELECT * FROM <%1$s> WHERE { FILTER( ?broj_prijave = \"%2$s\" ) }";
+    private static final String SELECT_BY_BROJ_PRIJAVE = "SELECT * FROM <%1$s> WHERE { ?s ?p ?o FILTER( ?broj_prijave = \"%2$s\" ) }";
 
     /* Plain text RDF serialization format */
     public static final String NTRIPLES = "N-TRIPLES";

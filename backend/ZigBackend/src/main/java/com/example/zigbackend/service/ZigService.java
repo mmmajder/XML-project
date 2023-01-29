@@ -28,6 +28,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
+import java.util.stream.Collectors;
 
 @Service
 public class ZigService {
@@ -135,14 +136,20 @@ public class ZigService {
         return ZigTransformer.getSupposedFileName(brojPrijave);
     }
 
-    public List<ZahtevZaPriznanjeZiga> getByText(String text, boolean casesensitive) throws Exception {
+    public List<ZahtevZaPriznanjeZiga> getByText(String text, boolean casesensitive, boolean isSearchForNeobradjeni) throws Exception {
         List<String> searchWords = Arrays.asList(text.split(" "));
 
         if (searchWords.size() == 0){
             return null;
         }
 
-        return zigRepository.getByText(searchWords, casesensitive);
+        List<ZahtevZaPriznanjeZiga> zahtevi = zigRepository.getByText(searchWords, casesensitive);
+
+        if (isSearchForNeobradjeni){
+            return zahtevi.stream().filter(z -> z.getStatus() == EStatus.PREDATO).collect(Collectors.toList());
+        } else {
+            return zahtevi.stream().filter(z -> z.getStatus() != EStatus.PREDATO).collect(Collectors.toList());
+        }
     }
 
     public List<ZahtevZaPriznanjeZiga> getByMetadata(List<MetadataSearchParams> params) throws IOException {
@@ -378,6 +385,24 @@ public class ZigService {
             e.printStackTrace();
         } finally {
             return filename;
+        }
+    }
+
+    public ByteArrayInputStream generateRDF(String brojPrijave) {
+        try {
+            String rdf = zigRepository.generateRDF(brojPrijave);
+            return new ByteArrayInputStream(rdf.getBytes());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ByteArrayInputStream generateJSON(String brojPrijave) {
+        try {
+            String json = zigRepository.generateJSON(brojPrijave);
+            return new ByteArrayInputStream(json.getBytes());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }

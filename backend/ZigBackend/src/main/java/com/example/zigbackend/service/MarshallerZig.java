@@ -7,10 +7,8 @@ import org.xmldb.api.base.Resource;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import javax.xml.bind.Unmarshaller;
+import javax.xml.bind.*;
+import javax.xml.transform.Source;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.OutputStream;
@@ -42,7 +40,10 @@ public class MarshallerZig {
         System.out.println("3");
         System.out.println(res);
         RemoteXMLResource r = (RemoteXMLResource) res;
+//        JAXBElement<ZahtevZaPriznanjeZiga> jaxbElement = unmarshaller.unmarshal((Source) r.getStreamContent(), ZahtevZaPriznanjeZiga.class);
+//        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = jaxbElement.getValue();
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = (ZahtevZaPriznanjeZiga) unmarshaller.unmarshal(r.getStreamContent());
+//        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = (ZahtevZaPriznanjeZiga) JAXBIntrospector.getValue(unmarshaller.unmarshal(r.getStreamContent()));
         System.out.println(zahtevZaPriznanjeZiga);
 
         return zahtevZaPriznanjeZiga;

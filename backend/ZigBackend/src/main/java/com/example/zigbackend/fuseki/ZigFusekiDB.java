@@ -22,4 +22,12 @@ public class ZigFusekiDB {
     public static List<String> findByMultipleMetadata(List<MetadataSearchParams> params) throws IOException {
         return FusekiReader.findByMetadata(params);
     }
+
+    public static String getRdfString(String brojPrijave) throws Exception {
+        return FusekiReader.getRdfString(brojPrijave);
+    }
+
+    public static String getJsonString(String brojPrijave) throws Exception {
+        return FusekiReader.getJsonString(brojPrijave);
+    }
 }

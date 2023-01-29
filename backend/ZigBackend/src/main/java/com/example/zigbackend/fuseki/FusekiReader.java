@@ -1,5 +1,6 @@
 package com.example.zigbackend.fuseki;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.List;
 import com.example.zigbackend.dto.MetadataSearchParams;
 import com.example.zigbackend.utils.AuthenticationUtilitiesFuseki;
 import com.example.zigbackend.utils.SparqlUtil;
+import com.itextpdf.text.Meta;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.RDFNode;
 
@@ -14,6 +16,7 @@ public class FusekiReader {
 //	private static final String QUERY_FILE = "data/sparql/query.rq";
 	private static final String GRAPH_URI = "metadata"; // http://localhost:8088/fuseki/ZigData/data/metadata
 	private static final String PREDICATE_TRIPLET_PART = "<http://www.ftn.uns.ac.rs/zig/predicate/";
+	private static final String SUBJECT_TRIPLET_PART = "<http://www.ftn.uns.ac.rs/zig/";
 	private static final String PREDICATE_ID_METADATA_NAME = "broj_prijave"; // "<http://www.ftn.uns.ac.rs/zig/predicate/broj_prijave>";
 	private static final String SUBJECT = "zig";
 
@@ -62,6 +65,7 @@ public class FusekiReader {
 	private static ResultSetRewindable select(String whereQueryPart) throws IOException {
 		AuthenticationUtilitiesFuseki.ConnectionProperties conn = AuthenticationUtilitiesFuseki.loadProperties();
 		String sparqlQuery = SparqlUtil.selectData(conn.dataEndpoint + "/" + GRAPH_URI, whereQueryPart);
+		System.out.println(sparqlQuery);
 		QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);
 		ResultSet r = query.execSelect();
 		ResultSetRewindable results = ResultSetFactory.copyResults(r);
@@ -170,5 +174,46 @@ public class FusekiReader {
 		} else {
 			return "=";
 		}
+	}
+
+	private static MetadataSearchParams createMetadataIdSearchParam(String brojPrijave){
+		MetadataSearchParams metadataSearchParams = new MetadataSearchParams();
+		metadataSearchParams.setOperator("AND");
+		metadataSearchParams.setProperty(PREDICATE_ID_METADATA_NAME);
+		metadataSearchParams.setValue(brojPrijave);
+
+		return metadataSearchParams;
+	}
+
+	public static String getRdfString(String brojPrijave) throws Exception {
+		ResultSet results = getRdfByBrojPrijave(brojPrijave);
+
+		return ResultSetFormatter.asXMLString(results);
+	}
+
+	public static String getJsonString(String brojPrijave) throws Exception {
+		ResultSet results = getRdfByBrojPrijave(brojPrijave);
+
+		ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+		ResultSetFormatter.outputAsJSON(outputStream, results);
+
+		return outputStream.toString();
+	}
+
+	private static ResultSet getRdfByBrojPrijave(String brojPrijave) throws IOException {
+		String whereQueryByBrojPrijave = createWhereQueryByBrojPrijavePart(brojPrijave);
+		ResultSetRewindable results = select(whereQueryByBrojPrijave);
+		ResultSetFormatter.out(System.out, results);
+		results.reset();
+
+		return results;
+	}
+
+	private static String createWhereQueryByBrojPrijavePart(String brojPrijave) {
+		String whereStr = "?s ?p ?o "; //.concat(createPredicateIdTripletQueryPart());
+		String filterStr = "FILTER ( ?s = ".concat(SUBJECT_TRIPLET_PART).concat(brojPrijave).concat("> )");
+		whereStr = whereStr.concat(filterStr);
+
+		return whereStr;
 	}
 }

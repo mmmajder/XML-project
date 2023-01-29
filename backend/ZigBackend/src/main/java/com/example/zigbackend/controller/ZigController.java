@@ -33,8 +33,7 @@ public class ZigController {
     }
 
     @PostMapping(consumes = "application/xml", produces = "application/xml")
-    public ResponseEntity<ZahtevZaPriznanjeZiga> createZahtevZaPriznanjePatenta(@RequestBody ZahtevZaPriznanjeZigaDTO zahtevZaPriznanjeZigaDTO) throws JAXBException, XMLDBException, IOException {
-        System.out.println("UUSAO U CONTROLLER");
+    public ResponseEntity<ZahtevZaPriznanjeZiga> createZahtevZaPriznanjeZiga(@RequestBody ZahtevZaPriznanjeZigaDTO zahtevZaPriznanjeZigaDTO) throws JAXBException, XMLDBException, IOException {
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = zigService.createZahtevZaPriznanjeZiga(zahtevZaPriznanjeZigaDTO);
 
         return ResponseEntity.ok(zahtevZaPriznanjeZiga);
@@ -103,7 +102,7 @@ public class ZigController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<ZahtevZaPriznanjeZiga> zahtevi = zigService.getByText(stripped, textSearchDTO.isCasesensitive());
+        List<ZahtevZaPriznanjeZiga> zahtevi = zigService.getByText(stripped, textSearchDTO.isCasesensitive(), textSearchDTO.isSearchForNeobradjeni());
 
         if (zahtevi == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
@@ -153,7 +152,7 @@ public class ZigController {
     }
 
     @GetMapping("/empty")
-    public ResponseEntity<String> saveAfterPrilogAddition(){
+    public ResponseEntity<String> empty(){
         try {
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {

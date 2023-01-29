@@ -80,7 +80,7 @@ public class ZigDB {
     }
 
     public static List<XMLResource> getAllByStatus(EStatus status) {
-        String xpathExp = "//sz:Stanje[text()='" + status + "']/ancestor::sz:Zahtev_za_priznanje_ziga";
+        String xpathExp = "//sz:Status[text()='" + status + "']/ancestor::sz:Zahtev_za_priznanje_ziga";
 
         return getAllByFilter(xpathExp);
     }
@@ -133,6 +133,8 @@ public class ZigDB {
         XMLResource resource = null;
 
         try {
+            // ovde ne moze da se koristi getXPathQueryServiceForZig() jer postavi namespace, informacija o namespace-u se prenese na Resource
+            // i kasnije ne moze da se izmarshaluje zbog ns ... zato filtraciju obradjeni/neobgradjeni ne raditi preko baze
             XPathQueryService xPathQueryService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
             xPathQueryService.setProperty("indent", "yes");
             String xPathExp = createXPathExpressionForTextSearch(words, matchCase);
@@ -173,7 +175,7 @@ public class ZigDB {
         }
     }
 
-    private static String createXPathExpressionForTextSearch(List<String> words, boolean matchCase) {
+    private static String createXPathExpressionForTextSearch(List<String> words, boolean matchCase) { //"//sz:Prilog//sz:Tip_priloga[text()='DOKAZ_O_UPLATI_TAKSE']//..//sz:Status_priloga='NIJE_PREDATO'"
         int wordsDone = 0;
         String xpath = "/*[";
 
