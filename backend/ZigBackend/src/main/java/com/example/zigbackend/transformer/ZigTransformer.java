@@ -28,12 +28,14 @@ public class ZigTransformer {
 
     private static TransformerFactory transformerFactory;
 
-    public static final String PDF_XSL_FILE = "src/transformer/Zig_zahtev_pdf.xsl";
-    public static final String HTML_XSL_FILE = "src/transformer/Zig_zahtev_html.xsl";
+    public static final String PDF_XSL_FILE = "src/main/java/com/example/zigbackend/transformer/Zig_zahtev_pdf.xsl";
+    public static final String HTML_XSL_FILE = "src/main/java/com/example/zigbackend/transformer/Zig_zahtev_html.xsl";
 
-    public static final String HTML_FOLDER = "data/gen/xhtml/";
+    private static final String filePathForGeneratedFiles = "C:\\Faks\\VII\\XML i veb servisi\\XML-project\\generatedFiles\\";
+    public static final String HTML_FOLDER = filePathForGeneratedFiles;//"data/gen/xhtml/";
 
-    public static final String PDF_FOLDER = "data/gen/pdf/";
+    public static final String PDF_FOLDER = filePathForGeneratedFiles;//"data/gen/pdf/";
+    private static final String TARGET_NAMESPACE = "com.example.zigbackend.model"; // koriscenje namespace-a, a ne .class resilo problem
 
     static {
 
@@ -56,6 +58,7 @@ public class ZigTransformer {
             throw new RuntimeException(e);
         }
 
+        System.out.println("IZGENERISAO HTML " + filename);
         return filename;
     }
 
@@ -71,6 +74,7 @@ public class ZigTransformer {
             e.printStackTrace();
         }
 
+        System.out.println("IZGENERISAO PDF " + titlePdf);
         return titlePdf;
     }
     
@@ -108,7 +112,7 @@ public class ZigTransformer {
 
             // Transform DOM to HTML
 
-            JAXBContext context = JAXBContext.newInstance(ZahtevZaPriznanjeZiga.class);
+            JAXBContext context = JAXBContext.newInstance(TARGET_NAMESPACE);
             JAXBSource source = new JAXBSource(context, zahtev);
             StreamResult result;
 

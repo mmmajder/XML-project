@@ -190,4 +190,9 @@ export class ZigService {
       })
     };
   }
+
+  // public getProfileImage(email: string) {
+  //   console.log("getProfileImage service")
+  //   return this.http.get(this.imageUrl + "/" + email, this.httpOptions);
+  // }
 }

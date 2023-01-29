@@ -18,7 +18,7 @@
                     </xs:simpleType>
                 </xs:element>
                 <xs:element name="Taksa" type="sz:TTaksa"/>
-                <xs:element maxOccurs="5" minOccurs="5" name="Prilog" type="sz:TPrilog"/>
+                <xs:element maxOccurs="6" minOccurs="3" name="Prilog" type="sz:TPrilog"/>
                 <xs:element name="Prilog_punomocje" type="sz:TPrilog_punomocje"/>
                 <xs:element name="Broj_prijave_ziga" type="sz:TBroj_prijave_ziga"/>
                 <xs:element name="Datum_podnosenja" type="xs:date"/>
@@ -171,6 +171,7 @@
                         <xs:enumeration value="OPSTI_AKT_O_ZIGU"/>
                         <xs:enumeration value="DOKAZ_O_PRAVU_PRVENSTVA"/>
                         <xs:enumeration value="DOKAZ_O_UPLATI_TAKSE"/>
+                        <xs:enumeration value="QR"/>
                     </xs:restriction>
                 </xs:simpleType>
             </xs:element>

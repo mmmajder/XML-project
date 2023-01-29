@@ -5,9 +5,11 @@ import com.example.zigbackend.dto.MetadataSearchParamsDTO;
 import com.example.zigbackend.dto.ZahtevZaPriznanjeZigaDTO;
 import com.example.zigbackend.dto.ZahteviZaPriznanjeZigaDTO;
 import com.example.zigbackend.mapper.ZigMapper;
-import com.example.zigbackend.model.ZahtevZaPriznanjeZiga;
+import com.example.zigbackend.model.*;
 import com.example.zigbackend.repository.ZigRepository;
 import com.example.zigbackend.transformer.ZigTransformer;
+import net.glxn.qrgen.javase.QRCode;
+import org.apache.commons.io.FileUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -16,10 +18,7 @@ import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
 import javax.xml.bind.JAXBException;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -27,6 +26,12 @@ import java.util.List;
 
 @Service
 public class ZigService {
+    private final String filePathForUploadedFiles = "C:\\Faks\\VII\\XML i veb servisi\\XML-project\\uploadedFiles\\";
+    private final String filePathForGeneratedFiles = "C:\\Faks\\VII\\XML i veb servisi\\XML-project\\generatedFiles\\";
+
+    private final String filePathForQRs = filePathForGeneratedFiles + "QR\\";
+    private final String downloadPdfHttp = "http://localhost:8002/zig/download/pdf/"; // used for QR
+
     private ZigRepository zigRepository = new ZigRepository();
 
     public ZahtevZaPriznanjeZiga getZahtev(String brojPrijave) {
@@ -50,6 +55,7 @@ public class ZigService {
         zahtevZaPriznanjeZiga.setBrojPrijaveZiga(getNewBrojPrijave());
         System.out.println("\n setBrojPrijaveZiga");
         System.out.println(zahtevZaPriznanjeZiga.getBrojPrijaveZiga());
+        addQr(zahtevZaPriznanjeZiga);
         saveZahtev(zahtevZaPriznanjeZiga);
         System.out.println("\n sacuvao");
 
@@ -184,8 +190,57 @@ public class ZigService {
         return parsedSearchParams;
     }
 
+    public boolean addPrilog(String brojPrijaveZiga, String prilogType,  MultipartFile uploadedFile) throws IOException, JAXBException, XMLDBException {
+        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = getZahtev(brojPrijaveZiga);
+        if (zahtevZaPriznanjeZiga == null) {
+            return false;
+        }
+
+        ETip_priloga tipPriloga = ETip_priloga.valueOf(prilogType);
+        String fileName = brojPrijaveZiga.replace('/', '_').concat("_").concat(prilogType);
+
+        if (ETip_priloga.PRIMERAK_ZNAKA == tipPriloga){
+            fileName = fileName.concat(".jpg");
+        } else {
+            fileName = fileName.concat(".pdf");
+        }
+
+        System.out.println(fileName);
+
+        boolean isOkay = writeFile(fileName, uploadedFile);
+        if (!isOkay)
+        {
+            return false;
+        }
+
+        setPrilogDetails(zahtevZaPriznanjeZiga, fileName, tipPriloga);
+
+        if (ETip_priloga.PRIMERAK_ZNAKA == tipPriloga){
+            zahtevZaPriznanjeZiga.getZig().setIzgledPutanjaDoSlike(fileName);
+        }
+
+        saveZahtev(zahtevZaPriznanjeZiga);
+
+        return true;
+    }
+
+    private void setPrilogDetails(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga, String fileName, ETip_priloga prilogType){
+        if (ETip_priloga.PUNOMOCJE == prilogType){
+            zahtevZaPriznanjeZiga.getPrilogPunomocje().setStatusPriloga(EStatus_prilog_punomocje.PREDATO);
+            zahtevZaPriznanjeZiga.getPrilogPunomocje().setPutanjaDoPriloga(fileName);
+        } else {
+            for (Prilog p : zahtevZaPriznanjeZiga.getPrilog()){
+                if (p.getTipPriloga() == prilogType){
+                    p.setStatusPriloga(EStatus_priloga.PREDATO);
+                    p.setPutanjaDoPriloga(fileName);
+                    break;
+                }
+            }
+        }
+    }
+
     public boolean writeFile(String fileName, MultipartFile uploadedFile) throws IOException {
-        File file = new File("C:\\Faks\\VII\\XML i veb servisi\\XML-project\\uploadedFiles\\" + fileName + ".pdf" );
+        File file = new File(filePathForUploadedFiles + fileName);
 
         try (OutputStream os = new FileOutputStream(file)) {
             os.write(uploadedFile.getBytes());
@@ -193,6 +248,82 @@ public class ZigService {
             return true;
         } catch (Exception e) {
             return false;
+        }
+    }
+
+    public ByteArrayInputStream getPrilog(String fileName) throws IOException {
+        String fullpath = filePathForUploadedFiles.concat(fileName);
+
+        return getFile(fullpath);
+    }
+
+    public ByteArrayInputStream getGenerated(String fileName) throws IOException {
+        String fullpath = filePathForGeneratedFiles.concat(fileName);
+
+        return getFile(fullpath);
+    }
+
+    public ByteArrayInputStream getFile(String fullpath) throws IOException {
+        File file = new File(fullpath);
+        if(file.exists() && !file.isDirectory()) {
+            return new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+        } else {
+            return null;
+        }
+    }
+
+    public void addQr(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga){
+        String brojPrijaveZiga = zahtevZaPriznanjeZiga.getBrojPrijaveZiga();
+        String qrFileName = generateQR(brojPrijaveZiga);
+
+        if (qrFileName != null){
+            Prilog qrPrilog = null;
+
+            for (Prilog prilog : zahtevZaPriznanjeZiga.getPrilog()){
+                if (prilog.getTipPriloga() == ETip_priloga.QR){
+                    qrPrilog = prilog;
+                    break;
+                }
+            }
+
+            if (qrPrilog == null){
+                qrPrilog = new Prilog();
+                qrPrilog.setTipPriloga(ETip_priloga.QR);
+                zahtevZaPriznanjeZiga.getPrilog().add(qrPrilog);
+            }
+
+            qrPrilog.setStatusPriloga(EStatus_priloga.PREDATO);
+            qrPrilog.setPutanjaDoPriloga(qrFileName);
+        }
+    }
+
+    public String generateQR(String brojPrijaveZiga){
+        String httpBrojPrijaveZiga = brojPrijaveZiga.replace('/', '-');
+        String fileNameBrojPrijaveZiga = brojPrijaveZiga.replace('/', '_').concat("_").concat("QR");
+
+        String filename = null;
+        try {
+            filename = fileNameBrojPrijaveZiga + ".jpg";
+            File file = new File(filePathForQRs + filename);
+            ByteArrayOutputStream stream = QRCode
+                    .from(downloadPdfHttp + httpBrojPrijaveZiga)
+                    .withSize(250, 250)
+                    .stream();
+            FileOutputStream fos = new FileOutputStream(file);
+            stream.writeTo(fos);
+            System.out.println("*");
+            System.out.println("*");
+            System.out.println("*");
+            System.out.println(filename);
+            System.out.println("*");
+            System.out.println("*");
+            System.out.println("*");
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            return filename;
         }
     }
 }

@@ -123,16 +123,12 @@ public class ZigController {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
-            ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = zigService.getZahtev(brojPrijaveZiga);
-            if (zahtevZaPriznanjeZiga == null)
-                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
-
-            String fileName = brojPrijaveZiga.replace('/', '_').concat("_").concat(tipPriloga);
-
-            boolean isOkay = zigService.writeFile(fileName, file);
+            boolean isOkay = zigService.addPrilog(brojPrijaveZiga, tipPriloga, file);
 
             if (!isOkay)
+            {
                 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            }
 
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {

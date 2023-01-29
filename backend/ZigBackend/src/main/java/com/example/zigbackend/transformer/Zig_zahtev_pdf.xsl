@@ -57,7 +57,7 @@
                 	</tr>
 						<tr>
 						 <td colspan="3" style="border-left-width:1px;">
-						 	<xsl:if test="//sz:Podnosilac_prijave//sz:Ime"> 
+						 	<xsl:if test="//sz:Podnosilac_prijave//sz:Ime">
 						  		<xsl:value-of select="//sz:Podnosilac_prijave//sz:Ime"/> <xsl:text>&#x20;</xsl:text>  <!-- &#x9; is tab &#x20; is space-->
 						  		<xsl:value-of select="//sz:Podnosilac_prijave//sz:Prezime"/>
 		                	</xsl:if>
@@ -165,7 +165,7 @@
 				 	<td colspan="2" rowspan="5">
 				 		<xsl:element name="img">
 			              	<xsl:attribute name="src">
-			                	data\<xsl:value-of select="//sz:Zig//sz:Izgled_putanja_do_slike"/>
+								C:\Faks\VII\XML i veb servisi\XML-project\uploadedFiles\<xsl:value-of select="//sz:Zig//sz:Izgled_putanja_do_slike"/>
 			              	</xsl:attribute>
 			            </xsl:element>
 				 	</td>
@@ -256,10 +256,14 @@
 				  	<td rowspan="7" style="text-align: center; border-top-width:1px;">Broj prijave ziga: <br/>
 				  		<xsl:value-of select="//sz:Broj_prijave_ziga"/> <br/> <br/>
 				  		Datum podnosenja: <br/>
-				  		<xsl:value-of select="format-dateTime(//sz:Datum_podnosenja, '[M01].[D01].[Y0001].')"/></td>
+<!--				  		<xsl:value-of select="format-dateTime(//sz:Datum_podnosenja, '[M01].[D01].[Y0001].')"/>-->
+						<xsl:value-of select="//sz:Datum_podnosenja"/>
+					</td>
 				  </tr>
 					<tr>
-						<td style="border-left-width:1px;">Primerak znaka</td>
+						<td style="border-left-width:1px;">
+									Primerak znaka
+						</td>
 						<xsl:choose>
 					 		<xsl:when test="//sz:Prilog//sz:Tip_priloga[text()='PRIMERAK_ZNAKA']//..//sz:Status_priloga='NIJE_PREDATO'">
 					 			<td>NIJE PREDATO</td>
@@ -270,7 +274,21 @@
 					 	</xsl:choose> 
 				    </tr>
 				    <tr>
-						<td style="border-left-width:1px;">Spisak robe i usluga</td>
+						<td style="border-left-width:1px;">
+							<xsl:choose>
+								<xsl:when test="//sz:Prilog//sz:Tip_priloga[text()='SPISAK_ROBE_I_USLUGA']//..//sz:Status_priloga='PREDATO'">
+									<xsl:element name="a">
+										<xsl:attribute name="href">
+											http://localhost:8002/zig/download/prilog/<xsl:value-of select="//sz:Prilog//sz:Tip_priloga[text()='SPISAK_ROBE_I_USLUGA']//..//sz:Putanja_do_priloga"/>
+										</xsl:attribute>
+										Spisak robe i usluga
+									</xsl:element>
+								</xsl:when>
+								<xsl:otherwise>
+									Spisak robe i usluga
+								</xsl:otherwise>
+							</xsl:choose>
+						</td>
 						<xsl:choose>
 					 		<xsl:when test="//sz:Prilog//sz:Tip_priloga[text()='SPISAK_ROBE_I_USLUGA']//..//sz:Status_priloga='NIJE_PREDATO'">
 					 			<td>NIJE PREDATO</td>
@@ -281,18 +299,32 @@
 					 	</xsl:choose> 
 				    </tr>
 				    <tr>
-						<td style="border-left-width:1px;">Punomocje</td>
+						<td style="border-left-width:1px;">
+							<xsl:choose>
+								<xsl:when test="//sz:Prilog_punomocje//sz:Status_priloga='PREDATO'">
+									<xsl:element name="a">
+										<xsl:attribute name="href">
+											http://localhost:8002/zig/download/prilog/<xsl:value-of select="//sz:Prilog_punomocje//sz:Putanja_do_priloga"/>
+										</xsl:attribute>
+										Punomocje
+									</xsl:element>
+								</xsl:when>
+								<xsl:otherwise>
+									Punomocje
+								</xsl:otherwise>
+							</xsl:choose>
+						</td>
 						<xsl:choose>
 					 		<xsl:when test="//sz:Prilog_punomocje//sz:Status_priloga='PREDATO_RANIJE'">
 					 			<td>PREDATO RANIJE</td>
 					 		</xsl:when>
-					 		<xsl:when test="//sz:Zig//sz:Opis_izgleda_ziga='BICE_NAKNADNO_PREDATO'">
+					 		<xsl:when test="//sz:Prilog_punomocje//sz:Status_priloga='BICE_NAKNADNO_PREDATO'">
 					 			<td>BICE NAKNADNO PREDATO</td>
 					 		</xsl:when>
-					 		<xsl:when test="//sz:Zig//sz:Opis_izgleda_ziga='NIJE_PREDATO'">
+					 		<xsl:when test="//sz:Prilog_punomocje//sz:Status_priloga='NIJE_PREDATO'">
 					 			<td>NIJE PREDATO</td>
 					 		</xsl:when>
-					 		<xsl:when test="//sz:Zig//sz:Opis_izgleda_ziga='NIJE_POTREBNO'">
+					 		<xsl:when test="//sz:Prilog_punomocje//sz:Status_priloga='NIJE_POTREBNO'">
 					 			<td>NIJE POTREBNO</td>
 					 		</xsl:when>
 					 		<xsl:otherwise>
@@ -302,7 +334,21 @@
 				    </tr>
 				    
 				    <tr>
-						<td style="border-left-width:1px;">Opsti akt o kolektivnom zigu/zigu garancije</td>
+						<td style="border-left-width:1px;">
+							<xsl:choose>
+								<xsl:when test="//sz:Prilog//sz:Tip_priloga[text()='OPSTI_AKT_O_ZIGU']//..//sz:Status_priloga='PREDATO'">
+									<xsl:element name="a">
+										<xsl:attribute name="href">
+											http://localhost:8002/zig/download/prilog/<xsl:value-of select="//sz:Prilog//sz:Tip_priloga[text()='OPSTI_AKT_O_ZIGU']//..//sz:Putanja_do_priloga"/>
+										</xsl:attribute>
+										Opsti akt o kolektivnom zigu/zigu garancije
+									</xsl:element>
+								</xsl:when>
+								<xsl:otherwise>
+									Opsti akt o kolektivnom zigu/zigu garancije
+								</xsl:otherwise>
+							</xsl:choose>
+							</td>
 						<xsl:choose>
 					 		<xsl:when test="//sz:Prilog//sz:Tip_priloga[text()='OPSTI_AKT_O_ZIGU']//..//sz:Status_priloga='NIJE_PREDATO'">
 					 			<td>NIJE PREDATO</td>
@@ -316,7 +362,21 @@
 					 	</xsl:choose> 
 				    </tr>
 				    <tr>
-						<td style="border-left-width:1px;">Dokaz o pravu prvenstva</td>
+						<td style="border-left-width:1px;">
+							<xsl:choose>
+								<xsl:when test="//sz:Prilog//sz:Tip_priloga[text()='DOKAZ_O_PRAVU_PRVENSTVA']//..//sz:Status_priloga='PREDATO'">
+									<xsl:element name="a">
+										<xsl:attribute name="href">
+											http://localhost:8002/zig/download/prilog/<xsl:value-of select="//sz:Prilog//sz:Tip_priloga[text()='DOKAZ_O_PRAVU_PRVENSTVA']//..//sz:Putanja_do_priloga"/>
+										</xsl:attribute>
+										Dokaz o pravu prvenstva
+									</xsl:element>
+								</xsl:when>
+								<xsl:otherwise>
+									Dokaz o pravu prvenstva
+								</xsl:otherwise>
+							</xsl:choose>
+						</td>
 						<xsl:choose>
 					 		<xsl:when test="//sz:Prilog//sz:Tip_priloga[text()='DOKAZ_O_PRAVU_PRVENSTVA']//..//sz:Status_priloga='NIJE_PREDATO'">
 					 			<td>NIJE PREDATO</td>
@@ -330,7 +390,21 @@
 					 	</xsl:choose> 
 				    </tr>
 				    <tr>
-						<td style="border-left-width:1px;">Dokaz o uplati takse</td>
+						<td style="border-left-width:1px;">
+							<xsl:choose>
+								<xsl:when test="//sz:Prilog//sz:Tip_priloga[text()='DOKAZ_O_UPLATI_TAKSE']//..//sz:Status_priloga='PREDATO'">
+									<xsl:element name="a">
+										<xsl:attribute name="href">
+											http://localhost:8002/zig/download/prilog/<xsl:value-of select="//sz:Prilog//sz:Tip_priloga[text()='DOKAZ_O_UPLATI_TAKSE']//..//sz:Putanja_do_priloga"/>
+										</xsl:attribute>
+										Dokaz o uplati takse
+									</xsl:element>
+								</xsl:when>
+								<xsl:otherwise>
+									Dokaz o uplati takse
+								</xsl:otherwise>
+							</xsl:choose>
+						</td>
 						<xsl:choose>
 					 		<xsl:when test="//sz:Prilog//sz:Tip_priloga[text()='DOKAZ_O_UPLATI_TAKSE']//..//sz:Status_priloga='NIJE_PREDATO'">
 					 			<td>NIJE PREDATO</td>
@@ -341,6 +415,16 @@
 					 	</xsl:choose> 
 				    </tr>
 				</table>
+				<br/>
+				<br/>
+				<br/>
+				<center>
+					<xsl:element name="img">
+						<xsl:attribute name="src">
+							C:\Faks\VII\XML i veb servisi\XML-project\generatedFiles\QR\<xsl:value-of select="//sz:Prilog//sz:Tip_priloga[text()='QR']//..//sz:Putanja_do_priloga"/>
+						</xsl:attribute>
+					</xsl:element>
+				</center>
             </body>
         </html>
     </xsl:template>

@@ -176,7 +176,7 @@
         <div *ngIf="zahtevZaPriznanjeZigaDTO.statusPrilogPunomocje == 'NIJE_PREDATO'">
           <label>
             Priložite ugovor o punomoćju u PDF formatu.
-            <input #fileUploaderPunomocje type="file" (input)="selectFileUpload($event)" accept="application/pdf"/>
+            <input #fileUploaderPunomocje type="file" (input)="selectPunomocjeUpload($event)" accept="application/pdf"/>
           </label>
         </div>
 
@@ -278,7 +278,10 @@
         </mat-form-field>
 
         <div *ngIf="zahtevZaPriznanjeZigaDTO.zigDTO.tipZiga == 'KOLEKTIVNI_ZIG' || zahtevZaPriznanjeZigaDTO.zigDTO.tipZiga == 'ZIG_GARANCIJE'">
-          <!--          TODO upload priloga OPSTI_AKT_O_ZIGU-->
+          <label>
+            Priložite opšti akto žigu u PDF formatu.
+            <input #fileUploaderOpstiAkt type="file" (input)="selectOpstiAktUpload($event)" accept="application/pdf"/>
+          </label>
         </div>
 
         <mat-form-field appearance="outline" style="width: 32%; margin-right: 5px">
@@ -303,16 +306,16 @@
         </div>
 
 <!--        TODO upload priloga PRIMERAK_ZNAKA i putanjaDoZnaka-->
+        <label>
+          Priložite detaljan spisak robe i usluga u PDF formatu.
+          <input #fileUploaderPrimerakZnaka type="file" (input)="selectPrimerakZnakaUpload($event)" accept="image/png, image/jpeg"/>
+        </label>
 
         <mat-selection-list #izabraneBojeTaraba [(ngModel)]="izabraneBoje">
           <mat-list-option  *ngFor="let mogucaBoja of moguceBoje" [value]="mogucaBoja">
             {{mogucaBoja}}
           </mat-list-option>
         </mat-selection-list>
-
-<!--        <p>-->
-<!--          Options selected: {{izabraneBoje.selectedOptions.selected}}-->
-<!--        </p>-->
 
         <p>
           <mat-form-field appearance="outline" style="width: 80%; margin-right: 5px">
@@ -347,7 +350,10 @@
           </mat-list-option>
         </mat-selection-list>
 
-        <!--        TODO upload priloga SPISAK_ROBE_I_USLUGA-->
+        <label>
+          Priložite detaljan spisak robe i usluga u PDF formatu.
+          <input #fileUploaderSpisakRobeIUsluga type="file" (input)="selectSpisakRobeIUslugaUpload($event)" accept="application/pdf"/>
+        </label>
 
       </ng-template>
     </mat-step>
@@ -366,8 +372,10 @@
         </mat-form-field>
 
         <div *ngIf="zahtevZaPriznanjeZigaDTO.zatrazenoPravoPrvenstvaIOsnov == 'KONVENCIJSKO' || zahtevZaPriznanjeZigaDTO.zatrazenoPravoPrvenstvaIOsnov == 'SAJAMSKO'">
-          <!--          TODO import priloga DOKAZ_O_PRAVU_PRVENSTVA-->
-
+          <label>
+            Priložite dokaz o pravu prvenstva u PDF formatu.
+            <input #fileUploaderDokazOPravuPrvenstva type="file" (input)="selectDokazOPravuPrvenstvaUpload($event)" accept="application/pdf"/>
+          </label>
         </div>
 
       </ng-template>
@@ -377,7 +385,10 @@
       <ng-template matStepLabel>Ostali prilozi</ng-template>
       <ng-template matStepContent>
 
-<!--        TODO upload priloga DOKAZ_O_UPLATI_TAKSE-->
+        <label>
+          Priložite dokaz o uplati takse u PDF formatu.
+          <input #fileUploaderDokazOUplatiTakse type="file" (input)="selectDokazOUplatiTakseUpload($event)" accept="application/pdf"/>
+        </label>
 
       </ng-template>
     </mat-step>

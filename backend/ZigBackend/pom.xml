@@ -119,7 +119,22 @@
 			<version>2.4</version>
 		</dependency>
 
+		<dependency>
+<!--			https://www.baeldung.com/java-generating-barcodes-qr-codes-->
+			<groupId>com.github.kenglxn.qrgen</groupId>
+			<artifactId>javase</artifactId>
+			<version>2.6.0</version>
+		</dependency>
+
 	</dependencies>
+
+	<repositories>
+<!--		https://www.baeldung.com/java-generating-barcodes-qr-codes-->
+		<repository>
+			<id>jitpack.io</id>
+			<url>https://jitpack.io</url>
+		</repository>
+	</repositories>
 
     <build>
         <plugins>

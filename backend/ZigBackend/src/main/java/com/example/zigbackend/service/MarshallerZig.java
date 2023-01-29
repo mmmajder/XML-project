@@ -16,7 +16,7 @@ import java.io.File;
 import java.io.OutputStream;
 
 public class MarshallerZig {
-    private static final String TARGET_NAMESPACE = "com.example.zigbackend.model";
+    private static final String TARGET_NAMESPACE = "com.example.zigbackend.model"; // koriscenje namespace-a, a ne .class resilo problem i u transformatoru, veliki problem resen postavljanjem magicne linije u configurations VM options
 
     public static void marshalToFile(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(TARGET_NAMESPACE);
