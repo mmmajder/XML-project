@@ -32,6 +32,10 @@ public class ZigService {
     private final String filePathForQRs = filePathForGeneratedFiles + "QR\\";
     private final String downloadPdfHttp = "http://localhost:8002/zig/download/pdf/"; // used for QR
 
+    private final int osnovnaTaksa = 300;
+    private final int taksaPoKlasi = 150;
+    private final int taksaZaGrafickoResenje = 500;
+
     private ZigRepository zigRepository = new ZigRepository();
 
     public ZahtevZaPriznanjeZiga getZahtev(String brojPrijave) {
@@ -55,6 +59,7 @@ public class ZigService {
         zahtevZaPriznanjeZiga.setBrojPrijaveZiga(getNewBrojPrijave());
         System.out.println("\n setBrojPrijaveZiga");
         System.out.println(zahtevZaPriznanjeZiga.getBrojPrijaveZiga());
+        setTaksa(zahtevZaPriznanjeZiga);
         addQr(zahtevZaPriznanjeZiga);
         saveZahtev(zahtevZaPriznanjeZiga);
         System.out.println("\n sacuvao");
@@ -74,6 +79,14 @@ public class ZigService {
         brojPrijave = brojPrijave.concat("/").concat(getLastTwoYearChars(currentYear));
 
         return brojPrijave;
+    }
+
+    private void setTaksa(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga){
+        Taksa taksa = new Taksa();
+        taksa.setOsnovnaTaksa(osnovnaTaksa);
+        taksa.setTaksaZaSveKlase(taksaPoKlasi * zahtevZaPriznanjeZiga.getKlasa().size());
+        taksa.setTaksaZaGrafickoResenje(taksaZaGrafickoResenje); // kasnije se postavi na 0, ukoliko se upload-uje izgled ziga
+        zahtevZaPriznanjeZiga.setTaksa(taksa);
     }
 
     private String getLastTwoYearChars(int year){
@@ -217,6 +230,7 @@ public class ZigService {
 
         if (ETip_priloga.PRIMERAK_ZNAKA == tipPriloga){
             zahtevZaPriznanjeZiga.getZig().setIzgledPutanjaDoSlike(fileName);
+            zahtevZaPriznanjeZiga.getTaksa().setTaksaZaGrafickoResenje(0);
         }
 
         saveZahtev(zahtevZaPriznanjeZiga);
@@ -311,13 +325,6 @@ public class ZigService {
                     .stream();
             FileOutputStream fos = new FileOutputStream(file);
             stream.writeTo(fos);
-            System.out.println("*");
-            System.out.println("*");
-            System.out.println("*");
-            System.out.println(filename);
-            System.out.println("*");
-            System.out.println("*");
-            System.out.println("*");
         } catch (FileNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
