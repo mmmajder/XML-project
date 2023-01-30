@@ -9,9 +9,10 @@ import {DetailsComponent} from "../details/details.component";
   styleUrls: ['./request-card.component.css']
 })
 export class RequestCardComponent {
-  @Input() zahtev: Zahtev = new Zahtev();
+  @Input() zahtev: Zahtev;
 
   constructor(private dialog: MatDialog) {
+    console.log("printam sada zahtev")
     console.log(this.zahtev)
   }
 

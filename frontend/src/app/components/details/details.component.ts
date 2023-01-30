@@ -24,7 +24,7 @@ export class DetailsComponent {
   public obradiZahtev(odbijen: boolean) {
     let dto = new ObradaZahtevaDTO();
     dto.brojPrijave = this.brojPrijave;
-    dto.sluzbenik = {'name': 'Pera', 'surname': 'Peric', 'email': 'pera@gmail.com'}
+    dto.sluzbenik = {'name': 'Pera Peric', 'email': 'pera@gmail.com'}
     dto.odbijen = odbijen;
     if (odbijen)
       dto.razlogOdbijanja = this.razlogOdbijanja;

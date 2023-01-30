@@ -41,6 +41,19 @@ export class ZahteviService {
     }
   }
 
+  private getObradiZahtevUrl(endpointChar: string | null): string {
+    if (endpointChar == null) return "";
+    switch (endpointChar.at(0)) {
+      case "A":
+        return "/autorskaPravaResenje/obradiZahtev";
+      case "P":
+        return "/obradiZahtev";
+      default:
+        return "" +
+          "/obradiZahtev";
+    }
+  }
+
   obradiZahtev(obradaZahteva: ObradaZahtevaDTO) {
     const xmlZahtev = JsonToXML.parse("obradaZahteva", obradaZahteva);
     console.log(xmlZahtev);

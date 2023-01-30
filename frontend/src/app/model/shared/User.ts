@@ -8,6 +8,5 @@ export class User {
 
 export class SimpleUser {
   email!: string;
-  name!: string;
-  surname!: string;
+  name!: string; // combined name and surname or business name
 }

@@ -4,6 +4,8 @@ import com.example.zigbackend.dto.*;
 import com.example.zigbackend.model.*;
 import com.example.zigbackend.repository.ZigRepository;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
@@ -133,5 +135,50 @@ public class ZigMapper {
         }
 
         return klase;
+    }
+
+    public static List<SimpleZahtevDTO> mapToSimpleZahtevs(List<ZahtevZaPriznanjeZiga> zahtevZaPriznanjeZigas){
+        List<SimpleZahtevDTO> simpleZahtevDTOs = new ArrayList<>();
+
+        for (ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga : zahtevZaPriznanjeZigas){
+            SimpleZahtevDTO simpleZahtevDTO = mapToSimpleZahtev(zahtevZaPriznanjeZiga);
+            simpleZahtevDTOs.add(simpleZahtevDTO);
+        }
+
+        return simpleZahtevDTOs;
+    }
+
+    public static SimpleZahtevDTO mapToSimpleZahtev(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga){
+        SimpleZahtevDTO simpleZahtevDTO = new SimpleZahtevDTO();
+        simpleZahtevDTO.setBrojPrijave(zahtevZaPriznanjeZiga.getBrojPrijaveZiga());
+
+        Date datumPodnosenja = zahtevZaPriznanjeZiga.getDatumPodnosenja();
+        simpleZahtevDTO.setDatumPodnosenja(mapDateToString(datumPodnosenja));
+
+        SimpleUserDTO podnosioc = mapToSimpleUser(zahtevZaPriznanjeZiga.getPodnosilacPrijave());
+        simpleZahtevDTO.setPodnosioc(podnosioc);
+
+        simpleZahtevDTO.setObradjen(zahtevZaPriznanjeZiga.getStatus() != EStatus.PREDATO);
+
+        return simpleZahtevDTO;
+    }
+
+    public static SimpleUserDTO mapToSimpleUser(Lice user){
+        SimpleUserDTO simpleUserDTO = new SimpleUserDTO();
+        simpleUserDTO.setEmail(user.getKontakt().getEmail());
+
+        if (user instanceof FizickoLice){
+            simpleUserDTO.setName(((FizickoLice) user).getIme() + " " + ((FizickoLice) user).getPrezime());
+        } else {
+            simpleUserDTO.setName(((PravnoLice) user).getPoslovnoIme());
+        }
+
+        return simpleUserDTO;
+    }
+
+    private static String mapDateToString(Date date){
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy.");
+
+        return dateFormat.format(date);
     }
 }

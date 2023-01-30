@@ -1,6 +1,7 @@
 package com.example.zigbackend.controller;
 
 import com.example.zigbackend.dto.*;
+import com.example.zigbackend.mapper.ZigMapper;
 import com.example.zigbackend.model.ZahtevZaPriznanjeZiga;
 import com.example.zigbackend.service.ZigService;
 import com.itextpdf.text.Meta;
@@ -82,7 +83,7 @@ public class ZigController {
     }
 
     @PutMapping(path = "/metadata-search", produces = "application/xml", consumes = "application/xml")
-    public ResponseEntity<List<ZahtevZaPriznanjeZiga>> getZahteviByMetadata(@RequestBody MetadataSearchParamsDTO metadataSearchParamsDTO) throws IOException {
+    public ResponseEntity<List<SimpleZahtevDTO>> getZahteviByMetadata(@RequestBody MetadataSearchParamsDTO metadataSearchParamsDTO) throws IOException {
         List<MetadataSearchParams> parsedSearchParams = zigService.parseMetadataDTO(metadataSearchParamsDTO);
 
         System.out.println(metadataSearchParamsDTO);
@@ -91,11 +92,14 @@ public class ZigController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        return ResponseEntity.ok(zigService.getByMetadata(parsedSearchParams));
+        List<ZahtevZaPriznanjeZiga> zahtevi = zigService.getByMetadata(parsedSearchParams);
+        List<SimpleZahtevDTO> simpleZahtevDTOs = ZigMapper.mapToSimpleZahtevs(zahtevi);
+
+        return ResponseEntity.ok(simpleZahtevDTOs);
     }
 
     @PutMapping(path = "/text-search", produces = "application/xml", consumes = "application/xml")
-    public ResponseEntity<List<ZahtevZaPriznanjeZiga>> getZahteviByTextSearch(@RequestBody TextSearchDTO textSearchDTO) throws Exception {
+    public ResponseEntity<List<SimpleZahtevDTO>> getZahteviByTextSearch(@RequestBody TextSearchDTO textSearchDTO) throws Exception {
         String stripped = textSearchDTO.getTextSearch().trim();
 
         if ("".equals(stripped)){
@@ -108,8 +112,9 @@ public class ZigController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-//        return ResponseEntity.ok(zigService.mapToZahtevi(zahtevi));
-        return ResponseEntity.ok(zahtevi);
+        List<SimpleZahtevDTO> simpleZahtevDTOs = ZigMapper.mapToSimpleZahtevs(zahtevi);
+
+        return ResponseEntity.ok(simpleZahtevDTOs);
     }
 
     @PostMapping("/file-upload/{brojPrijaveZigaId}-{brojPrijaveZigaGodina}-{tipPriloga}")

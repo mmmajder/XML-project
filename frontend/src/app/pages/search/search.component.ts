@@ -5,6 +5,7 @@ import {MetadataSearchParamsDTO, TextSearchDTO} from "../../model/search/SearchP
 import {ZahteviService} from "../../service/zahtevi.service";
 import * as JsonToXML from "js2xmlparser";
 import {Meta} from "@angular/platform-browser";
+import {SimpleUser} from "../../model/shared/User";
 
 @Component({
   selector: 'app-search',
@@ -41,7 +42,7 @@ export class SearchComponent {
 
   simpleSearchText: string = "";
   metapodaci: MetadataSearchParamsDTO[] = [];
-  rezultatiPretrage: Zahtev[] = [new Zahtev(), new Zahtev(), new Zahtev()];
+  rezultatiPretrage: Zahtev[] = [];
   fifthIndexesOfResults = [0];
   searched = false;
   selected: string = "A";
@@ -69,6 +70,7 @@ export class SearchComponent {
       return;
     }
 
+    this.rezultatiPretrage = [];
     let textSearchParams:TextSearchDTO = new TextSearchDTO();
     textSearchParams.textSearch = this.simpleSearchText.trim();
     textSearchParams.searchForNeobradjeni = this.statusZahteva === "neobradjeni";
@@ -76,6 +78,8 @@ export class SearchComponent {
 
     this.zahteviService.searchByText(textSearchParams, this.vrstaZahteva).subscribe(data => {
       console.log(data);
+      let simpleZahtevs:Zahtev[] = this.parseSimpleZahtevsDoc(data);
+      this.rezultatiPretrage = simpleZahtevs;
       this.simpleSearchText = "";
       this.searched = true;
     });
@@ -87,6 +91,7 @@ export class SearchComponent {
       return;
     }
 
+    this.rezultatiPretrage = [];
     let metapodaciForSearch:MetadataSearchParamsDTO[] = this.mapVisibleMetadataNamesToFunctional();
     let metaParams:MetadataSearchParamsDTO = this.mapMetadataParamsToOneInstance(metapodaciForSearch);
     // let metaParams:MultipleMetadataSearchParams = new MultipleMetadataSearchParams();
@@ -128,6 +133,8 @@ export class SearchComponent {
 
     this.zahteviService.searchByMetadata(metaParams, this.vrstaZahteva).subscribe(data => {
       console.log(data);
+      let simpleZahtevs:Zahtev[] = this.parseSimpleZahtevsDoc(data);
+      this.rezultatiPretrage = simpleZahtevs;
       this.searched = true;
     });
   }
@@ -201,5 +208,36 @@ export class SearchComponent {
       this.sviMetapodaci = this.zigPossibleMetadata;
       this.metadataMapper = this.zigMetadataMapper;
     }
+  }
+
+  parseSimpleZahtevsDoc(data:any){
+    let simpleZahtevs:Zahtev[] = [];
+
+    let simpleZahtevsDoc = data.getElementsByTagName("item"); // #document is a <List> of <item>s containing data from back [0].textContent;
+
+    for (let simpleZahtevDoc of simpleZahtevsDoc){
+      let brojPrijaveSimpleZahtev:string = simpleZahtevDoc.getElementsByTagName("brojPrijave")[0].textContent;
+      let datumPodnosenjaSimpleZahtev:string = simpleZahtevDoc.getElementsByTagName("datumPodnosenja")[0].textContent;
+      let podnosiocSimpleZahtev = simpleZahtevDoc.getElementsByTagName("podnosioc")[0];
+      let podnosiocNameSimpleZahtev = podnosiocSimpleZahtev.getElementsByTagName("name")[0].textContent;
+      let podnosiocEmailSimpleZahtev = podnosiocSimpleZahtev.getElementsByTagName("email")[0].textContent;
+      let obradjenSimpleZahtev:boolean = simpleZahtevDoc.getElementsByTagName("obradjen")[0].textContent === "true";
+
+      let simpleUser:SimpleUser = new SimpleUser();
+      simpleUser.name = podnosiocNameSimpleZahtev;
+      simpleUser.email = podnosiocEmailSimpleZahtev;
+
+      let simpleZahtev = new Zahtev();
+      simpleZahtev.brojPrijave = brojPrijaveSimpleZahtev;
+      simpleZahtev.datumPodnosenja = datumPodnosenjaSimpleZahtev;
+      simpleZahtev.podnosioc = podnosiocSimpleZahtev;
+      simpleZahtev.obradjen = obradjenSimpleZahtev;
+
+      simpleZahtevs.push(simpleZahtev);
+
+      console.log(simpleZahtev);
+    }
+
+    return simpleZahtevs;
   }
 }

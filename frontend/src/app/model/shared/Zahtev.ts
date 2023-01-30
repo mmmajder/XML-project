@@ -4,8 +4,7 @@ export class Zahtev {
   brojPrijave: string = "A-2023/27";
   datumPodnosenja: string = "20.01.2023.";
   podnosioc: SimpleUser = {
-    "name": "Pera",
-    "surname": "Peric",
+    "name": "Pera Peric",
     "email": "pera@gmail.com"
   };
   obradjen: boolean = false;

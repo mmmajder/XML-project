@@ -58,7 +58,12 @@
 
       <div style="margin: 20px">
         <div style="display: inline" *ngFor="let item of metapodaci; let i = index" [attr.data-index]="i">
-          <mat-button-toggle-group [(ngModel)]="metapodaci[i].operator" style="margin-right: 5px">
+          <mat-button-toggle-group *ngIf="i === 0" [(ngModel)]="metapodaci[i].operator" style="margin-right: 5px">
+            <mat-button-toggle value="AND">I</mat-button-toggle>
+            <mat-button-toggle value="NOT">NE</mat-button-toggle>
+          </mat-button-toggle-group>
+
+          <mat-button-toggle-group *ngIf="i !== 0" [(ngModel)]="metapodaci[i].operator" style="margin-right: 5px">
             <mat-button-toggle value="AND">I</mat-button-toggle>
             <mat-button-toggle value="OR">ILI</mat-button-toggle>
             <mat-button-toggle value="NOT">NE</mat-button-toggle>
@@ -76,9 +81,10 @@
             <input matInput type="text" [(ngModel)]="metapodaci[i].value" required>
           </mat-form-field>
 
-          <button mat-button color="warn" (click)="removeMeta(i)" [disabled]="metapodaci.length == 1">
-            Ukloni metapodatak
-          </button>
+            <button mat-button color="warn" (click)="removeMeta(i)" [disabled]="i === 0">
+              Ukloni metapodatak
+            </button>
+
           <mat-divider style="margin-bottom: 10px; margin-top: -10px"></mat-divider>
         </div>
       </div>
@@ -91,26 +97,9 @@
     <img src="assets/nemaRezultata.png" style="height: 350px" alt="no-results">
   </div>
   <div *ngIf="rezultatiPretrage.length > 0">
-    <div *ngFor="let i of fifthIndexesOfResults" class="row" style="margin: 10px">
+    <div *ngFor="let r of rezultatiPretrage" class="row" style="margin: 10px">
       <div class="col-md-2 text-center">
-        <app-request-card [zahtev]="rezultatiPretrage[i]"></app-request-card>
-      </div>
-      <div class="col-md-2 text-center">
-        <app-request-card *ngIf="i * 5 + 1 < rezultatiPretrage.length"
-                          [zahtev]="rezultatiPretrage[i + 1]"></app-request-card>
-      </div>
-      <div class="col-md-2 text-center">
-        <app-request-card *ngIf="i * 5 + 2 < rezultatiPretrage.length"
-                          [zahtev]="rezultatiPretrage[i + 2]"></app-request-card>
-      </div>
-      <div class="col-md-2 text-center">
-        <app-request-card *ngIf="i * 5 + 3 < rezultatiPretrage.length"
-                          [zahtev]="rezultatiPretrage[i + 3]"></app-request-card>
-      </div>
-
-      <div class="col-md-2 text-center">
-        <app-request-card *ngIf="i * 5 + 4 < rezultatiPretrage.length"
-                          [zahtev]="rezultatiPretrage[i + 4]"></app-request-card>
+        <app-request-card [zahtev]="r"></app-request-card>
       </div>
     </div>
   </div>
