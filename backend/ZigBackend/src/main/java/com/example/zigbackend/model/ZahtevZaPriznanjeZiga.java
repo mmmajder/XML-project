@@ -37,7 +37,7 @@ public class ZahtevZaPriznanjeZiga {
     @XmlElement(name="Broj_prijave_ziga", required=true)
     private String brojPrijaveZiga;
     @XmlElement(name="Datum_podnosenja", required=true)
-    private Date datumPodnosenja;
+    private String datumPodnosenja;
     @XmlElement(name="Status", required=true)
     private EStatus status;
 

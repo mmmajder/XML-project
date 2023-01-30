@@ -48,10 +48,15 @@ public class ResenjeService {
         resenjeZahteva.setEmailSluzbenika(obradaZahteva.getSluzbenik().getEmail());
         resenjeZahteva.setDatumObrade(new Date());
         resenjeZahteva.setOdbijen(obradaZahteva.isOdbijen());
-        if (resenjeZahteva.isOdbijen())
+
+        if (resenjeZahteva.isOdbijen()){
             resenjeZahteva.setRazlogOdbijanja(obradaZahteva.getRazlogOdbijanja());
-        else
+            service.declineZahtev(obradaZahteva.getBrojPrijave());
+        }
+        else {
             resenjeZahteva.setSifra(obradaZahteva.getBrojPrijave() + "_" + ZigMapper.mapDateToString(new Date()).replace('.', '_'));
+            service.acceptZahtev(obradaZahteva.getBrojPrijave());
+        }
         repository.kreiraj(resenjeZahteva);
     }
 

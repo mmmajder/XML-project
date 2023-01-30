@@ -32,11 +32,14 @@ import java.util.stream.Collectors;
 
 @Service
 public class ZigService {
-    private final String filePathForUploadedFiles = "C:\\Faks\\VII\\XML i veb servisi\\XML-project\\uploadedFiles\\";
-    private final String filePathForGeneratedFiles = "C:\\Faks\\VII\\XML i veb servisi\\XML-project\\generatedFiles\\";
+//    private final String filePathForUploadedFiles = "C:\\Faks\\VII\\XML i veb servisi\\XML-project\\uploadedFiles\\";
+//    private final String filePathForGeneratedFiles = "C:\\Faks\\VII\\XML i veb servisi\\XML-project\\generatedFiles\\";
 
-    private final String filePathForQRs = filePathForGeneratedFiles + "QR\\";
-    private final String downloadPdfHttp = "http://localhost:8002/zig/download/pdf/"; // used for QR
+    private final String filePathForUploadedFiles = "src/main/resources/uploadedFiles/";
+    private final String filePathForGeneratedFiles = "src/main/resources/generatedFiles/";
+
+    private final String filePathForQRs = filePathForGeneratedFiles + "QR/";
+    private final String downloadPdfHttp = "http://localhost:8002/download/pdf/"; // used for QR
 
     private final int osnovnaTaksa = 300;
     private final int taksaPoKlasi = 150;
@@ -403,6 +406,30 @@ public class ZigService {
             return new ByteArrayInputStream(json.getBytes());
         } catch (Exception e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    public void acceptZahtev(String brojPrijavZahteva){
+        obradiZahtev(brojPrijavZahteva, true);
+    }
+
+    public void declineZahtev(String brojPrijavZahteva){
+        obradiZahtev(brojPrijavZahteva, false);
+    }
+
+    private void obradiZahtev(String brojPrijavZahteva, boolean isAccepted){
+        ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = getZahtev(brojPrijavZahteva);
+
+        if (isAccepted){
+            zahtevZaPriznanjeZiga.setStatus(EStatus.PRIHVACENO);
+        } else {
+            zahtevZaPriznanjeZiga.setStatus(EStatus.ODBIJENO);
+        }
+
+        try {
+            saveZahtev(zahtevZaPriznanjeZiga);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 }

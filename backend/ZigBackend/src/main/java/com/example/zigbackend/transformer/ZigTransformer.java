@@ -32,7 +32,8 @@ public class ZigTransformer {
     public static final String PDF_XSL_FILE = "src/main/java/com/example/zigbackend/transformer/Zig_zahtev_pdf.xsl";
     public static final String HTML_XSL_FILE = "src/main/java/com/example/zigbackend/transformer/Zig_zahtev_html.xsl";
 
-    private static final String filePathForGeneratedFiles = "C:\\Faks\\VII\\XML i veb servisi\\XML-project\\generatedFiles\\";
+//    private static final String filePathForGeneratedFiles = "C:\\Faks\\VII\\XML i veb servisi\\XML-project\\generatedFiles\\";
+    private static final String filePathForGeneratedFiles = "src/main/resources/generatedFiles/";
     public static final String HTML_FOLDER = filePathForGeneratedFiles;//"data/gen/xhtml/";
 
     public static final String PDF_FOLDER = filePathForGeneratedFiles;//"data/gen/pdf/";
@@ -40,8 +41,8 @@ public class ZigTransformer {
     private static final String TARGET_NAMESPACE = "com.example.zigbackend.model"; // koriscenje namespace-a, a ne .class resilo problem
     private static final String TARGET_NAMESPACE_RESENJE = "com.example.zigbackend.resenje"; // koriscenje namespace-a, a ne .class resilo problem
 
-    public static final String HTML_RESENJA_FOLDER = "src/main/resources/gen/resenjaHTML/";
-    public static final String PDF_RESENJA_FOLDER = "src/main/resources/gen/resenjaPDF/";
+    public static final String HTML_RESENJA_FOLDER = "src/main/resources/generatedFiles/resenja/";
+    public static final String PDF_RESENJA_FOLDER = HTML_RESENJA_FOLDER;
     public static final String XSL_RESENJE_FILE = "src/main/java/com/example/zigbackend/transformer/Resenje.xsl";
 
     static {

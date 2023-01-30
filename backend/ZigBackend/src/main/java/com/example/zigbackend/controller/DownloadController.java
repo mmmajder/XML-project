@@ -28,7 +28,7 @@ public class DownloadController {
                                                                         @PathVariable("brojPrijaveZigaGodina") String brojPrijaveZigaGodina) throws IOException {
         String brojPrijave = brojPrijaveZigaId.concat("/").concat(brojPrijaveZigaGodina);
         String filename = zigService.generateHTML(brojPrijave);
-        String[] filenameParts = filename.split("\\\\");
+        String[] filenameParts = filename.split("/");
         filename = filenameParts[filenameParts.length-1];
         ByteArrayInputStream byteFile = zigService.getGenerated(filename);
         HttpHeaders headers = new HttpHeaders();
@@ -68,7 +68,7 @@ public class DownloadController {
     public ResponseEntity<InputStreamResource> generateHTML(@RequestBody BrojPrijaveDTO brojPrijaveDto) throws IOException {
         String brojPrijave = brojPrijaveDto.getBroj();
         String filename = zigService.generateHTML(brojPrijave);
-        String[] filenameParts = filename.split("\\\\");
+        String[] filenameParts = filename.split("/");
         filename = filenameParts[filenameParts.length-1];
         ByteArrayInputStream byteFile = zigService.getGenerated(filename);
         HttpHeaders headers = new HttpHeaders();

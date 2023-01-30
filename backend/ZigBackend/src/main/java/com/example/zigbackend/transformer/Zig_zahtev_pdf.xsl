@@ -165,7 +165,7 @@
 				 	<td colspan="2" rowspan="5">
 				 		<xsl:element name="img">
 			              	<xsl:attribute name="src">
-								C:\Faks\VII\XML i veb servisi\XML-project\uploadedFiles\<xsl:value-of select="//sz:Zig//sz:Izgled_putanja_do_slike"/>
+								C:\Faks\VII\XML i veb servisi\XML-project\backend\ZigBackend\src\main\resources\uploadedFiles\<xsl:value-of select="//sz:Zig//sz:Izgled_putanja_do_slike"/>
 			              	</xsl:attribute>
 			            </xsl:element>
 				 	</td>
@@ -421,7 +421,7 @@
 				<center>
 					<xsl:element name="img">
 						<xsl:attribute name="src">
-							C:\Faks\VII\XML i veb servisi\XML-project\generatedFiles\QR\<xsl:value-of select="//sz:Prilog//sz:Tip_priloga[text()='QR']//..//sz:Putanja_do_priloga"/>
+							C:\Faks\VII\XML i veb servisi\XML-project\backend\ZigBackend\src\main\resources\generatedFiles\QR\<xsl:value-of select="//sz:Prilog//sz:Tip_priloga[text()='QR']//..//sz:Putanja_do_priloga"/>
 						</xsl:attribute>
 					</xsl:element>
 				</center>

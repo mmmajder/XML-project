@@ -17,7 +17,7 @@ public class ZigMapper {
     public static ZahtevZaPriznanjeZiga createZahtev(ZahtevZaPriznanjeZigaDTO zahtevZaPriznanjeZigaDTO){
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = copyFromDTO(zahtevZaPriznanjeZigaDTO);
         Date now = new Date(System.currentTimeMillis());
-        zahtevZaPriznanjeZiga.setDatumPodnosenja(now);
+        zahtevZaPriznanjeZiga.setDatumPodnosenja(mapDateToString(now));
         zahtevZaPriznanjeZiga.setStatus(EStatus.PREDATO);
         // brojPrijave has to be set in service
 
@@ -153,8 +153,8 @@ public class ZigMapper {
         SimpleZahtevDTO simpleZahtevDTO = new SimpleZahtevDTO();
         simpleZahtevDTO.setBrojPrijave(zahtevZaPriznanjeZiga.getBrojPrijaveZiga());
 
-        Date datumPodnosenja = zahtevZaPriznanjeZiga.getDatumPodnosenja();
-        simpleZahtevDTO.setDatumPodnosenja(mapDateToString(datumPodnosenja));
+        String datumPodnosenja = zahtevZaPriznanjeZiga.getDatumPodnosenja();
+        simpleZahtevDTO.setDatumPodnosenja(datumPodnosenja);
 
         SimpleUserDTO podnosioc = mapToSimpleUser(zahtevZaPriznanjeZiga.getPodnosilacPrijave());
         simpleZahtevDTO.setPodnosioc(podnosioc);

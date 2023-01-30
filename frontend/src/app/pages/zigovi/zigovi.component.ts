@@ -95,7 +95,16 @@ export class ZigoviComponent implements OnInit  {
     this.chosenKlasas = [];
     this.izabraneBoje = [];
     this.neededPrilogs = [];
-    //TODO uploads
+    this.resetUploads();
+  }
+
+  resetUploads(){
+    this.prilogPRIMERAK_ZNAKA = [];
+    this.prilogSPISAK_ROBE_I_USLUGA = [];
+    this.prilogDOKAZ_O_UPLATI_TAKSE = [];
+    this.prilogOPSTI_AKT_O_ZIGU = [];
+    this.prilogDOKAZ_O_PRAVU_PRVENSTVA = [];
+    this.prilogPUNOMOCJE = [];
   }
 
   addNeededPrilogType(prilogType:string){
