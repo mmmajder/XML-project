@@ -4,6 +4,7 @@ import com.example.authservice.dto.UserResponse;
 import com.example.authservice.model.User;
 import com.example.authservice.repository.RoleRepository;
 import com.example.authservice.repository.UserRepository;
+import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -49,5 +50,9 @@ public class UserService implements UserDetailsService {
             return DTOMapper.getUserResponse(user);
         }
         return null;
+    }
+
+    public User saveUser(User user){
+        return userRepository.save(user);
     }
 }

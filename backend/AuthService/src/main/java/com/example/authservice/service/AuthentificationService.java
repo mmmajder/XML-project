@@ -24,8 +24,6 @@ public class AuthentificationService {
     private final UserAuthService userAuthService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-    private final GradjaninService gradjaninService;
-    private final SluzbenikService sluzbenikService;
 
     public User addUser(CreateUserDTO createUserDTO) {
         return userService.findByEmail(createUserDTO.getEmail()) == null ? saveUser(createUserDTO) : null;
@@ -35,10 +33,11 @@ public class AuthentificationService {
         User user = DTOMapper.getUser(createUserDTO);
         user.setPassword(passwordEncoder.encode(createUserDTO.getPassword()));
         user.setUserAuth(getUserAuth(user));
-        switch (createUserDTO.getUserRole()) {
-            case GRADJANIN -> gradjaninService.saveUser(user);
-            case SLUZBENIK -> sluzbenikService.saveUser(user);
-        }
+        user = userService.saveUser(user);
+//        switch (createUserDTO.getUserRole()) {
+//            case GRADJANIN -> gradjaninService.saveUser(user);
+//            case SLUZBENIK -> sluzbenikService.saveUser(user);
+//        }
         return user;
     }
 

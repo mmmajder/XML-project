@@ -17,7 +17,7 @@ public class UserAuth {
     @Column(unique = true)
     private long id;
 
-    private Boolean isEnabled;
+    private Boolean isEnabled = true;
     private Boolean deleted = false;
     @ManyToMany
     private List<Role> roles;

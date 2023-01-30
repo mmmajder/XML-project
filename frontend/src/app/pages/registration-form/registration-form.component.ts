@@ -17,7 +17,7 @@ export class RegistrationFormComponent {
   password2: string = "";
   name: string = "";
   lastName: string = "";
-  userRole: string = "gradjanin";
+  userRole: string = "GRADJANIN";
 
   hide: boolean = true;
   hide2: boolean = true;

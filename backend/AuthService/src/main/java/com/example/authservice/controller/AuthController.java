@@ -17,12 +17,12 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @CrossOrigin(origins = "*")
-@RequestMapping(value = "/auth", produces = MediaType.APPLICATION_XML_VALUE, consumes = MediaType.APPLICATION_XML_VALUE)
+@RequestMapping(value = "/auth")
 public class AuthController {
     private final AuthentificationService authentificationService;
     private final UserService userService;
 
-    @PostMapping(path="/login", produces = "application/xml", consumes = "application/xml;charset=UTF-8")
+    @PostMapping(path="/login", produces = "application/xml", consumes = "application/xml")
     public ResponseEntity<LoginResponseDTO> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest) {
 

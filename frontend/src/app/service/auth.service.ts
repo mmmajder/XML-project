@@ -37,7 +37,9 @@ export class AuthService {
       "phoneNumber": user.phoneNumber,
       "userRole": user.userRole
     }
-    return this.http.post<string>(this.authUrl + '/register', body, AuthService.getHttpOptions());
+    const xmlZahtev = JsonToXML.parse("userDTO", body);
+    console.log(xmlZahtev)
+    return this.http.post<string>(this.authUrl + '/register', xmlZahtev, AuthService.getHttpOptions());
   }
 
   public logout(token: UserTokenState | ""): Observable<Object> {
@@ -54,6 +56,15 @@ export class AuthService {
         'Access-Control-Allow-Origin': '*',
         'Authorization': localStorage.getItem('token') || 'authkey',
         'Content-Type': 'application/xml',
+      })
+    };
+  }
+
+  public static getNoContentTypeHttpOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': localStorage.getItem('token') || 'authkey',
       })
     };
   }
