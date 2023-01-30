@@ -3,6 +3,7 @@ package com.example.zigbackend.mapper;
 import com.example.zigbackend.dto.*;
 import com.example.zigbackend.model.*;
 import com.example.zigbackend.repository.ZigRepository;
+import com.example.zigbackend.resenje.ResenjeZahteva;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -176,9 +177,21 @@ public class ZigMapper {
         return simpleUserDTO;
     }
 
-    private static String mapDateToString(Date date){
+    public static String mapDateToString(Date date){
         DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy.");
 
         return dateFormat.format(date);
     }
+
+    public static ObradaZahteva mapToObradaZahteva(ResenjeZahteva resenjeZahteva, SimpleUserDTO simpleUserDTO){
+        ObradaZahteva obradaZahteva = new ObradaZahteva();
+        obradaZahteva.setSluzbenik(simpleUserDTO);
+        obradaZahteva.setDatumObrade(mapDateToString(resenjeZahteva.getDatumObrade()));
+        obradaZahteva.setRazlogOdbijanja(resenjeZahteva.getRazlogOdbijanja());
+        obradaZahteva.setOdbijen(resenjeZahteva.isOdbijen());
+        obradaZahteva.setSifra(resenjeZahteva.getSifra());
+
+        return obradaZahteva;
+    }
+
 }

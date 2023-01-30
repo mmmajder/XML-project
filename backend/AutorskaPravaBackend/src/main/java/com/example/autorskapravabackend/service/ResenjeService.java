@@ -39,8 +39,7 @@ public class ResenjeService {
                 .brojPrijave(brojPrijave)
                 .build();
         SimpleUser sluzbenik = SimpleUser.builder()
-                .name(resenje.getImeSluzbenika())
-                .surname(resenje.getPrezimeSluzbenika())
+                .name(resenje.getImeSluzbenika() + " " + resenje.getPrezimeSluzbenika())
                 .email(resenje.getEmailSluzbenika())
                 .build();
         ObradaZahteva obrada = ObradaZahteva.builder()
@@ -60,7 +59,6 @@ public class ResenjeService {
         ResenjeZahteva resenjeZahteva = new ResenjeZahteva();
         resenjeZahteva.setBrojPrijave(obradaZahteva.getBrojPrijave());
         resenjeZahteva.setImeSluzbenika(obradaZahteva.getSluzbenik().getName());
-        resenjeZahteva.setPrezimeSluzbenika(obradaZahteva.getSluzbenik().getSurname());
         resenjeZahteva.setEmailSluzbenika(obradaZahteva.getSluzbenik().getEmail());
         resenjeZahteva.setDatumObrade(new Date());
         resenjeZahteva.setOdbijen(obradaZahteva.isOdbijen());

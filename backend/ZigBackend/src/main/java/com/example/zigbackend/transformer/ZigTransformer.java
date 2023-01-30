@@ -17,6 +17,7 @@ import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
 
 import com.example.zigbackend.model.ZahtevZaPriznanjeZiga;
+import com.example.zigbackend.resenje.ResenjeZahteva;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -35,7 +36,13 @@ public class ZigTransformer {
     public static final String HTML_FOLDER = filePathForGeneratedFiles;//"data/gen/xhtml/";
 
     public static final String PDF_FOLDER = filePathForGeneratedFiles;//"data/gen/pdf/";
+
     private static final String TARGET_NAMESPACE = "com.example.zigbackend.model"; // koriscenje namespace-a, a ne .class resilo problem
+    private static final String TARGET_NAMESPACE_RESENJE = "com.example.zigbackend.resenje"; // koriscenje namespace-a, a ne .class resilo problem
+
+    public static final String HTML_RESENJA_FOLDER = "src/main/resources/gen/resenjaHTML/";
+    public static final String PDF_RESENJA_FOLDER = "src/main/resources/gen/resenjaPDF/";
+    public static final String XSL_RESENJE_FILE = "src/main/java/com/example/zigbackend/transformer/Resenje.xsl";
 
     static {
 
@@ -134,5 +141,39 @@ public class ZigTransformer {
 
     public static String getSupposedFileName(String brojPrijave){
         return "zig_" + brojPrijave.replace('/', '_');
+    }
+
+    public static void generateResenjePDF(ResenjeZahteva resenjeZahteva, String title) {
+        try {
+            generateResenjeHTML(resenjeZahteva, title);
+            Document document = new Document();
+            PdfWriter writer = PdfWriter.getInstance(document, new FileOutputStream(PDF_RESENJA_FOLDER + title + ".pdf"));
+            document.open();
+            XMLWorkerHelper.getInstance().parseXHtml(writer, document, new FileInputStream(HTML_RESENJA_FOLDER + title + ".html"));
+            document.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void generateResenjeHTML(ResenjeZahteva resenjeZahteva, String title) {
+        try {
+            // Initialize Transformer instance
+            StreamSource transformSource = new StreamSource(new File(XSL_RESENJE_FILE));
+            Transformer transformer = transformerFactory.newTransformer(transformSource);
+            transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
+            transformer.setOutputProperty(OutputKeys.INDENT, "yes");
+
+            // Generate XHTML
+            transformer.setOutputProperty(OutputKeys.METHOD, "gen/xhtml");
+
+            // Transform DOM to HTML
+            JAXBContext context = JAXBContext.newInstance(TARGET_NAMESPACE_RESENJE);
+            JAXBSource source = new JAXBSource(context, resenjeZahteva);
+            StreamResult result = new StreamResult(new FileOutputStream(HTML_RESENJA_FOLDER + title + ".html"));
+            transformer.transform(source, result);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

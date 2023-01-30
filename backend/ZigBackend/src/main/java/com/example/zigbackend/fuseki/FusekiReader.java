@@ -161,7 +161,7 @@ public class FusekiReader {
 	}
 
 	private static String getLogicalOperator(String wordOperator) {
-		if ("OR".equals(wordOperator) || "||".equals(wordOperator)){
+		if ("OR".equals(wordOperator) || "||".equals(wordOperator) || "or".equals(wordOperator)){
 			return "||";
 		} else {
 			return "&&";
@@ -169,7 +169,7 @@ public class FusekiReader {
 	}
 
 	private static String getEquivalenceOperator(String wordOperator) {
-		if ("NOT".equals(wordOperator) || "!".equals(wordOperator)){
+		if ("NOT".equals(wordOperator) || "!".equals(wordOperator) || "not".equals(wordOperator)){
 			return "!=";
 		} else {
 			return "=";

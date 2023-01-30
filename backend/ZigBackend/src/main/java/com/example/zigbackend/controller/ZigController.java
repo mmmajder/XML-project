@@ -3,6 +3,7 @@ package com.example.zigbackend.controller;
 import com.example.zigbackend.dto.*;
 import com.example.zigbackend.mapper.ZigMapper;
 import com.example.zigbackend.model.ZahtevZaPriznanjeZiga;
+import com.example.zigbackend.service.ResenjeService;
 import com.example.zigbackend.service.ZigService;
 import com.itextpdf.text.Meta;
 import lombok.AllArgsConstructor;
@@ -27,6 +28,9 @@ public class ZigController {
 
     @Autowired
     private ZigService zigService;
+
+    @Autowired
+    private ResenjeService resenjeService;
 
     @GetMapping(produces = "application/xml", consumes = "application/xml")
     public ResponseEntity<ZahtevZaPriznanjeZiga> getZahtev(@RequestBody NazivPrijaveDTO brojPrijave) {
@@ -162,6 +166,22 @@ public class ZigController {
             return new ResponseEntity<>(HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @PostMapping(path = "/resenjeZahteva", consumes = "application/xml", produces = "application/xml")
+    public DetaljiOZahtevu getResenjeZahteva(@RequestBody BrojPrijaveDTO brojPrijave) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+        return resenjeService.getResenjeZahteva(brojPrijave.getBroj());
+    }
+
+    @PostMapping(value = "obradiZahtev", consumes = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<Void> obradiZahtev(@RequestBody ObradaZahteva obradaZahteva) {
+        try {
+            resenjeService.obradiZahtev(obradaZahteva);
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
     }
 }

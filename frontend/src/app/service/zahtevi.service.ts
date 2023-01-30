@@ -21,7 +21,7 @@ export class ZahteviService {
   constructor(private http: HttpClient) {
     this.patentiUrl = 'http://localhost:8000';
     this.autorskaPravaUrl = 'http://localhost:8001';
-    this.zigoviUrl = 'http://localhost:8002/zig';
+    this.zigoviUrl = 'http://localhost:8002';
   }
 
   public getZahtev(brojPrijave: string | null): Observable<any> {
@@ -37,7 +37,7 @@ export class ZahteviService {
       case "P":
         return this.patentiUrl;
       default:
-        return this.zigoviUrl;
+        return this.zigoviUrl + "/zig";
     }
   }
 
@@ -49,15 +49,14 @@ export class ZahteviService {
       case "P":
         return "/obradiZahtev";
       default:
-        return "" +
-          "/obradiZahtev";
+        return "/obradiZahtev";
     }
   }
 
   obradiZahtev(obradaZahteva: ObradaZahtevaDTO) {
     const xmlZahtev = JsonToXML.parse("obradaZahteva", obradaZahteva);
     console.log(xmlZahtev);
-    return this.http.post<Blob>(this.getUrl(obradaZahteva.brojPrijave) + "/autorskaPravaResenje/obradiZahtev", xmlZahtev, AuthService.getHttpOptions());
+    return this.http.post<Blob>(this.getUrl(obradaZahteva.brojPrijave) + this.getObradiZahtevUrl(obradaZahteva.brojPrijave), xmlZahtev, AuthService.getHttpOptions());
   }
 
   public downloadPDF(brojPrijave: string): Observable<Blob> {

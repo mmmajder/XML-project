@@ -12,5 +12,4 @@ import lombok.Setter;
 public class SimpleUser {
     private String name;
     private String email;
-    private String surname;
 }

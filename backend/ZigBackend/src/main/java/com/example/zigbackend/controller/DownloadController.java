@@ -17,7 +17,7 @@ import java.io.IOException;
 @AllArgsConstructor
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value = "/zig/download")
+@RequestMapping(value = "/download")
 public class DownloadController {
 
     private ZigService zigService;

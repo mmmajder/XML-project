@@ -43,6 +43,8 @@ export class DetailsComponent {
   }
 
   downloadPDF() {
+    console.log("this.detaljiOZahtevu.zahtev.brojPrijave");
+    console.log(this.detaljiOZahtevu.zahtev.brojPrijave)
     this.servis.downloadPDF(this.detaljiOZahtevu.zahtev.brojPrijave)
       .subscribe({
         next: (data) => this.downloadFile(data, 'pdf', 'pdf')
