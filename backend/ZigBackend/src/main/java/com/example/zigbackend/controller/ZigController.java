@@ -96,7 +96,7 @@ public class ZigController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<ZahtevZaPriznanjeZiga> zahtevi = zigService.getByMetadata(parsedSearchParams);
+        List<ZahtevZaPriznanjeZiga> zahtevi = zigService.getByMetadata(parsedSearchParams, metadataSearchParamsDTO.isSearchForNeobradjeni());
         List<SimpleZahtevDTO> simpleZahtevDTOs = ZigMapper.mapToSimpleZahtevs(zahtevi);
 
         return ResponseEntity.ok(simpleZahtevDTOs);

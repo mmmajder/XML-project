@@ -155,11 +155,18 @@ public class ZigService {
         }
     }
 
-    public List<ZahtevZaPriznanjeZiga> getByMetadata(List<MetadataSearchParams> params) throws IOException {
+    public List<ZahtevZaPriznanjeZiga> getByMetadata(List<MetadataSearchParams> params, boolean isSearchForNeobradjeni) throws IOException {
+        List<ZahtevZaPriznanjeZiga> zahtevi;
         if (params.size() == 1){
-            return zigRepository.getByMetadata(params.get(0));
+            zahtevi = zigRepository.getByMetadata(params.get(0));
         } else {
-            return zigRepository.getByMultipleMetadata(params);
+            zahtevi = zigRepository.getByMultipleMetadata(params);
+        }
+
+        if (isSearchForNeobradjeni){
+            return zahtevi.stream().filter(z -> z.getStatus() == EStatus.PREDATO).collect(Collectors.toList());
+        } else {
+            return zahtevi.stream().filter(z -> z.getStatus() != EStatus.PREDATO).collect(Collectors.toList());
         }
     }
 
