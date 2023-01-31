@@ -12,14 +12,14 @@ export class RequestCardComponent {
   @Input() zahtev: Zahtev;
 
   constructor(private dialog: MatDialog) {
-    console.log("printam sada zahtev")
     console.log(this.zahtev)
   }
 
-  detaljiOZahtevu() {
-    this.dialog.open(DetailsComponent, {
-      width: '400px',
-      data: this.zahtev.brojPrijave
+  detaljiOZahtevu(brojPrijave: string, obradjen: boolean) {
+    let dialogRef = this.dialog.open(DetailsComponent, {
+      width: '400px'
     });
+    dialogRef.componentInstance.brojPrijave = brojPrijave;
+    dialogRef.componentInstance.obradjen = obradjen;
   }
 }

@@ -3,7 +3,7 @@ import {SimpleUser} from "./User";
 export class Zahtev {
   brojPrijave: string;
   datumPodnosenja: string;
-  podnosioc: SimpleUser;
+  podnosiocEmail: string;
   obradjen: boolean = false;
 }
 

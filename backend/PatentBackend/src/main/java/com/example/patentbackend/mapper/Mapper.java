@@ -172,7 +172,7 @@ public class Mapper {
         simpleZahtevDTO.setDatumPodnosenja(datumPodnosenja);
 
         SimpleUserDTO podnosioc = mapToSimpleUser(zahtev.getSadrzajZahtevaZaPriznanjePatenta().getPodaciOPodnosiocuPrijave().getPodnosilacPrijave());
-        simpleZahtevDTO.setPodnosioc(podnosioc);
+        simpleZahtevDTO.setPodnosiocEmail(podnosioc.getEmail());
 
         simpleZahtevDTO.setObradjen(!Objects.equals(zahtev.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getStanje(), "NA_CEKANJU"));
 

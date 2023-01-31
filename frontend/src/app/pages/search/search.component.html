@@ -97,8 +97,8 @@
     <img src="assets/nemaRezultata.png" style="height: 350px" alt="no-results">
   </div>
   <div *ngIf="rezultatiPretrage.length > 0">
-    <div *ngFor="let r of rezultatiPretrage" class="row" style="margin: 10px">
-      <div class="col-md-2 text-center">
+    <div class="row" style="margin: 10px">
+      <div *ngFor="let r of rezultatiPretrage" class="col-md-2 text-center">
         <app-request-card [zahtev]="r"></app-request-card>
       </div>
     </div>

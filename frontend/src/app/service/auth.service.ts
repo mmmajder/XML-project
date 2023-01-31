@@ -47,6 +47,7 @@ export class AuthService {
         'Access-Control-Allow-Origin': '*',
         'Authorization': localStorage.getItem('token') || 'authkey',
         'Content-Type': 'application/xml',
+        'Accept': 'application/xml'
       })
     };
   }

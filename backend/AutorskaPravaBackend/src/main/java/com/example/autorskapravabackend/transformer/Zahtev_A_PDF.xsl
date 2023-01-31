@@ -13,22 +13,18 @@
                     border-collapse: collapse;
                     margin: 0;
                     width: 100%;
+                    border: 1px solid black;
                     }
                     th, td {
                     text-align: left;
                     padding: 3px;
-                    border-bottom-width:1px;
-                    border-right-width:1px;
                     }
-                    tr:nth-child(even){ background-color: #f2f2f2 }
                     th {
                     font-family: sans-serif;
                     }
-
                     .leftBorder{
                     border-left-width:1px;
                     }
-
                     .topBorder{
                     border-top-width:1px;
                     }
@@ -45,11 +41,6 @@
                 </style>
             </head>
             <body>
-                <!--                <center>-->
-                <!--                    <h3>Zahtev za unošenje u evidenciju i deponovanje autorskih prava</h3>-->
-                <!--                    <h5>Zavod za intelektualnu svojinu, Kneginje Ljubice broj 5, 11000 Beograd</h5>-->
-                <!--                </center>-->
-
                 <table>
                     <tr>
                         <td style="border-top-width:1px; border-left-width:1px;">
@@ -58,12 +49,30 @@
                             Beograd, Knjeginje Ljubice 5
                         </td>
                         <td style="text-align:center; border-top-width:0px;">
+                            <b>OBRAZAC A-1</b>
+                        </td>
+                    </tr>
+                    <br/>
+                    <br/>
+                    <br/>
+                    <tr>
+                        <td style="text-align:center">
                             <b>ZAHTEV ZA UNOŠENJE U EVIDENCIJU I DEPONOVANJE AUTORSKIH DELA</b>
                         </td>
                     </tr>
+                    <br/>
+                    <br/>
+                    <br/>
+                </table>
+                <br/>
+                <table>
                     <tr>
                         <td style="border-left-width:1px;">
-                            Podnosilac
+                            1) Podnosilac - ime, prezime, adresa i drzavljanstvo autora ili drugog nosioca autorskog
+                            prava ako je
+                            podnosilac fizicko lice, odnosno poslovno ime i sediste nosioca autorskog prava ako je
+                            podnosilac pravno lice:
+                            <br/>
                             <br/>
                             <xsl:if test="//aut:Podnosilac_zahteva//aut:Ime">
                                 <xsl:value-of select="//aut:Podnosilac_zahteva//aut:Podaci_o_podnosiocu//aut:Ime"/><xsl:text>&#x20;</xsl:text>
@@ -98,7 +107,9 @@
                         </td>
                     </tr>
                 </table>
-                <table>
+                <br/>
+
+                <table style="margin: 5px">
                     <tr>
                         <td style="border-left-width:1px;">
                             telefon:
@@ -111,18 +122,28 @@
                         </td>
                     </tr>
                 </table>
+                <br/>
                 <table>
                     <tr>
                         <td style="border-left-width:1px;">
+                            2) Pseudonim ili znak autora, (ako ga ima):
+                            <br/>
+                            <br/>
                             <xsl:if test="//aut:Autor//aut:Podaci_o_autoru//aut:Pseudonim">
-                                Pseudonim ili znak autora
                                 <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Pseudonim"/>
                                 <br/>
                                 <br/>
                             </xsl:if>
+                            <xsl:if test="not(//aut:Autor//aut:Podaci_o_autoru//aut:Pseudonim)">
+                                <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Pseudonim"/>
+                                Autor nema pseudonim.
+                                <br/>
+                                <br/>
+                            </xsl:if>
 
+                            3) Ime, prezime i adresa punomocnikam ako se prijava podnosi preko punomocnika:
                             <xsl:if test="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Ime">
-                                Punomoćnik
+                                <br/>
                                 <br/>
                                 <xsl:value-of select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Ime"/><xsl:text>&#x20;</xsl:text>
                                 <xsl:value-of
@@ -145,30 +166,64 @@
                                 <br/>
                             </xsl:if>
 
-                            Naslov autorskog dela
+                            <xsl:if test="not(//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Ime)">
+                                Prijava se ne odnosi preko punomocnika.
+                                <br/>
+                                <br/>
+                            </xsl:if>
+
+                            4) Naslov autorskog dela, odnosno alternativni naslov, ako ga ima, po kome autorsko delo
+                            moze da se
+                            identifikuje:
+                            <br/>
                             <br/>
                             <xsl:value-of select="//aut:Autorsko_delo//aut:Naslov_autorskog_dela"/>
                             <br/>
                             <br/>
 
-                            Vrsta autorskog dela
+                            5) Podaci o naslovu autorskog dela na kome se zasniva delo prerade, kao i podatak o autoru
+                            izvornog dela:
+                            <br/>
+                            <br/>
+                            <xsl:if test="//aut:Zasnivano_delo//aut:Naslov">
+                                Naslov:
+                                <xsl:value-of select="//aut:Zasnivano_delo//aut:Naslov"/>
+                                <br/>
+                                Autor:
+                                <xsl:value-of select="//aut:Zasnivano_delo//aut:Autor"/>
+                                <br/>
+                                <br/>
+                            </xsl:if>
+                            <xsl:if test="not(//aut:Zasnivano_delo//aut:Autor)">
+                                Autorsko delo nije zasnovano ni na jednom drugom delu.
+                                <br/>
+                                <br/>
+                            </xsl:if>
+
+                            6) Podaci o vrsti autorskog dela (knjizevno delo, muzicko delo, likovno delo, racunarski
+                            program i dr.):
+                            <br/>
                             <br/>
                             <xsl:value-of select="//aut:Autorsko_delo//aut:Vrsta_autorskog_dela"/>
                             <br/>
                             <br/>
 
-                            Forma zapisa autorskog dela
+                            7) Podaci o formi zapisa autorskog dela (stampani tekst, opticki disk i slicno):
+                            <br/>
                             <br/>
                             <xsl:value-of select="//aut:Autorsko_delo//aut:Forma_zapisa_autorskog_dela"/>
                             <br/>
                             <br/>
 
-                            Podaci o autoru
+                            8) Podaci o autoru:
                             <br/>
+                            <br/>
+                            Ime i prezime:
                             <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Ime"/><xsl:text>&#x20;</xsl:text>
                             <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Prezime"/>,
                             <xsl:text>&#x20;</xsl:text>
                             <br/>
+                            Adresa:
                             <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Adresa//aut:Ulica"/>
                             <xsl:text>&#x20;</xsl:text>
                             <xsl:value-of
@@ -179,10 +234,14 @@
                             <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Adresa//aut:Mesto"/><xsl:text>&#x20;</xsl:text>
                             <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Adresa//aut:Drzava"/>
                             <br/>
+                            Drzavljanstvo:
                             <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Drzavljanstvo"/>
                             <br/>
                             <br/>
 
+                            9) Podatak da li je u pitanju autorsko delo stvoreno u radnom odnosu:
+                            <br/>
+                            <br/>
                             <xsl:choose>
                                 <xsl:when test="aut:Autorsko_delo//aut:Autorsko_delo_stvoreno_u_radnom_odnosu">
                                     Autorsko delo je stvoreno u radnom odnosu.
@@ -194,7 +253,8 @@
                             <br/>
                             <br/>
 
-                            Način korišćenja ili planirani način korišćenja
+                            10) Nacin korišcenja ili nameravani nacin korišcenja autorskog dela:
+                            <br/>
                             <br/>
                             <xsl:value-of select="//aut:Autorsko_delo//aut:Nacin_koriscenja_autorskog_dela"/>
                             <br/>
@@ -205,55 +265,61 @@
                 </table>
                 <br/>
 
-                <table style="width:30%">
+                <table>
                     <tr>
-                        <td style="border-top-width:1px; border-left-width:1px;">Prilozi uz prijavu</td>
-                    </tr>
-                    <tr>
-                        <td style="border-left-width:1px;">
-                            <xsl:element name="a">
-                                <xsl:attribute name="href">
-                                    http://localhost:8001/download/prilog/<xsl:value-of
-                                        select="//aut:PutanjaDoOpisa"/>
-                                </xsl:attribute>
-                                Opis autorskog dela
-                            </xsl:element>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="border-left-width:1px;">
-                            <xsl:element name="a">
-                                <xsl:attribute name="href">
-                                    http://localhost:8001/download/prilog/<xsl:value-of
-                                        select="//aut:PutanjaDoPrimera"/>
-                                </xsl:attribute>
-                                Primerak autorskog dela
-                            </xsl:element>
+                        <td>
+                            <div style="width: 100%">
+                                <p style="text-align: center; font-weight: 500; margin-bottom: 15px">POPUNJAVA ZAVOD
+                                </p>
+                                <p>Prilozi uz prijavu:</p>
+                                <br></br>
+                                <br></br>
+                                <xsl:element name="a">
+                                    <xsl:attribute name="href">
+                                        http://localhost:8001/autorskaPrava/download/prilog/<xsl:value-of
+                                            select="//aut:PutanjaDoOpisa"/>
+                                    </xsl:attribute>
+                                    Opis autorskog dela
+                                </xsl:element>
+                                <br></br>
+                                <br></br>
+                                <xsl:element name="a">
+                                    <xsl:attribute name="href">
+                                        http://localhost:8001/autorskaPrava/download/prilog/<xsl:value-of
+                                            select="//aut:PutanjaDoPrimera"/>
+                                    </xsl:attribute>
+                                    Primer autorskog dela
+                                </xsl:element>
+                            </div>
+                            <div style="width: 50%">
+                                <table style="margin-top: 80px; float: right">
+                                    <tr>
+                                        <td style="font-size: 20px; padding: 15px 0 5px 15px; border-bottom: white">Broj
+                                            prijave
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 22px; font-weight: bold; padding: 5px 0 15px 15px; border-top: white">
+                                            A -
+                                            <xsl:value-of select="//aut:Broj_prijave"/>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 20px; padding: 15px 0 5px 15px; border-bottom: white">
+                                            Datum
+                                            podnošenja:
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td style="font-size: 22px; padding: 5px 0 15px 15px; border-top: white">
+                                            <xsl:value-of select="substring(//aut:Datum_podnosenja, 0, 11)"/>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
                         </td>
                     </tr>
                 </table>
-                <br/>
-
-                <table style="width:30%">
-                    <tr>
-                        <td style="border-top-width:1px; border-left-width:1px;">Informacije o zahtevu</td>
-                    </tr>
-                    <tr>
-                        <td style="border-left-width:1px;">
-                            Broj prijave:
-                            <br/>
-                            <xsl:value-of select="//aut:Broj_prijave"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="border-left-width:1px;">
-                            Datum podnošenja:
-                            <br/>
-                            <xsl:value-of select="//aut:Datum_podnosenja"/>
-                        </td>
-                    </tr>
-                </table>
-
             </body>
         </html>
     </xsl:template>

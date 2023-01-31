@@ -3,7 +3,7 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from "rxjs";
 import {AuthService} from "./auth.service";
 import * as JsonToXML from "js2xmlparser";
-import {DetaljiOZahtevu, ObradaZahtevaDTO} from "../model/shared/Zahtev";
+import {DetaljiOZahtevu, ObradaZahtevaDTO, Zahtev} from "../model/shared/Zahtev";
 import {MetadataSearchParamsDTO, TextSearchDTO} from "../model/search/SearchParams";
 
 @Injectable({
@@ -21,9 +21,9 @@ export class ZahteviService {
     this.zigoviUrl = 'http://localhost:8002';
   }
 
-  public getZahtev(brojPrijave: string | null): Observable<any> {
-    const xmlZahtev = JsonToXML.parse("brojPrijave", brojPrijave);
-    return this.http.post<DetaljiOZahtevu>(this.getUrl(brojPrijave), xmlZahtev, AuthService.getHttpOptions());
+  public getDetaljiOObradi(brojPrijave: string | null): Observable<DetaljiOZahtevu> {
+    const xmlZahtev = JsonToXML.parse("brojPrijave", {'broj': brojPrijave});
+    return this.http.post<DetaljiOZahtevu>(this.getDetaljiOZahtevuUrl(brojPrijave) + "/getRequest", xmlZahtev, this.getXMLHttpOptions());
   }
 
   private getUrl(endpointChar: string | null): string {
@@ -35,6 +35,18 @@ export class ZahteviService {
         return this.patentiUrl + "/patent";
       default:
         return this.zigoviUrl + "/zig";
+    }
+  }
+
+  private getDetaljiOZahtevuUrl(endpointChar: string | null): string {
+    if (endpointChar == null) return "";
+    switch (endpointChar.at(0)) {
+      case "A":
+        return "/autorskaPravaResenje/resenjeZahteva";
+      case "P":
+        return "/obradiZahtev";
+      default:
+        return "/obradiZahtev";
     }
   }
 
@@ -92,18 +104,28 @@ export class ZahteviService {
     };
   }
 
-  public searchByText(textSearchParams:TextSearchDTO, endpointChar:string): Observable<any> {
+  private getXMLHttpOptions(): Object {
+    return {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': localStorage.getItem('token') || 'authkey',
+        'Content-Type': 'application/xml',
+      }),
+      responseType: 'text' as 'json'
+    };
+  }
+
+  public searchByText(textSearchParams: TextSearchDTO, endpointChar: string): Observable<Zahtev> {
     const xmlZahtev = JsonToXML.parse("TextSearchDTO", textSearchParams);
     console.log(textSearchParams);
     console.log(xmlZahtev);
-    return this.http.put<any>(this.getUrl(endpointChar) + "/patent/text-search", xmlZahtev, this.getXmlHttpOptions());
+    return this.http.put<Zahtev>(this.getUrl(endpointChar) + "/text-search", xmlZahtev, this.getXmlHttpOptions());
   }
 
-  public searchByMetadata(metaParams:MetadataSearchParamsDTO, endpointChar:string): Observable<any> {
-    // const xmlZahtev = JsonToXML.parse("MetadataSearchParamsDTO", metaParams);
+  public searchByMetadata(metaParams: MetadataSearchParamsDTO, endpointChar: string): Observable<Zahtev> {
     const xmlZahtev = JsonToXML.parse("MetadataSearchParamsDTO", metaParams);
     console.log(xmlZahtev);
-    return this.http.put<any>(this.getUrl(endpointChar) + "/metadata-search", xmlZahtev, this.getXmlHttpOptions());
+    return this.http.put<Zahtev>(this.getUrl(endpointChar) + "/metadata-search", xmlZahtev, this.getXmlHttpOptions());
   }
 
   public getXmlHttpOptions() {

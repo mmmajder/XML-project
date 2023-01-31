@@ -15,7 +15,7 @@ import java.io.IOException;
 @AllArgsConstructor
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value = "/download")
+@RequestMapping(value = "/patent/download")
 public class DownloadController {
 
     private final PatentService patentService;

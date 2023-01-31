@@ -182,7 +182,7 @@ public class PatentTransformer {
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 
             // Generate XHTML
-            transformer.setOutputProperty(OutputKeys.METHOD, "xhtml");
+            transformer.setOutputProperty(OutputKeys.METHOD, "gen/xhtml");
 
             // Transform DOM to HTML
 

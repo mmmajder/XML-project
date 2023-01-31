@@ -40,32 +40,10 @@ public class Mapper {
         String datumPodnosenja = zahtev.getInformacijeOZahtevu().getDatumPodnosenja().toString();
         simpleZahtevDTO.setDatumPodnosenja(datumPodnosenja);
 
-        SimpleUserDTO podnosioc = mapToSimpleUser(zahtev.getSadrzajZahteva().getPodnosilacZahteva());
-        simpleZahtevDTO.setPodnosioc(podnosioc);
-
+        simpleZahtevDTO.setPodnosiocEmail(zahtev.getSadrzajZahteva().getPodnosilacZahteva().getPodaciOPodnosiocu().getEmail());
         simpleZahtevDTO.setObradjen(zahtev.getStatus() != EStatus.PREDATO);
 
         return simpleZahtevDTO;
-    }
-
-    public static SimpleUserDTO mapToSimpleUser(PodnosilacZahteva podnosilacZahteva) {
-        SimpleUserDTO simpleUserDTO = new SimpleUserDTO();
-        simpleUserDTO.setEmail(podnosilacZahteva.getPodaciOPodnosiocu().getEmail());
-
-        if (podnosilacZahteva.getPodaciOPodnosiocu() instanceof TFizickoLice) {
-            simpleUserDTO.setName(((TFizickoLice) podnosilacZahteva.getPodaciOPodnosiocu()).getOsnovniLicniPodaci().getIme() +
-                    " " + ((TFizickoLice) podnosilacZahteva.getPodaciOPodnosiocu()).getOsnovniLicniPodaci().getPrezime());
-        } else {
-            simpleUserDTO.setName(((TPravnoLice) podnosilacZahteva.getPodaciOPodnosiocu()).getPoslovnoIme());
-        }
-
-        return simpleUserDTO;
-    }
-
-    public static String mapDateToString(Date date) {
-        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy.");
-
-        return dateFormat.format(date);
     }
 
     private static PodnosilacZahteva dtoToPodnosilac(PodnosilacDTO podnosilacZahteva) {

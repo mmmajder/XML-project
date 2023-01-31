@@ -17,16 +17,17 @@
   <div *ngIf="!detaljiOZahtevu.zahtev.obradjen">
     <h4 style="color: gray">NEOBRAĐEN ZAHTEV</h4>
     <h1>{{brojPrijave}}</h1>
-    <div mat-dialog-content>
-      <mat-form-field style="width: 100%;">
-        <mat-label>Unesite razlog odbijanja</mat-label>
-        <textarea [(ngModel)]="razlogOdbijanja" matInput placeholder="Npr. nije priložen dokument o..."
-                  required></textarea>
-      </mat-form-field>
+    <mat-form-field style="width: 100%;" *ngIf="odbija">
+      <mat-label>Unesite razlog odbijanja</mat-label>
+      <textarea [(ngModel)]="razlogOdbijanja" matInput placeholder="Npr. nije priložen dokument o..."
+                required></textarea>
+    </mat-form-field>
+    <div style="width: 100%; margin-bottom: 5px">
+      <button style="width: 49%" mat-raised-button color="primary" (click)="obradiZahtev(false)">PRIHVATI ZAHTEV
+      </button>
+      <button style="width: 49%; float: right" mat-raised-button color="warn" (click)="odbijanjeZahteva()">ODBIJ ZAHTEV
+      </button>
     </div>
-    <p *ngIf="odbija && razlogOdbijanja == ''">Molimo unesite razlog odbijanja.</p>
-    <button mat-raised-button color="primary" (click)="obradiZahtev(false)">PRIHVATI ZAHTEV</button>
-    <button mat-raised-button color="warn" (click)="odbijanjeZahteva()">ODBIJ ZAHTEV</button>
   </div>
   <button mat-flat-button style="width: 100%" [matMenuTriggerFor]="menu" color="primary">
     <mat-icon>download</mat-icon>
