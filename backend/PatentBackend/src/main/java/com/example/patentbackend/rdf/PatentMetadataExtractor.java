@@ -22,15 +22,15 @@ public class PatentMetadataExtractor {
         Model model = ModelFactory.createDefaultModel();
 
         String idPrijave = Utils.formatNameOfRequestForPatent(zahtev.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave(), ".xml");
+
         Resource resource = model.createResource(PATENT_NAMESPACE + "/" + zahtev.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave());
 
-        //
+
         addRDFTripletToModel(model, resource, "podnosilac_email", zahtev.getSadrzajZahtevaZaPriznanjePatenta().getPodaciOPodnosiocuPrijave().getPodnosilacPrijave().getEPosta());
         addRDFTripletToModel(model, resource, "pronalazac_email", zahtev.getSadrzajZahtevaZaPriznanjePatenta().getPodaciOPronalazacu().getPronalazac().getEPosta());
         addRDFTripletToModel(model, resource, "punomocnik_email", zahtev.getSadrzajZahtevaZaPriznanjePatenta().getPodaciOPunomocniku().getPunomocnik().getEPosta());
         addRDFTripletToModel(model, resource, "vrsta_prijave", zahtev.getSadrzajZahtevaZaPriznanjePatenta().getPodaciOPrijavi().getVrstaPrijave());
         addRDFTripletToModel(model, resource, "broj_prijave", zahtev.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave());
-//        addRDFTripletToModel(model, resource, "datum_podnosenja", zahtev.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getDatumPrijema().toString());
         return model;
     }
 

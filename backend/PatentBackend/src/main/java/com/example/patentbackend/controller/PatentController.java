@@ -22,7 +22,7 @@ public class PatentController {
     private PatentService patentService;
 
     @GetMapping(produces = "application/xml", consumes = "application/xml")
-    public ResponseEntity<ZahtevZaPriznanjePatenta> getZahtevZaPriznanjePatentaBy(@RequestBody NazivPrijaveDTO brojPrijave) {
+    public ResponseEntity<ZahtevZaPriznanjePatenta> getZahtevZaPriznanjePatenta(@RequestBody NazivPrijaveDTO brojPrijave) {
         return ResponseEntity.ok(patentService.getZahtevZaPriznanjePatenta(brojPrijave.getNaziv()));
     }
 
@@ -41,8 +41,6 @@ public class PatentController {
     public ResponseEntity<List<ZahtevZaPriznanjePatenta>> getAllAccepted() {
         return ResponseEntity.ok(patentService.getAllAccepted());
     }
-
-//    @PutMapping(path = "/accept", consumes = "application/xml", produces = "application/xml")
 
     @PostMapping(path = "/generate-html", consumes = "application/xml")
     public ResponseEntity<String> generateHTML(@RequestBody NazivPrijaveDTO brojPrijave) {
