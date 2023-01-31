@@ -1,5 +1,7 @@
+import {Adresa} from "./Adresa";
+
 export class Punomocnik {
   ime: string = "";
   prezime: string = "";
-  adresa: string = "";
+  adresa: Adresa = new Adresa();
 }

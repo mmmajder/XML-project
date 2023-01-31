@@ -1,19 +1,26 @@
 package com.example.autorskapravabackend.db;
 
 import com.example.autorskapravabackend.marshal.Marshal;
+import com.example.autorskapravabackend.model.EStatus;
 import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
 import com.example.autorskapravabackend.utils.AuthenticationUtilities;
 import com.example.autorskapravabackend.utils.DBSetup;
+import org.exist.xmldb.EXistResource;
+import org.exist.xmldb.RemoteXMLResource;
 import org.xmldb.api.DatabaseManager;
-import org.xmldb.api.base.Collection;
-import org.xmldb.api.base.XMLDBException;
+import org.xmldb.api.base.*;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
+import org.xmldb.api.modules.XPathQueryService;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.OutputKeys;
 
+import java.io.IOException;
 import java.io.OutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import static com.example.autorskapravabackend.utils.Utils.formatNameOfRequest;
 
@@ -56,18 +63,132 @@ public class AutorskaPravaRequestDB {
     }
 
     public static void save(ZahtevZaAutorskaPrava zahtev) {
-        OutputStream marshaledPatent = Marshal.marshalPatent(zahtev);
+        OutputStream marshaled = Marshal.marshal(zahtev);
         try {
             AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
             String collectionId = DBSetup.setupDBConnection(conn);
             String documentId = formatNameOfRequest(zahtev.getInformacijeOZahtevu().getBrojPrijave(), ".xml");
             Collection col = getOrCreateCollection(collectionId, conn);
             XMLResource res = (XMLResource) col.createResource(documentId, XMLResource.RESOURCE_TYPE);
-            res.setContent(marshaledPatent);
+            res.setContent(marshaled);
             col.storeResource(res);
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    public static List<XMLResource> getAllByYear(String yy) {
+        String xpathExp = "//aut:Zahtev_za_unosenje_u_evidenciju_i_deponovanje_autorskih_dela//aut:Broj_prijave[contains(.,'/" + yy + "')]";
+
+        return getAllByFilter(xpathExp);
+    }
+
+    public static List<XMLResource> getAllByStatus(EStatus status) {
+        String xpathExp = "//aut:Status[text()='" + status + "']/ancestor::aut:Zahtev_za_unosenje_u_evidenciju_i_deponovanje_autorskih_dela";
+
+        return getAllByFilter(xpathExp);
+    }
+
+    private static XPathQueryService getXPathQueryServiceForZig(Collection col) throws XMLDBException {
+        XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+        xpathService.setProperty("indent", "yes");
+        xpathService.setNamespace("aut", "http://www.ftn.uns.ac.rs/autorskoDelo");
+
+        return xpathService;
+    }
+
+
+    // use this one
+    private static Collection getCollection() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
+        AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+        String collectionId = DBSetup.setupDBConnection(conn);
+        Collection col = getOrCreateCollection(collectionId, conn);
+        col.setProperty(OutputKeys.INDENT, "yes");
+
+        return col;
+    }
+
+    public static List<XMLResource> searchResourcesForText(List<String> words, boolean matchCase) throws Exception {
+
+        try (Collection col = getCollection()) {
+            List<XMLResource> resources = new ArrayList<>();
+            // ovde ne moze da se koristi getXPathQueryServiceForZig() jer postavi namespace, informacija o namespace-u se prenese na Resource
+            // i kasnije ne moze da se izmarshaluje zbog ns ... zato filtraciju obradjeni/neobgradjeni ne raditi preko baze
+            XPathQueryService xPathQueryService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            xPathQueryService.setProperty("indent", "yes");
+            String xPathExp = createXPathExpressionForTextSearch(words, matchCase);
+            ResourceIterator iter = xPathQueryService.query(xPathExp).getIterator();
+
+            while (iter.hasMoreResources()) {
+                Resource res = iter.nextResource();
+                System.out.println(res.getContent());
+                RemoteXMLResource resxml = (RemoteXMLResource) res;
+                resources.add(resxml);
+            }
+            return resources;
+        }
+    }
+
+    private static void collectXMLResourcesFromResult(ResourceSet result, List<XMLResource> resources, Collection col) throws XMLDBException {
+        ResourceIterator iter = result.getIterator();
+        XMLResource resource = null;
+
+        try {
+            while (iter.hasMoreResources()) {
+                resource = (XMLResource) iter.nextResource();
+                resources.add(resource);
+            }
+        } finally {
+            if (resource != null) {
+                ((EXistResource) resource).freeResources();
+            }
+            if (col != null) {
+                col.close();
+            }
+        }
+    }
+
+    private static String createXPathExpressionForTextSearch(List<String> words, boolean matchCase) {
+        int wordsDone = 0;
+        String xpath = "/*[";
+
+        for (String word : words) {
+            xpath = xpath.concat("contains(");
+
+            if (!matchCase) {
+                xpath = xpath.concat("lower-case(.)");
+                word = word.toLowerCase();
+            } else {
+                xpath = xpath.concat(".");
+            }
+
+            xpath = xpath.concat(", ").concat("\"").concat(word).concat("\"");
+            xpath = xpath.concat(")");
+
+            wordsDone++;
+            if (wordsDone != words.size()) {
+                xpath = xpath.concat(" and ");
+            }
+        }
+
+        xpath = xpath.concat("]");
+
+        return xpath;
+    }
+
+    private static List<XMLResource> getAllByFilter(String xpathExp) {
+        List<XMLResource> resources = new ArrayList<>();
+
+        try {
+            Collection col = getCollection();
+            XPathQueryService xpathService = getXPathQueryServiceForZig(col);
+            ResourceSet result = xpathService.query(xpathExp);
+            collectXMLResourcesFromResult(result, resources, col);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return resources;
     }
 
     private static org.xmldb.api.base.Collection getOrCreateCollection(String collectionUri, int pathSegmentOffset, AuthenticationUtilities.ConnectionProperties conn) throws XMLDBException {
@@ -114,5 +235,48 @@ public class AutorskaPravaRequestDB {
         } else {
             return col;
         }
+    }
+
+    public static List<ZahtevZaAutorskaPrava> getZahtevi() {
+        try {
+            AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
+            String collectionId = DBSetup.setupDBConnection(conn);
+            Collection col = getOrCreateCollection(collectionId, conn);
+
+            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+            xpathService.setProperty("indent", "yes");
+
+            // make the service aware of namespaces, using the default one
+            xpathService.setNamespace("aut", "http://www.ftn.uns.ac.rs/autorskoDelo");
+            String xpathExp = "aut:Zahtev_za_unosenje_u_evidenciju_i_deponovanje_autorskih_dela";
+
+            // execute xpath expression
+            System.out.println("[INFO] Invoking XPath query service for: " + xpathExp);
+            ResourceSet result = xpathService.query(xpathExp);
+
+            // handle the results
+            System.out.println("[INFO] Handling the results... ");
+
+            ResourceIterator i = result.getIterator();
+            Resource res = null;
+            while (i.hasMoreResources()) {
+
+                try {
+                    res = i.nextResource();
+                    System.out.println(res.getContent());
+
+                } finally {
+                    try {
+                        assert res != null;
+                        ((EXistResource) res).freeResources();
+                    } catch (XMLDBException xe) {
+                        xe.printStackTrace();
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

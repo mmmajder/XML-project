@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.*;
 @XmlType(name = "Autorsko_delo", propOrder = {"naslovAutorskogDela", "zasnivanoDelo", "vrstaAutorskogDela",
         "formaZapisaAutorskogDela", "autorskoDeloStvorenoURadnomOdnosu", "nacinKoriscenjaAutorskogDela"})
 public class AutorskoDelo {
+
     @XmlElement(name = "Naslov_autorskog_dela", required = true)
     private String naslovAutorskogDela;
     @XmlElement(name = "Zasnivano_delo")

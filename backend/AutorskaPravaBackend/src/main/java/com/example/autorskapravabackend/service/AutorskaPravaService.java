@@ -1,23 +1,40 @@
 package com.example.autorskapravabackend.service;
 
+import com.example.autorskapravabackend.dto.MetadataSearchParams;
+import com.example.autorskapravabackend.dto.MetadataSearchParamsDTO;
 import com.example.autorskapravabackend.dto.ZahtevZaAutorskaPravaDTO;
 import com.example.autorskapravabackend.mapper.Mapper;
+import com.example.autorskapravabackend.model.EStatus;
 import com.example.autorskapravabackend.model.InformacijeOZahtevu;
 import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
 import com.example.autorskapravabackend.repository.AutorskaPravaRepository;
+import com.example.autorskapravabackend.transformer.AutorskaPravaTransformer;
+import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
+import org.xmldb.api.base.XMLDBException;
 
+import javax.xml.bind.JAXBException;
+import java.io.*;
 import java.time.LocalDate;
-import java.util.Date;
-import java.util.List;
+import java.util.*;
+import java.util.concurrent.locks.Lock;
+import java.util.concurrent.locks.ReentrantLock;
+import java.util.stream.Collectors;
 
 @Service
 public class AutorskaPravaService {
 
-    private AutorskaPravaRepository autorskaPravaRepository = new AutorskaPravaRepository();
+    private final AutorskaPravaRepository autorskaPravaRepository = new AutorskaPravaRepository();
+    private final Lock prilogUpdatingZahtevsLock = new ReentrantLock();
+    private static final HashMap<String, ZahtevZaAutorskaPrava> prilogUpdatingZahtevs = new HashMap<>();
 
     public ZahtevZaAutorskaPrava getZahtev(String brojPrijave) {
         return autorskaPravaRepository.getZahtev(brojPrijave);
+    }
+
+    public List<ZahtevZaAutorskaPrava> getZahtevi() {
+        return autorskaPravaRepository.getZahtevi();
     }
 
     public ZahtevZaAutorskaPrava createZahtevZaAutorskaPrava(ZahtevZaAutorskaPravaDTO dto) {
@@ -35,22 +52,183 @@ public class AutorskaPravaService {
         osnovneInformacije.setDatumPodnosenja(new Date());
         zahtev.setInformacijeOZahtevu(osnovneInformacije);
     }
-//
-//    public boolean generateHTML(com.example.patentbackend.dto.NazivPrijaveDTO brojPrijave) {
-//        ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = getZahtevZaPriznanjePatenta(brojPrijave.getNaziv());
-//        if (zahtevZaPriznanjePatenta == null) {
-//            return false;
-//        }
-//        com.example.patentbackend.transformer.PatentTransformer.generateHTMLPatent(zahtevZaPriznanjePatenta);
-//        return true;
-//    }
-//
-//    public boolean generatePDF(com.example.patentbackend.dto.NazivPrijaveDTO brojPrijave) {
-//        ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = getZahtevZaPriznanjePatenta(brojPrijave.getNaziv());
-//        if (zahtevZaPriznanjePatenta == null) {
-//            return false;
-//        }
-//        com.example.patentbackend.transformer.PatentTransformer.generatePDFPatent(zahtevZaPriznanjePatenta);
-//        return true;
-//    }
+
+    public ByteArrayInputStream generateHTML(String brojPrijave) {
+        try {
+            AutorskaPravaTransformer.generateZahtevHTML(getZahtev(brojPrijave), false);
+            File htmlFile = new File("src/main/resources/gen/xhtml/autorskaPrava_" + brojPrijave.replace('/', '_') + ".html");
+            return new ByteArrayInputStream(FileUtils.readFileToByteArray(htmlFile));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ByteArrayInputStream generatePDF(String brojPrijave) {
+        try {
+            AutorskaPravaTransformer.generateZahtevPDF(getZahtev(brojPrijave));
+            File pdfFile = new File("src/main/resources/gen/pdf/autorskaPrava_" + brojPrijave.replace('/', '_') + ".pdf");
+            return new ByteArrayInputStream(FileUtils.readFileToByteArray(pdfFile));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ByteArrayInputStream generateRDF(String brojPrijave) {
+        try {
+            String rdf = autorskaPravaRepository.generateRDF(brojPrijave);
+            return new ByteArrayInputStream(rdf.getBytes());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ByteArrayInputStream generateJSON(String brojPrijave) {
+        try {
+            String json = autorskaPravaRepository.generateJSON(brojPrijave);
+            return new ByteArrayInputStream(json.getBytes());
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ByteArrayInputStream getPrilog(String fileName) throws IOException {
+        return getFile("src/main/resources/uploadedFiles/" + fileName);
+    }
+
+    public ByteArrayInputStream getFile(String fullpath) throws IOException {
+        File file = new File(fullpath);
+        if (file.exists() && !file.isDirectory()) {
+            return new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
+        } else {
+            return null;
+        }
+    }
+
+    public List<ZahtevZaAutorskaPrava> getAllApplied() throws JAXBException, XMLDBException {
+        return autorskaPravaRepository.getAllApplied();
+    }
+
+    public List<ZahtevZaAutorskaPrava> getAllApproved() throws JAXBException, XMLDBException {
+        return autorskaPravaRepository.getAllApproved();
+    }
+
+    public List<ZahtevZaAutorskaPrava> getAllCanceled() throws JAXBException, XMLDBException {
+        return autorskaPravaRepository.getAllCanceled();
+    }
+
+    public List<ZahtevZaAutorskaPrava> getAllDenied() throws JAXBException, XMLDBException {
+        return autorskaPravaRepository.getAllDenied();
+    }
+
+    public List<MetadataSearchParams> parseMetadataDTO(MetadataSearchParamsDTO metadataSearchParamsDTO) {
+        String[] properties = metadataSearchParamsDTO.getProperty().trim().split("\\|");
+        String[] values = metadataSearchParamsDTO.getValue().trim().split("\\|");
+        String[] operators = metadataSearchParamsDTO.getOperator().trim().split("\\|");
+
+        if (this.isMetadataDTOOfInequalLength(metadataSearchParamsDTO) || (properties.length != values.length || properties.length != operators.length)) {
+            return null;
+        }
+
+        List<MetadataSearchParams> parsedSearchParams = new ArrayList<>();
+
+        for (int i = 0; i < properties.length; i++) {
+            MetadataSearchParams mp = new MetadataSearchParams(properties[i], values[i], operators[i]);
+            parsedSearchParams.add(mp);
+        }
+
+        return parsedSearchParams;
+    }
+
+    public boolean isMetadataDTOOfInequalLength(MetadataSearchParamsDTO metadataSearchParamsDTO) {
+        String strippedProperty = metadataSearchParamsDTO.getProperty().trim();
+        String strippedValue = metadataSearchParamsDTO.getValue().trim();
+        String strippedOperator = metadataSearchParamsDTO.getOperator().trim();
+
+        return "".equals(strippedProperty) || "".equals(strippedValue) || "".equals(strippedOperator);
+    }
+
+    public List<ZahtevZaAutorskaPrava> getByMetadata(List<MetadataSearchParams> params, boolean searchForNeobradjeni) throws IOException {
+        List<ZahtevZaAutorskaPrava> zahtevi;
+        if (params.size() == 1) {
+            zahtevi = autorskaPravaRepository.getByMetadata(params.get(0));
+        } else {
+            zahtevi = autorskaPravaRepository.getByMultipleMetadata(params);
+        }
+
+        if (searchForNeobradjeni) {
+            return zahtevi.stream().filter(z -> z.getStatus() == EStatus.PREDATO).collect(Collectors.toList());
+        } else {
+            return zahtevi.stream().filter(z -> z.getStatus() != EStatus.PREDATO).collect(Collectors.toList());
+        }
+    }
+
+    private ZahtevZaAutorskaPrava getZahtevForPrilogAddition(String brojPrijaveZiga) {
+        ZahtevZaAutorskaPrava ZahtevZaAutorskaPrava;
+
+        prilogUpdatingZahtevsLock.lock();
+        try {
+            if (!prilogUpdatingZahtevs.containsKey(brojPrijaveZiga)) {
+                ZahtevZaAutorskaPrava = getZahtev(brojPrijaveZiga);
+
+                if (ZahtevZaAutorskaPrava == null) {
+                    return null;
+                }
+
+                prilogUpdatingZahtevs.put(brojPrijaveZiga, ZahtevZaAutorskaPrava);
+            } else {
+                ZahtevZaAutorskaPrava = prilogUpdatingZahtevs.get(brojPrijaveZiga);
+            }
+        } finally {
+            prilogUpdatingZahtevsLock.unlock();
+        }
+
+        return ZahtevZaAutorskaPrava;
+    }
+
+    public boolean addPrilog(String brojPrijaveZiga, String prilogType, MultipartFile uploadedFile) {
+        ZahtevZaAutorskaPrava ZahtevZaAutorskaPrava = getZahtevForPrilogAddition(brojPrijaveZiga);
+        if (ZahtevZaAutorskaPrava == null) {
+            return false;
+        }
+
+        String fileName = brojPrijaveZiga.replace('/', '_').concat("_").concat(prilogType);
+        fileName = fileName.concat(".pdf");
+        System.out.println(fileName);
+
+        if (prilogType.equals("OPIS")) {
+            ZahtevZaAutorskaPrava.setPutanjaDoOpisa("src/main/resources/uploadedFiles/" + fileName);
+        } else {
+            ZahtevZaAutorskaPrava.setPutanjaDoPrimera("src/main/resources/uploadedFiles/" + fileName);
+        }
+        return writeFile(fileName, uploadedFile);
+    }
+
+    public boolean writeFile(String fileName, MultipartFile uploadedFile) {
+        File file = new File("src/main/resources/uploadedFiles/" + fileName);
+
+        try (OutputStream os = new FileOutputStream(file)) {
+            os.write(uploadedFile.getBytes());
+            System.out.println("Saved new file: " + fileName);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public List<ZahtevZaAutorskaPrava> getByText(String text, boolean casesensitive, boolean searchForNeobradjeni) throws Exception {
+        List<String> searchWords = Arrays.asList(text.split(" "));
+
+        if (searchWords.size() == 0) {
+            return null;
+        }
+
+        List<ZahtevZaAutorskaPrava> zahtevi = autorskaPravaRepository.getByText(searchWords, casesensitive);
+
+        if (searchForNeobradjeni) {
+            return zahtevi.stream().filter(z -> z.getStatus() == EStatus.PREDATO).collect(Collectors.toList());
+        } else {
+            return zahtevi.stream().filter(z -> z.getStatus() != EStatus.PREDATO).collect(Collectors.toList());
+        }
+    }
 }
+

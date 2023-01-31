@@ -1,9 +1,6 @@
 package com.example.autorskapravabackend.model;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import javax.xml.bind.annotation.*;
 
@@ -18,7 +15,6 @@ public class TLice {
 
     @XmlElement(name = "Broj_telefona", required = true)
     private String brojTelefona;
-
     @XmlElement(name = "Email", required = true)
     private String email;
 

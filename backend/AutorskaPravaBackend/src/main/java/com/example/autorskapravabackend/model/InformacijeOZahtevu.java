@@ -23,6 +23,7 @@ import javax.xml.bind.annotation.XmlType;
 @XmlRootElement(name = "Informacije_o_zahtevu")
 @XmlType(name = "Informacije_o_zahtevu", propOrder = {"brojPrijave", "datumPodnosenja", "listaPrilogaKojiSePodnoseUzZahtev"})
 public class InformacijeOZahtevu {
+
     @XmlElement(name = "Broj_prijave", required = true)
     private String brojPrijave;
     @XmlElement(name = "Datum_podnosenja", required = true)

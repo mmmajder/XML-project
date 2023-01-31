@@ -64,16 +64,16 @@ public class ObjectFactory {
         return new PodnosilacZahteva();
     }
 
-    public TAutor createTAutor() {
-        return new TAutor();
+    public Autor createTAutor() {
+        return new Autor();
     }
 
     public ZasnivanoDelo createZasnivanoDelo() {
         return new ZasnivanoDelo();
     }
 
-    public Autor createAutor() {
-        return new Autor();
+    public PodaciOAutoru createAutor() {
+        return new PodaciOAutoru();
     }
 
     public Adresa createAdresa() {

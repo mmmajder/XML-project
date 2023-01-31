@@ -7,19 +7,26 @@
          font-family: serif;
          border-collapse: collapse;
          margin: 0;
-         width: 95%;
-         border: 1;
+         width: 100%;
+         border:0px;
          }
          th, td {
          text-align: left;
          padding: 3px;
-         border: 1;
+         border:0px;
+         border-bottom-width:1px;
+         border-right-width:1px;
+         border-style: solid;
          }
+         
+         tr{
+         border:0px;
+         }
+         
          tr:nth-child(even){ background-color: #f2f2f2 }
          th {
          font-family: sans-serif;
          }
-         tr { border: 1; }
          
          body { font-family: sans-serif; }
          p { text-indent: 30px; }
@@ -35,207 +42,140 @@
    </head>
    <body>
       <center>
-         <h3>Zahtev za priznanje Ziga</h3>
+         <h3>Zahtev za priznanje HTML Ziga</h3>
          <h5>Zavod za intelektualnu svojinu, Kneginje Ljubice broj 5, 11000 Beograd</h5>
       </center>
       <table>
          <tr>
-            <th colspan="7">1. Podnosilac prijave</th>
+            <th colspan="3" style="border-top-width:1px; border-left-width:1px;">1. Podnosilac prijave</th>
          </tr>
          <tr>
-            <th>Ime</th>
-            <th>Prezime</th>
-            <th>Ulica</th>
-            <th>Broj</th>
-            <th>Postanski broj</th>
-            <th>Mesto</th>
-            <th>Drzava</th>
+            <td colspan="3" style="border-left-width:1px;">Jovan Jovic
+               <br></br>Jovanova ulica 3, 
+               	                     	33000, 
+               	                     	Jovangrad, 
+               	                     	Srbija
+            </td>
          </tr>
          <tr>
-            <td>Jovan</td>
-            <td>Jovic</td>
-            <td>Jovanova ulica</td>
-            <td>3</td>
-            <td>33000</td>
-            <td>Jovangrad</td>
-            <td>Srbija</td>
+            <td style="border-left-width:1px;">telefon: 06721389832</td>
+            <td>e-mail: jovanovemail@jovan.com</td>
+            <td>faks: 233452153</td>
          </tr>
          <tr>
-            <th colspan="2">Telefon</th>
-            <th colspan="3">Email</th>
-            <th colspan="2">Faks</th>
+            <th colspan="3" style="border-left-width:1px;">2. Punomocnik</th>
          </tr>
          <tr>
-            <td colspan="2">06721389832</td>
-            <td colspan="3">jovanovemail@jovan.com</td>
-            <td colspan="2">233452153</td>
-         </tr>
-      </table>
-      <br></br>
-      <table>
-         <tr>
-            <th colspan="7">2. Punomocnik</th>
+            <td colspan="3" style="border-left-width:1px;">
+               <i>JovanovPunomocnik Company</i>
+               <br></br>Company ulica 56, 
+               	                     	33000, 
+               	                     	Jovangrad, 
+               	                     	Srbija
+            </td>
          </tr>
          <tr>
-            <th colspan="2">Poslovno ime</th>
-            <th>Ulica</th>
-            <th>Broj</th>
-            <th>Postanski broj</th>
-            <th>Mesto</th>
-            <th>Drzava</th>
+            <td style="border-left-width:1px;">telefon: 063453159</td>
+            <td>e-mail: JovanovPunomocnik@jovan.com</td>
+            <td>faks: 8416816854</td>
          </tr>
          <tr>
-            <td colspan="2">JovanovPunomocnik Company</td>
-            <td>Company ulica</td>
-            <td>56</td>
-            <td>33000</td>
-            <td>Jovangrad</td>
-            <td>Srbija</td>
+            <th colspan="3" style="border-left-width:1px;">3. Predstavnik</th>
          </tr>
          <tr>
-            <th colspan="2">Telefon</th>
-            <th colspan="3">Email</th>
-            <th colspan="2">Faks</th>
+            <td colspan="3" style="border-left-width:1px;">
+               <i>PredstavnikJovanov Company</i>
+               <br></br>Predstavnik ulica 78, 
+               	                     	33000, 
+               	                     	Jovangrad, 
+               	                     	Srbija
+            </td>
          </tr>
          <tr>
-            <td colspan="2">063453159</td>
-            <td colspan="3">JovanovPunomocnik@jovan.com</td>
-            <td colspan="2">8416816854</td>
+            <td style="border-left-width:1px;">telefon: 06125552255</td>
+            <td>e-mail: Predstavnik@jovan.com</td>
+            <td>faks: 77878788778</td>
          </tr>
       </table>
-      <br></br>
       <table>
          <tr>
-            <th colspan="7">3. Predstavnik</th>
+            <th colspan="2" style="border-left-width:1px;">4. Prijava se odnosi za:</th>
+            <th colspan="2" rowspan="2" style="border-top-width:1px;">c) izgled znaka:</th>
          </tr>
          <tr>
-            <th colspan="2">Poslovno ime</th>
-            <th>Ulica</th>
-            <th>Broj</th>
-            <th>Postanski broj</th>
-            <th>Mesto</th>
-            <th>Drzava</th>
+            <th style="border-left-width:1px;">a)</th>
+            <td>Individualni zig</td>
          </tr>
          <tr>
-            <td colspan="2">PredstavnikJovanov Company</td>
-            <td>Predstavnik ulica</td>
-            <td>78</td>
-            <td>33000</td>
-            <td>Jovangrad</td>
-            <td>Srbija</td>
+            <th style="border-left-width:1px;"> b)</th>
+            <td>Kombinovani znak</td>
+            <td colspan="2" rowspan="5">
+               <img width="100%" maxWidth="250px" maxHeight="250px" src="&#xA;&#x9;&#x9;&#x9;                C:\Faks\VII\XML i veb servisi\XML-project\Zig_parser\data\test_logo.jpg"></img>
+            </td>
          </tr>
          <tr>
-            <th colspan="2">Telefon</th>
-            <th colspan="3">Email</th>
-            <th colspan="2">Faks</th>
+            <td colspan="2" style="border-left-width:1px;">
+               <b>5. Naznacenje boje, odnosno boja iz kojih se znak sastoji:</b>
+               <br></br>PLAVA,  ZUTA,  ROZE,  
+            </td>
          </tr>
          <tr>
-            <td colspan="2">06125552255</td>
-            <td colspan="3">Predstavnik@jovan.com</td>
-            <td colspan="2">77878788778</td>
-         </tr>
-      </table>
-      <br></br>
-      <table>
-         <tr>
-            <th colspan="2">4. Prijava se odnosi za:</th>
+            <td colspan="2" style="border-left-width:1px;">
+               <b>6. Transliteracija znaka:</b>
+               <br></br>Oh yes!
+            </td>
          </tr>
          <tr>
-            <th>a)</th>
-            <td>Zig garancije</td>
+            <td colspan="2" style="border-left-width:1px;">
+               <b>7. Prevod znaka</b>
+               <br></br>Oh da!
+            </td>
          </tr>
          <tr>
-            <th>b)</th>
-            <td></td>
-         </tr>
-         <tr>
-            <th>c) </th>
-            <td>Izgled znaka: putanja</td>
-         </tr>
-      </table>
-      <br></br>
-      <table>
-         <tr>
-            <th>5. Naznacenje boje, odnosno boja iz kojih se znak sastoji:</th>
-         </tr>
-         <tr>
-            <td></td>
-         </tr>
-      </table>
-      <br></br>
-      <table>
-         <tr>
-            <th>6. Transliteracija znaka</th>
-         </tr>
-         <tr>
-            <td>Oh yes!</td>
-         </tr>
-      </table>
-      <br></br>
-      <table>
-         <tr>
-            <th>7. Prevod znaka</th>
-         </tr>
-         <tr>
-            <td>Oh da!</td>
-         </tr>
-      </table>
-      <br></br>
-      <table>
-         <tr>
-            <th>8. Opis znaka</th>
-         </tr>
-         <tr>
-            <td>Znak predstavlja zadovoljnu musteriju koja pokazuje palcem ka gore i smeje se. Oko
+            <td colspan="2" style="border-left-width:1px;">
+               <b>8. Opis znaka</b>
+               <br></br>Znak predstavlja zadovoljnu musteriju koja pokazuje palcem ka gore i smeje se. Oko
                musterijine glave je ispisan uzvik Oh yes!
             </td>
          </tr>
       </table>
-      <br></br>
       <table>
          <tr>
-            <th colspan="2">9. Brojevi klasa robe i usluga prema Nicanskoj klasifikaciji</th>
+            <th colspan="3" style="border-left-width:1px;">9. Brojevi klasa robe i usluga prema Nicanskoj klasifikaciji</th>
          </tr>
          <tr>
-            <td>1</td>
-            <td>Hemijski proizvodi</td>
+            <td style="border-left-width:1px;">1</td>
+            <td colspan="2">Hemijski proizvodi</td>
          </tr>
          <tr>
-            <td>2</td>
-            <td>Boje lakovi</td>
-         </tr>
-      </table>
-      <br></br>
-      <table>
-         <tr>
-            <th>10. Zatrazeno pravo prvenstva i osnov</th>
+            <td style="border-left-width:1px;">2</td>
+            <td colspan="2">Boje lakovi</td>
          </tr>
          <tr>
-            <td>Ja sam prvi pronalazac ovog magicnog praska.</td>
+            <td colspan="3" style="border-left-width:1px;">
+               <b>10. Zatrazeno pravo prvenstva i osnov</b>
+               <br></br>KONVENCIJSKO
+            </td>
          </tr>
-      </table>
-      <br></br>
-      <table>
          <tr>
-            <th>11. Placene takse</th>
+            <th style="border-left-width:1px;">11. Placene takse</th>
             <th>Dinara</th>
-            <th>Potpis podnosioca zahteva</th>
+            <th rowspan="5" style="vertical-align: top; text-align: center;">Potpis podnosioca zahteva</th>
          </tr>
          <tr>
-            <td>a) Osnovna taksa</td>
+            <td style="border-left-width:1px;">a) Osnovna taksa</td>
             <td>550</td>
-            <td rowspan="4"></td>
          </tr>
          <tr>
-            <td>b) Za 2 klase</td>
+            <td style="border-left-width:1px;">b) Za 2 klase</td>
             <td>300</td>
          </tr>
          <tr>
-            <td>c) Za graficko resenje</td>
+            <td style="border-left-width:1px;">c) Za graficko resenje</td>
             <td>420</td>
          </tr>
          <tr>
-            <td>UKUPNO</td>
+            <td style="border-left-width:1px;">UKUPNO</td>
             <td>1270</td>
          </tr>
       </table>
@@ -245,42 +185,38 @@
       </center>
       <table>
          <tr>
-            <th colspan="2">Prilozi uz zahtev:</th>
+            <th colspan="2" style="border-top-width:1px; border-left-width:1px;">Prilozi uz zahtev:</th>
+            <td rowspan="7" style="text-align: center; border-top-width:1px;">Broj prijave ziga: 
+               <br></br>Z-12398/22
+               <br></br>
+               <br></br>
+               				  		Datum podnosenja: 
+               <br></br>05.06.2022.
+            </td>
          </tr>
          <tr>
-            <td>Primerak znaka</td>
-            <td>PREDAT</td>
+            <td style="border-left-width:1px;">Primerak znaka</td>
+            <td>PREDATO</td>
          </tr>
          <tr>
-            <td>Spisak robe i usluga</td>
-            <td>PREDAT</td>
+            <td style="border-left-width:1px;">Spisak robe i usluga</td>
+            <td>PREDATO</td>
          </tr>
          <tr>
-            <td>Punomocje</td>
-            <td>PREDAT</td>
+            <td style="border-left-width:1px;">Punomocje</td>
+            <td>PREDATO</td>
          </tr>
          <tr>
-            <td>Opsti akt o kolektivnom zigu/zigu garancije</td>
-            <td>PREDAT</td>
+            <td style="border-left-width:1px;">Opsti akt o kolektivnom zigu/zigu garancije</td>
+            <td>NIJE POTREBNO</td>
          </tr>
          <tr>
-            <td>Dokaz o pravu prvenstva</td>
-            <td>PREDAT</td>
+            <td style="border-left-width:1px;">Dokaz o pravu prvenstva</td>
+            <td>NIJE PREDATO</td>
          </tr>
          <tr>
-            <td>Dokaz o uplati takse</td>
-            <td>PREDAT</td>
-         </tr>
-      </table>
-      <br></br>
-      <table>
-         <tr>
-            <th>Broj prijave ziga:</th>
-            <th>Datum podnosenja:</th>
-         </tr>
-         <tr>
-            <td>Z-12398/22</td>
-            <td>2022-05-06T00:00:00+02:00</td>
+            <td style="border-left-width:1px;">Dokaz o uplati takse</td>
+            <td>NIJE PREDATO</td>
          </tr>
       </table>
    </body>

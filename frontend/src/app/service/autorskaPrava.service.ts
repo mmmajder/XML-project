@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from "rxjs";
 import {SadrzajZahtevaZaAutorskaPrava} from "../model/autorskoDelo/SadrzajZahtevaZaAutorskaPrava";
 import {AuthService} from "./auth.service";
@@ -18,10 +18,6 @@ export class AutorskaPravaService {
 
   public podnesiZahtev(zahtev: SadrzajZahtevaZaAutorskaPrava): Observable<Object> {
     console.log("PODNOSENJE ZAHTEVA", zahtev)
-    // const json = JSON.stringify(zahtev);
-    //
-    // const xml = json2xml(json, {compact: true, spaces: 4});
-    // let xml = this.OBJtoXML(zahtev);
     const xmlZahtev = JsonToXML.parse("zahtevZaAutorskaPravaDTO", zahtev);
     console.log(xmlZahtev)
     return this.http.post<Object>(this.autorskaPravaUrl, xmlZahtev, AuthService.getHttpOptions());
@@ -29,6 +25,28 @@ export class AutorskaPravaService {
 
   public dobaviZahtev(brojPrijave: string): Observable<Object> {
     return this.http.get<Object>(this.autorskaPravaUrl + "/" + brojPrijave, AuthService.getHttpOptions());
+  }
+
+  public postPrilog(brojPrijaveZiga: string, tipPrilog: string, file: any) {
+    let formData = new FormData();
+    let brojPrijaveZigaParts: string[] = brojPrijaveZiga.split("/");
+    formData.append("file", file);
+
+    return this.http.post<Object>(this.autorskaPravaUrl + "/file-upload/" + brojPrijaveZigaParts[0] + "-" + brojPrijaveZigaParts[1] + "-" + tipPrilog, formData, this.getNoContentTypeHttpOptions());
+  }
+
+  public saveAfterPrilogAddition(brojPrijaveZiga: string) {
+    let brojPrijaveZigaParts: string[] = brojPrijaveZiga.split("/");
+    return this.http.get<Object>(this.autorskaPravaUrl + "/save/" + brojPrijaveZigaParts[0] + "-" + brojPrijaveZigaParts[1], AuthService.getHttpOptions());
+  }
+
+  public getNoContentTypeHttpOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': localStorage.getItem('token') || 'authkey',
+      })
+    };
   }
 
 }

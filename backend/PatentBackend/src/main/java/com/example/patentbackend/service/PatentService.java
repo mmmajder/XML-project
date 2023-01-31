@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 
-
 @Service
 public class PatentService {
 
@@ -47,23 +46,21 @@ public class PatentService {
 
     public boolean generateHTML(NazivPrijaveDTO brojPrijave) {
         ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = getZahtevZaPriznanjePatenta(brojPrijave.getNaziv());
-        if (zahtevZaPriznanjePatenta==null) {
+        if (zahtevZaPriznanjePatenta == null) {
             return false;
         }
         PatentTransformer.generateHTMLPatent(zahtevZaPriznanjePatenta);
         return true;
     }
+
     public boolean generatePDF(NazivPrijaveDTO brojPrijave) {
         ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = getZahtevZaPriznanjePatenta(brojPrijave.getNaziv());
-        if (zahtevZaPriznanjePatenta==null) {
+        if (zahtevZaPriznanjePatenta == null) {
             return false;
         }
         PatentTransformer.generatePDFPatent(zahtevZaPriznanjePatenta);
         return true;
     }
-
-
-
 
 //    public List<ZahtevZaPriznanjePatenta> getAllZahtevZaPriznanjePatenta() {
 //        return patentRepository.getAll();

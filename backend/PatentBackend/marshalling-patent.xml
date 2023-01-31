@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<pat:Zahtev_za_priznanje_patenta xmlns:pat="http://www.ftn.uns.ac.rs/patent" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+<pat:Zahtev_za_priznanje_patenta xmlns:pat="http://www.ftn.uns.ac.rs/patent"
+                                 xmlns:xs="http://www.w3.org/2001/XMLSchema">
     <pat:Osnovne_informacije_o_zahtevu_za_priznanje_patenta>
         <pat:Broj_prijave>P-1314/2019</pat:Broj_prijave>
         <pat:Datum_prijema>3900-02-01+01:00</pat:Datum_prijema>

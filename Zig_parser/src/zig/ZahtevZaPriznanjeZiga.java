@@ -7,10 +7,10 @@ import java.util.List;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Zahtev_za_priznanje_ziga")
 @XmlType(name="ZahtevZaPriznanjeZiga", propOrder={"podnosilacPrijave", "punomocnik", "predstavnik", "zig", "klasa",
-        "zatrazenoPravoPrvenstvaIOsnov", "taksa", "prilog", "prilogPunomocje", "brojPrijaveZiga", "datumPodnosenja"})
+        "zatrazenoPravoPrvenstvaIOsnov", "taksa", "prilog", "prilogPunomocje", "brojPrijaveZiga", "datumPodnosenja", "status"})
 public class ZahtevZaPriznanjeZiga {
     @XmlElement(name="Podnosilac_prijave", required=true)
-    private List<Lice> podnosilacPrijave;
+    private Lice podnosilacPrijave;
     @XmlElement(name="Punomocnik", required=true)
     private Lice punomocnik;
     @XmlElement(name="Predstavnik", required=true)
@@ -20,7 +20,7 @@ public class ZahtevZaPriznanjeZiga {
     @XmlElement(name="Klasa", required=true)
     private List<Klasa> klasa;
     @XmlElement(name="Zatrazeno_pravo_prvenstva_i_osnov", required=true)
-    private String zatrazenoPravoPrvenstvaIOsnov;
+    private EZatrazeno_pravo_prvenstva_i_osnov zatrazenoPravoPrvenstvaIOsnov;
     @XmlElement(name="Taksa", required=true)
     private Taksa taksa;
     @XmlElement(name="Prilog", required=true)
@@ -31,12 +31,14 @@ public class ZahtevZaPriznanjeZiga {
     private String brojPrijaveZiga;
     @XmlElement(name="Datum_podnosenja", required=true)
     private Date datumPodnosenja;
+    @XmlElement(name="Status", required=true)
+    private EStatus status;
 
-    public List<Lice> getPodnosilacPrijave() {
+    public Lice getPodnosilacPrijave() {
         return podnosilacPrijave;
     }
 
-    public void setPodnosilacPrijave(List<Lice> podnosilacPrijave) {
+    public void setPodnosilacPrijave(Lice podnosilacPrijave) {
         this.podnosilacPrijave = podnosilacPrijave;
     }
 
@@ -72,11 +74,11 @@ public class ZahtevZaPriznanjeZiga {
         this.klasa = klasa;
     }
 
-    public String getZatrazenoPravoPrvenstvaIOsnov() {
+    public EZatrazeno_pravo_prvenstva_i_osnov getZatrazenoPravoPrvenstvaIOsnov() {
         return zatrazenoPravoPrvenstvaIOsnov;
     }
 
-    public void setZatrazenoPravoPrvenstvaIOsnov(String zatrazenoPravoPrvenstvaIOsnov) {
+    public void setZatrazenoPravoPrvenstvaIOsnov(EZatrazeno_pravo_prvenstva_i_osnov zatrazenoPravoPrvenstvaIOsnov) {
         this.zatrazenoPravoPrvenstvaIOsnov = zatrazenoPravoPrvenstvaIOsnov;
     }
 
@@ -120,6 +122,14 @@ public class ZahtevZaPriznanjeZiga {
         this.datumPodnosenja = datumPodnosenja;
     }
 	
+	public EStatus getStatus() {
+		return status;
+	}
+
+	public void setStatus(EStatus status) {
+		this.status = status;
+	}
+
 	@Override
 	public String toString() {
 		StringBuffer buffer = new StringBuffer();

@@ -33,7 +33,8 @@ public class PatentTransformer {
 
     //	public static final String INPUT_FILE = "resources/pdf/bookstore.xml";
 //
-    public static final String XSL_FILE = "src/main/java/com/example/patentbackend/transformer/Zahtev.xsl";
+    public static final String PDF_XSL_FILE = "src/main/java/com/example/patentbackend/transformer/Zahtev_PDF.xsl";
+    public static final String HTML_XSL_FILE = "src/main/java/com/example/patentbackend/transformer/Zahtev_HTML.xsl";
 
     public static final String HTML_FOLDER = "src/main/resources/gen/xhtml/";
 
@@ -56,7 +57,7 @@ public class PatentTransformer {
 
     public static void generateHTMLPatent(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) {
         try {
-            PatentTransformer.generateHTML(zahtevZaPriznanjePatenta, XSL_FILE);
+            PatentTransformer.generateHTML(zahtevZaPriznanjePatenta, HTML_XSL_FILE, false);
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
@@ -64,9 +65,9 @@ public class PatentTransformer {
 
     public static void generatePDFPatent(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) {
         try {
-            PatentTransformer.generateHTML(zahtevZaPriznanjePatenta, XSL_FILE);
+            PatentTransformer.generateHTML(zahtevZaPriznanjePatenta, PDF_XSL_FILE, true);
             String titlePdf = Utils.formatNameOfRequestForPatent(zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave(), ".pdf");
-            String titleHTML = Utils.formatNameOfRequestForPatent(zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave(), ".html");
+            String titleHTML = Utils.formatNameOfRequestForPatent(zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave(), "_for_pdf.html");
             PatentTransformer.generatePDF(titlePdf, titleHTML);
         } catch (Exception e) {
             e.printStackTrace();
@@ -113,7 +114,7 @@ public class PatentTransformer {
         return document;
     }
 
-    private static void generateHTML(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta, String xslPath) throws FileNotFoundException {
+    private static void generateHTML(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta, String xslPath, boolean forPdf) throws FileNotFoundException {
 
         try {
 
@@ -130,7 +131,14 @@ public class PatentTransformer {
 
             JAXBContext context = JAXBContext.newInstance("com.example.patentbackend.model");
             JAXBSource source = new JAXBSource(context, zahtevZaPriznanjePatenta);
-            StreamResult result = new StreamResult(new FileOutputStream(HTML_FOLDER + Utils.formatNameOfRequestForPatent(zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave(), ".html")));
+            StreamResult result;
+
+            if (forPdf) {
+                result = new StreamResult(new FileOutputStream(HTML_FOLDER + Utils.formatNameOfRequestForPatent(zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave(), "_for_pdf.html")));
+            } else {
+                result =  new StreamResult(new FileOutputStream(HTML_FOLDER + Utils.formatNameOfRequestForPatent(zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave(), ".html")));
+            }
+
             transformer.transform(source, result);
 
         } catch (Exception e) {
