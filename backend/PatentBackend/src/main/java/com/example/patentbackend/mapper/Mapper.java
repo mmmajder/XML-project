@@ -5,6 +5,7 @@ import com.example.patentbackend.model.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 public class Mapper {
     public static Adresa mapToAdresa(AdresaDTO adresaDTO) {
@@ -152,4 +153,43 @@ public class Mapper {
     }
 
 
+    public static List<SimpleZahtevDTO> mapToSimpleZahtevs(List<ZahtevZaPriznanjePatenta> zahtevs) {
+        List<SimpleZahtevDTO> simpleZahtevDTOs = new ArrayList<>();
+
+        for (ZahtevZaPriznanjePatenta zahtev : zahtevs) {
+            SimpleZahtevDTO simpleZahtevDTO = mapToSimpleZahtev(zahtev);
+            simpleZahtevDTOs.add(simpleZahtevDTO);
+        }
+
+        return simpleZahtevDTOs;
+    }
+
+    public static SimpleZahtevDTO mapToSimpleZahtev(ZahtevZaPriznanjePatenta zahtev) {
+        SimpleZahtevDTO simpleZahtevDTO = new SimpleZahtevDTO();
+        simpleZahtevDTO.setBrojPrijave(zahtev.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave());
+
+        String datumPodnosenja = zahtev.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getPriznatiDatumPodnosenja().toString();
+        simpleZahtevDTO.setDatumPodnosenja(datumPodnosenja);
+
+        SimpleUserDTO podnosioc = mapToSimpleUser(zahtev.getSadrzajZahtevaZaPriznanjePatenta().getPodaciOPodnosiocuPrijave().getPodnosilacPrijave());
+        simpleZahtevDTO.setPodnosioc(podnosioc);
+
+        simpleZahtevDTO.setObradjen(!Objects.equals(zahtev.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getStanje(), "NA_CEKANJU"));
+
+        return simpleZahtevDTO;
+    }
+
+    public static SimpleUserDTO mapToSimpleUser(TLice podnosilacZahteva) {
+        SimpleUserDTO simpleUserDTO = new SimpleUserDTO();
+        simpleUserDTO.setEmail(podnosilacZahteva.getEPosta());
+
+        if (podnosilacZahteva instanceof TFizickoLice) {
+            simpleUserDTO.setName(((TFizickoLice) podnosilacZahteva).getIme() +
+                    " " + ((TFizickoLice) podnosilacZahteva).getPrezime());
+        } else {
+            simpleUserDTO.setName(((TPravnoLice) podnosilacZahteva).getPoslovnoIme());
+        }
+
+        return simpleUserDTO;
+    }
 }

@@ -32,7 +32,7 @@ export class ZahteviService {
       case "A":
         return this.autorskaPravaUrl + "/autorskaPrava";
       case "P":
-        return this.patentiUrl;
+        return this.patentiUrl + "/patent";
       default:
         return this.zigoviUrl + "/zig";
     }
@@ -44,7 +44,7 @@ export class ZahteviService {
       case "A":
         return "/autorskaPravaResenje/obradiZahtev";
       case "P":
-        return "/obradiZahtev";
+        return "/patentResenje/obradiZahtev";
       default:
         return "/obradiZahtev";
     }
@@ -96,7 +96,7 @@ export class ZahteviService {
     const xmlZahtev = JsonToXML.parse("TextSearchDTO", textSearchParams);
     console.log(textSearchParams);
     console.log(xmlZahtev);
-    return this.http.put<any>(this.getUrl(endpointChar) + "/text-search", xmlZahtev, this.getXmlHttpOptions());
+    return this.http.put<any>(this.getUrl(endpointChar) + "/patent/text-search", xmlZahtev, this.getXmlHttpOptions());
   }
 
   public searchByMetadata(metaParams:MetadataSearchParamsDTO, endpointChar:string): Observable<any> {
