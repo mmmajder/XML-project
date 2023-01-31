@@ -1,5 +1,6 @@
 package com.example.autorskapravabackend.service;
 
+import com.example.autorskapravabackend.dto.DetaljiOZahtevu;
 import com.example.autorskapravabackend.dto.MetadataSearchParams;
 import com.example.autorskapravabackend.dto.MetadataSearchParamsDTO;
 import com.example.autorskapravabackend.dto.ZahtevZaAutorskaPravaDTO;
@@ -33,6 +34,10 @@ public class AutorskaPravaService {
         return autorskaPravaRepository.getZahtev(brojPrijave);
     }
 
+//    public DetaljiOZahtevu getDetaljiZahteva(ZahtevZaAutorskaPrava) {
+//        return ;
+//    }
+
     public List<ZahtevZaAutorskaPrava> getZahtevi() {
         return autorskaPravaRepository.getZahtevi();
     }
@@ -41,7 +46,6 @@ public class AutorskaPravaService {
         ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = Mapper.dtoToZahtev(dto);
         setBrojPrijave(zahtevZaAutorskaPrava);
         autorskaPravaRepository.createRequest(zahtevZaAutorskaPrava);
-        System.out.println(getZahtev(zahtevZaAutorskaPrava.getInformacijeOZahtevu().getBrojPrijave()));
         return zahtevZaAutorskaPrava;
     }
 
@@ -51,6 +55,7 @@ public class AutorskaPravaService {
         osnovneInformacije.setBrojPrijave(brojPrijave);
         osnovneInformacije.setDatumPodnosenja(new Date());
         zahtev.setInformacijeOZahtevu(osnovneInformacije);
+        zahtev.setStatus(EStatus.PREDATO);
     }
 
     public ByteArrayInputStream generateHTML(String brojPrijave) {
@@ -190,14 +195,12 @@ public class AutorskaPravaService {
         if (ZahtevZaAutorskaPrava == null) {
             return false;
         }
-
-        String fileName = brojPrijave.replace('/', '_').concat("_").concat(prilogType);
-        fileName = fileName.concat(".pdf");
-        System.out.println(fileName);
-
+        String fileName;
         if (prilogType.equals("OPIS")) {
+            fileName = brojPrijave.replace('/', '_').concat("_OPIS.pdf");
             ZahtevZaAutorskaPrava.setPutanjaDoOpisa("src/main/resources/uploadedFiles/" + fileName);
         } else {
+            fileName = brojPrijave.replace('/', '_').concat("_PRIMER.pdf");
             ZahtevZaAutorskaPrava.setPutanjaDoPrimera("src/main/resources/uploadedFiles/" + fileName);
         }
         return writeFile(fileName, uploadedFile);

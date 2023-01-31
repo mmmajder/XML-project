@@ -1,7 +1,6 @@
-import {Component, Inject} from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {DetaljiOZahtevu, ObradaZahtevaDTO} from "../../model/shared/Zahtev";
 import {ZahteviService} from "../../service/zahtevi.service";
-import {MAT_DIALOG_DATA} from "@angular/material/dialog";
 
 @Component({
   selector: 'app-details',
@@ -9,16 +8,24 @@ import {MAT_DIALOG_DATA} from "@angular/material/dialog";
   styleUrls: ['./details.component.css']
 })
 export class DetailsComponent {
+  @Input() brojPrijave: string;
+  @Input() obradjen: boolean;
+
   detaljiOZahtevu: DetaljiOZahtevu = new DetaljiOZahtevu();
   razlogOdbijanja: string = "";
   odbija: boolean = false;
   blob: Blob = new Blob();
 
-  constructor(@Inject(MAT_DIALOG_DATA) public brojPrijave: string, private servis: ZahteviService) {
-    // this.servis.getZahtev(this.brojPrijave).subscribe({
-    //   next: value => this.detaljiOZahtevu = value,
-    //   error: err => console.log(err)
-    // })
+  constructor(private servis: ZahteviService) {
+    if (this.obradjen) {
+      this.servis.getDetaljiOObradi(this.brojPrijave).subscribe({
+        next: value => {
+          console.log(value)
+          this.detaljiOZahtevu = value
+        },
+        error: err => console.log(err)
+      })
+    }
   }
 
   public obradiZahtev(odbijen: boolean) {
@@ -43,30 +50,28 @@ export class DetailsComponent {
   }
 
   downloadPDF() {
-    console.log("this.detaljiOZahtevu.zahtev.brojPrijave");
-    console.log(this.detaljiOZahtevu.zahtev.brojPrijave)
-    this.servis.downloadPDF(this.detaljiOZahtevu.zahtev.brojPrijave)
+    this.servis.downloadPDF(this.brojPrijave)
       .subscribe({
         next: (data) => this.downloadFile(data, 'pdf', 'pdf')
       });
   }
 
   downloadHTML() {
-    this.servis.downloadHTML(this.detaljiOZahtevu.zahtev.brojPrijave)
+    this.servis.downloadHTML(this.brojPrijave)
       .subscribe({
         next: (data) => this.downloadFile(data, 'html', 'xhtml')
       });
   }
 
   downloadJSON() {
-    this.servis.downloadJSON(this.detaljiOZahtevu.zahtev.brojPrijave)
+    this.servis.downloadJSON(this.brojPrijave)
       .subscribe({
         next: (data) => this.downloadFile(data, 'json', 'pdf')
       });
   }
 
   downloadRDF() {
-    this.servis.downloadRDF(this.detaljiOZahtevu.zahtev.brojPrijave)
+    this.servis.downloadRDF(this.brojPrijave)
       .subscribe({
         next: (data) => this.downloadFile(data, 'rdf', 'pdf')
       });
@@ -79,5 +84,4 @@ export class DetailsComponent {
     link.download = this.brojPrijave + "." + ekstenzija;
     link.click();
   }
-
 }

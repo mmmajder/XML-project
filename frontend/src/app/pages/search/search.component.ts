@@ -3,6 +3,7 @@ import {Zahtev} from "../../model/shared/Zahtev";
 import {MetadataSearchParamsDTO, TextSearchDTO} from "../../model/search/SearchParams";
 import {ZahteviService} from "../../service/zahtevi.service";
 import {SimpleUser} from "../../model/shared/User";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-search',
@@ -12,7 +13,7 @@ import {SimpleUser} from "../../model/shared/User";
 export class SearchComponent {
   zigPossibleMetadata: string[] = ["Podnosilac - email", "Punomocnik - email", "Predstavnik - email", "Tip žiga", "Broj prijave", "Datum podnošenja"];
   patentPossibleMetadata: string[] = ["Broj prijave", "Naslov", "Datum"];
-  autorskaPravaPossibleMetadata: string[] = ["Autor", "Naslov", "Email podnosioca prijave", "Vrsta autorskog dela"];
+  autorskaPravaPossibleMetadata: string[] = ["Broj prijave", "Naslov", "Email podnosioca prijave", "Vrsta autorskog dela"];
   sviMetapodaci: string[] = this.autorskaPravaPossibleMetadata;
 
   zigMetadataMapper = {
@@ -47,7 +48,7 @@ export class SearchComponent {
   statusZahteva: string = "obradjeni";
   matchCase: boolean = false;
 
-  constructor(private zahteviService: ZahteviService) {
+  constructor(private zahteviService: ZahteviService, private _snackBar: MatSnackBar) {
   }
 
   removeMeta(i: number) {
@@ -63,7 +64,10 @@ export class SearchComponent {
 
   searchText() {
     if (!this.validateTextSearch()) {
-      //TODO warning
+      this._snackBar.open("Invalid search.", '', {
+        duration: 3000,
+        panelClass: ['snack-bar']
+      })
       return;
     }
 
@@ -83,7 +87,10 @@ export class SearchComponent {
 
   searchMeta() {
     if (!this.validateMeta()) {
-      //TODO warning
+      this._snackBar.open("Metadata not valid.", '', {
+        duration: 3000,
+        panelClass: ['snack-bar']
+      })
       return;
     }
 
@@ -171,19 +178,13 @@ export class SearchComponent {
     for (let simpleZahtevDoc of simpleZahtevsDoc) {
       let brojPrijaveSimpleZahtev: string = simpleZahtevDoc.getElementsByTagName("brojPrijave")[0].textContent;
       let datumPodnosenjaSimpleZahtev: string = simpleZahtevDoc.getElementsByTagName("datumPodnosenja")[0].textContent;
-      let podnosiocSimpleZahtev = simpleZahtevDoc.getElementsByTagName("podnosioc")[0];
-      let podnosiocNameSimpleZahtev = podnosiocSimpleZahtev.getElementsByTagName("name")[0].textContent;
-      let podnosiocEmailSimpleZahtev = podnosiocSimpleZahtev.getElementsByTagName("email")[0].textContent;
+      let podnosiocSimpleZahtev = simpleZahtevDoc.getElementsByTagName("podnosiocEmail")[0].textContent;
       let obradjenSimpleZahtev: boolean = simpleZahtevDoc.getElementsByTagName("obradjen")[0].textContent === "true";
-
-      let simpleUser: SimpleUser = new SimpleUser();
-      simpleUser.name = podnosiocNameSimpleZahtev;
-      simpleUser.email = podnosiocEmailSimpleZahtev;
 
       let simpleZahtev = new Zahtev();
       simpleZahtev.brojPrijave = brojPrijaveSimpleZahtev;
       simpleZahtev.datumPodnosenja = datumPodnosenjaSimpleZahtev;
-      simpleZahtev.podnosioc = podnosiocSimpleZahtev;
+      simpleZahtev.podnosiocEmail = podnosiocSimpleZahtev;
       simpleZahtev.obradjen = obradjenSimpleZahtev;
 
       simpleZahtevs.push(simpleZahtev);

@@ -128,7 +128,7 @@ public class ResenjeZahtevaDB {
             XPathQueryService xPathQueryService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
             xPathQueryService.setProperty("indent", "yes");
 
-            String xPathExp = "//resenje_zahteva[brojPrijave='" + brojPrijave + "']";
+            String xPathExp = "//resenje_zahteva[broj_prijave='" + brojPrijave + "']";
             ResourceSet result = xPathQueryService.query(xPathExp);
             XMLResource res = (XMLResource) result.getIterator().nextResource();
             JAXBContext context = JAXBContext.newInstance(ResenjeZahteva.class);

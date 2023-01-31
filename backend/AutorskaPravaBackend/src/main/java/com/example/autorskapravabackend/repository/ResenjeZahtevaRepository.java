@@ -14,7 +14,13 @@ public class ResenjeZahtevaRepository {
     }
 
     public ResenjeZahteva dobaviPoBrojuPrijave(String brojPrijave) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        return ResenjeZahtevaDB.dobaviPoBrojuPrijave(brojPrijave);
+//        return ResenjeZahtevaDB.dobaviPoBrojuPrijave(brojPrijave);
+        List<ResenjeZahteva> resenja = ResenjeZahtevaDB.dobaviSvaResenja();
+        for (ResenjeZahteva resenjeZahteva : resenja) {
+            if (resenjeZahteva.getBrojPrijave().equals(brojPrijave))
+                return resenjeZahteva;
+        }
+        return null;
     }
 
     public List<ResenjeZahteva> dobaviSve() throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {

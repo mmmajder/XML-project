@@ -19,14 +19,14 @@ import java.util.List;
 @AllArgsConstructor
 @RestController
 @CrossOrigin("*")
-@RequestMapping(value = "/autorskaPrava", produces = MediaType.APPLICATION_XML_VALUE)
+@RequestMapping(value = "/autorskaPrava")
 public class ZahtevController {
 
     private AutorskaPravaService autorskaPravaService;
 
-    @GetMapping(produces = "application/xml", consumes = "application/xml")
-    public ResponseEntity<ZahtevZaAutorskaPrava> getZahtevByBrojPrijave(@RequestBody String brojPrijave) {
-        return ResponseEntity.ok(autorskaPravaService.getZahtev(brojPrijave));
+    @PostMapping(path="/getRequest", produces = MediaType.APPLICATION_XML_VALUE)
+    public ResponseEntity<ZahtevZaAutorskaPrava> getZahtevByBrojPrijave(@RequestBody BrojPrijaveDTO brojPrijave) {
+        return ResponseEntity.ok().body(autorskaPravaService.getZahtev(brojPrijave.getBroj()));
     }
 
     @PostMapping(consumes = "application/xml", produces = "application/xml")
