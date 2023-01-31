@@ -54,18 +54,18 @@ export class ZahteviService {
     if (endpointChar == null) return "";
     switch (endpointChar.at(0)) {
       case "A":
-        return "/autorskaPravaResenje/obradiZahtev";
+        return this.autorskaPravaUrl + "/autorskaPravaResenje/obradiZahtev";
       case "P":
-        return "/obradiZahtev";
+        return this.patentiUrl + "/obradiZahtev";
       default:
-        return "/obradiZahtev";
+        return this.zigoviUrl + "/obradiZahtev";
     }
   }
 
   obradiZahtev(obradaZahteva: ObradaZahtevaDTO) {
     const xmlZahtev = JsonToXML.parse("obradaZahteva", obradaZahteva);
     console.log(xmlZahtev);
-    return this.http.post<Blob>(this.getUrl(obradaZahteva.brojPrijave) + this.getObradiZahtevUrl(obradaZahteva.brojPrijave), xmlZahtev, AuthService.getHttpOptions());
+    return this.http.post<Blob>(this.getObradiZahtevUrl(obradaZahteva.brojPrijave), xmlZahtev, AuthService.getHttpOptions());
   }
 
   public downloadPDF(brojPrijave: string): Observable<Blob> {

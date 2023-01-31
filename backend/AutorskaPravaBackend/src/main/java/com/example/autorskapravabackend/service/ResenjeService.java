@@ -4,18 +4,16 @@ import com.example.autorskapravabackend.dto.DetaljiOZahtevu;
 import com.example.autorskapravabackend.dto.ObradaZahteva;
 import com.example.autorskapravabackend.dto.SimpleUser;
 import com.example.autorskapravabackend.dto.ZahtevDTO;
-import com.example.autorskapravabackend.resenje.ResenjeZahteva;
 import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
 import com.example.autorskapravabackend.repository.ResenjeZahtevaRepository;
+import com.example.autorskapravabackend.resenje.ResenjeZahteva;
 import com.example.autorskapravabackend.transformer.AutorskaPravaTransformer;
 import com.example.autorskapravabackend.utils.Utils;
 import com.itextpdf.text.DocumentException;
-import org.apache.commons.io.FileUtils;
+import jakarta.mail.MessagingException;
 import org.springframework.stereotype.Service;
 import org.xmldb.api.base.XMLDBException;
 
-import java.io.ByteArrayInputStream;
-import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
@@ -55,7 +53,7 @@ public class ResenjeService {
                 .build();
     }
 
-    public void obradiZahtev(ObradaZahteva obradaZahteva) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, DocumentException {
+    public void obradiZahtev(ObradaZahteva obradaZahteva) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, DocumentException, MessagingException {
         ResenjeZahteva resenjeZahteva = new ResenjeZahteva();
         resenjeZahteva.setBrojPrijave(obradaZahteva.getBrojPrijave());
         resenjeZahteva.setImeSluzbenika(obradaZahteva.getSluzbenik().getName());
