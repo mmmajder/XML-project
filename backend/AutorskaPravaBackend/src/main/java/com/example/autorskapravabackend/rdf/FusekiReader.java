@@ -83,7 +83,6 @@ public class FusekiReader {
         return whereStr;
     }
 
-
     public static List<String> findByMetadata(MetadataSearchParams param) throws IOException {
         String whereQueryPart = createWhereQueryPart(param);
         ResultSetRewindable results = select(whereQueryPart);

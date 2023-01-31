@@ -30,7 +30,7 @@ export class ZahteviService {
     if (endpointChar == null) return "";
     switch (endpointChar.at(0)) {
       case "A":
-        return this.autorskaPravaUrl;
+        return this.autorskaPravaUrl + "/autorskaPrava";
       case "P":
         return this.patentiUrl;
       default:

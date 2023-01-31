@@ -89,7 +89,7 @@ public class AutorskaPravaRequestDB {
         return getAllByFilter(xpathExp);
     }
 
-    private static XPathQueryService getXPathQueryServiceForZig(Collection col) throws XMLDBException {
+    private static XPathQueryService getXPathQueryService(Collection col) throws XMLDBException {
         XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
         xpathService.setProperty("indent", "yes");
         xpathService.setNamespace("aut", "http://www.ftn.uns.ac.rs/autorskoDelo");
@@ -112,8 +112,6 @@ public class AutorskaPravaRequestDB {
 
         try (Collection col = getCollection()) {
             List<XMLResource> resources = new ArrayList<>();
-            // ovde ne moze da se koristi getXPathQueryServiceForZig() jer postavi namespace, informacija o namespace-u se prenese na Resource
-            // i kasnije ne moze da se izmarshaluje zbog ns ... zato filtraciju obradjeni/neobgradjeni ne raditi preko baze
             XPathQueryService xPathQueryService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
             xPathQueryService.setProperty("indent", "yes");
             String xPathExp = createXPathExpressionForTextSearch(words, matchCase);
@@ -181,7 +179,7 @@ public class AutorskaPravaRequestDB {
 
         try {
             Collection col = getCollection();
-            XPathQueryService xpathService = getXPathQueryServiceForZig(col);
+            XPathQueryService xpathService = getXPathQueryService(col);
             ResourceSet result = xpathService.query(xpathExp);
             collectXMLResourcesFromResult(result, resources, col);
         } catch (Exception e) {

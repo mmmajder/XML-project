@@ -162,21 +162,21 @@ public class AutorskaPravaService {
         }
     }
 
-    private ZahtevZaAutorskaPrava getZahtevForPrilogAddition(String brojPrijaveZiga) {
+    private ZahtevZaAutorskaPrava getZahtevForPrilogAddition(String brojPrijave) {
         ZahtevZaAutorskaPrava ZahtevZaAutorskaPrava;
 
         prilogUpdatingZahtevsLock.lock();
         try {
-            if (!prilogUpdatingZahtevs.containsKey(brojPrijaveZiga)) {
-                ZahtevZaAutorskaPrava = getZahtev(brojPrijaveZiga);
+            if (!prilogUpdatingZahtevs.containsKey(brojPrijave)) {
+                ZahtevZaAutorskaPrava = getZahtev(brojPrijave);
 
                 if (ZahtevZaAutorskaPrava == null) {
                     return null;
                 }
 
-                prilogUpdatingZahtevs.put(brojPrijaveZiga, ZahtevZaAutorskaPrava);
+                prilogUpdatingZahtevs.put(brojPrijave, ZahtevZaAutorskaPrava);
             } else {
-                ZahtevZaAutorskaPrava = prilogUpdatingZahtevs.get(brojPrijaveZiga);
+                ZahtevZaAutorskaPrava = prilogUpdatingZahtevs.get(brojPrijave);
             }
         } finally {
             prilogUpdatingZahtevsLock.unlock();
@@ -185,13 +185,13 @@ public class AutorskaPravaService {
         return ZahtevZaAutorskaPrava;
     }
 
-    public boolean addPrilog(String brojPrijaveZiga, String prilogType, MultipartFile uploadedFile) {
-        ZahtevZaAutorskaPrava ZahtevZaAutorskaPrava = getZahtevForPrilogAddition(brojPrijaveZiga);
+    public boolean addPrilog(String brojPrijave, String prilogType, MultipartFile uploadedFile) {
+        ZahtevZaAutorskaPrava ZahtevZaAutorskaPrava = getZahtevForPrilogAddition(brojPrijave);
         if (ZahtevZaAutorskaPrava == null) {
             return false;
         }
 
-        String fileName = brojPrijaveZiga.replace('/', '_').concat("_").concat(prilogType);
+        String fileName = brojPrijave.replace('/', '_').concat("_").concat(prilogType);
         fileName = fileName.concat(".pdf");
         System.out.println(fileName);
 
@@ -213,6 +213,22 @@ public class AutorskaPravaService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public boolean saveZahtevAfterPrilogAddition(String brojPrijaveZiga) {
+        if (!prilogUpdatingZahtevs.containsKey(brojPrijaveZiga)) {
+            return false;
+        }
+
+        ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = prilogUpdatingZahtevs.get(brojPrijaveZiga);
+        if (zahtevZaAutorskaPrava == null) {
+            return false;
+        }
+
+        autorskaPravaRepository.createRequest(zahtevZaAutorskaPrava);
+        prilogUpdatingZahtevs.remove(brojPrijaveZiga);
+
+        return true;
     }
 
     public List<ZahtevZaAutorskaPrava> getByText(String text, boolean casesensitive, boolean searchForNeobradjeni) throws Exception {

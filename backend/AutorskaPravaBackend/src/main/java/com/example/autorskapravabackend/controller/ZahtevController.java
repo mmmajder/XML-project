@@ -30,8 +30,8 @@ public class ZahtevController {
     }
 
     @PostMapping(consumes = "application/xml", produces = "application/xml")
-    public ResponseEntity<ZahtevZaAutorskaPrava> createZahtev(@RequestBody ZahtevZaAutorskaPravaDTO dto) {
-        return ResponseEntity.ok(autorskaPravaService.createZahtevZaAutorskaPrava(dto));
+    public String createZahtev(@RequestBody ZahtevZaAutorskaPravaDTO dto) {
+        return autorskaPravaService.createZahtevZaAutorskaPrava(dto).getInformacijeOZahtevu().getBrojPrijave();
     }
 
     @GetMapping(path = "/applied", produces = "application/xml")
@@ -89,22 +89,38 @@ public class ZahtevController {
         return ResponseEntity.ok(simpleZahtevDTOs);
     }
 
-    @PostMapping("/file-upload/{brojPrijave}/{godinaPrijave}/{tipPriloga}")
-    public ResponseEntity<String> uploadPrilog(@PathVariable("brojPrijave") String brojPrijave,
-                                               @PathVariable("godinaPrijave") String godinaPrijave,
+    @PostMapping("/file-upload/{godinaPrijave}/{brojPrijave}/{tipPriloga}")
+    public ResponseEntity<String> uploadPrilog(@PathVariable("godinaPrijave") String godinaPrijave,
+                                               @PathVariable("brojPrijave") String brojPrijave,
                                                @PathVariable("tipPriloga") String tipPriloga,
                                                @RequestParam("file") MultipartFile file) {
         try {
-            String brojPrijaveZiga = "A-" + godinaPrijave + "/" + brojPrijave;
+            String brojPrijaveA = godinaPrijave + "/" + brojPrijave;
 
             if (tipPriloga.trim().equals("")) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
-            boolean isOkay = autorskaPravaService.addPrilog(brojPrijaveZiga, tipPriloga, file);
+            boolean isOkay = autorskaPravaService.addPrilog(brojPrijaveA, tipPriloga, file);
 
             if (!isOkay) {
                 return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            }
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @GetMapping("/save/{brojPrijaveZigaId}-{brojPrijaveZigaGodina}")
+    public ResponseEntity<String> saveAfterPrilogAddition(@PathVariable("brojPrijaveZigaId") String brojPrijaveZigaId,
+                                                          @PathVariable("brojPrijaveZigaGodina") String brojPrijaveZigaGodina) {
+        try {
+            String brojPrijaveZiga = brojPrijaveZigaId.trim().concat("/").concat(brojPrijaveZigaGodina.trim());
+
+            if (!autorskaPravaService.saveZahtevAfterPrilogAddition(brojPrijaveZiga)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 
             return new ResponseEntity<>(HttpStatus.OK);

@@ -10,10 +10,11 @@ export class Autor {
   pseudonim: string = "";
 
   public isValid(): boolean {
-    return this.ime.length > 0 &&
+    console.log(this.anoniman)
+    return (this.ime.length > 0 &&
       this.prezime.length > 0 &&
       this.adresa.isValid() &&
-      this.drzavljanstvo.length > 0;
+      this.drzavljanstvo.length > 0) || (this.ime.length > 0 && this.godinaSmrti != undefined) || (this.anoniman == true);
   }
 }
 

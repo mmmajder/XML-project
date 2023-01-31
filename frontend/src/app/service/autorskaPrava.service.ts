@@ -16,23 +16,24 @@ export class AutorskaPravaService {
     this.autorskaPravaUrl = 'http://localhost:8001/autorskaPrava';
   }
 
-  public podnesiZahtev(zahtev: SadrzajZahtevaZaAutorskaPrava): Observable<Object> {
+  public podnesiZahtev(zahtev: SadrzajZahtevaZaAutorskaPrava): Observable<string> {
     console.log("PODNOSENJE ZAHTEVA", zahtev)
     const xmlZahtev = JsonToXML.parse("zahtevZaAutorskaPravaDTO", zahtev);
     console.log(xmlZahtev)
-    return this.http.post<Object>(this.autorskaPravaUrl, xmlZahtev, AuthService.getHttpOptions());
+    return this.http.post<string>(this.autorskaPravaUrl, xmlZahtev, AuthService.getHttpOptions());
   }
 
   public dobaviZahtev(brojPrijave: string): Observable<Object> {
     return this.http.get<Object>(this.autorskaPravaUrl + "/" + brojPrijave, AuthService.getHttpOptions());
   }
 
-  public postPrilog(brojPrijaveZiga: string, tipPrilog: string, file: any) {
+  public postPrilog(brojPrijave: string, tipPrilog: string, file: any) {
     let formData = new FormData();
-    let brojPrijaveZigaParts: string[] = brojPrijaveZiga.split("/");
+    console.log(brojPrijave);
+    let brojPrijaveParts: string[] = brojPrijave.split("/");
     formData.append("file", file);
-
-    return this.http.post<Object>(this.autorskaPravaUrl + "/file-upload/" + brojPrijaveZigaParts[0] + "-" + brojPrijaveZigaParts[1] + "-" + tipPrilog, formData, this.getNoContentTypeHttpOptions());
+    return this.http.post<Object>(this.autorskaPravaUrl + "/file-upload/" +
+      brojPrijaveParts[0] + "/" + brojPrijaveParts[1] + "/" + tipPrilog, formData, this.getNoContentTypeHttpOptions());
   }
 
   public saveAfterPrilogAddition(brojPrijaveZiga: string) {
