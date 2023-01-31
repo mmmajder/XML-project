@@ -369,6 +369,22 @@
       </ng-template>
     </mat-step>
 
+    <mat-step>
+      <ng-template matStepLabel>Prilozi uz prijavu</ng-template>
+      <ng-template matStepContent>
+        <p>
+          Opis autorskog dela
+          <input #uploadOpis type="file" (input)="selectOpis($event)"
+                 accept="application/pdf"/>
+        </p>
+        <p>
+          Primer autorskog dela
+          <input #uploadPrimer type="file" (input)="selectPrimer($event)"
+                 accept="application/pdf"/>
+        </p>
+      </ng-template>
+    </mat-step>
+
   </mat-stepper>
 
   <button style="width: 100%; margin-top: 10px" color="primary" (click)="podnesiZahtev()" mat-raised-button>

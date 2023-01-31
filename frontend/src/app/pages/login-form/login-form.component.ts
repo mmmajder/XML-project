@@ -35,8 +35,8 @@ export class LoginFormComponent {
       "password": this.password
     }).subscribe({
       next: (value) => {
-        // localStorage.setItem('token', "Bearer " + value.auth.token.accessToken);
-        this.authService.getCurrentlyLoggedUser();
+        console.log(value)
+        localStorage.setItem('token', "Bearer " + value.token.accessToken);
         this.router.navigate(['/home']);
       },
       error: () => this._snackBar.open("Wrong email or password.", '', {

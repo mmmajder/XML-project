@@ -5,8 +5,6 @@ import {PodnosilacZahteva} from "../../model/autorskoDelo/PodnosilacZahteva";
 import {AutorskaPravaService} from "../../service/autorskaPrava.service";
 import {SadrzajZahtevaZaAutorskaPrava} from "../../model/autorskoDelo/SadrzajZahtevaZaAutorskaPrava";
 import {PodaciOAutorskomDelu} from "../../model/autorskoDelo/PodaciOAutorskomDelu";
-import {xml2js} from "xml-js";
-import { map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-autorska-prava',
@@ -23,6 +21,9 @@ export class AutorskaPravaComponent {
   podnosilac: PodnosilacZahteva = new PodnosilacZahteva();
   valid: boolean = true;
   tipAutora: string = "ziv";
+
+  opis: any;
+  primer: any;
 
   constructor(private servis: AutorskaPravaService) {
   }
@@ -46,5 +47,13 @@ export class AutorskaPravaComponent {
     if (this.valid) {
       this.servis.podnesiZahtev(zahtev).subscribe(data => console.log(data));
     }
+  }
+
+  selectOpis(event: any) {
+    this.opis = event.target.files[0];
+  }
+
+  selectPrimer(event: any) {
+    this.primer = event.target.files[0];
   }
 }

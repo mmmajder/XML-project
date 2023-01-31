@@ -1,9 +1,13 @@
 package com.example.autorskapravabackend.mapper;
 
-import com.example.autorskapravabackend.dto.AutorDTO;
-import com.example.autorskapravabackend.dto.PodnosilacDTO;
-import com.example.autorskapravabackend.dto.ZahtevZaAutorskaPravaDTO;
+import com.example.autorskapravabackend.dto.*;
 import com.example.autorskapravabackend.model.*;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 public class Mapper {
 
@@ -16,6 +20,52 @@ public class Mapper {
         sadrzaj.setPodaciOPunomocniku(dto.getPodaciOPunomocniku());
         z.setSadrzajZahteva(sadrzaj);
         return z;
+    }
+
+    public static List<SimpleZahtevDTO> mapToSimpleZahtevs(List<ZahtevZaAutorskaPrava> zahtevs) {
+        List<SimpleZahtevDTO> simpleZahtevDTOs = new ArrayList<>();
+
+        for (ZahtevZaAutorskaPrava zahtev : zahtevs) {
+            SimpleZahtevDTO simpleZahtevDTO = mapToSimpleZahtev(zahtev);
+            simpleZahtevDTOs.add(simpleZahtevDTO);
+        }
+
+        return simpleZahtevDTOs;
+    }
+
+    public static SimpleZahtevDTO mapToSimpleZahtev(ZahtevZaAutorskaPrava zahtev) {
+        SimpleZahtevDTO simpleZahtevDTO = new SimpleZahtevDTO();
+        simpleZahtevDTO.setBrojPrijave(zahtev.getInformacijeOZahtevu().getBrojPrijave());
+
+        String datumPodnosenja = zahtev.getInformacijeOZahtevu().getDatumPodnosenja().toString();
+        simpleZahtevDTO.setDatumPodnosenja(datumPodnosenja);
+
+        SimpleUserDTO podnosioc = mapToSimpleUser(zahtev.getSadrzajZahteva().getPodnosilacZahteva());
+        simpleZahtevDTO.setPodnosioc(podnosioc);
+
+        simpleZahtevDTO.setObradjen(zahtev.getStatus() != EStatus.PREDATO);
+
+        return simpleZahtevDTO;
+    }
+
+    public static SimpleUserDTO mapToSimpleUser(PodnosilacZahteva podnosilacZahteva) {
+        SimpleUserDTO simpleUserDTO = new SimpleUserDTO();
+        simpleUserDTO.setEmail(podnosilacZahteva.getPodaciOPodnosiocu().getEmail());
+
+        if (podnosilacZahteva.getPodaciOPodnosiocu() instanceof TFizickoLice) {
+            simpleUserDTO.setName(((TFizickoLice) podnosilacZahteva.getPodaciOPodnosiocu()).getOsnovniLicniPodaci().getIme() +
+                    " " + ((TFizickoLice) podnosilacZahteva.getPodaciOPodnosiocu()).getOsnovniLicniPodaci().getPrezime());
+        } else {
+            simpleUserDTO.setName(((TPravnoLice) podnosilacZahteva.getPodaciOPodnosiocu()).getPoslovnoIme());
+        }
+
+        return simpleUserDTO;
+    }
+
+    public static String mapDateToString(Date date) {
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy.");
+
+        return dateFormat.format(date);
     }
 
     private static PodnosilacZahteva dtoToPodnosilac(PodnosilacDTO podnosilacZahteva) {

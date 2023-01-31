@@ -1,17 +1,12 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from "rxjs";
-import {mapCreatePatent} from "../utils/Mapper";
 import {AuthService} from "./auth.service";
-import {SadrzajZahtevaZaAutorskaPrava} from "../model/autorskoDelo/SadrzajZahtevaZaAutorskaPrava";
 import * as JsonToXML from "js2xmlparser";
-import {MetadataSearchParamsDTO} from "../model/search/SearchParams";
-import {KlasaDTO, ZahtevZaPriznanjeZigaDTO} from "../model/zigModels/ZahtevZaPriznanjeZigaDTO";
+import {ZahtevZaPriznanjeZigaDTO} from "../model/zigModels/ZahtevZaPriznanjeZigaDTO";
 import {LiceZahtevaZig} from "../model/zigModels/LiceZahtevaZig";
 import {Adresa} from "../model/zigModels/Adresa";
 import {Kontakt} from "../model/zigModels/Kontakt";
-import {Zig} from "../model/zigModels/Zig";
-import {Klasa} from "../model/zigModels/Klasa";
 import {ZigDTO} from "../model/zigModels/ZigDTO";
 
 @Injectable({
@@ -28,7 +23,7 @@ export class ZigService {
     this.zigUrl = 'http://localhost:8002/zig';
   }
 
-  public postZahtev(zahtev:any): Observable<any> {
+  public postZahtev(zahtev: any): Observable<any> {
     const xmlZahtev = JsonToXML.parse("ZahtevZaPriznanjeZigaDTO", zahtev);
     console.log(xmlZahtev)
     console.log("evo saljem zahtev")
@@ -52,7 +47,7 @@ export class ZigService {
     };
   }
 
-  isValidFilled(zahtev:ZahtevZaPriznanjeZigaDTO){
+  isValidFilled(zahtev: ZahtevZaPriznanjeZigaDTO) {
     let valid = true;
     valid &&= this.isValidLice(zahtev.podnosilacPrijave);
     valid &&= this.isValidLice(zahtev.punomocnik);
@@ -64,7 +59,7 @@ export class ZigService {
     return valid;
   }
 
-  isValidConsoleLog(zahtev:ZahtevZaPriznanjeZigaDTO){
+  isValidConsoleLog(zahtev: ZahtevZaPriznanjeZigaDTO) {
     console.log(this.isValidLice(zahtev.podnosilacPrijave));
     console.log(this.isValidLice(zahtev.punomocnik));
     console.log(zahtev.statusPrilogPunomocje != "");
@@ -73,7 +68,7 @@ export class ZigService {
     // console.log(this.isValidKlasa());
   }
 
-  isValidLice(lice:LiceZahtevaZig){
+  isValidLice(lice: LiceZahtevaZig) {
     let valid = true;
     valid &&= this.isValidName(lice);
     valid &&= this.isValidAdresa(lice.adresa);
@@ -82,15 +77,15 @@ export class ZigService {
     return valid;
   }
 
-  isValidName(lice:LiceZahtevaZig) {
-    if (lice.tipLica === "fizickoLice"){
+  isValidName(lice: LiceZahtevaZig) {
+    if (lice.tipLica === "fizickoLice") {
       return (this.doesContainOnlyLetters(lice.ime) && this.doesContainOnlyLetters(lice.prezime));
     } else {
       return this.doesContainOnlyLetters(lice.poslovnoIme);
     }
   }
 
-  isValidAdresa(adresa:Adresa) {
+  isValidAdresa(adresa: Adresa) {
     let valid = true;
     valid &&= this.doesContainOnlyLetters(adresa.ulica);
     valid &&= adresa.postanskiBroj > 9999 && adresa.postanskiBroj < 100000;
@@ -100,7 +95,7 @@ export class ZigService {
     return valid;
   }
 
-  isValidKontakt(kontakt:Kontakt) {
+  isValidKontakt(kontakt: Kontakt) {
     let valid = true;
     valid &&= this.phonenumber.test(kontakt.telefon);
     valid &&= this.email.test(kontakt.email);
@@ -109,28 +104,28 @@ export class ZigService {
     return valid;
   }
 
-  isValidZigDTO(zigDTO:ZigDTO) {
+  isValidZigDTO(zigDTO: ZigDTO) {
     let valid = true;
 
-    if (zigDTO.opisIzgledaZiga  === "DRUGA_VRSTA_ZNAKA") {
+    if (zigDTO.opisIzgledaZiga === "DRUGA_VRSTA_ZNAKA") {
       valid &&= zigDTO.drugaVrstaZnakaOpis != "";
     }
 
     return valid;
   }
 
-  isValidKlasa(chosenKlasas:string[]) {
+  isValidKlasa(chosenKlasas: string[]) {
     let valid = chosenKlasas.length > 0;
 
     return valid;
   }
 
-  doesContainOnlyLetters(word:string): boolean{
+  doesContainOnlyLetters(word: string): boolean {
     word = word.trim();
     return this.letters.test(word);
   }
 
-  createTestZahtev(){
+  createTestZahtev() {
     let zahtev = new ZahtevZaPriznanjeZigaDTO();
     zahtev.podnosilacPrijave = this.createTestLice();
     zahtev.punomocnik = this.createTestLice();
@@ -144,8 +139,8 @@ export class ZigService {
     return zahtev;
   }
 
-  createTestLice(){
-    let lice  = new LiceZahtevaZig();
+  createTestLice() {
+    let lice = new LiceZahtevaZig();
     lice.tipLica = "fizickoLice";
     lice.ime = "Ime";
     lice.prezime = "Prezime";
@@ -161,7 +156,7 @@ export class ZigService {
     return lice;
   }
 
-  createTestZig(){
+  createTestZig() {
     let zig = new ZigDTO();
     zig.tipZiga = "INDIVIDUALNI_ZIG";
     zig.opisIzgledaZiga = "DRUGA_VRSTA_ZNAKA";
@@ -175,16 +170,16 @@ export class ZigService {
 
   public postPrilog(brojPrijaveZiga: string, tipPrilog: string, file: any) {
     let formData = new FormData();
-    let brojPrijaveZigaParts:string[] = brojPrijaveZiga.split("/");
+    let brojPrijaveZigaParts: string[] = brojPrijaveZiga.split("/");
     formData.append("file", file);
 
-    return this.http.post<Object>(this.zigUrl + "/file-upload/" +brojPrijaveZigaParts[0] +"-" + brojPrijaveZigaParts[1] + "-" + tipPrilog, formData, this.getNoContentTypeHttpOptions()); // do not change for AuthService.getHttpOptions() because of 'Content-Type' header
+    return this.http.post<Object>(this.zigUrl + "/file-upload/" + brojPrijaveZigaParts[0] + "-" + brojPrijaveZigaParts[1] + "-" + tipPrilog, formData, this.getNoContentTypeHttpOptions()); // do not change for AuthService.getHttpOptions() because of 'Content-Type' header
   }
 
   public saveAfterPrilogAddition(brojPrijaveZiga: string) {
-    let brojPrijaveZigaParts:string[] = brojPrijaveZiga.split("/");
+    let brojPrijaveZigaParts: string[] = brojPrijaveZiga.split("/");
 
-    return this.http.get<Object>(this.zigUrl + "/save/" +brojPrijaveZigaParts[0] +"-" + brojPrijaveZigaParts[1], AuthService.getHttpOptions());
+    return this.http.get<Object>(this.zigUrl + "/save/" + brojPrijaveZigaParts[0] + "-" + brojPrijaveZigaParts[1], AuthService.getHttpOptions());
   }
 
   public empty() {
@@ -199,9 +194,4 @@ export class ZigService {
       })
     };
   }
-
-  // public getProfileImage(email: string) {
-  //   console.log("getProfileImage service")
-  //   return this.http.get(this.imageUrl + "/" + email, this.httpOptions);
-  // }
 }

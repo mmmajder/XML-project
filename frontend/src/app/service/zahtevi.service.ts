@@ -1,13 +1,10 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpEvent, HttpHeaders} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from "rxjs";
 import {AuthService} from "./auth.service";
 import * as JsonToXML from "js2xmlparser";
-import {DetaljiOZahtevu, ObradaZahteva, ObradaZahtevaDTO} from "../model/shared/Zahtev";
-// import {MetadataSearchParams, MultipleMetadataSearchParams, TextSearchDTO} from "../model/search/SearchParams";
+import {DetaljiOZahtevu, ObradaZahtevaDTO} from "../model/shared/Zahtev";
 import {MetadataSearchParamsDTO, TextSearchDTO} from "../model/search/SearchParams";
-import { map } from 'rxjs/operators';
-import {xml2js} from "xml-js";
 
 @Injectable({
   providedIn: 'root'

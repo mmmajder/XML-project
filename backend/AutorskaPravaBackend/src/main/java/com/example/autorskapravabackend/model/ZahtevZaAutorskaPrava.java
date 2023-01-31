@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
+import java.util.List;
 
 @Setter
 @Getter
@@ -21,7 +22,7 @@ import javax.xml.bind.annotation.XmlType;
 )
 @XmlType(
         name = "",
-        propOrder = {"informacijeOZahtevu", "sadrzajZahteva"}
+        propOrder = {"informacijeOZahtevu", "sadrzajZahteva", "status", "putanjaDoOpisa", "putanjaDoPrimera"}
 )
 public class ZahtevZaAutorskaPrava {
     @XmlElement(
@@ -34,6 +35,12 @@ public class ZahtevZaAutorskaPrava {
             required = true
     )
     private SadrzajZahteva sadrzajZahteva;
+    @XmlElement(name = "Status", required = true)
+    private EStatus status;
+    @XmlElement(name="Putanja_do_opisa")
+    private String putanjaDoOpisa;
+    @XmlElement(name="Putanja_do_primera")
+    private String putanjaDoPrimera;
 
     @Override
     public String toString() {

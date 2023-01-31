@@ -42,12 +42,12 @@ export class RegistrationFormComponent {
       "userRole": this.userRole
     }).subscribe({
       next: () => {
-        this._snackBar.open("We sent you registration link", '', {
+        this._snackBar.open("Registration successful!", '', {
           duration: 3000,
           panelClass: ['snack-bar']
         })
       },
-      error: () => this._snackBar.open("Wrong email or password.", '', {
+      error: () => this._snackBar.open("Error occured. Please check your data.", '', {
         duration: 3000,
         panelClass: ['snack-bar']
       })

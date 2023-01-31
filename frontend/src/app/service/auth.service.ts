@@ -24,20 +24,11 @@ export class AuthService {
       "password": user.password
     }
     const xmlZahtev = JsonToXML.parse("authenticationRequest", body);
-    console.log(xmlZahtev)
     return this.http.post<LoginResponseDto>(this.authUrl + '/login', xmlZahtev, AuthService.getHttpOptions());
   }
 
   public register(user: RegisterCredentials): Observable<string> {
-    let body = {
-      "email": user.email,
-      "password": user.password,
-      "name": user.name,
-      "surname": user.lastName,
-      "phoneNumber": user.phoneNumber,
-      "userRole": user.userRole
-    }
-    const xmlZahtev = JsonToXML.parse("userDTO", body);
+    const xmlZahtev = JsonToXML.parse("userDTO", user);
     console.log(xmlZahtev)
     return this.http.post<string>(this.authUrl + '/register', xmlZahtev, AuthService.getHttpOptions());
   }

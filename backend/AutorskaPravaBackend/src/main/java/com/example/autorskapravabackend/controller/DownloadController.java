@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 
 @AllArgsConstructor
 @RestController
@@ -52,6 +53,15 @@ public class DownloadController {
         ByteArrayInputStream byteFile = autorskaPravaService.generateJSON(brojPrijave.getBroj());
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=metadata-" + brojPrijave.getBroj() + ".json");
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
+    }
+
+    @GetMapping(path = "/prilog/{fileName}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> getPrilogFile(@PathVariable("fileName") String fileName) throws IOException {
+        ByteArrayInputStream byteFile = autorskaPravaService.getPrilog(fileName);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=" + fileName);
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
     }
