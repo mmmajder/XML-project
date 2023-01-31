@@ -91,4 +91,44 @@ public class PatentController {
 
         return ResponseEntity.ok(simpleZahtevDTOs);
     }
+
+    @PostMapping("/file-upload/{godinaPrijave}/{brojPrijave}/{tipPriloga}")
+    public ResponseEntity<String> uploadPrilog(@PathVariable("godinaPrijave") String godinaPrijave,
+                                               @PathVariable("brojPrijave") String brojPrijave,
+                                               @PathVariable("tipPriloga") String tipPriloga,
+                                               @RequestParam("file") MultipartFile file) {
+        try {
+            String brojPrijaveA = godinaPrijave + "/" + brojPrijave;
+
+            if (tipPriloga.trim().equals("")) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            boolean isOkay = patentService.addPrilog(brojPrijaveA, tipPriloga, file);
+
+            if (!isOkay) {
+                return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+            }
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
+
+    @GetMapping("/save/{brojPrijaveId}-{brojPrijaveGodina}")
+    public ResponseEntity<String> saveAfterPrilogAddition(@PathVariable("brojPrijaveId") String brojPrijaveId,
+                                                          @PathVariable("brojPrijaveGodina") String brojPrijaveGodina) {
+        try {
+            String brojPrijave = brojPrijaveId.trim().concat("/").concat(brojPrijaveGodina.trim());
+
+            if (!patentService.saveZahtevAfterPrilogAddition(brojPrijave)) {
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            return new ResponseEntity<>(HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(HttpStatus.NOT_ACCEPTABLE);
+        }
+    }
 }

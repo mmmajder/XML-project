@@ -11,6 +11,7 @@ import com.example.patentbackend.repository.PatentRepository;
 import com.example.patentbackend.transformer.PatentTransformer;
 import org.apache.commons.io.FileUtils;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.xmldb.api.base.XMLDBException;
 
 import javax.xml.bind.JAXBException;
@@ -26,6 +27,7 @@ public class PatentService {
 
     private PatentRepository patentRepository = new PatentRepository();
     private final Lock prilogUpdatingZahtevsLock = new ReentrantLock();
+    private static final HashMap<String, ZahtevZaPriznanjePatenta> prilogUpdatingZahtevs = new HashMap<>();
 
     public ZahtevZaPriznanjePatenta getZahtevZaPriznanjePatenta(String brojPrijave) {
         return patentRepository.getZahtevZaPriznanjePatenta(brojPrijave);
@@ -191,6 +193,73 @@ public class PatentService {
         } else {
             return zahtevi.stream().filter(z -> !Objects.equals(z.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getStanje(), "NA_CEKANJU")).collect(Collectors.toList());
         }
+    }
+
+    public boolean addPrilog(String brojPrijave, String prilogType, MultipartFile uploadedFile) {
+        ZahtevZaPriznanjePatenta zahtev = getZahtevForPrilogAddition(brojPrijave);
+        if (zahtev == null) {
+            return false;
+        }
+        String fileName;
+        if (prilogType.equals("Podnosioc")) {
+            fileName = brojPrijave.replace('/', '_').concat("_PODNOSIOCI.pdf");
+            zahtev.setPutanjaDoPrilogaPodnosioca("src/main/resources/uploadedFiles/" + fileName);
+        } else {
+            fileName = brojPrijave.replace('/', '_').concat("_PRAVO_PRIJAVE.pdf");
+            zahtev.setPutanjaDoPrimera("src/main/resources/uploadedFiles/" + fileName);
+        }
+        return writeFile(fileName, uploadedFile);
+    }
+
+    public boolean writeFile(String fileName, MultipartFile uploadedFile) {
+        File file = new File("src/main/resources/uploadedFiles/" + fileName);
+
+        try (OutputStream os = new FileOutputStream(file)) {
+            os.write(uploadedFile.getBytes());
+            System.out.println("Saved new file: " + fileName);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+    public boolean saveZahtevAfterPrilogAddition(String brojPrijaveZiga) {
+        if (!prilogUpdatingZahtevs.containsKey(brojPrijaveZiga)) {
+            return false;
+        }
+
+        ZahtevZaPriznanjePatenta zahtev = prilogUpdatingZahtevs.get(brojPrijaveZiga);
+        if (zahtev == null) {
+            return false;
+        }
+
+        patentRepository.createPatentRequest(zahtev);
+        prilogUpdatingZahtevs.remove(brojPrijaveZiga);
+
+        return true;
+    }
+
+    private ZahtevZaPriznanjePatenta getZahtevForPrilogAddition(String brojPrijave) {
+        ZahtevZaPriznanjePatenta zahtev;
+
+        prilogUpdatingZahtevsLock.lock();
+        try {
+            if (!prilogUpdatingZahtevs.containsKey(brojPrijave)) {
+                zahtev = getZahtev(brojPrijave);
+
+                if (zahtev == null) {
+                    return null;
+                }
+
+                prilogUpdatingZahtevs.put(brojPrijave, zahtev);
+            } else {
+                zahtev = prilogUpdatingZahtevs.get(brojPrijave);
+            }
+        } finally {
+            prilogUpdatingZahtevsLock.unlock();
+        }
+
+        return zahtev;
     }
 //    public List<ZahtevZaPriznanjePatenta> getAllZahtevZaPriznanjePatenta() {
 //        return patentRepository.getAll();

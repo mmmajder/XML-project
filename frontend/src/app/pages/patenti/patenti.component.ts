@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {PatentService} from "../../service/patent.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 declare const Xonomy: any;
 
@@ -10,7 +11,10 @@ declare const Xonomy: any;
 })
 export class PatentiComponent implements OnInit {
 
-  constructor(private patentService: PatentService) {
+  prilogPodnosioc: any
+  prilogPravoPriajve: any
+
+  constructor(private patentService: PatentService, private _snackBar: MatSnackBar) {
   }
 
   save(): void {
@@ -384,4 +388,32 @@ export class PatentiComponent implements OnInit {
   }
 
 
+  addPrilogPodnosioc(event: any) {
+    this.prilogPodnosioc = event.target.files[0];
+  }
+
+  addPrilogPravoPrijave(event: any) {
+    this.prilogPravoPriajve = event.target.files[0];
+  }
+
+  uploadPrilogsForkJoin(brojPrijave: string) {
+    if (undefined != this.prilogPodnosioc)
+      this.patentService.postPrilog(brojPrijave, "Podnosioc", this.prilogPodnosioc).subscribe(() => {
+        this.patentService.postPrilog(brojPrijave, "PravoPriajve", this.prilogPravoPriajve).subscribe()
+        this.patentService.saveAfterPrilogAddition(brojPrijave).subscribe(() => {
+          this._snackBar.open("Vaš zahtev je uspešno podnet.", '', {
+            duration: 3000,
+            panelClass: ['snack-bar']
+          })
+        });
+      });
+    if (undefined != this.prilogPravoPriajve)
+      this.patentService.postPrilog(brojPrijave, "PravoPriajve", this.prilogPravoPriajve).subscribe()
+    this.patentService.saveAfterPrilogAddition(brojPrijave).subscribe(() => {
+      this._snackBar.open("Vaš zahtev je uspešno podnet.", '', {
+        duration: 3000,
+        panelClass: ['snack-bar']
+      })
+    });
+  }
 }

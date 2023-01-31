@@ -46,48 +46,70 @@
             <body>
                 <table style="width: 65%">
                     <tr>
-                        <td colspan="2" style="text-align:center; border-top-width:1px; border-left-width:1px;">Popunjava zavod</td>
+                        <td colspan="2" style="text-align:center; border-top-width:1px; border-left-width:1px;">
+                            Popunjava zavod
+                        </td>
                     </tr>
                     <tr>
                         <td style="border-left-width:1px;">Broj prijave</td>
-                        <td><xsl:value-of select="//pat:Broj_prijave"/></td>
+                        <td>
+                            <xsl:value-of select="//pat:Broj_prijave"/>
+                        </td>
                     </tr>
                     <tr>
                         <td style="border-left-width:1px;">Datum prijema</td>
-                        <td><xsl:value-of select="//pat:Datum_prijema"/></td>
+                        <td>
+                            <xsl:value-of select="//pat:Datum_prijema"/>
+                        </td>
                     </tr>
                     <tr>
                         <td style="border-left-width:1px;">Priznati datum podnosenja</td>
-                        <td><xsl:value-of select="//pat:Priznati_datum_podnosenja"/></td>
+                        <td>
+                            <xsl:value-of select="//pat:Priznati_datum_podnosenja"/>
+                        </td>
                     </tr>
                     <tr>
                         <td style="border-left-width:1px;">Pecat i potpis</td>
                         <td></td>
                     </tr>
                 </table>
-                <p><br/>
-                    Republika Srbija<br/>
-                    Zavod za intelektualnu svojinu<br/>
-                    Kneginje Ljubice broj 5<br/>
+                <p>
+                    <br/>
+                    Republika Srbija
+                    <br/>
+                    Zavod za intelektualnu svojinu
+                    <br/>
+                    Kneginje Ljubice broj 5
+                    <br/>
                     11000 Beograd
                 </p>
                 <center>
-                    <h3>ZAHTEV<br/>
-                ZA PRIZNANJE PATENTA</h3>
+                    <h3>ZAHTEV
+                        <br/>
+                        ZA PRIZNANJE PATENTA
+                    </h3>
                 </center>
 
-<!--                <tr><td colspan="2" style="border-left-width:1px;">-->
-<!--                    <b>5. Naznacenje boje, odnosno boja iz kojih se znak sastoji:</b> <br/>-->
-<!--                    <xsl:for-each select="//sz:Boja">-->
-<!--                        <xsl:value-of select="."/>, <xsl:text>&#x20;</xsl:text>-->
-<!--                    </xsl:for-each>-->
-<!--                </td></tr>-->
+                <!--                <tr><td colspan="2" style="border-left-width:1px;">-->
+                <!--                    <b>5. Naznacenje boje, odnosno boja iz kojih se znak sastoji:</b> <br/>-->
+                <!--                    <xsl:for-each select="//sz:Boja">-->
+                <!--                        <xsl:value-of select="."/>, <xsl:text>&#x20;</xsl:text>-->
+                <!--                    </xsl:for-each>-->
+                <!--                </td></tr>-->
 
                 <table>
-                    <tr><th colspan="3" style="border-top-width:1px; border-left-width:1px;">Polje broj I NAZIV PRONALASKA</th></tr>
                     <tr>
-                        <td colspan="3" style="border-left-width:1px;">Na srpskom jeziku: <xsl:value-of select="//pat:Naziv_pronalaska[@Jezik='SRPSKI']/@Naziv"/><br/>
-                            Na engleskom jeziku: <xsl:value-of select="//pat:Naziv_pronalaska[@Jezik='ENGLESKI']/@Naziv"/></td>
+                        <th colspan="3" style="border-top-width:1px; border-left-width:1px;">Polje broj I NAZIV
+                            PRONALASKA
+                        </th>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="border-left-width:1px;">Na srpskom jeziku:
+                            <xsl:value-of select="//pat:Naziv_pronalaska[@Jezik='SRPSKI']/@Naziv"/>
+                            <br/>
+                            Na engleskom jeziku:
+                            <xsl:value-of select="//pat:Naziv_pronalaska[@Jezik='ENGLESKI']/@Naziv"/>
+                        </td>
                     </tr>
                     <tr>
                         <td colspan="3" style="border-left-width:1px;">
@@ -109,7 +131,8 @@
                             <xsl:if test="//pat:Podaci_o_podnosiocu_prijave//pat:Poslovno_ime">
                                 Poslovno ime
                             </xsl:if>
-                            <br/><br/>
+                            <br/>
+                            <br/>
                             <xsl:if test="//pat:Podaci_o_podnosiocu_prijave//pat:Ime">
                                 <xsl:value-of select="//pat:Podaci_o_podnosiocu_prijave//pat:Ime"/><xsl:text>&#x20;</xsl:text>
                                 <xsl:value-of select="//pat:Podaci_o_podnosiocu_prijave//pat:Prezime"/>
@@ -120,11 +143,16 @@
                         </td>
                         <td rowspan="3">
                             Ulica i broj, poštanski broj, mesto i država
-                            <br/><br/>
-                            <xsl:value-of select="//pat:Podnosilac_prijave//pat:Adresa_lica//pat:Ulica"/> <xsl:text>&#x20;</xsl:text>
-                            <xsl:value-of select="//pat:Podnosilac_prijave//pat:Adresa_lica//pat:Broj_u_ulici"/> <xsl:text>&#x20;</xsl:text>,
-                            <xsl:value-of select="//pat:Podnosilac_prijave//pat:Adresa_lica//pat:Postanski_broj"/> <xsl:text>&#x20;</xsl:text>
-                            <xsl:value-of select="//pat:Podnosilac_prijave//pat:Adresa_lica//pat:Mesto"/> <xsl:text>&#x20;</xsl:text>
+                            <br/>
+                            <br/>
+                            <xsl:value-of select="//pat:Podnosilac_prijave//pat:Adresa_lica//pat:Ulica"/>
+                            <xsl:text>&#x20;</xsl:text>
+                            <xsl:value-of select="//pat:Podnosilac_prijave//pat:Adresa_lica//pat:Broj_u_ulici"/>
+                            <xsl:text>&#x20;</xsl:text>,
+                            <xsl:value-of select="//pat:Podnosilac_prijave//pat:Adresa_lica//pat:Postanski_broj"/>
+                            <xsl:text>&#x20;</xsl:text>
+                            <xsl:value-of select="//pat:Podnosilac_prijave//pat:Adresa_lica//pat:Mesto"/>
+                            <xsl:text>&#x20;</xsl:text>
                             <xsl:value-of select="//pat:Podnosilac_prijave//pat:Adresa_lica//pat:Drzava"/>
                         </td>
                         <td>
@@ -148,7 +176,20 @@
                         </td>
                     </tr>
                     <tr>
-                        <td colspan="2" style="border-left-width:1px;">Drzavljanstvo: <xsl:value-of select="//pat:Podaci_o_podnosiocu_prijave//pat:Drzavljanstvo"/></td>
+                        <td colspan="2" style="border-left-width:1px;">Drzavljanstvo:
+                            <xsl:value-of select="//pat:Podaci_o_podnosiocu_prijave//pat:Drzavljanstvo"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td colspan="3" style="border-left-width:1px;">
+                            <xsl:element name="a">
+                                <xsl:attribute name="href">
+                                    http://localhost:8001/autorskaPrava/download/prilog/<xsl:value-of
+                                        select="//pat:Podaci_o_podnosiocu_prijave//pat:Putanja_do_priloga_podnosioca"/>
+                                </xsl:attribute>
+                                Izjavu o zajedničkom predstavniku
+                            </xsl:element>
+                        </td>
                     </tr>
                 </table>
 
@@ -168,52 +209,68 @@
                         </td>
                     </tr>
                     <xsl:if test="//pat:Pronalazac_ne_zeli_da_bude_naveden=false()"> <!-- informacije o pronalazacu se ispisuju samo ukoliko on to zeli -->
-                    <tr>
-                        <td rowspan="3" style="border-left-width:1px;">
-                            <xsl:if test="//pat:Pronalazac//pat:Ime">
-                                Ime i Prezime
-                            </xsl:if>
-                            <xsl:if test="//pat:Pronalazac//pat:Poslovno_ime">
-                                Poslovno ime
-                            </xsl:if>
-                            <br/><br/>
-                            <xsl:if test="//pat:Pronalazac//pat:Ime">
-                                <xsl:value-of select="//pat:Pronalazac//pat:Ime"/><xsl:text>&#x20;</xsl:text>
-                                <xsl:value-of select="//pat:Pronalazac//pat:Prezime"/>
-                            </xsl:if>
-                            <xsl:if test="//pat:Pronalazac//pat:Poslovno_ime">
-                                <xsl:value-of select="//pat:Pronalazac//pat:Poslovno_ime"/>
-                            </xsl:if>
-                        </td>
-                        <td rowspan="3">
-                            Ulica i broj, poštanski broj, mesto i država
-                            <br/><br/>
-                            <xsl:value-of select="//pat:Pronalazac//pat:Adresa_lica//pat:Ulica"/> <xsl:text>&#x20;</xsl:text>
-                            <xsl:value-of select="//pat:Pronalazac//pat:Adresa_lica//pat:Broj_u_ulici"/> <xsl:text>&#x20;</xsl:text>,
-                            <xsl:value-of select="//pat:Pronalazac//pat:Adresa_lica//pat:Postanski_broj"/> <xsl:text>&#x20;</xsl:text>
-                            <xsl:value-of select="//pat:Pronalazac//pat:Adresa_lica//pat:Mesto"/> <xsl:text>&#x20;</xsl:text>
-                            <xsl:value-of select="//pat:Pronalazac//pat:Adresa_lica//pat:Drzava"/>
-                        </td>
-                        <td>
-                            Broj telefona
-                            <br/>
-                            <xsl:value-of select="//pat:Pronalazac//pat:Broj_telefona"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            Broj faksa
-                            <br/>
-                            <xsl:value-of select="//pat:Pronalazac//pat:Broj_faksa"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            E-pošta
-                            <br/>
-                            <xsl:value-of select="//pat:Pronalazac//pat:E_posta"/>
-                        </td>
-                    </tr>
+                        <tr>
+                            <td rowspan="3" style="border-left-width:1px;">
+                                <xsl:if test="//pat:Pronalazac//pat:Ime">
+                                    Ime i Prezime
+                                </xsl:if>
+                                <xsl:if test="//pat:Pronalazac//pat:Poslovno_ime">
+                                    Poslovno ime
+                                </xsl:if>
+                                <br/>
+                                <br/>
+                                <xsl:if test="//pat:Pronalazac//pat:Ime">
+                                    <xsl:value-of select="//pat:Pronalazac//pat:Ime"/><xsl:text>&#x20;</xsl:text>
+                                    <xsl:value-of select="//pat:Pronalazac//pat:Prezime"/>
+                                </xsl:if>
+                                <xsl:if test="//pat:Pronalazac//pat:Poslovno_ime">
+                                    <xsl:value-of select="//pat:Pronalazac//pat:Poslovno_ime"/>
+                                </xsl:if>
+                            </td>
+                            <td rowspan="3">
+                                Ulica i broj, poštanski broj, mesto i država
+                                <br/>
+                                <br/>
+                                <xsl:value-of select="//pat:Pronalazac//pat:Adresa_lica//pat:Ulica"/>
+                                <xsl:text>&#x20;</xsl:text>
+                                <xsl:value-of select="//pat:Pronalazac//pat:Adresa_lica//pat:Broj_u_ulici"/> <xsl:text>&#x20;</xsl:text>,
+                                <xsl:value-of select="//pat:Pronalazac//pat:Adresa_lica//pat:Postanski_broj"/>
+                                <xsl:text>&#x20;</xsl:text>
+                                <xsl:value-of select="//pat:Pronalazac//pat:Adresa_lica//pat:Mesto"/>
+                                <xsl:text>&#x20;</xsl:text>
+                                <xsl:value-of select="//pat:Pronalazac//pat:Adresa_lica//pat:Drzava"/>
+                            </td>
+                            <td>
+                                Broj telefona
+                                <br/>
+                                <xsl:value-of select="//pat:Pronalazac//pat:Broj_telefona"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                Broj faksa
+                                <br/>
+                                <xsl:value-of select="//pat:Pronalazac//pat:Broj_faksa"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                E-pošta
+                                <br/>
+                                <xsl:value-of select="//pat:Pronalazac//pat:E_posta"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="border-left-width:1px;">
+                                <xsl:element name="a">
+                                    <xsl:attribute name="href">
+                                        http://localhost:8001/autorskaPrava/download/prilog/<xsl:value-of
+                                            select="//pat:Podaci_o_podnosiocu_prijave//pat:Putanja_do_primera"/>
+                                    </xsl:attribute>
+                                    Izjava podnosilaca prijave o osnovu sticanja prava
+                                </xsl:element>
+                            </td>
+                        </tr>
                     </xsl:if>
                 </table>
 
@@ -230,7 +287,8 @@
                                 PUNOMOCNK ZA PRIJEM PISMENA
                             </xsl:if>
                             <br/>
-                            ZAJEDNICKI PREDSTAVNIK: <xsl:text>&#x20;</xsl:text>
+                            ZAJEDNICKI PREDSTAVNIK:
+                            <xsl:text>&#x20;</xsl:text>
                             <xsl:if test="//pat:Zajednicki_predstavnik=true()">
                                 DA
                             </xsl:if>
@@ -239,45 +297,50 @@
                             </xsl:if>
                         </td>
                     </tr>
-                        <tr>
-                            <td rowspan="2" style="border-left-width:1px;">
-                                <xsl:if test="//pat:Punomocnik//pat:Ime">
-                                    Ime i Prezime
-                                </xsl:if>
-                                <xsl:if test="//pat:Punomocnik//pat:Poslovno_ime">
-                                    Poslovno ime
-                                </xsl:if>
-                                <br/><br/>
-                                <xsl:if test="//pat:Punomocnik//pat:Ime">
-                                    <xsl:value-of select="//pat:Punomocnik//pat:Ime"/><xsl:text>&#x20;</xsl:text>
-                                    <xsl:value-of select="//pat:Punomocnik//pat:Prezime"/>
-                                </xsl:if>
-                                <xsl:if test="//pat:Punomocnik//pat:Poslovno_ime">
-                                    <xsl:value-of select="//pat:Punomocnik//pat:Poslovno_ime"/>
-                                </xsl:if>
-                            </td>
-                            <td rowspan="2">
-                                Ulica i broj, poštanski broj, mesto i država
-                                <br/><br/>
-                                <xsl:value-of select="//pat:Punomocnik//pat:Adresa_lica//pat:Ulica"/> <xsl:text>&#x20;</xsl:text>
-                                <xsl:value-of select="//pat:Punomocnik//pat:Adresa_lica//pat:Broj_u_ulici"/> <xsl:text>&#x20;</xsl:text>,
-                                <xsl:value-of select="//pat:Punomocnik//pat:Adresa_lica//pat:Postanski_broj"/> <xsl:text>&#x20;</xsl:text>
-                                <xsl:value-of select="//pat:Punomocnik//pat:Adresa_lica//pat:Mesto"/> <xsl:text>&#x20;</xsl:text>
-                                <xsl:value-of select="//pat:Punomocnik//pat:Adresa_lica//pat:Drzava"/>
-                            </td>
-                            <td>
-                                Broj telefona
-                                <br/>
-                                <xsl:value-of select="//pat:Punomocnik//pat:Broj_telefona"/>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                E-pošta
-                                <br/>
-                                <xsl:value-of select="//pat:Punomocnik//pat:E_posta"/>
-                            </td>
-                        </tr>
+                    <tr>
+                        <td rowspan="2" style="border-left-width:1px;">
+                            <xsl:if test="//pat:Punomocnik//pat:Ime">
+                                Ime i Prezime
+                            </xsl:if>
+                            <xsl:if test="//pat:Punomocnik//pat:Poslovno_ime">
+                                Poslovno ime
+                            </xsl:if>
+                            <br/>
+                            <br/>
+                            <xsl:if test="//pat:Punomocnik//pat:Ime">
+                                <xsl:value-of select="//pat:Punomocnik//pat:Ime"/><xsl:text>&#x20;</xsl:text>
+                                <xsl:value-of select="//pat:Punomocnik//pat:Prezime"/>
+                            </xsl:if>
+                            <xsl:if test="//pat:Punomocnik//pat:Poslovno_ime">
+                                <xsl:value-of select="//pat:Punomocnik//pat:Poslovno_ime"/>
+                            </xsl:if>
+                        </td>
+                        <td rowspan="2">
+                            Ulica i broj, poštanski broj, mesto i država
+                            <br/>
+                            <br/>
+                            <xsl:value-of select="//pat:Punomocnik//pat:Adresa_lica//pat:Ulica"/>
+                            <xsl:text>&#x20;</xsl:text>
+                            <xsl:value-of select="//pat:Punomocnik//pat:Adresa_lica//pat:Broj_u_ulici"/> <xsl:text>&#x20;</xsl:text>,
+                            <xsl:value-of select="//pat:Punomocnik//pat:Adresa_lica//pat:Postanski_broj"/>
+                            <xsl:text>&#x20;</xsl:text>
+                            <xsl:value-of select="//pat:Punomocnik//pat:Adresa_lica//pat:Mesto"/>
+                            <xsl:text>&#x20;</xsl:text>
+                            <xsl:value-of select="//pat:Punomocnik//pat:Adresa_lica//pat:Drzava"/>
+                        </td>
+                        <td>
+                            Broj telefona
+                            <br/>
+                            <xsl:value-of select="//pat:Punomocnik//pat:Broj_telefona"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>
+                            E-pošta
+                            <br/>
+                            <xsl:value-of select="//pat:Punomocnik//pat:E_posta"/>
+                        </td>
+                    </tr>
                 </table>
                 <xsl:if test="//pat:Adresa_za_dostavljanje">
                     <table>
@@ -286,11 +349,16 @@
                         </tr>
                         <tr>
                             <td style="border-left-width:1px;">Ulica i broj, poštanski broj i mesto:
-                                <br/><br/>
-                                <xsl:value-of select="//pat:Adresa_za_dostavljanje//pat:Ulica"/> <xsl:text>&#x20;</xsl:text>
-                                <xsl:value-of select="//pat:Adresa_za_dostavljanje//pat:Broj_u_ulici"/> <xsl:text>&#x20;</xsl:text>,
-                                <xsl:value-of select="//pat:Adresa_za_dostavljanje//pat:Postanski_broj"/> <xsl:text>&#x20;</xsl:text>
-                                <xsl:value-of select="//pat:Adresa_za_dostavljanje//pat:Mesto"/> <xsl:text>&#x20;</xsl:text>
+                                <br/>
+                                <br/>
+                                <xsl:value-of select="//pat:Adresa_za_dostavljanje//pat:Ulica"/>
+                                <xsl:text>&#x20;</xsl:text>
+                                <xsl:value-of select="//pat:Adresa_za_dostavljanje//pat:Broj_u_ulici"/>
+                                <xsl:text>&#x20;</xsl:text>,
+                                <xsl:value-of select="//pat:Adresa_za_dostavljanje//pat:Postanski_broj"/>
+                                <xsl:text>&#x20;</xsl:text>
+                                <xsl:value-of select="//pat:Adresa_za_dostavljanje//pat:Mesto"/>
+                                <xsl:text>&#x20;</xsl:text>
                             </td>
                         </tr>
                     </table>
@@ -302,7 +370,8 @@
                     <tr>
                         <td style="border-left-width:1px;">
                             <xsl:if test="//pat:Nacin_dostave[text()='ELEKTRONSKIM_PUTEM']">
-                                Podnosilac prijave je saglasan da Zavod vrsi dostavljanje pismena iskljucivo elektronskim putem u formi elektronskog dokumenta
+                                Podnosilac prijave je saglasan da Zavod vrsi dostavljanje pismena iskljucivo
+                                elektronskim putem u formi elektronskog dokumenta
                             </xsl:if>
                             <xsl:if test="//pat:Nacin_dostave[text()='PAPIRNA_FORM']"> <!-- postoji typo u testnom primeru -->
                                 Podnosilac prijave je saglasan da Zavod vrsi dostavljanje pismena u papirnoj formi
@@ -325,7 +394,8 @@
                     <tr>
                         <td style="border-left-width:1px;">
                             <xsl:if test="//pat:Nacin_dostave[text()='ELEKTRONSKIM_PUTEM']">
-                                Podnosilac prijave je saglasan da Zavod vrsi dostavljanje pismena iskljucivo elektronskim putem u formi elektronskog dokumenta
+                                Podnosilac prijave je saglasan da Zavod vrsi dostavljanje pismena iskljucivo
+                                elektronskim putem u formi elektronskog dokumenta
                             </xsl:if>
                             <xsl:if test="//pat:Nacin_dostave[text()='PAPIRNA_FORM']"> <!-- postoji typo u testnom primeru -->
                                 Podnosilac prijave je saglasan da Zavod vrsi dostavljanje pismena u papirnoj formi
@@ -337,17 +407,23 @@
                     </tr>
                     <tr>
                         <td style="border-left-width:1px;">
-                            Broj prvobitne prijave / osnovne prijave, odnosno osnovnog patenta: <xsl:value-of select="//pat:Broj_osnovne_prijave"/>
+                            Broj prvobitne prijave / osnovne prijave, odnosno osnovnog patenta:
+                            <xsl:value-of select="//pat:Broj_osnovne_prijave"/>
                         </td>
                     </tr>
                     <tr>
                         <td style="border-left-width:1px;">
-                            Datum podnosenja prvobitne prijave / osnovne prijave: <xsl:value-of select="//pat:Datum_podnosenja_prijave"/>
+                            Datum podnosenja prvobitne prijave / osnovne prijave:
+                            <xsl:value-of select="//pat:Datum_podnosenja_prijave"/>
                         </td>
                     </tr>
                 </table>
                 <table>
-                    <tr><th colspan="7" style="border-left-width:1px;">Polje broj VIII ZAHTEV ZA PRIZNANJE PRAVA PRVENSTVA IZ RANIJIH PRIJAVA</th></tr>
+                    <tr>
+                        <th colspan="7" style="border-left-width:1px;">Polje broj VIII ZAHTEV ZA PRIZNANJE PRAVA
+                            PRVENSTVA IZ RANIJIH PRIJAVA
+                        </th>
+                    </tr>
                     <tr>
                         <th colspan="2" style="border-left-width:1px;">
                             Datum podnosenja ranije prijave
