@@ -70,6 +70,9 @@ public class ResenjeService {
         else
             resenjeZahteva.setSifra(obradaZahteva.getBrojPrijave() + "_" + Utils.formatDate(new Date()).replace('.', '_'));
         repository.kreiraj(resenjeZahteva);
+
+        service.setObradjen(obradaZahteva.getBrojPrijave(), obradaZahteva.isOdbijen());
+
         System.out.println("SLANJE EMAIL-a podnosiocu zahteva");
         emailService.sendMailWithAttachment(getPodnosilacEmail(resenjeZahteva), resenjeZahteva, generatePDF(resenjeZahteva));
         System.out.println("EMAIL SA RESENJEM ZAHTEVA POSLAT");

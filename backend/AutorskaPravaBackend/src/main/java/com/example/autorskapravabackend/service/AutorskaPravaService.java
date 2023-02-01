@@ -13,11 +13,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.xmldb.api.base.XMLDBException;
 
-import javax.management.modelmbean.XMLParseException;
 import javax.xml.bind.JAXBException;
-import javax.xml.datatype.DatatypeConfigurationException;
 import java.io.*;
-import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.locks.Lock;
@@ -35,18 +32,10 @@ public class AutorskaPravaService {
         return autorskaPravaRepository.getZahtev(brojPrijave);
     }
 
-//    public DetaljiOZahtevu getDetaljiZahteva(ZahtevZaAutorskaPrava) {
-//        return ;
-//    }
-
-    public List<ZahtevZaAutorskaPrava> getZahtevi() {
-        return autorskaPravaRepository.getZahtevi();
-    }
-
     public ZahtevZaAutorskaPrava createZahtevZaAutorskaPrava(ZahtevZaAutorskaPravaDTO dto) {
         ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = Mapper.dtoToZahtev(dto);
         setBrojPrijave(zahtevZaAutorskaPrava);
-        autorskaPravaRepository.createRequest(zahtevZaAutorskaPrava);
+        autorskaPravaRepository.save(zahtevZaAutorskaPrava);
         return zahtevZaAutorskaPrava;
     }
 
@@ -229,7 +218,7 @@ public class AutorskaPravaService {
             return false;
         }
 
-        autorskaPravaRepository.createRequest(zahtevZaAutorskaPrava);
+        autorskaPravaRepository.save(zahtevZaAutorskaPrava);
         prilogUpdatingZahtevs.remove(brojPrijaveZiga);
 
         return true;
@@ -257,5 +246,15 @@ public class AutorskaPravaService {
         } catch (Exception e) {
             throw new FileNotFoundException("Couldn't generate report");
         }
+    }
+
+    public void setObradjen(String brojPrijave, boolean odbijen) {
+        ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = autorskaPravaRepository.getZahtev(brojPrijave);
+        if(odbijen) {
+            zahtevZaAutorskaPrava.setStatus(EStatus.ODBIJENO);
+        } else {
+            zahtevZaAutorskaPrava.setStatus(EStatus.PRIHVACENO);
+        }
+        autorskaPravaRepository.save(zahtevZaAutorskaPrava);
     }
 }

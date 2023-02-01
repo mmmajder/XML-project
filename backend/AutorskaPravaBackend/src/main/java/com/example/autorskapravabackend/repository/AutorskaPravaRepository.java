@@ -28,7 +28,7 @@ public class AutorskaPravaRepository {
         return AutorskaPravaRequestDB.getNumberOfRequests();
     }
 
-    public void createRequest(ZahtevZaAutorskaPrava zahtev) {
+    public void save(ZahtevZaAutorskaPrava zahtev) {
         AutorskaPravaRequestDB.save(zahtev);
         AutorskaPravaFusekiDB.save(zahtev);
     }
