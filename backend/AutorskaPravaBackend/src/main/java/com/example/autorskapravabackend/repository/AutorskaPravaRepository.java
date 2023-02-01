@@ -6,7 +6,6 @@ import com.example.autorskapravabackend.marshal.Marshal;
 import com.example.autorskapravabackend.model.EStatus;
 import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
 import com.example.autorskapravabackend.rdf.AutorskaPravaFusekiDB;
-import com.example.autorskapravabackend.rdf.FusekiReader;
 import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.XMLResource;
 
@@ -34,28 +33,12 @@ public class AutorskaPravaRepository {
         AutorskaPravaFusekiDB.save(zahtev);
     }
 
-//    public String generateRDF(String brojPrijave) throws Exception {
-//        return FusekiReader.getRdfString(brojPrijave);
-//    }
-//
-//    public String generateJSON(String brojPrijave) throws Exception {
-//        return FusekiReader.getJsonString(brojPrijave);
-//    }
-
     public List<ZahtevZaAutorskaPrava> getZahteviByBrojPrijave(List<String> ids) {
         List<ZahtevZaAutorskaPrava> zahtevi = new ArrayList<>();
         for (String brojPrijave : ids) {
             zahtevi.add(getZahtev(brojPrijave));
         }
         return zahtevi;
-    }
-
-    public List<XMLResource> getAllForYear(String year){
-        char y1 = year.charAt(2);
-        char y2 = year.charAt(3);
-        String yy = Character.toString(y1).concat(Character.toString(y2));
-
-        return AutorskaPravaRequestDB.getAllByYear(yy);
     }
 
     public List<ZahtevZaAutorskaPrava> getAllApplied() throws JAXBException, XMLDBException {

@@ -5,12 +5,16 @@ import com.example.autorskapravabackend.dto.DetaljiOZahtevu;
 import com.example.autorskapravabackend.dto.ObradaZahteva;
 import com.example.autorskapravabackend.service.ResenjeService;
 import lombok.AllArgsConstructor;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.xmldb.api.base.XMLDBException;
 
+import javax.xml.bind.JAXBException;
+import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
 @AllArgsConstructor
@@ -22,7 +26,7 @@ public class ResenjeZahtevaController {
     private ResenjeService resenjeService;
 
     @PostMapping(path = "/resenjeZahteva", consumes = "application/xml", produces = "application/xml")
-    public DetaljiOZahtevu getResenjeZahteva(@RequestBody BrojPrijaveDTO brojPrijave) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public DetaljiOZahtevu getResenjeZahteva(@RequestBody BrojPrijaveDTO brojPrijave) throws XMLDBException, IOException, JAXBException {
         return resenjeService.getResenjeZahteva(brojPrijave.getBroj());
     }
 
@@ -35,5 +39,14 @@ public class ResenjeZahtevaController {
             e.printStackTrace();
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
+    }
+
+    @PostMapping(path = "/resenje", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> generateResenje(@RequestBody BrojPrijaveDTO brojPrijave) {
+        ByteArrayInputStream byteFile = resenjeService.generateResenje(brojPrijave.getBroj());
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=resenje_" + brojPrijave.getBroj() + ".pdf");
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
     }
 }

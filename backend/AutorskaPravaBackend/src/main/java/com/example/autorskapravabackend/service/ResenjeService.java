@@ -11,9 +11,14 @@ import com.example.autorskapravabackend.transformer.AutorskaPravaTransformer;
 import com.example.autorskapravabackend.utils.Utils;
 import com.itextpdf.text.DocumentException;
 import jakarta.mail.MessagingException;
+import org.apache.commons.io.FileUtils;
+import org.exist.http.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.xmldb.api.base.XMLDBException;
 
+import javax.xml.bind.JAXBException;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
@@ -28,7 +33,7 @@ public class ResenjeService {
         this.emailService = emailService;
     }
 
-    public DetaljiOZahtevu getResenjeZahteva(String brojPrijave) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public DetaljiOZahtevu getResenjeZahteva(String brojPrijave) throws XMLDBException, IOException, JAXBException {
         ResenjeZahteva resenje = repository.dobaviPoBrojuPrijave(brojPrijave);
         ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = service.getZahtev(brojPrijave);
 
@@ -79,6 +84,20 @@ public class ResenjeService {
             String title = "resenje_" + resenjeZahteva.getBrojPrijave().replace("/", "_");
             AutorskaPravaTransformer.generateResenjePDF(resenjeZahteva, title);
             return title;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ByteArrayInputStream generateResenje(String brojPrijave) {
+        try {
+            ResenjeZahteva resenjeZahteva = repository.dobaviPoBrojuPrijave(brojPrijave);
+            if (resenjeZahteva == null) {
+                throw new NotFoundException("Resenje ne postoji.");
+            }
+            String title = generatePDF(resenjeZahteva);
+            File pdfFile = new File("src/main/resources/gen/resenjaPDF/" + title + ".pdf");
+            return new ByteArrayInputStream(FileUtils.readFileToByteArray(pdfFile));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

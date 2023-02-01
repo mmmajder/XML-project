@@ -1,13 +1,11 @@
 package com.example.autorskapravabackend.service;
 
-import com.example.autorskapravabackend.dto.DetaljiOZahtevu;
-import com.example.autorskapravabackend.dto.MetadataSearchParams;
-import com.example.autorskapravabackend.dto.MetadataSearchParamsDTO;
-import com.example.autorskapravabackend.dto.ZahtevZaAutorskaPravaDTO;
+import com.example.autorskapravabackend.dto.*;
 import com.example.autorskapravabackend.mapper.Mapper;
 import com.example.autorskapravabackend.model.EStatus;
 import com.example.autorskapravabackend.model.InformacijeOZahtevu;
 import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
+import com.example.autorskapravabackend.rdf.AutorskaPravaFusekiDB;
 import com.example.autorskapravabackend.repository.AutorskaPravaRepository;
 import com.example.autorskapravabackend.transformer.AutorskaPravaTransformer;
 import org.apache.commons.io.FileUtils;
@@ -15,8 +13,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.xmldb.api.base.XMLDBException;
 
+import javax.management.modelmbean.XMLParseException;
 import javax.xml.bind.JAXBException;
+import javax.xml.datatype.DatatypeConfigurationException;
 import java.io.*;
+import java.text.ParseException;
 import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.locks.Lock;
@@ -249,5 +250,12 @@ public class AutorskaPravaService {
             return zahtevi.stream().filter(z -> z.getStatus() != EStatus.PREDATO).collect(Collectors.toList());
         }
     }
-}
 
+    public ByteArrayInputStream generateIzvestaj(IzvestajRequest izvestajRequest) throws FileNotFoundException {
+        try {
+            return AutorskaPravaFusekiDB.generateReport(izvestajRequest);
+        } catch (Exception e) {
+            throw new FileNotFoundException("Couldn't generate report");
+        }
+    }
+}

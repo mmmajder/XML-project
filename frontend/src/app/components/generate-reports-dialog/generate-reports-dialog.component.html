@@ -1,6 +1,15 @@
 <h1 mat-dialog-title>Generisanje izveštaja</h1>
 <div mat-dialog-content>
   <mat-form-field appearance="outline" style="width: 100%; margin-top: 10px">
+    <mat-label>Izaberite vrstu prava</mat-label>
+    <mat-select [(ngModel)]="vrstaZahteva">
+      <mat-option value="A">Zahtevi za autorska prava</mat-option>
+      <mat-option value="P">Zahtevi za patente</mat-option>
+      <mat-option value="Z">Zahtevi za žigove</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="outline" style="width: 100%; margin-top: 10px">
     <mat-label>Vremenski period</mat-label>
     <mat-date-range-input
       [formGroup]="dateRange"

@@ -13,6 +13,10 @@
     <p *ngIf="detaljiOZahtevu.obrada?.odbijen">Razlog odbijanja:
       <span style="color:gray">{{detaljiOZahtevu.obrada?.razlogOdbijanja}}</span>
     </p>
+    <button mat-raised-button color="primary" style="width: 100%;" (click)="downloadResenje()">
+      <mat-icon>download</mat-icon>
+      REŠENJE ZAHTEVA
+    </button>
   </div>
   <div *ngIf="!detaljiOZahtevu.zahtev.obradjen">
     <h4 style="color: gray">NEOBRAĐEN ZAHTEV</h4>

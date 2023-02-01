@@ -68,6 +68,11 @@ export class ZahteviService {
     return this.http.post<Blob>(this.getObradiZahtevUrl(obradaZahteva.brojPrijave), xmlZahtev, AuthService.getHttpOptions());
   }
 
+  public downloadResenje(brojPrijave: string): Observable<Blob> {
+    const xmlZahtev = JsonToXML.parse("brojPrijave", {'broj': brojPrijave});
+    return this.http.post<Blob>(this.getResenjeUrl(brojPrijave), xmlZahtev, this.getDownloadHttpOptions());
+  }
+
   public downloadPDF(brojPrijave: string): Observable<Blob> {
     const xmlZahtev = JsonToXML.parse("brojPrijave", {'broj': brojPrijave});
     return this.http.post<Blob>(this.getUrl(brojPrijave) + "/download/pdf", xmlZahtev, this.getDownloadHttpOptions());
@@ -88,9 +93,9 @@ export class ZahteviService {
     return this.http.post<Blob>(this.getUrl(brojPrijave) + "/download/json", xmlZahtev, this.getDownloadHttpOptions());
   }
 
-  public generisiIzvestaj(start: string, end: string): Observable<Blob> {
-    const xmlZahtev = JsonToXML.parse("dateRange", {'start': start, 'end': end});
-    return this.http.post<Blob>(this.getUrl('A') + "/download/json", xmlZahtev, this.getDownloadHttpOptions());
+  public generisiIzvestaj(start: string, end: string, vrstaDokumenta: string): Observable<Blob> {
+    const xmlZahtev = JsonToXML.parse("izvestajRequest", {'start': start, 'end': end});
+    return this.http.post<Blob>(this.getUrl(vrstaDokumenta) + "/download/izvestaj", xmlZahtev, this.getDownloadHttpOptions());
   }
 
   public getDownloadHttpOptions() {
@@ -137,5 +142,17 @@ export class ZahteviService {
       }),
       responseType: 'document' as 'json'
     };
+  }
+
+  private getResenjeUrl(endpointChar: string | null): string {
+    if (endpointChar == null) return "";
+    switch (endpointChar.at(0)) {
+      case "A":
+        return this.autorskaPravaUrl + "/autorskaPravaResenje/resenje";
+      case "P":
+        return this.patentiUrl + "/obradiZahtev";
+      default:
+        return this.zigoviUrl + "/obradiZahtev";
+    }
   }
 }

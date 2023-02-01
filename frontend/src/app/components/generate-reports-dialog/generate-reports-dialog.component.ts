@@ -14,6 +14,7 @@ export class GenerateReportsDialogComponent {
     start: new FormControl(new Date()),
     end: new FormControl(new Date()),
   });
+  vrstaZahteva: string = "A";
 
   constructor(private servis: ZahteviService) {
   }
@@ -21,7 +22,7 @@ export class GenerateReportsDialogComponent {
   generisi() {
     let start = this.pocetak.toISOString().split('T')[0];
     let end = this.kraj.toISOString().split('T')[0];
-    this.servis.generisiIzvestaj(start, end).subscribe({
+    this.servis.generisiIzvestaj(start, end, this.vrstaZahteva).subscribe({
       next: value => console.log("TO DO")
     });
   }
