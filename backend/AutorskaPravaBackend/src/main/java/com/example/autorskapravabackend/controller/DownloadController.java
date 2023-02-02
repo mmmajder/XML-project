@@ -2,6 +2,7 @@ package com.example.autorskapravabackend.controller;
 
 
 import com.example.autorskapravabackend.dto.BrojPrijaveDTO;
+import com.example.autorskapravabackend.dto.IzvestajRequest;
 import com.example.autorskapravabackend.service.AutorskaPravaService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -11,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @AllArgsConstructor
@@ -25,7 +27,7 @@ public class DownloadController {
     public ResponseEntity<InputStreamResource> generateHTML(@RequestBody BrojPrijaveDTO brojPrijave) {
         ByteArrayInputStream byteFile = autorskaPravaService.generateHTML(brojPrijave.getBroj());
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=review-" + brojPrijave.getBroj() + ".html");
+        headers.add("Content-Disposition", "inline; filename=review_" + brojPrijave.getBroj() + ".html");
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_XHTML_XML).body(new InputStreamResource(byteFile));
     }
@@ -34,7 +36,7 @@ public class DownloadController {
     public ResponseEntity<InputStreamResource> generatePDF(@RequestBody BrojPrijaveDTO brojPrijave) {
         ByteArrayInputStream byteFile = autorskaPravaService.generatePDF(brojPrijave.getBroj());
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=review-" + brojPrijave.getBroj() + ".pdf");
+        headers.add("Content-Disposition", "inline; filename=review_" + brojPrijave.getBroj() + ".pdf");
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
     }
@@ -43,7 +45,7 @@ public class DownloadController {
     public ResponseEntity<InputStreamResource> generateRDF(@RequestBody BrojPrijaveDTO brojPrijave) {
         ByteArrayInputStream byteFile = autorskaPravaService.generateRDF(brojPrijave.getBroj());
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=metadata-" + brojPrijave.getBroj() + ".rdf");
+        headers.add("Content-Disposition", "inline; filename=metadata_" + brojPrijave.getBroj() + ".rdf");
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
     }
@@ -52,7 +54,7 @@ public class DownloadController {
     public ResponseEntity<InputStreamResource> generateJSON(@RequestBody BrojPrijaveDTO brojPrijave) {
         ByteArrayInputStream byteFile = autorskaPravaService.generateJSON(brojPrijave.getBroj());
         HttpHeaders headers = new HttpHeaders();
-        headers.add("Content-Disposition", "inline; filename=metadata-" + brojPrijave.getBroj() + ".json");
+        headers.add("Content-Disposition", "inline; filename=metadata_" + brojPrijave.getBroj() + ".json");
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
     }
@@ -62,6 +64,15 @@ public class DownloadController {
         ByteArrayInputStream byteFile = autorskaPravaService.getPrilog(fileName);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=" + fileName);
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
+    }
+
+    @PostMapping(path = "/izvestaj", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> generateIzvestaj(@RequestBody IzvestajRequest izvestajRequest) throws FileNotFoundException {
+        ByteArrayInputStream byteFile = autorskaPravaService.generateIzvestaj(izvestajRequest);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=izvestaj_" + izvestajRequest.toString() + ".pdf");
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
     }

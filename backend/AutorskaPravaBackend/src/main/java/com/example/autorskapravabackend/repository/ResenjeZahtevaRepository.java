@@ -4,6 +4,7 @@ import com.example.autorskapravabackend.db.ResenjeZahtevaDB;
 import com.example.autorskapravabackend.resenje.ResenjeZahteva;
 import org.xmldb.api.base.XMLDBException;
 
+import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.util.List;
 
@@ -13,18 +14,7 @@ public class ResenjeZahtevaRepository {
         ResenjeZahtevaDB.write(resenjeZahteva);
     }
 
-    public ResenjeZahteva dobaviPoBrojuPrijave(String brojPrijave) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-//        return ResenjeZahtevaDB.dobaviPoBrojuPrijave(brojPrijave);
-        List<ResenjeZahteva> resenja = ResenjeZahtevaDB.dobaviSvaResenja();
-        for (ResenjeZahteva resenjeZahteva : resenja) {
-            if (resenjeZahteva.getBrojPrijave().equals(brojPrijave))
-                return resenjeZahteva;
-        }
-        return null;
+    public ResenjeZahteva dobaviPoBrojuPrijave(String brojPrijave) throws XMLDBException, IOException, JAXBException {
+        return ResenjeZahtevaDB.dobaviPoBrojuPrijave(brojPrijave);
     }
-
-    public List<ResenjeZahteva> dobaviSve() throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        return ResenjeZahtevaDB.dobaviSvaResenja();
-    }
-
 }

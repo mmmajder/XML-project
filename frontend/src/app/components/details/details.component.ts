@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {DetaljiOZahtevu, ObradaZahtevaDTO} from "../../model/shared/Zahtev";
 import {ZahteviService} from "../../service/zahtevi.service";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'app-details',
@@ -16,7 +17,7 @@ export class DetailsComponent {
   odbija: boolean = false;
   blob: Blob = new Blob();
 
-  constructor(private servis: ZahteviService) {
+  constructor(private servis: ZahteviService, private _snackBar: MatSnackBar) {
     if (this.obradjen) {
       this.servis.getDetaljiOObradi(this.brojPrijave).subscribe({
         next: value => {
@@ -36,8 +37,20 @@ export class DetailsComponent {
     if (odbijen)
       dto.razlogOdbijanja = this.razlogOdbijanja;
     this.servis.obradiZahtev(dto).subscribe({
-      next: value => console.log(value),
-      error: err => console.log(err)
+      next: () => {
+        this.servis.downloadResenje(dto.brojPrijave).subscribe({
+          next: (data: Blob) => this.downloadFile(data, 'pdf', 'pdf'),
+          error: () => this.snack()
+        });
+      },
+      error: () => this.snack()
+    })
+  }
+
+  private snack() {
+    this._snackBar.open("Greška pri generisanju fajla.", '', {
+      duration: 3000,
+      panelClass: ['snack-bar']
     })
   }
 
@@ -49,31 +62,43 @@ export class DetailsComponent {
     }
   }
 
+  downloadResenje() {
+    this.servis.downloadResenje(this.brojPrijave)
+      .subscribe({
+        next: (data) => this.downloadFile(data, 'pdf', 'pdf'),
+        error: () => this.snack()
+      });
+  }
+
   downloadPDF() {
     this.servis.downloadPDF(this.brojPrijave)
       .subscribe({
-        next: (data) => this.downloadFile(data, 'pdf', 'pdf')
+        next: (data) => this.downloadFile(data, 'pdf', 'pdf'),
+        error: () => this.snack()
       });
   }
 
   downloadHTML() {
     this.servis.downloadHTML(this.brojPrijave)
       .subscribe({
-        next: (data) => this.downloadFile(data, 'html', 'xhtml')
+        next: (data) => this.downloadFile(data, 'html', 'xhtml'),
+        error: () => this.snack()
       });
   }
 
   downloadJSON() {
     this.servis.downloadJSON(this.brojPrijave)
       .subscribe({
-        next: (data) => this.downloadFile(data, 'json', 'pdf')
+        next: (data) => this.downloadFile(data, 'json', 'pdf'),
+        error: () => this.snack()
       });
   }
 
   downloadRDF() {
     this.servis.downloadRDF(this.brojPrijave)
       .subscribe({
-        next: (data) => this.downloadFile(data, 'rdf', 'pdf')
+        next: (data) => this.downloadFile(data, 'rdf', 'pdf'),
+        error: () => this.snack()
       });
   }
 

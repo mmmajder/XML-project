@@ -43,23 +43,21 @@
             <body>
                 <table>
                     <tr>
-                        <td style="border-top-width:1px; border-left-width:1px;">
+                        <td>
                             <b>ZAVOD ZA INTELEKTUALNU SVOJINU</b>
                             <br/>
                             Beograd, Knjeginje Ljubice 5
                         </td>
-                        <td style="text-align:center; border-top-width:0px;">
+                        <td>
                             <b>OBRAZAC A-1</b>
                         </td>
                     </tr>
                     <br/>
                     <br/>
                     <br/>
-                    <tr>
-                        <td style="text-align:center">
-                            <b>ZAHTEV ZA UNOŠENJE U EVIDENCIJU I DEPONOVANJE AUTORSKIH DELA</b>
-                        </td>
-                    </tr>
+                    <p style="text-align:center; font-size: 15px; margin-top: 10px; margin-bottom: 10px">
+                        <b>ZAHTEV ZA UNOŠENJE U EVIDENCIJU I DEPONOVANJE AUTORSKIH DELA</b>
+                    </p>
                     <br/>
                     <br/>
                     <br/>
@@ -291,27 +289,27 @@
                                     Primer autorskog dela
                                 </xsl:element>
                             </div>
-                            <div style="width: 50%">
-                                <table style="margin-top: 80px; float: right">
+                            <div style="width: 100%; float: right">
+                                <table style="margin-top: 80px">
                                     <tr>
-                                        <td style="font-size: 20px; padding: 15px 0 5px 15px; border-bottom: white">Broj
+                                        <td style="font-size: 20px; padding: 15px 0 5px 15px;">Broj
                                             prijave
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="font-size: 22px; font-weight: bold; padding: 5px 0 15px 15px; border-top: white">
+                                        <td style="font-size: 22px; font-weight: bold; padding: 5px 0 15px 15px">
                                             A -
                                             <xsl:value-of select="//aut:Broj_prijave"/>
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="font-size: 20px; padding: 15px 0 5px 15px; border-bottom: white">
+                                        <td style="font-size: 20px; padding: 15px 0 5px 15px;">
                                             Datum
                                             podnošenja:
                                         </td>
                                     </tr>
                                     <tr>
-                                        <td style="font-size: 22px; padding: 5px 0 15px 15px; border-top: white">
+                                        <td style="font-size: 22px; padding: 5px 0 15px 15px">
                                             <xsl:value-of select="substring(//aut:Datum_podnosenja, 0, 11)"/>
                                         </td>
                                     </tr>

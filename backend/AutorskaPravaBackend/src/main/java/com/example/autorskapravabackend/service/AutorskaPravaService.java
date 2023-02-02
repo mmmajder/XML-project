@@ -1,13 +1,11 @@
 package com.example.autorskapravabackend.service;
 
-import com.example.autorskapravabackend.dto.DetaljiOZahtevu;
-import com.example.autorskapravabackend.dto.MetadataSearchParams;
-import com.example.autorskapravabackend.dto.MetadataSearchParamsDTO;
-import com.example.autorskapravabackend.dto.ZahtevZaAutorskaPravaDTO;
+import com.example.autorskapravabackend.dto.*;
 import com.example.autorskapravabackend.mapper.Mapper;
 import com.example.autorskapravabackend.model.EStatus;
 import com.example.autorskapravabackend.model.InformacijeOZahtevu;
 import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
+import com.example.autorskapravabackend.rdf.AutorskaPravaFusekiDB;
 import com.example.autorskapravabackend.repository.AutorskaPravaRepository;
 import com.example.autorskapravabackend.transformer.AutorskaPravaTransformer;
 import org.apache.commons.io.FileUtils;
@@ -34,18 +32,10 @@ public class AutorskaPravaService {
         return autorskaPravaRepository.getZahtev(brojPrijave);
     }
 
-//    public DetaljiOZahtevu getDetaljiZahteva(ZahtevZaAutorskaPrava) {
-//        return ;
-//    }
-
-    public List<ZahtevZaAutorskaPrava> getZahtevi() {
-        return autorskaPravaRepository.getZahtevi();
-    }
-
     public ZahtevZaAutorskaPrava createZahtevZaAutorskaPrava(ZahtevZaAutorskaPravaDTO dto) {
         ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = Mapper.dtoToZahtev(dto);
         setBrojPrijave(zahtevZaAutorskaPrava);
-        autorskaPravaRepository.createRequest(zahtevZaAutorskaPrava);
+        autorskaPravaRepository.save(zahtevZaAutorskaPrava);
         return zahtevZaAutorskaPrava;
     }
 
@@ -228,7 +218,7 @@ public class AutorskaPravaService {
             return false;
         }
 
-        autorskaPravaRepository.createRequest(zahtevZaAutorskaPrava);
+        autorskaPravaRepository.save(zahtevZaAutorskaPrava);
         prilogUpdatingZahtevs.remove(brojPrijaveZiga);
 
         return true;
@@ -249,5 +239,22 @@ public class AutorskaPravaService {
             return zahtevi.stream().filter(z -> z.getStatus() != EStatus.PREDATO).collect(Collectors.toList());
         }
     }
-}
 
+    public ByteArrayInputStream generateIzvestaj(IzvestajRequest izvestajRequest) throws FileNotFoundException {
+        try {
+            return AutorskaPravaFusekiDB.generateReport(izvestajRequest);
+        } catch (Exception e) {
+            throw new FileNotFoundException("Couldn't generate report");
+        }
+    }
+
+    public void setObradjen(String brojPrijave, boolean odbijen) {
+        ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = autorskaPravaRepository.getZahtev(brojPrijave);
+        if(odbijen) {
+            zahtevZaAutorskaPrava.setStatus(EStatus.ODBIJENO);
+        } else {
+            zahtevZaAutorskaPrava.setStatus(EStatus.PRIHVACENO);
+        }
+        autorskaPravaRepository.save(zahtevZaAutorskaPrava);
+    }
+}

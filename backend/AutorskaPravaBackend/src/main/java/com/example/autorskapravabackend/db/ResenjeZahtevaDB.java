@@ -13,11 +13,14 @@ import org.xmldb.api.modules.XPathQueryService;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
+import javax.xml.transform.OutputKeys;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 public class ResenjeZahtevaDB {
+
+    private static String collectionId = "/db/XWS-PROJECT/resenja";
 
     private static Collection getOrCreateCollection(String collectionUri, AuthenticationUtilities.ConnectionProperties conn) throws XMLDBException {
         return getOrCreateCollection(collectionUri, 0, conn);
@@ -69,8 +72,6 @@ public class ResenjeZahtevaDB {
     public static ResenjeZahteva write(ResenjeZahteva resenjeZahteva) throws ClassNotFoundException, XMLDBException, InstantiationException, IllegalAccessException, IOException {
         AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
 
-        String collectionId = "/db/XWS-PROJECT/resenja";
-
         // initialize database driver
         System.out.println("[INFO] Loading driver class: " + conn.driver);
         Class<?> cl = Class.forName(conn.driver);
@@ -109,49 +110,22 @@ public class ResenjeZahtevaDB {
         return resenjeZahteva;
     }
 
-    public static ResenjeZahteva dobaviPoBrojuPrijave(String brojPrijave) throws IOException, ClassNotFoundException, XMLDBException, InstantiationException, IllegalAccessException {
+    public static ResenjeZahteva dobaviPoBrojuPrijave(String brojPrijave) throws IOException, XMLDBException, JAXBException {
+        String documentName = "resenjeAutorskoPravo_" + brojPrijave.replace('/', '_');
         AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
-        String collectionId = "/db/XWS-PROJECT/resenja";
-        Class<?> cl = Class.forName(conn.driver);
 
-        Database database = (Database) cl.newInstance();
-        database.setProperty("create-database", "true");
+        Collection col = DatabaseManager.getCollection(conn.uri + collectionId);
+        col.setProperty(OutputKeys.INDENT, "yes");
+        XMLResource res = (XMLResource) col.getResource(documentName);
 
-        DatabaseManager.registerDatabase(database);
-
-        Collection col = null;
-        ResenjeZahteva resenjeZahteva = null;
-        try {
-            System.out.println("[INFO] Retrieving the collection: " + collectionId);
-            col = DatabaseManager.getCollection(conn.uri + collectionId);
-
-            XPathQueryService xPathQueryService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
-            xPathQueryService.setProperty("indent", "yes");
-
-            String xPathExp = "//resenje_zahteva[broj_prijave='" + brojPrijave + "']";
-            ResourceSet result = xPathQueryService.query(xPathExp);
-            XMLResource res = (XMLResource) result.getIterator().nextResource();
-            JAXBContext context = JAXBContext.newInstance(ResenjeZahteva.class);
-            Unmarshaller unmarshaller = context.createUnmarshaller();
-            resenjeZahteva = (ResenjeZahteva) unmarshaller.unmarshal(res.getContentAsDOM());
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        } finally {
-            if (col != null) {
-                try {
-                    col.close();
-                } catch (XMLDBException xe) {
-                    xe.printStackTrace();
-                }
-            }
-        }
-        return resenjeZahteva;
+        JAXBContext context = JAXBContext.newInstance(ResenjeZahteva.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        return (ResenjeZahteva) unmarshaller.unmarshal(res.getContentAsDOM());
     }
 
     public static List<ResenjeZahteva> dobaviSvaResenja() throws ClassNotFoundException, IOException, InstantiationException, IllegalAccessException, XMLDBException {
         AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
 
-        String collectionId = "/db/XWS-PROJECT/resenja";
         Class<?> cl = Class.forName(conn.driver);
 
         Database database = (Database) cl.newInstance();
@@ -161,7 +135,7 @@ public class ResenjeZahtevaDB {
 
         Collection col = null;
         ResenjeZahteva resenjeZahteva;
-        List<ResenjeZahteva> resenjaZahteva = null;
+        List<ResenjeZahteva> resenjaZahteva = new ArrayList<>();
         try {
             // get the collection
             System.out.println("[INFO] Retrieving the collection: " + collectionId);

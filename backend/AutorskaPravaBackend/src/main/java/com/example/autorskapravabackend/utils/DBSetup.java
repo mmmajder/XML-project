@@ -12,12 +12,4 @@ public class DBSetup {
         DatabaseManager.registerDatabase(database);
         return "/db/XWS-PROJECT/autorskaPrava";
     }
-
-    public static String setupDBResenjaConnection(AuthenticationUtilities.ConnectionProperties conn) throws ClassNotFoundException, InstantiationException, IllegalAccessException, XMLDBException {
-        Class<?> cl = Class.forName(conn.driver);
-        Database database = (Database) cl.newInstance();
-        database.setProperty("create-database", "true");
-        DatabaseManager.registerDatabase(database);
-        return "/db/XWS-PROJECT/resenjaAutorskaPrava";
-    }
 }

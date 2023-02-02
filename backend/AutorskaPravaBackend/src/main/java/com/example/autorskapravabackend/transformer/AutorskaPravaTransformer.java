@@ -24,8 +24,7 @@ public class AutorskaPravaTransformer {
     private static final TransformerFactory transformerFactory;
 
     public static final String XSL_RESENJE_FILE = "src/main/java/com/example/autorskapravabackend/transformer/Resenje.xsl";
-    public static final String PDF_XSL_FILE = "src/main/java/com/example/autorskapravabackend/transformer/Zahtev_A_PDF.xsl";
-    public static final String HTML_XSL_FILE = "src/main/java/com/example/autorskapravabackend/transformer/Zahtev_A_HTML.xsl";
+    public static final String XSL_FILE = "src/main/java/com/example/autorskapravabackend/transformer/Zahtev.xsl";
 
     public static final String HTML_FOLDER = "src/main/resources/gen/xhtml/";
 
@@ -79,16 +78,8 @@ public class AutorskaPravaTransformer {
 
     public static void generateZahtevHTML(ZahtevZaAutorskaPrava zahtev, boolean forPdf) {
         try {
-            String xslFile;
-
-            if (forPdf){
-                xslFile = PDF_XSL_FILE;
-            } else {
-                xslFile = HTML_XSL_FILE;
-            }
-
             // Initialize Transformer instance
-            StreamSource transformSource = new StreamSource(new File(xslFile));
+            StreamSource transformSource = new StreamSource(new File(XSL_FILE));
             Transformer transformer = transformerFactory.newTransformer(transformSource);
             transformer.setOutputProperty("{http://xml.apache.org/xalan}indent-amount", "2");
             transformer.setOutputProperty(OutputKeys.INDENT, "yes");

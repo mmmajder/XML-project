@@ -30,27 +30,6 @@ public class FusekiReader {
         query.close();
     }
 
-//    public static String getRdfString(String brojPrijave) throws Exception {
-//        FusekiAuthenticationUtilities.ConnectionProperties conn = FusekiAuthenticationUtilities.loadProperties();
-//        String sparqlQuery = SparqlUtil.selectDataByBrojPrijave(conn.dataEndpoint + "/" + GRAPH_URI, brojPrijave);
-//        QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);
-//        ResultSet results = query.execSelect();
-//
-//        return ResultSetFormatter.asXMLString(results);
-//    }
-//
-//    public static String getJsonString(String brojPrijave) throws Exception {
-//        FusekiAuthenticationUtilities.ConnectionProperties conn = FusekiAuthenticationUtilities.loadProperties();
-//        String sparqlQuery = SparqlUtil.selectDataByBrojPrijave(conn.dataEndpoint + "/" + GRAPH_URI, brojPrijave);
-//        QueryExecution query = QueryExecutionFactory.sparqlService(conn.queryEndpoint, sparqlQuery);
-//        ResultSet results = query.execSelect();
-//
-//        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-//        ResultSetFormatter.outputAsJSON(outputStream, results);
-//
-//        return outputStream.toString();
-//    }
-
     public static String getRdfString(String brojPrijave) throws Exception {
         ResultSet results = getRdfByBrojPrijave(brojPrijave);
 
@@ -159,9 +138,7 @@ public class FusekiReader {
             filterConcat = logicalOperator + " ?" + msp.getProperty() + " " + equivalenceOperator + " \"" + msp.getValue() + "\" ";
         }
 
-        filterStr = filterStr.concat(filterConcat);
-
-        return filterStr;
+        return filterStr.concat(filterConcat);
     }
 
     private static String concateToWhere(MetadataSearchParams msp, String whereStr) {
