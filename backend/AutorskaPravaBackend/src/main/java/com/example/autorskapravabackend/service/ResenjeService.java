@@ -4,6 +4,7 @@ import com.example.autorskapravabackend.dto.DetaljiOZahtevu;
 import com.example.autorskapravabackend.dto.ObradaZahteva;
 import com.example.autorskapravabackend.dto.SimpleUser;
 import com.example.autorskapravabackend.dto.ZahtevDTO;
+import com.example.autorskapravabackend.model.EStatus;
 import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
 import com.example.autorskapravabackend.repository.ResenjeZahtevaRepository;
 import com.example.autorskapravabackend.resenje.ResenjeZahteva;
@@ -40,6 +41,7 @@ public class ResenjeService {
         ZahtevDTO zahtevDTO = ZahtevDTO.builder()
                 .datumPodnosenja(Utils.formatDate(zahtevZaAutorskaPrava.getInformacijeOZahtevu().getDatumPodnosenja()))
                 .brojPrijave(brojPrijave)
+                .obradjen(!zahtevZaAutorskaPrava.getStatus().equals(EStatus.PREDATO))
                 .build();
         SimpleUser sluzbenik = SimpleUser.builder()
                 .name(resenje.getImeSluzbenika() + " " + resenje.getPrezimeSluzbenika())
@@ -68,7 +70,7 @@ public class ResenjeService {
         if (resenjeZahteva.isOdbijen())
             resenjeZahteva.setRazlogOdbijanja(obradaZahteva.getRazlogOdbijanja());
         else
-            resenjeZahteva.setSifra(obradaZahteva.getBrojPrijave() + "_" + Utils.formatDate(new Date()).replace('.', '_'));
+            resenjeZahteva.setSifra(obradaZahteva.getBrojPrijave() + "_" + Utils.formatDate(new Date()).replace('-', '_'));
         repository.kreiraj(resenjeZahteva);
 
         service.setObradjen(obradaZahteva.getBrojPrijave(), obradaZahteva.isOdbijen());

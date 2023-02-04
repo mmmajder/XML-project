@@ -1,6 +1,7 @@
 package com.example.autorskapravabackend.rdf;
 
 import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
+import com.example.autorskapravabackend.utils.Utils;
 import org.apache.jena.rdf.model.*;
 
 public class AutorskaPravaMetadataExtractor {
@@ -14,7 +15,7 @@ public class AutorskaPravaMetadataExtractor {
         addRDFTripletToModel(model, resource, "naslov", zahtev.getSadrzajZahteva().getAutorskoDelo().getNaslovAutorskogDela());
         addRDFTripletToModel(model, resource, "vrsta_autorskog_dela", zahtev.getSadrzajZahteva().getAutorskoDelo().getVrstaAutorskogDela());
         addRDFTripletToModel(model, resource, "broj_prijave", zahtev.getInformacijeOZahtevu().getBrojPrijave());
-        addRDFTripletToModel(model, resource, "datum_podnosenja", zahtev.getInformacijeOZahtevu().getDatumPodnosenja().toString());
+        addRDFTripletToModel(model, resource, "datum_podnosenja", Utils.formatDate(zahtev.getInformacijeOZahtevu().getDatumPodnosenja()));
 
         return model;
     }

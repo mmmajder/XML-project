@@ -57,7 +57,7 @@ public class AutorskaPravaRepository {
         return getAllByStatus(EStatus.ODBIJENO);
     }
 
-    private List<ZahtevZaAutorskaPrava> getAllByStatus(EStatus status) throws JAXBException, XMLDBException {
+    public List<ZahtevZaAutorskaPrava> getAllByStatus(EStatus status) throws JAXBException, XMLDBException {
         List<XMLResource> resources = AutorskaPravaRequestDB.getAllByStatus(status);
 
         return getZahteviFromResources(resources);

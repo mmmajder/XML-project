@@ -67,9 +67,8 @@
                     <tr>
                         <td style="border-left-width:1px;">
                             1) Podnosilac - ime, prezime, adresa i drzavljanstvo autora ili drugog nosioca autorskog
-                            prava ako je
-                            podnosilac fizicko lice, odnosno poslovno ime i sediste nosioca autorskog prava ako je
-                            podnosilac pravno lice:
+                            prava ako je podnosilac fizicko lice, odnosno poslovno ime i sediste nosioca autorskog prava
+                            ako je podnosilac pravno lice:
                             <br/>
                             <br/>
                             <xsl:if test="//aut:Podnosilac_zahteva//aut:Ime">
@@ -127,52 +126,55 @@
                             2) Pseudonim ili znak autora, (ako ga ima):
                             <br/>
                             <br/>
-                            <xsl:if test="//aut:Autor//aut:Podaci_o_autoru//aut:Pseudonim">
-                                <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Pseudonim"/>
-                                <br/>
-                                <br/>
-                            </xsl:if>
-                            <xsl:if test="not(//aut:Autor//aut:Podaci_o_autoru//aut:Pseudonim)">
-                                <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Pseudonim"/>
-                                Autor nema pseudonim.
-                                <br/>
-                                <br/>
-                            </xsl:if>
+                            <xsl:choose>
+                                <xsl:when test="//aut:Autor//aut:Podaci_o_autoru//aut:Pseudonim">
+                                    <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Pseudonim"/>
+                                    <br/>
+                                    <br/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    Autor nema pseudonim.
+                                    <br/>
+                                    <br/>
+                                </xsl:otherwise>
+                            </xsl:choose>
 
                             3) Ime, prezime i adresa punomocnikam ako se prijava podnosi preko punomocnika:
-                            <xsl:if test="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Ime">
-                                <br/>
-                                <br/>
-                                <xsl:value-of select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Ime"/><xsl:text>&#x20;</xsl:text>
-                                <xsl:value-of
-                                        select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Prezime"/>,
-                                <xsl:text>&#x20;</xsl:text>
-                                <br/>
-                                <xsl:value-of
-                                        select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Ulica"/>
-                                <xsl:text>&#x20;</xsl:text>
-                                <xsl:value-of
-                                        select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Broj_u_ulici"/>,
-                                <xsl:text>&#x20;</xsl:text>
-                                <xsl:value-of
-                                        select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Postanski_broj"/><xsl:text>&#x20;</xsl:text>
-                                <xsl:value-of
-                                        select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Mesto"/><xsl:text>&#x20;</xsl:text>
-                                <xsl:value-of
-                                        select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Drzava"/>
-                                <br/>
-                                <br/>
-                            </xsl:if>
+                            <xsl:choose>
+                                <xsl:when test="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Ime">
+                                    <br/>
+                                    <br/>
+                                    <xsl:value-of
+                                            select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Ime"/><xsl:text>&#x20;</xsl:text>
+                                    <xsl:value-of
+                                            select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Prezime"/>,
+                                    <xsl:text>&#x20;</xsl:text>
+                                    <br/>
+                                    <xsl:value-of
+                                            select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Ulica"/>
+                                    <xsl:text>&#x20;</xsl:text>
+                                    <xsl:value-of
+                                            select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Broj_u_ulici"/>,
+                                    <xsl:text>&#x20;</xsl:text>
+                                    <xsl:value-of
+                                            select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Postanski_broj"/><xsl:text>&#x20;</xsl:text>
+                                    <xsl:value-of
+                                            select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Mesto"/><xsl:text>&#x20;</xsl:text>
+                                    <xsl:value-of
+                                            select="//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Adresa//aut:Drzava"/>
+                                    <br/>
+                                    <br/>
+                                </xsl:when>
 
-                            <xsl:if test="not(//aut:Podaci_o_punomocniku//aut:Osnovni_licni_podaci//aut:Ime)">
-                                Prijava se ne odnosi preko punomocnika.
-                                <br/>
-                                <br/>
-                            </xsl:if>
+                                <xsl:otherwise>
+                                    Prijava se ne odnosi preko punomocnika.
+                                    <br/>
+                                    <br/>
+                                </xsl:otherwise>
+                            </xsl:choose>
 
                             4) Naslov autorskog dela, odnosno alternativni naslov, ako ga ima, po kome autorsko delo
-                            moze da se
-                            identifikuje:
+                            moze da se identifikuje:
                             <br/>
                             <br/>
                             <xsl:value-of select="//aut:Autorsko_delo//aut:Naslov_autorskog_dela"/>
@@ -183,20 +185,22 @@
                             izvornog dela:
                             <br/>
                             <br/>
-                            <xsl:if test="//aut:Zasnivano_delo//aut:Naslov">
-                                Naslov:
-                                <xsl:value-of select="//aut:Zasnivano_delo//aut:Naslov"/>
-                                <br/>
-                                Autor:
-                                <xsl:value-of select="//aut:Zasnivano_delo//aut:Autor"/>
-                                <br/>
-                                <br/>
-                            </xsl:if>
-                            <xsl:if test="not(//aut:Zasnivano_delo//aut:Autor)">
-                                Autorsko delo nije zasnovano ni na jednom drugom delu.
-                                <br/>
-                                <br/>
-                            </xsl:if>
+                            <xsl:choose>
+                                <xsl:when test="//aut:Zasnivano_delo//aut:Naslov">
+                                    Naslov:
+                                    <xsl:value-of select="//aut:Zasnivano_delo//aut:Naslov"/>
+                                    <br/>
+                                    Autor:
+                                    <xsl:value-of select="//aut:Zasnivano_delo//aut:Autor"/>
+                                    <br/>
+                                    <br/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    Autorsko delo nije zasnovano ni na jednom drugom delu.
+                                    <br/>
+                                    <br/>
+                                </xsl:otherwise>
+                            </xsl:choose>
 
                             6) Podaci o vrsti autorskog dela (knjizevno delo, muzicko delo, likovno delo, racunarski
                             program i dr.):
@@ -216,26 +220,48 @@
                             8) Podaci o autoru:
                             <br/>
                             <br/>
-                            Ime i prezime:
-                            <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Ime"/><xsl:text>&#x20;</xsl:text>
-                            <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Prezime"/>,
-                            <xsl:text>&#x20;</xsl:text>
-                            <br/>
-                            Adresa:
-                            <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Adresa//aut:Ulica"/>
-                            <xsl:text>&#x20;</xsl:text>
-                            <xsl:value-of
-                                    select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Adresa//aut:Broj_u_ulici"/>,
-                            <xsl:text>&#x20;</xsl:text>
-                            <xsl:value-of
-                                    select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Adresa//aut:Postanski_broj"/><xsl:text>&#x20;</xsl:text>
-                            <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Adresa//aut:Mesto"/><xsl:text>&#x20;</xsl:text>
-                            <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Adresa//aut:Drzava"/>
-                            <br/>
-                            Drzavljanstvo:
-                            <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Drzavljanstvo"/>
-                            <br/>
-                            <br/>
+                            <xsl:choose>
+                                <xsl:when test="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Ime">
+                                    Ime i prezime:
+                                    <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Ime"/><xsl:text>&#x20;</xsl:text>
+                                    <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Prezime"/>,
+                                    <xsl:text>&#x20;</xsl:text>
+                                    <br/>
+                                    Adresa:
+                                    <xsl:value-of
+                                            select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Adresa//aut:Ulica"/>
+                                    <xsl:text>&#x20;</xsl:text>
+                                    <xsl:value-of
+                                            select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Adresa//aut:Broj_u_ulici"/>,
+                                    <xsl:text>&#x20;</xsl:text>
+                                    <xsl:value-of
+                                            select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Adresa//aut:Postanski_broj"/><xsl:text>&#x20;</xsl:text>
+                                    <xsl:value-of
+                                            select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Adresa//aut:Mesto"/><xsl:text>&#x20;</xsl:text>
+                                    <xsl:value-of
+                                            select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Adresa//aut:Drzava"/>
+                                    <br/>
+                                    Drzavljanstvo:
+                                    <xsl:value-of
+                                            select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Drzavljanstvo"/>
+                                    <br/>
+                                    <br/>
+                                </xsl:when>
+                                <xsl:when test="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Godina_smrti">
+                                    Ime autora:
+                                    <xsl:value-of select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Ime"/>
+                                    <br/>
+                                    <br/>
+                                    Godina smrti:
+                                    <xsl:value-of
+                                            select="//aut:Autor//aut:Podaci_o_autoru//aut:Lice//aut:Godina_smrti"/>
+                                    <br/>
+                                    <br/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    Autor je anoniman.
+                                </xsl:otherwise>
+                            </xsl:choose>
 
                             9) Podatak da li je u pitanju autorsko delo stvoreno u radnom odnosu:
                             <br/>
@@ -275,7 +301,7 @@
                                 <xsl:element name="a">
                                     <xsl:attribute name="href">
                                         http://localhost:8001/autorskaPrava/download/prilog/<xsl:value-of
-                                            select="//aut:PutanjaDoOpisa"/>
+                                            select="//aut:Putanja_do_opisa"/>
                                     </xsl:attribute>
                                     Opis autorskog dela
                                 </xsl:element>
@@ -284,7 +310,7 @@
                                 <xsl:element name="a">
                                     <xsl:attribute name="href">
                                         http://localhost:8001/autorskaPrava/download/prilog/<xsl:value-of
-                                            select="//aut:PutanjaDoPrimera"/>
+                                            select="//aut:Putanja_do_primera"/>
                                     </xsl:attribute>
                                     Primer autorskog dela
                                 </xsl:element>
@@ -298,7 +324,6 @@
                                     </tr>
                                     <tr>
                                         <td style="font-size: 22px; font-weight: bold; padding: 5px 0 15px 15px">
-                                            A -
                                             <xsl:value-of select="//aut:Broj_prijave"/>
                                         </td>
                                     </tr>

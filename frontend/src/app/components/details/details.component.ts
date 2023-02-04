@@ -1,28 +1,38 @@
-import {Component, Input} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {DetaljiOZahtevu, ObradaZahtevaDTO} from "../../model/shared/Zahtev";
 import {ZahteviService} from "../../service/zahtevi.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {bootstrapApplication} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-details',
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.css']
 })
-export class DetailsComponent {
+export class DetailsComponent implements OnInit {
   @Input() brojPrijave: string;
   @Input() obradjen: boolean;
 
   detaljiOZahtevu: DetaljiOZahtevu = new DetaljiOZahtevu();
   razlogOdbijanja: string = "";
   odbija: boolean = false;
+  datumObrade = "";
+  sluzbenik = "";
+  sluzbenikEmail = "";
+  odbijen: boolean;
   blob: Blob = new Blob();
 
   constructor(private servis: ZahteviService, private _snackBar: MatSnackBar) {
+  }
+
+  ngOnInit() {
     if (this.obradjen) {
       this.servis.getDetaljiOObradi(this.brojPrijave).subscribe({
         next: value => {
-          console.log(value)
-          this.detaljiOZahtevu = value
+          this.datumObrade = value.getElementsByTagName("datumObrade")[0].textContent;
+          this.sluzbenik = value.getElementsByTagName("name")[0].textContent;
+          this.sluzbenikEmail = value.getElementsByTagName("email")[0].textContent;
+          this.odbijen = value.getElementsByTagName("odbijen")[0].textContent === "true";
         },
         error: err => console.log(err)
       })
@@ -39,7 +49,7 @@ export class DetailsComponent {
     this.servis.obradiZahtev(dto).subscribe({
       next: () => {
         this.servis.downloadResenje(dto.brojPrijave).subscribe({
-          next: (data: Blob) => this.downloadFile(data, 'pdf', 'pdf'),
+          next: (data: Blob) => this.downloadFile(data, "resenje_", 'pdf', 'pdf'),
           error: () => this.snack()
         });
       },
@@ -65,7 +75,7 @@ export class DetailsComponent {
   downloadResenje() {
     this.servis.downloadResenje(this.brojPrijave)
       .subscribe({
-        next: (data) => this.downloadFile(data, 'pdf', 'pdf'),
+        next: (data) => this.downloadFile(data, 'resenje_', 'pdf', 'pdf'),
         error: () => this.snack()
       });
   }
@@ -73,7 +83,7 @@ export class DetailsComponent {
   downloadPDF() {
     this.servis.downloadPDF(this.brojPrijave)
       .subscribe({
-        next: (data) => this.downloadFile(data, 'pdf', 'pdf'),
+        next: (data) => this.downloadFile(data, "", 'pdf', 'pdf'),
         error: () => this.snack()
       });
   }
@@ -81,7 +91,7 @@ export class DetailsComponent {
   downloadHTML() {
     this.servis.downloadHTML(this.brojPrijave)
       .subscribe({
-        next: (data) => this.downloadFile(data, 'html', 'xhtml'),
+        next: (data) => this.downloadFile(data, "", 'html', 'xhtml'),
         error: () => this.snack()
       });
   }
@@ -89,7 +99,7 @@ export class DetailsComponent {
   downloadJSON() {
     this.servis.downloadJSON(this.brojPrijave)
       .subscribe({
-        next: (data) => this.downloadFile(data, 'json', 'pdf'),
+        next: (data) => this.downloadFile(data, "", 'json', 'pdf'),
         error: () => this.snack()
       });
   }
@@ -97,16 +107,16 @@ export class DetailsComponent {
   downloadRDF() {
     this.servis.downloadRDF(this.brojPrijave)
       .subscribe({
-        next: (data) => this.downloadFile(data, 'rdf', 'pdf'),
+        next: (data) => this.downloadFile(data, "", 'rdf', 'pdf'),
         error: () => this.snack()
       });
   }
 
-  downloadFile(data: Blob, ekstenzija: string, applicationType: string) {
+  downloadFile(data: Blob, prefix: string, ekstenzija: string, applicationType: string) {
     this.blob = new Blob([data], {type: 'application/' + applicationType});
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(data);
-    link.download = this.brojPrijave + "." + ekstenzija;
+    link.download = prefix + this.brojPrijave + "." + ekstenzija;
     link.click();
   }
 }
