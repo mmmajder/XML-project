@@ -27,7 +27,7 @@ public class PatentController {
     private PatentService patentService;
 
     @GetMapping(produces = "application/xml", consumes = "application/xml")
-    public ResponseEntity<ZahtevZaPriznanjePatenta> getZahtevZaPriznanjePatentaBy(@RequestBody NazivPrijaveDTO brojPrijave) {
+    public ResponseEntity<ZahtevZaPriznanjePatenta> getZahtevZaPriznanjePatentaByBrojPrijave(@RequestBody NazivPrijaveDTO brojPrijave) {
         return ResponseEntity.ok(patentService.getZahtevZaPriznanjePatenta(brojPrijave.getNaziv()));
     }
 

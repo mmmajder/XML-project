@@ -148,7 +148,7 @@ public class Mapper {
     public static ZahtevZaPriznanjePatenta mapToZahtevZaPriznanjePatenta(ZahtevZaPriznanjePatentaDTO zahtevDTO) {
         ZahtevZaPriznanjePatenta zahtev = new ZahtevZaPriznanjePatenta();
         zahtev.setSadrzajZahtevaZaPriznanjePatenta(mapToSadrzajZahtevaZaPriznanjePatenta(zahtevDTO.getSadrzajZahtevaZaPriznanjePatenta()));
-//        zahtev.setOsnovneInformacijeOZahtevuZaPriznanjePatenta(mapToOsnovneInformacijeOZahtevuZaPriznanjePatenta(zahtevDTO.getOsnovneInformacijeOZahtevuZaPriznanjePatenta()));
+//          zahtev.setOsnovneInformacijeOZahtevuZaPriznanjePatenta(mapToOsnovneInformacijeOZahtevuZaPriznanjePatenta(zahtevDTO.getOsnovneInformacijeOZahtevuZaPriznanjePatenta()));
         return zahtev;
     }
 

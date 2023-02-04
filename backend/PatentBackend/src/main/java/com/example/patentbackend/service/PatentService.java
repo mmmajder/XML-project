@@ -36,6 +36,10 @@ public class PatentService {
     public ZahtevZaPriznanjePatenta createZahtevZaPriznanjePatenta(ZahtevZaPriznanjePatentaDTO zahtevZaPriznanjePatentaDTO) {
         ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = Mapper.mapToZahtevZaPriznanjePatenta(zahtevZaPriznanjePatentaDTO);
         setBrojPrijave(zahtevZaPriznanjePatenta);
+        if (zahtevZaPriznanjePatentaDTO.getPutanjaDoPrilogaPodnosioca() != null)
+            zahtevZaPriznanjePatenta.setPutanjaDoPrilogaPodnosioca(zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave().replace('/', '_') + "_PODNOSIOCI.pdf");
+        if (zahtevZaPriznanjePatentaDTO.getPutanjaDoPrimera() != null)
+            zahtevZaPriznanjePatenta.setPutanjaDoPrimera(zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave().replace('/', '_') + "_PRAVO_PRIJAVE.pdf");
         setDatumi(zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta());
         patentRepository.createPatentRequest(zahtevZaPriznanjePatenta);
         return zahtevZaPriznanjePatenta;
@@ -71,8 +75,6 @@ public class PatentService {
     }
 
 
-
-
     public ByteArrayInputStream generateHTML(String brojPrijave) {
         try {
             PatentTransformer.generateZahtevHTML(getZahtev(brojPrijave), false);
@@ -101,6 +103,7 @@ public class PatentService {
             throw new RuntimeException(e);
         }
     }
+
     public ByteArrayInputStream generateRDF(String brojPrijave) {
         try {
             String rdf = patentRepository.generateRDF(brojPrijave);

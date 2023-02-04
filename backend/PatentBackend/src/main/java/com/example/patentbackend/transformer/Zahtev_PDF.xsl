@@ -89,14 +89,6 @@
                         ZA PRIZNANJE PATENTA
                     </h3>
                 </center>
-
-                <!--                <tr><td colspan="2" style="border-left-width:1px;">-->
-                <!--                    <b>5. Naznacenje boje, odnosno boja iz kojih se znak sastoji:</b> <br/>-->
-                <!--                    <xsl:for-each select="//sz:Boja">-->
-                <!--                        <xsl:value-of select="."/>, <xsl:text>&#x20;</xsl:text>-->
-                <!--                    </xsl:for-each>-->
-                <!--                </td></tr>-->
-
                 <table>
                     <tr>
                         <th colspan="3" style="border-top-width:1px; border-left-width:1px;">Polje broj I NAZIV
@@ -115,10 +107,10 @@
                         <td colspan="3" style="border-left-width:1px;">
                             <b>Polje broj II PODNOSILAC PRIJAVE</b>
                             Podnosilac prijave je i pronalazac:
-                            <xsl:if test="//pat:Podnosilac_prijave_je_i_pronalazac=true()">
+                            <xsl:if test="//pat:Podnosilac_prijave_je_i_pronalazac[text()='true']">
                                 DA
                             </xsl:if>
-                            <xsl:if test="//pat:Podnosilac_prijave_je_i_pronalazac=false()">
+                            <xsl:if test="//pat:Podnosilac_prijave_je_i_pronalazac[text()='false']">
                                 NE
                             </xsl:if>
                         </td>
@@ -182,13 +174,25 @@
                     </tr>
                     <tr>
                         <td colspan="3" style="border-left-width:1px;">
-                            <xsl:element name="a">
-                                <xsl:attribute name="href">
-                                    http://localhost:8001/autorskaPrava/download/prilog/<xsl:value-of
-                                        select="//pat:Podaci_o_podnosiocu_prijave//pat:Putanja_do_priloga_podnosioca"/>
-                                </xsl:attribute>
-                                Izjavu o zajedničkom predstavniku
-                            </xsl:element>
+                            <xsl:choose>
+                                <xsl:when test="//pat:Putanja_do_priloga_podnosioca[text()='']">
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:element name="a">
+                                        <xsl:attribute name="href">
+                                            http://localhost:8000/patent/download/prilog/<xsl:value-of select="//pat:Putanja_do_priloga_podnosioca"/>
+                                        </xsl:attribute>
+                                        Spisak robe i usluga
+                                    </xsl:element>
+                                </xsl:otherwise>
+                            </xsl:choose>
+<!--                            <xsl:element name="a">-->
+<!--                                <xsl:attribute name="href">-->
+<!--                                    http://localhost:8001/autorskaPrava/download/prilog/<xsl:value-of-->
+<!--                                        select="//pat:Podaci_o_podnosiocu_prijave//pat:Putanja_do_priloga_podnosioca"/>-->
+<!--                                </xsl:attribute>-->
+<!--                                Izjavu o zajedničkom predstavniku-->
+<!--                            </xsl:element>-->
                         </td>
                     </tr>
                 </table>
@@ -200,15 +204,15 @@
                         <td colspan="3" style="border-top-width:1px; border-left-width:1px;">
                             <b>Polje broj III PRONALAZAC</b>
                             Pronalazac ne zeli da bude naveden u prijavi:
-                            <xsl:if test="//pat:Pronalazac_ne_zeli_da_bude_naveden=true()">
+                            <xsl:if test="//pat:Pronalazac_ne_zeli_da_bude_naveden[text()='true']">
                                 NE ZELI
                             </xsl:if>
-                            <xsl:if test="//pat:Pronalazac_ne_zeli_da_bude_naveden=false()">
+                            <xsl:if test="//pat:Pronalazac_ne_zeli_da_bude_naveden[text()='false']">
                                 ZELI
                             </xsl:if>
                         </td>
                     </tr>
-                    <xsl:if test="//pat:Pronalazac_ne_zeli_da_bude_naveden=false()"> <!-- informacije o pronalazacu se ispisuju samo ukoliko on to zeli -->
+                    <xsl:if test="//pat:Pronalazac_ne_zeli_da_bude_naveden[text()='false']"> <!-- informacije o pronalazacu se ispisuju samo ukoliko on to zeli -->
                         <tr>
                             <td rowspan="3" style="border-left-width:1px;">
                                 <xsl:if test="//pat:Pronalazac//pat:Ime">
@@ -262,13 +266,26 @@
                         </tr>
                         <tr>
                             <td colspan="3" style="border-left-width:1px;">
-                                <xsl:element name="a">
-                                    <xsl:attribute name="href">
-                                        http://localhost:8001/autorskaPrava/download/prilog/<xsl:value-of
-                                            select="//pat:Podaci_o_podnosiocu_prijave//pat:Putanja_do_primera"/>
-                                    </xsl:attribute>
-                                    Izjava podnosilaca prijave o osnovu sticanja prava
-                                </xsl:element>
+                                <xsl:choose>
+                                    <xsl:when test="//pat:Putanja_do_primera[text()='']">
+                                    </xsl:when>
+                                    <xsl:otherwise>
+                                        <xsl:element name="a">
+                                            <xsl:attribute name="href">
+                                                http://localhost:8000/patent/download/prilog/<xsl:value-of select="//pat:Putanja_do_primera"/>
+                                            </xsl:attribute>
+                                            Spisak robe i usluga
+                                        </xsl:element>
+                                    </xsl:otherwise>
+                                </xsl:choose>
+<!--                                <xsl:element name="a">-->
+<!--                                    <xsl:attribute name="href">-->
+<!--                                        http://localhost:8001/autorskaPrava/download/prilog/<xsl:value-of-->
+<!--                                            select="//pat:Podaci_o_podnosiocu_prijave//pat:Putanja_do_primera"/>-->
+<!--                                    </xsl:attribute>-->
+<!--                                    Izjava podnosilaca prijave o osnovu sticanja prava-->
+<!--                                </xsl:element>-->
+
                             </td>
                         </tr>
                     </xsl:if>
@@ -289,10 +306,10 @@
                             <br/>
                             ZAJEDNICKI PREDSTAVNIK:
                             <xsl:text>&#x20;</xsl:text>
-                            <xsl:if test="//pat:Zajednicki_predstavnik=true()">
+                            <xsl:if test="//pat:Zajednicki_predstavnik[text()='true']">
                                 DA
                             </xsl:if>
-                            <xsl:if test="//pat:Zajednicki_predstavnik=false()">
+                            <xsl:if test="//pat:Zajednicki_predstavnik[text()='false']">
                                 NE
                             </xsl:if>
                         </td>

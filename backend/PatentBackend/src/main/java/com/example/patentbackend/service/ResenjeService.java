@@ -10,9 +10,13 @@ import com.example.patentbackend.resenje.ResenjeZahteva;
 import com.example.patentbackend.transformer.PatentTransformer;
 import com.example.patentbackend.utils.Utils;
 import com.itextpdf.text.DocumentException;
+import org.apache.commons.io.FileUtils;
+import org.exist.http.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.xmldb.api.base.XMLDBException;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
@@ -69,6 +73,20 @@ public class ResenjeService {
             String title = "resenje_" + resenjeZahteva.getBrojPrijave().replace("/", "_");
             PatentTransformer.generateResenjePDF(resenjeZahteva, title);
             return title;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ByteArrayInputStream generateResenje(String brojPrijave) {
+        try {
+            ResenjeZahteva resenjeZahteva = repository.dobaviPoBrojuPrijave(brojPrijave);
+            if (resenjeZahteva == null) {
+                throw new NotFoundException("Resenje ne postoji.");
+            }
+            String title = generatePDF(resenjeZahteva);
+            File pdfFile = new File("src/main/resources/gen/resenjaPDF/" + title + ".pdf");
+            return new ByteArrayInputStream(FileUtils.readFileToByteArray(pdfFile));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
