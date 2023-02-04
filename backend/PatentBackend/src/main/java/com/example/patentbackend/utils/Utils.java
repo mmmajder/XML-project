@@ -1,5 +1,9 @@
 package com.example.patentbackend.utils;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 public class Utils {
 
     public static String formatNameOfRequestForPatent(String name, String extension) {
@@ -13,5 +17,10 @@ public class Utils {
         }
         returnSeparatedWithUnderscore.append(extension);
         return returnSeparatedWithUnderscore.toString();
+    }
+
+    public static String formatDate(Date date) {
+        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy.");
+        return formatter.format(date);
     }
 }

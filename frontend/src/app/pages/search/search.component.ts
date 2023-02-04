@@ -12,7 +12,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 })
 export class SearchComponent {
   zigPossibleMetadata: string[] = ["Podnosilac - email", "Punomocnik - email", "Predstavnik - email", "Tip žiga", "Broj prijave", "Datum podnošenja"];
-  patentPossibleMetadata: string[] = ["Broj prijave", "Naslov", "Datum"];
+  patentPossibleMetadata: string[] = ["Broj prijave", "Podnosilac - email", "Pronalazac - email", "Punomocnik - email", "Datum podnošenja", "Vrsta prijave"];
   autorskaPravaPossibleMetadata: string[] = ["Broj prijave", "Naslov", "Email podnosioca prijave", "Vrsta autorskog dela"];
   sviMetapodaci: string[] = this.autorskaPravaPossibleMetadata;
 
@@ -30,11 +30,14 @@ export class SearchComponent {
     "Email podnosioca prijave": "podnosilac_email",
     "Vrsta autorskog dela": "vrsta_autorskog_dela",
   }
-  // TODO
+
   patentMetadataMapper = {
-    "Autor": "Autor",
-    "Naslov": "Naslov",
-    "Datum": "Datum"
+    "Broj prijave": "broj_prijave",
+    "Podnosilac - email": "podnosilac_email",
+    "Pronalazac - email": "pronalazac_email",
+    "Punomocnik - email": "punomocnik_email",
+    "Datum podnošenja": "datum_podnosenja",
+    "Vrsta prijave": "vrsta_prijave"
   }
   metadataMapper: any = this.autorskaPravaMetadataMapper;
 

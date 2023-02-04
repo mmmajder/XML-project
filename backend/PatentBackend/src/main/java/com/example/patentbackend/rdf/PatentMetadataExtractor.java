@@ -30,7 +30,7 @@ public class PatentMetadataExtractor {
         addRDFTripletToModel(model, resource, "punomocnik_email", zahtev.getSadrzajZahtevaZaPriznanjePatenta().getPodaciOPunomocniku().getPunomocnik().getEPosta());
         addRDFTripletToModel(model, resource, "vrsta_prijave", zahtev.getSadrzajZahtevaZaPriznanjePatenta().getPodaciOPrijavi().getVrstaPrijave());
         addRDFTripletToModel(model, resource, "broj_prijave", zahtev.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave());
-//        addRDFTripletToModel(model, resource, "datum_podnosenja", zahtev.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getDatumPrijema().toString());
+        addRDFTripletToModel(model, resource, "datum_podnosenja", Utils.formatDate(zahtev.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getPriznatiDatumPodnosenja()));
         return model;
     }
 

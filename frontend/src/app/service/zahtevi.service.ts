@@ -32,7 +32,7 @@ export class ZahteviService {
       case "A":
         return this.autorskaPravaUrl + "/autorskaPrava";
       case "P":
-        return this.patentiUrl;
+        return this.patentiUrl + "/patent";
       default:
         return this.zigoviUrl + "/zig";
     }
@@ -67,15 +67,16 @@ export class ZahteviService {
       case "A":
         return this.autorskaPravaUrl + "/autorskaPravaResenje/obradiZahtev";
       case "P":
-        return this.patentiUrl + "/obradiZahtev";
+        return "/patentResenje/obradiZahtev";
       default:
-        return this.zigoviUrl + "/obradiZahtev";
+        return this.zigoviUrl + "/zig/obradiZahtev";
     }
   }
 
   obradiZahtev(obradaZahteva: ObradaZahtevaDTO) {
     const xmlZahtev = JsonToXML.parse("obradaZahteva", obradaZahteva);
     console.log(xmlZahtev);
+    console.log(this.getObradiZahtevUrl(obradaZahteva.brojPrijave))
     return this.http.post<Blob>(this.getObradiZahtevUrl(obradaZahteva.brojPrijave), xmlZahtev, AuthService.getHttpOptions());
   }
 

@@ -150,6 +150,17 @@
                     <tr>
                         <td colspan="2" style="border-left-width:1px;">Drzavljanstvo: <xsl:value-of select="//pat:Podaci_o_podnosiocu_prijave//pat:Drzavljanstvo"/></td>
                     </tr>
+                    <tr>
+                        <td colspan="3" style="border-left-width:1px;">
+                            <xsl:element name="a">
+                                <xsl:attribute name="href">
+                                    http://localhost:8001/autorskaPrava/download/prilog/<xsl:value-of
+                                        select="//pat:Podaci_o_podnosiocu_prijave//pat:Putanja_do_priloga_podnosioca"/>
+                                </xsl:attribute>
+                                Izjavu o zajedničkom predstavniku
+                            </xsl:element>
+                        </td>
+                    </tr>
                 </table>
 
                 <br/>
@@ -212,6 +223,17 @@
                                 E-pošta
                                 <br/>
                                 <xsl:value-of select="//pat:Pronalazac//pat:E_posta"/>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td colspan="3" style="border-left-width:1px;">
+                                <xsl:element name="a">
+                                    <xsl:attribute name="href">
+                                        http://localhost:8001/autorskaPrava/download/prilog/<xsl:value-of
+                                            select="//pat:Podaci_o_podnosiocu_prijave//pat:Putanja_do_primera"/>
+                                    </xsl:attribute>
+                                    Izjava podnosilaca prijave o osnovu sticanja prava
+                                </xsl:element>
                             </td>
                         </tr>
                     </xsl:if>

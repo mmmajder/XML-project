@@ -8,6 +8,6 @@ import lombok.*;
 public class SimpleZahtevDTO {
     private String brojPrijave;
     private String datumPodnosenja;
-    private SimpleUserDTO podnosioc;
+    private String podnosiocEmail;
     private boolean obradjen;
 }

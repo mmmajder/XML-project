@@ -156,9 +156,7 @@ public class ZigMapper {
         String datumPodnosenja = zahtevZaPriznanjeZiga.getDatumPodnosenja();
         simpleZahtevDTO.setDatumPodnosenja(datumPodnosenja);
 
-        SimpleUserDTO podnosioc = mapToSimpleUser(zahtevZaPriznanjeZiga.getPodnosilacPrijave());
-        simpleZahtevDTO.setPodnosioc(podnosioc);
-
+        simpleZahtevDTO.setPodnosiocEmail(zahtevZaPriznanjeZiga.getPodnosilacPrijave().getKontakt().getEmail());
         simpleZahtevDTO.setObradjen(zahtevZaPriznanjeZiga.getStatus() != EStatus.PREDATO);
 
         return simpleZahtevDTO;

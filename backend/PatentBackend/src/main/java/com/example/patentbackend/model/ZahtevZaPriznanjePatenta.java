@@ -15,7 +15,7 @@ import javax.xml.bind.annotation.XmlType;
 @NoArgsConstructor
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Zahtev_za_priznanje_patenta")
-@XmlType(name = "", propOrder = {"osnovneInformacijeOZahtevuZaPriznanjePatenta", "sadrzajZahtevaZaPriznanjePatenta"})
+@XmlType(name = "", propOrder = {"osnovneInformacijeOZahtevuZaPriznanjePatenta", "sadrzajZahtevaZaPriznanjePatenta", "putanjaDoPrilogaPodnosioca", "putanjaDoPrimera"})
 public class ZahtevZaPriznanjePatenta {
 
     @XmlElement(name = "Osnovne_informacije_o_zahtevu_za_priznanje_patenta", required = true)
@@ -23,6 +23,11 @@ public class ZahtevZaPriznanjePatenta {
 
     @XmlElement(name = "Sadrzaj_zahteva_za_priznanje_patenta", required = true)
     private SadrzajZahtevaZaPriznanjePatenta sadrzajZahtevaZaPriznanjePatenta;
+
+    @XmlElement(name="Putanja_do_priloga_podnosioca")
+    private String putanjaDoPrilogaPodnosioca;
+    @XmlElement(name="Putanja_do_primera")
+    private String putanjaDoPrimera;
 
     @Override
     public String toString() {
@@ -34,5 +39,4 @@ public class ZahtevZaPriznanjePatenta {
         buffer.append("\n");
         return buffer.toString();
     }
-
 }
