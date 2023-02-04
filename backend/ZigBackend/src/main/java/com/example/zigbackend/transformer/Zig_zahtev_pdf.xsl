@@ -279,7 +279,7 @@
 								<xsl:when test="//sz:Prilog//sz:Tip_priloga[text()='SPISAK_ROBE_I_USLUGA']//..//sz:Status_priloga='PREDATO'">
 									<xsl:element name="a">
 										<xsl:attribute name="href">
-											http://localhost:8002/download/prilog/<xsl:value-of select="//sz:Prilog//sz:Tip_priloga[text()='SPISAK_ROBE_I_USLUGA']//..//sz:Putanja_do_priloga"/>
+											http://localhost:8002/zig/download/prilog/<xsl:value-of select="//sz:Prilog//sz:Tip_priloga[text()='SPISAK_ROBE_I_USLUGA']//..//sz:Putanja_do_priloga"/>
 										</xsl:attribute>
 										Spisak robe i usluga
 									</xsl:element>
@@ -304,7 +304,7 @@
 								<xsl:when test="//sz:Prilog_punomocje//sz:Status_priloga='PREDATO'">
 									<xsl:element name="a">
 										<xsl:attribute name="href">
-											http://localhost:8002/download/prilog/<xsl:value-of select="//sz:Prilog_punomocje//sz:Putanja_do_priloga"/>
+											http://localhost:8002/zig/download/prilog/<xsl:value-of select="//sz:Prilog_punomocje//sz:Putanja_do_priloga"/>
 										</xsl:attribute>
 										Punomocje
 									</xsl:element>
@@ -339,7 +339,7 @@
 								<xsl:when test="//sz:Prilog//sz:Tip_priloga[text()='OPSTI_AKT_O_ZIGU']//..//sz:Status_priloga='PREDATO'">
 									<xsl:element name="a">
 										<xsl:attribute name="href">
-											http://localhost:8002/download/prilog/<xsl:value-of select="//sz:Prilog//sz:Tip_priloga[text()='OPSTI_AKT_O_ZIGU']//..//sz:Putanja_do_priloga"/>
+											http://localhost:8002/zig/download/prilog/<xsl:value-of select="//sz:Prilog//sz:Tip_priloga[text()='OPSTI_AKT_O_ZIGU']//..//sz:Putanja_do_priloga"/>
 										</xsl:attribute>
 										Opsti akt o kolektivnom zigu/zigu garancije
 									</xsl:element>
@@ -367,7 +367,7 @@
 								<xsl:when test="//sz:Prilog//sz:Tip_priloga[text()='DOKAZ_O_PRAVU_PRVENSTVA']//..//sz:Status_priloga='PREDATO'">
 									<xsl:element name="a">
 										<xsl:attribute name="href">
-											http://localhost:8002/download/prilog/<xsl:value-of select="//sz:Prilog//sz:Tip_priloga[text()='DOKAZ_O_PRAVU_PRVENSTVA']//..//sz:Putanja_do_priloga"/>
+											http://localhost:8002/zig/download/prilog/<xsl:value-of select="//sz:Prilog//sz:Tip_priloga[text()='DOKAZ_O_PRAVU_PRVENSTVA']//..//sz:Putanja_do_priloga"/>
 										</xsl:attribute>
 										Dokaz o pravu prvenstva
 									</xsl:element>
@@ -395,7 +395,7 @@
 								<xsl:when test="//sz:Prilog//sz:Tip_priloga[text()='DOKAZ_O_UPLATI_TAKSE']//..//sz:Status_priloga='PREDATO'">
 									<xsl:element name="a">
 										<xsl:attribute name="href">
-											http://localhost:8002/download/prilog/<xsl:value-of select="//sz:Prilog//sz:Tip_priloga[text()='DOKAZ_O_UPLATI_TAKSE']//..//sz:Putanja_do_priloga"/>
+											http://localhost:8002/zig/download/prilog/<xsl:value-of select="//sz:Prilog//sz:Tip_priloga[text()='DOKAZ_O_UPLATI_TAKSE']//..//sz:Putanja_do_priloga"/>
 										</xsl:attribute>
 										Dokaz o uplati takse
 									</xsl:element>

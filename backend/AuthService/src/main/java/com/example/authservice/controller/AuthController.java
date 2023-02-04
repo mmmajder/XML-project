@@ -49,13 +49,16 @@ public class AuthController {
         return new ResponseEntity<>(HttpStatus.CREATED);
     }
 
-    @GetMapping("/currently-logged-user")
+    @GetMapping(path="/currently-logged-user", produces = "application/xml", consumes = "application/xml")
     public ResponseEntity<UserResponse> loggedUser(Authentication authentication) {
+        System.out.println("Usao u currently");
         User user = userService.getLoggedUser(authentication);
+
         if (user == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         UserResponse dto = DTOMapper.getUserResponse(user);
-        return new ResponseEntity<>(dto, HttpStatus.OK);
+
+        return ResponseEntity.ok(dto);
     }
 }
