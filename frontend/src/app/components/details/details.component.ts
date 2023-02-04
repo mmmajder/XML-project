@@ -5,6 +5,7 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {AuthService} from "../../service/auth.service";
 import {LoginResponseDto, UserTokenState} from "../../model/shared/LoginResponseDto";
 import {User} from "../../model/shared/User";
+import {bootstrapApplication} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-details',
@@ -18,28 +19,47 @@ export class DetailsComponent implements OnInit{
   detaljiOZahtevu: DetaljiOZahtevu = new DetaljiOZahtevu();
   razlogOdbijanja: string = "";
   odbija: boolean = false;
+  datumObrade = "";
+  sluzbenik = "";
+  sluzbenikEmail = "";
+  odbijen: boolean;
   blob: Blob = new Blob();
   loggedUser: any;
 
-  ngOnInit(): void {
-    if (this.loggedUser === undefined){
-      this.authService.getCurrentlyLoggedUser().subscribe( (data:any) => {
-        this.loggedUser = this.parseUser(data);
-      });
-    }
-  }
+// <<<<<<< HEAD
+//   ngOnInit(): void {
+//     if (this.loggedUser === undefined){
+//       this.authService.getCurrentlyLoggedUser().subscribe( (data:any) => {
+//         this.loggedUser = this.parseUser(data);
+//       });
+//     }
+//   }
 
   constructor(private servis: ZahteviService, private _snackBar: MatSnackBar, private authService: AuthService) {
-    if (this.loggedUser === undefined){
-      this.authService.getCurrentlyLoggedUser().subscribe( (data:any) => {
-        this.loggedUser = this.parseUser(data);
-      });
-    }
+    // if (this.loggedUser === undefined) {
+    //   this.authService.getCurrentlyLoggedUser().subscribe((data: any) => {
+    //     this.loggedUser = this.parseUser(data);
+    //   });
+    // }
+  }
+// =======
+//   constructor(private servis: ZahteviService, private _snackBar: MatSnackBar) {
+//   }
+
+// >>>>>>> 4950a513047b8c26e09e31a349682ad5876909ba
+    ngOnInit() {
+      if (this.loggedUser === undefined){
+        this.authService.getCurrentlyLoggedUser().subscribe( (data:any) => {
+          this.loggedUser = this.parseUser(data);
+        });
+      }
     if (this.obradjen) {
       this.servis.getDetaljiOObradi(this.brojPrijave).subscribe({
         next: value => {
-          console.log(value)
-          this.detaljiOZahtevu = value
+          this.datumObrade = value.getElementsByTagName("datumObrade")[0].textContent;
+          this.sluzbenik = value.getElementsByTagName("name")[0].textContent;
+          this.sluzbenikEmail = value.getElementsByTagName("email")[0].textContent;
+          this.odbijen = value.getElementsByTagName("odbijen")[0].textContent === "true";
         },
         error: err => console.log(err)
       })
@@ -58,7 +78,7 @@ export class DetailsComponent implements OnInit{
 
     this.servis.obradiZahtev(dto).subscribe(() => {
         this.servis.downloadResenje(dto.brojPrijave).subscribe({
-          next: (data: Blob) => this.downloadFile(data, 'pdf', 'pdf'),
+          next: (data: Blob) => this.downloadFile(data, "resenje_", 'pdf', 'pdf'),
           error: () => this.snack()
         });
       })
@@ -82,7 +102,7 @@ export class DetailsComponent implements OnInit{
   downloadResenje() {
     this.servis.downloadResenje(this.brojPrijave)
       .subscribe({
-        next: (data) => this.downloadFile(data, 'pdf', 'pdf'),
+        next: (data) => this.downloadFile(data, 'resenje_', 'pdf', 'pdf'),
         error: () => this.snack()
       });
   }
@@ -90,7 +110,7 @@ export class DetailsComponent implements OnInit{
   downloadPDF() {
     this.servis.downloadPDF(this.brojPrijave)
       .subscribe({
-        next: (data) => this.downloadFile(data, 'pdf', 'pdf'),
+        next: (data) => this.downloadFile(data, "", 'pdf', 'pdf'),
         error: () => this.snack()
       });
   }
@@ -98,7 +118,7 @@ export class DetailsComponent implements OnInit{
   downloadHTML() {
     this.servis.downloadHTML(this.brojPrijave)
       .subscribe({
-        next: (data) => this.downloadFile(data, 'html', 'xhtml'),
+        next: (data) => this.downloadFile(data, "", 'html', 'xhtml'),
         error: () => this.snack()
       });
   }
@@ -106,7 +126,7 @@ export class DetailsComponent implements OnInit{
   downloadJSON() {
     this.servis.downloadJSON(this.brojPrijave)
       .subscribe({
-        next: (data) => this.downloadFile(data, 'json', 'pdf'),
+        next: (data) => this.downloadFile(data, "", 'json', 'pdf'),
         error: () => this.snack()
       });
   }
@@ -114,16 +134,16 @@ export class DetailsComponent implements OnInit{
   downloadRDF() {
     this.servis.downloadRDF(this.brojPrijave)
       .subscribe({
-        next: (data) => this.downloadFile(data, 'rdf', 'pdf'),
+        next: (data) => this.downloadFile(data, "", 'rdf', 'pdf'),
         error: () => this.snack()
       });
   }
 
-  downloadFile(data: Blob, ekstenzija: string, applicationType: string) {
+  downloadFile(data: Blob, prefix: string, ekstenzija: string, applicationType: string) {
     this.blob = new Blob([data], {type: 'application/' + applicationType});
     const link = document.createElement('a');
     link.href = window.URL.createObjectURL(data);
-    link.download = this.brojPrijave + "." + ekstenzija;
+    link.download = prefix + this.brojPrijave + "." + ekstenzija;
     link.click();
   }
 

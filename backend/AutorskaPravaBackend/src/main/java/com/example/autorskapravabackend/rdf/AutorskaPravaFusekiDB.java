@@ -3,7 +3,9 @@ package com.example.autorskapravabackend.rdf;
 import com.example.autorskapravabackend.db.ResenjeZahtevaDB;
 import com.example.autorskapravabackend.dto.IzvestajRequest;
 import com.example.autorskapravabackend.dto.MetadataSearchParams;
+import com.example.autorskapravabackend.model.EStatus;
 import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
+import com.example.autorskapravabackend.repository.AutorskaPravaRepository;
 import com.example.autorskapravabackend.resenje.ResenjeZahteva;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -12,12 +14,17 @@ import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.commons.io.FileUtils;
 import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
+import org.xmldb.api.base.XMLDBException;
 
+import javax.xml.bind.JAXBException;
 import javax.xml.datatype.DatatypeConfigurationException;
 import javax.xml.datatype.DatatypeFactory;
 import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.*;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
 
@@ -52,49 +59,45 @@ public class AutorskaPravaFusekiDB {
         return FusekiReader.getJsonString(brojPrijave);
     }
 
-    public static ByteArrayInputStream generateReport(IzvestajRequest izvestajRequest) throws DatatypeConfigurationException, ParseException {
+    public static ByteArrayInputStream generateReport(IzvestajRequest izvestajRequest) throws IOException, DocumentException {
         int zahtevi = 0;
         int prihvaceniZahtevi = 0;
         int odbijeniZahtevi = 0;
 
-        XMLGregorianCalendar pocetak = stringToXMLGregorian(izvestajRequest.getStart());
-        XMLGregorianCalendar kraj = stringToXMLGregorian(izvestajRequest.getEnd());
+        try {
+            AutorskaPravaRepository autorskaPravaRepository = new AutorskaPravaRepository();
+            Date start = new SimpleDateFormat("yyyy-MM-dd").parse(izvestajRequest.getStart());
+            Date end = new SimpleDateFormat("yyyy-MM-dd").parse(izvestajRequest.getEnd());
 
-        String queryString = "select ?s ?p ?o {graph ?g {?s ?p ?o}}";
-        Query query = QueryFactory.create(queryString);
-
-        try (QueryExecution qexec = QueryExecutionFactory.sparqlService("http://localhost:8080/fuseki/AutorskaPravaData/", query)) {
-            ResultSet resultSet = qexec.execSelect();
-
-            while (resultSet.hasNext()) {
-                QuerySolution solution = resultSet.next();
-                String p = solution.get("p").toString();
-                String o = solution.get("o").toString();
-                if (p.contains("datum_podnosenja")) {
-                    XMLGregorianCalendar date = DatatypeFactory.newInstance().newXMLGregorianCalendar(o);
-                    if (pocetak.compare(date) <= 0 && kraj.compare(date) >= 0) {
-                        zahtevi++;
-                    }
+            for (ZahtevZaAutorskaPrava zahtev : autorskaPravaRepository.getAllByStatus(EStatus.ODBIJENO)) {
+                Date predato = zahtev.getInformacijeOZahtevu().getDatumPodnosenja();
+                if (predato.before(end) && predato.after(start)) {
+                    odbijeniZahtevi += 1;
                 }
             }
 
-            for (ResenjeZahteva resenjeZahteva : ResenjeZahtevaDB.dobaviSvaResenja()) {
-                XMLGregorianCalendar datumObrade = dateToXMLGregorian(resenjeZahteva.getDatumObrade());
-                if (pocetak.compare(datumObrade) <= 0 && kraj.compare(datumObrade) >= 0) {
-                    if (resenjeZahteva.isOdbijen()) {
-                        odbijeniZahtevi++;
-                    } else {
-                        prihvaceniZahtevi++;
-                    }
+            for (ZahtevZaAutorskaPrava zahtev : autorskaPravaRepository.getAllByStatus(EStatus.PRIHVACENO)) {
+                Date predato = zahtev.getInformacijeOZahtevu().getDatumPodnosenja();
+                if (predato.before(end) && predato.after(start)) {
+                    prihvaceniZahtevi += 1;
                 }
             }
-            String fileName = createDocument(zahtevi, prihvaceniZahtevi, odbijeniZahtevi, izvestajRequest);
-            File file = new File("src/main/resources/gen/izvestaji/" + fileName);
 
-            return new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
-        } catch (Exception e) {
-            throw new RuntimeException(e);
+            for (ZahtevZaAutorskaPrava zahtev : autorskaPravaRepository.getAllByStatus(EStatus.PREDATO)) {
+                Date predato = zahtev.getInformacijeOZahtevu().getDatumPodnosenja();
+                if (predato.before(end) && predato.after(start)) {
+                    zahtevi += 1;
+                }
+            }
+            zahtevi += prihvaceniZahtevi;
+            zahtevi += odbijeniZahtevi;
+        } catch (Exception ignore) {
         }
+
+        String fileName = createDocument(zahtevi, prihvaceniZahtevi, odbijeniZahtevi, izvestajRequest);
+        File file = new File("src/main/resources/gen/izvestaji/" + fileName);
+
+        return new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
     }
 
     private static String createDocument(int brojZahteva, int prihvaceniZahtevi, int odbijeniZahtevi, IzvestajRequest izvestajRequest) throws FileNotFoundException, DocumentException {
@@ -104,9 +107,10 @@ public class AutorskaPravaFusekiDB {
         PdfWriter.getInstance(document, new FileOutputStream("src/main/resources/gen/izvestaji/" + fileName));
         document.open();
 
-        document.add(new Chunk("IZVESTAJ"));
-        document.add(new Chunk("Pocetni datum: " + izvestajRequest.getStart()));
-        document.add(new Chunk("Pocetni datum: " + izvestajRequest.getEnd()));
+        document.add(new Paragraph("IZVESTAJ"));
+        document.add(new Paragraph("\nPocetni datum: " + izvestajRequest.getStart()));
+        document.add(new Paragraph("\nPocetni datum: " + izvestajRequest.getEnd()));
+        document.add(new Paragraph("\nTip dela: Zahtev za autorsko pravo"));
         document.add(new Paragraph("\n\n"));
 
         PdfPTable table = new PdfPTable(3);

@@ -87,7 +87,7 @@ public class AutorskaPravaService {
     }
 
     public ByteArrayInputStream getPrilog(String fileName) throws IOException {
-        return getFile("src/main/resources/uploadedFiles/" + fileName);
+        return getFile(fileName);
     }
 
     public ByteArrayInputStream getFile(String fullpath) throws IOException {

@@ -25,7 +25,7 @@ public class Utils {
     }
 
     public static String formatDate(Date date) {
-        DateFormat formatter = new SimpleDateFormat("dd.MM.yyyy.");
+        DateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
         return formatter.format(date);
     }
 

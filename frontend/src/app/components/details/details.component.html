@@ -1,14 +1,14 @@
 <div style="margin: 20px">
-  <div *ngIf="detaljiOZahtevu.zahtev.obradjen">
+  <div *ngIf="obradjen">
     <h4 style="color: gray">OBRAĐEN ZAHTEV</h4>
     <h1>{{brojPrijave}}</h1>
-    <p>Datum obrade: {{detaljiOZahtevu.obrada?.datumObrade}}</p>
-    <p>Službenik: {{detaljiOZahtevu.obrada?.sluzbenik?.name}}
-      <span style="color: gray">({{detaljiOZahtevu.obrada?.sluzbenik?.email}})</span>
+    <p>Datum obrade: {{datumObrade}}</p>
+    <p>Službenik: {{sluzbenik}}
+      <span style="color: gray">({{sluzbenikEmail}})</span>
     </p>
     <p>Status zahteva:
-      <span *ngIf="!detaljiOZahtevu.obrada?.odbijen" style="color: darkgreen; font-weight: 500">PRIHVAĆEN</span>
-      <span *ngIf="detaljiOZahtevu.obrada?.odbijen" style="color: darkred; font-weight: 500">ODBIJEN</span>
+      <span *ngIf="!odbijen" style="color: darkgreen; font-weight: 500">PRIHVAĆEN</span>
+      <span *ngIf="odbijen" style="color: darkred; font-weight: 500">ODBIJEN</span>
     </p>
     <p *ngIf="detaljiOZahtevu.obrada?.odbijen">Razlog odbijanja:
       <span style="color:gray">{{detaljiOZahtevu.obrada?.razlogOdbijanja}}</span>
@@ -18,7 +18,7 @@
       REŠENJE ZAHTEVA
     </button>
   </div>
-  <div *ngIf="!detaljiOZahtevu.zahtev.obradjen">
+  <div *ngIf="!obradjen">
     <h4 style="color: gray">NEOBRAĐEN ZAHTEV</h4>
     <h1>{{brojPrijave}}</h1>
     <mat-form-field style="width: 100%;" *ngIf="odbija">

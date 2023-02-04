@@ -77,12 +77,6 @@ public class AutorskaPravaRequestDB {
         }
     }
 
-    public static List<XMLResource> getAllByYear(String yy) {
-        String xpathExp = "//aut:Zahtev_za_unosenje_u_evidenciju_i_deponovanje_autorskih_dela//aut:Broj_prijave[contains(.,'/" + yy + "')]";
-
-        return getAllByFilter(xpathExp);
-    }
-
     public static List<XMLResource> getAllByStatus(EStatus status) {
         String xpathExp = "//aut:Status[text()='" + status + "']/ancestor::aut:Zahtev_za_unosenje_u_evidenciju_i_deponovanje_autorskih_dela";
 
@@ -96,7 +90,6 @@ public class AutorskaPravaRequestDB {
 
         return xpathService;
     }
-
 
     // use this one
     private static Collection getCollection() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {

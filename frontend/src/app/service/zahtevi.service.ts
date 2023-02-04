@@ -21,9 +21,9 @@ export class ZahteviService {
     this.zigoviUrl = 'http://localhost:8002';
   }
 
-  public getDetaljiOObradi(brojPrijave: string | null): Observable<DetaljiOZahtevu> {
+  public getDetaljiOObradi(brojPrijave: string | null): Observable<any> {
     const xmlZahtev = JsonToXML.parse("brojPrijave", {'broj': brojPrijave});
-    return this.http.post<DetaljiOZahtevu>(this.getDetaljiOZahtevuUrl(brojPrijave) + "/getRequest", xmlZahtev, this.getXMLHttpOptions());
+    return this.http.post<any>(this.getDetaljiOZahtevuUrl(brojPrijave), xmlZahtev, this.getXmlHttpOptionsDocument());
   }
 
   private getUrl(endpointChar: string | null): string {
@@ -38,15 +38,26 @@ export class ZahteviService {
     }
   }
 
+  public getXmlHttpOptionsDocument() {
+    return {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': localStorage.getItem('token') || 'authkey',
+        'Content-Type': 'application/xml',
+      }),
+      responseType: 'document' as 'json'
+    };
+  }
+
   private getDetaljiOZahtevuUrl(endpointChar: string | null): string {
     if (endpointChar == null) return "";
     switch (endpointChar.at(0)) {
       case "A":
-        return "/autorskaPravaResenje/resenjeZahteva";
+        return this.autorskaPravaUrl + "/autorskaPravaResenje/resenjeZahteva";
       case "P":
-        return "/obradiZahtev";
+        return this.patentiUrl + "/obradiZahtev";
       default:
-        return "/obradiZahtev";
+        return this.zigoviUrl + "/obradiZahtev";
     }
   }
 
@@ -125,6 +136,8 @@ export class ZahteviService {
 
   public searchByText(textSearchParams: TextSearchDTO, endpointChar: string): Observable<Zahtev> {
     const xmlZahtev = JsonToXML.parse("TextSearchDTO", textSearchParams);
+    console.log(xmlZahtev);
+    console.log(this.getUrl(endpointChar) + "/text-search")
     return this.http.put<Zahtev>(this.getUrl(endpointChar) + "/text-search", xmlZahtev, this.getXmlHttpOptions());
   }
 
