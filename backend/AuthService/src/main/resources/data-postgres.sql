@@ -17,3 +17,4 @@ values (false, true);
 insert into users(email, password, name, surname, phone_number, user_auth_id, role)
 values ('g@gmail.com', '$2a$10$tnplXdStY6t7kOqqKssMYedAGjJ0T3OJH2BxeT81c1YrDqOUvHLD6', 'Gradjanin', 'Peric', '069123456', 1, 1),
        ('s@gmail.com', '$2a$10$tnplXdStY6t7kOqqKssMYedAGjJ0T3OJH2BxeT81c1YrDqOUvHLD6', 'Sluzbenik', 'Peric', '069123456', 1, 2);
+

@@ -18,13 +18,13 @@ export class AuthService {
     this.authUrl = 'http://localhost:8003/auth';
   }
 
-  public login(user: LoginCredentials): Observable<LoginResponseDto> {
+  public login(user: LoginCredentials): Observable<any> {
     let body = {
       "email": user.email,
       "password": user.password
     }
     const xmlZahtev = JsonToXML.parse("authenticationRequest", body);
-    return this.http.post<LoginResponseDto>(this.authUrl + '/login', xmlZahtev, AuthService.getHttpOptions());
+    return this.http.post<any>(this.authUrl + '/login', xmlZahtev, AuthService.getXmlHttpOptions());
   }
 
   public register(user: RegisterCredentials): Observable<string> {
@@ -58,6 +58,17 @@ export class AuthService {
         'Access-Control-Allow-Origin': '*',
         'Authorization': localStorage.getItem('token') || 'authkey',
       })
+    };
+  }
+
+  public static getXmlHttpOptions() {
+    return {
+      headers: new HttpHeaders({
+        'Access-Control-Allow-Origin': '*',
+        'Authorization': localStorage.getItem('token') || 'authkey',
+        'Content-Type': 'application/xml',
+      }),
+      responseType: 'document' as 'json'
     };
   }
 

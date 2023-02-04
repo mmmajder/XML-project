@@ -58,13 +58,14 @@ export class ZahteviService {
       case "P":
         return "/patentResenje/obradiZahtev";
       default:
-        return this.zigoviUrl + "/obradiZahtev";
+        return this.zigoviUrl + "/zig/obradiZahtev";
     }
   }
 
   obradiZahtev(obradaZahteva: ObradaZahtevaDTO) {
     const xmlZahtev = JsonToXML.parse("obradaZahteva", obradaZahteva);
     console.log(xmlZahtev);
+    console.log(this.getObradiZahtevUrl(obradaZahteva.brojPrijave))
     return this.http.post<Blob>(this.getObradiZahtevUrl(obradaZahteva.brojPrijave), xmlZahtev, AuthService.getHttpOptions());
   }
 
