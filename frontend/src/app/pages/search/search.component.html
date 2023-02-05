@@ -12,7 +12,7 @@
             <mat-option value="Z">Zahtevi za žigove</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="outline" style="margin-left: 5px">
+        <mat-form-field *ngIf="role === 'SLUZBENIK'" appearance="outline" style="margin-left: 5px">
           <mat-label>Izaberite status zahteva</mat-label>
           <mat-select [(ngModel)]="statusZahteva">
             <mat-option value="obradjeni">Obrađeni zahtevi</mat-option>
@@ -41,7 +41,7 @@
             <mat-option value="Z">Zahtevi za žigove</mat-option>
           </mat-select>
         </mat-form-field>
-        <mat-form-field appearance="outline" style="margin-left: 5px; margin-right: 5px">
+        <mat-form-field *ngIf="role === 'SLUZBENIK'" appearance="outline" style="margin-left: 5px; margin-right: 5px">
           <mat-label>Izaberite status zahteva</mat-label>
           <mat-select [(ngModel)]="statusZahteva">
             <mat-option value="obradjeni">Obrađeni zahtevi</mat-option>
