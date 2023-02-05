@@ -55,7 +55,7 @@ public class PatentFusekiDB {
             Date start = new SimpleDateFormat("yyyy-MM-dd").parse(izvestajRequest.getStart());
             Date end = new SimpleDateFormat("yyyy-MM-dd").parse(izvestajRequest.getEnd());
 
-            for (ZahtevZaPriznanjePatenta zahtev : patentRepository.getAllCanceled()) {
+            for (ZahtevZaPriznanjePatenta zahtev : patentRepository.getAllDenied()) {
                 Date predato = zahtev.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getPriznatiDatumPodnosenja();
                 if (predato.before(end) && predato.after(start)) {
                     odbijeniZahtevi += 1;

@@ -13,7 +13,7 @@ import {AuthService} from "../../service/auth.service";
 })
 export class SearchComponent {
   zigPossibleMetadata: string[] = ["Podnosilac - email", "Punomocnik - email", "Predstavnik - email", "Tip žiga", "Broj prijave", "Datum podnošenja"];
-  patentPossibleMetadata: string[] = ["Broj prijave", "Podnosilac - email", "Pronalazac - email", "Punomocnik - email", "Datum podnošenja", "Vrsta prijave"];
+  patentPossibleMetadata: string[] = ["Broj prijave", "Podnosilac - email", "Pronalazac - email", "Punomocnik - email", "Vrsta prijave"];
   autorskaPravaPossibleMetadata: string[] = ["Broj prijave", "Naslov", "Email podnosioca prijave", "Vrsta autorskog dela"];
   sviMetapodaci: string[] = this.autorskaPravaPossibleMetadata;
 
@@ -37,7 +37,6 @@ export class SearchComponent {
     "Podnosilac - email": "podnosilac_email",
     "Pronalazac - email": "pronalazac_email",
     "Punomocnik - email": "punomocnik_email",
-    "Datum podnošenja": "datum_podnosenja",
     "Vrsta prijave": "vrsta_prijave"
   }
   metadataMapper: any = this.autorskaPravaMetadataMapper;
