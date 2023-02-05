@@ -70,7 +70,7 @@ public class ZigRepository {
         return getAllByStatus(EStatus.ODBIJENO);
     }
 
-    private List<ZahtevZaPriznanjeZiga> getAllByStatus(EStatus status) throws JAXBException, XMLDBException {
+    public List<ZahtevZaPriznanjeZiga> getAllByStatus(EStatus status) throws JAXBException, XMLDBException {
         List<XMLResource> resources = ZigDB.getAllByStatus(status);
         List<ZahtevZaPriznanjeZiga> zahtevi = getZahteviFromResources(resources);
 

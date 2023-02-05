@@ -89,7 +89,7 @@ public class ResenjeZahtevaDB {
 
             System.out.println("[INFO] Retrieving the collection: " + collectionId);
             col = getOrCreateCollection(collectionId, conn);
-            String documentName = "resenje_" + resenjeZahteva.getBrojPrijave().replace('/', '_');
+            String documentName = "resenje_zig_" + resenjeZahteva.getBrojPrijave().replace('/', '_');
             res = (XMLResource) col.createResource(documentName, XMLResource.RESOURCE_TYPE);
             res.setContent(MarshallerZig.marshal(resenjeZahteva));
             System.out.println("[INFO] Storing the document: " + res.getId());
@@ -122,19 +122,13 @@ public class ResenjeZahtevaDB {
         Collection col = null;
         ResenjeZahteva resenjeZahteva = null;
         try {
-            System.out.println("[INFO] Retrieving the collection: " + collectionId);
             col = DatabaseManager.getCollection(conn.uri + collectionId);
 
-            XPathQueryService xPathQueryService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
-            xPathQueryService.setProperty("indent", "yes");
-
-            String xPathExp = "//resenje_zahteva[brojPrijave='" + brojPrijave + "']";
-            ResourceSet result = xPathQueryService.query(xPathExp);
-            XMLResource res = (XMLResource) result.getIterator().nextResource();
+            XMLResource res = (XMLResource) col.getResource("resenje_zig_" + brojPrijave.replace('/', '_'));
             JAXBContext context = JAXBContext.newInstance(ResenjeZahteva.class);
             Unmarshaller unmarshaller = context.createUnmarshaller();
             resenjeZahteva = (ResenjeZahteva) unmarshaller.unmarshal(res.getContentAsDOM());
-        } catch (JAXBException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         } finally {
             if (col != null) {

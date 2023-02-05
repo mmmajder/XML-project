@@ -57,7 +57,7 @@ export class ZahteviService {
       case "P":
         return this.patentiUrl + "/patentResenje/resenjeZahteva";
       default:
-        return this.zigoviUrl + "/obradiZahtev";
+        return this.zigoviUrl + "/zigResenje/resenjeZahteva";
     }
   }
 
@@ -163,7 +163,7 @@ export class ZahteviService {
       case "P":
         return this.patentiUrl + "/patentResenje/resenje";
       default:
-        return this.zigoviUrl + "/obradiZahtev";
+        return this.zigoviUrl + "/zigResenje/resenje";
     }
   }
 }

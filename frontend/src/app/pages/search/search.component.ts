@@ -56,8 +56,6 @@ export class SearchComponent {
   constructor(private zahteviService: ZahteviService, private _snackBar: MatSnackBar, private authService: AuthService) {
     this.authService.getCurrentlyLoggedUser().subscribe((data: any) => {
       this.role = data.getElementsByTagName("role")[0].textContent;
-      if (this.role === "GRADJANIN")
-        this.statusZahteva = "prihvaceni";
     });
   }
 
@@ -69,7 +67,6 @@ export class SearchComponent {
     let metadata = new MetadataSearchParamsDTO();
     metadata.operator = "AND";
     this.metapodaci.push(new MetadataSearchParamsDTO());
-    console.log(this.metapodaci.length)
   }
 
   searchText() {

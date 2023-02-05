@@ -2,6 +2,7 @@ package com.example.zigbackend.controller;
 
 
 import com.example.zigbackend.dto.BrojPrijaveDTO;
+import com.example.zigbackend.dto.IzvestajRequest;
 import com.example.zigbackend.model.ZahtevZaPriznanjeZiga;
 import com.example.zigbackend.service.ZigService;
 import lombok.AllArgsConstructor;
@@ -12,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @AllArgsConstructor
@@ -61,9 +63,6 @@ public class DownloadController {
     }
     // for testing ^^^
 
-
-
-
     @PostMapping(path = "/html", produces = MediaType.APPLICATION_XHTML_XML_VALUE)
     public ResponseEntity<InputStreamResource> generateHTML(@RequestBody BrojPrijaveDTO brojPrijaveDto) throws IOException {
         String brojPrijave = brojPrijaveDto.getBroj();
@@ -111,6 +110,15 @@ public class DownloadController {
         ByteArrayInputStream byteFile = zigService.getPrilog(fileName);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=" + fileName);
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
+    }
+
+    @PostMapping(path = "/izvestaj", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> generateIzvestaj(@RequestBody IzvestajRequest izvestajRequest) throws FileNotFoundException {
+        ByteArrayInputStream byteFile = zigService.generateIzvestaj(izvestajRequest);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=izvestaj_" + izvestajRequest.toString() + ".pdf");
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
     }

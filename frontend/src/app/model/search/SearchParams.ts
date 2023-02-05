@@ -6,7 +6,7 @@ export class MetadataSearchParamsDTO {
 }
 
 export class TextSearchDTO {
-  textSearch: string;
+  textSearch: string = "";
   casesensitive: boolean;
-  status: string;
+  status: string = "prihvaceni";
 }

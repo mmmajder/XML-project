@@ -62,17 +62,10 @@
                         <th colspan="2">Službenik koji je obradio zahtev</th>
                     </tr>
                     <tr>
-                        <td>Ime</td>
+                        <td>Ime i prezime</td>
                         <td>
                             <xsl:value-of
                                     select="//aut:resenje_zahteva//aut:ime_sluzbenika"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Prezime</td>
-                        <td>
-                            <xsl:value-of
-                                    select="//aut:resenje_zahteva//aut:prezime_sluzbenika"/>
                         </td>
                     </tr>
                     <tr>

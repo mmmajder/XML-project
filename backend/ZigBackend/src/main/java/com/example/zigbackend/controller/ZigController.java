@@ -3,24 +3,17 @@ package com.example.zigbackend.controller;
 import com.example.zigbackend.dto.*;
 import com.example.zigbackend.mapper.ZigMapper;
 import com.example.zigbackend.model.ZahtevZaPriznanjeZiga;
-import com.example.zigbackend.service.ResenjeService;
 import com.example.zigbackend.service.ZigService;
-import com.itextpdf.text.Meta;
 import lombok.AllArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.core.io.InputStreamResource;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import org.xmldb.api.base.XMLDBException;
 
 import javax.xml.bind.JAXBException;
-import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 @AllArgsConstructor
@@ -89,14 +82,13 @@ public class ZigController {
     @PutMapping(path = "/metadata-search", produces = "application/xml", consumes = "application/xml")
     public ResponseEntity<List<SimpleZahtevDTO>> getZahteviByMetadata(@RequestBody MetadataSearchParamsDTO metadataSearchParamsDTO) throws IOException {
         List<MetadataSearchParams> parsedSearchParams = zigService.parseMetadataDTO(metadataSearchParamsDTO);
-
         System.out.println(metadataSearchParamsDTO);
 
         if (parsedSearchParams == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<ZahtevZaPriznanjeZiga> zahtevi = zigService.getByMetadata(parsedSearchParams, metadataSearchParamsDTO.isSearchForNeobradjeni());
+        List<ZahtevZaPriznanjeZiga> zahtevi = zigService.getByMetadata(parsedSearchParams, metadataSearchParamsDTO.getStatus());
         List<SimpleZahtevDTO> simpleZahtevDTOs = ZigMapper.mapToSimpleZahtevs(zahtevi);
 
         return ResponseEntity.ok(simpleZahtevDTOs);
@@ -106,11 +98,7 @@ public class ZigController {
     public ResponseEntity<List<SimpleZahtevDTO>> getZahteviByTextSearch(@RequestBody TextSearchDTO textSearchDTO) throws Exception {
         String stripped = textSearchDTO.getTextSearch().trim();
 
-        if ("".equals(stripped)){
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        List<ZahtevZaPriznanjeZiga> zahtevi = zigService.getByText(stripped, textSearchDTO.isCasesensitive(), textSearchDTO.isSearchForNeobradjeni());
+        List<ZahtevZaPriznanjeZiga> zahtevi = zigService.getByText(stripped, textSearchDTO.isCasesensitive(), textSearchDTO.getStatus());
 
         if (zahtevi == null){
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
