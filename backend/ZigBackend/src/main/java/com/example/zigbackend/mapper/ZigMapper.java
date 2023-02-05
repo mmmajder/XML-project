@@ -184,7 +184,7 @@ public class ZigMapper {
     public static ObradaZahteva mapToObradaZahteva(ResenjeZahteva resenjeZahteva, SimpleUserDTO simpleUserDTO){
         ObradaZahteva obradaZahteva = new ObradaZahteva();
         obradaZahteva.setSluzbenik(simpleUserDTO);
-        obradaZahteva.setDatumObrade(mapDateToString(resenjeZahteva.getDatumObrade()));
+        obradaZahteva.setDatumObrade(resenjeZahteva.getDatumObrade());
         obradaZahteva.setRazlogOdbijanja(resenjeZahteva.getRazlogOdbijanja());
         obradaZahteva.setOdbijen(resenjeZahteva.isOdbijen());
         obradaZahteva.setSifra(resenjeZahteva.getSifra());
