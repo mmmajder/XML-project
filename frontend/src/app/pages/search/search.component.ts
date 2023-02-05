@@ -4,6 +4,7 @@ import {MetadataSearchParamsDTO, TextSearchDTO} from "../../model/search/SearchP
 import {ZahteviService} from "../../service/zahtevi.service";
 import {SimpleUser} from "../../model/shared/User";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {AuthService} from "../../service/auth.service";
 
 @Component({
   selector: 'app-search',
@@ -51,7 +52,12 @@ export class SearchComponent {
   statusZahteva: string = "obradjeni";
   matchCase: boolean = false;
 
-  constructor(private zahteviService: ZahteviService, private _snackBar: MatSnackBar) {
+  role: string = "GRADJANIN";
+
+  constructor(private zahteviService: ZahteviService, private _snackBar: MatSnackBar, private authService: AuthService) {
+    this.authService.getCurrentlyLoggedUser().subscribe((data: any) => {
+      this.role = data.getElementsByTagName("role")[0].textContent;
+    });
   }
 
   removeMeta(i: number) {

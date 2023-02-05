@@ -44,7 +44,7 @@ public class ResenjeService {
                 .obradjen(!zahtevZaAutorskaPrava.getStatus().equals(EStatus.PREDATO))
                 .build();
         SimpleUser sluzbenik = SimpleUser.builder()
-                .name(resenje.getImeSluzbenika() + " " + resenje.getPrezimeSluzbenika())
+                .name(resenje.getImeSluzbenika())
                 .email(resenje.getEmailSluzbenika())
                 .build();
         ObradaZahteva obrada = ObradaZahteva.builder()

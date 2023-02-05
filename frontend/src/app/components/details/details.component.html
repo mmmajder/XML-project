@@ -27,13 +27,15 @@
                 required></textarea>
     </mat-form-field>
     <div style="width: 100%; margin-bottom: 5px">
-      <button style="width: 49%" mat-raised-button color="primary" (click)="obradiZahtev(false)">PRIHVATI ZAHTEV
+      <button style="width: 49%" mat-raised-button color="primary" mat-dialog-close="true"
+              (click)="obradiZahtev(false)">PRIHVATI ZAHTEV
       </button>
-      <button style="width: 49%; float: right" mat-raised-button color="warn" (click)="odbijanjeZahteva()">ODBIJ ZAHTEV
+      <button style="width: 49%; float: right" mat-raised-button color="warn"
+              [mat-dialog-close]="odbija && this.razlogOdbijanja !== ''" (click)="odbijanjeZahteva()">ODBIJ ZAHTEV
       </button>
     </div>
   </div>
-  <button mat-flat-button style="width: 100%" [matMenuTriggerFor]="menu" color="primary">
+  <button mat-flat-button style="width: 100%; margin-bottom: 5px" [matMenuTriggerFor]="menu" color="primary">
     <mat-icon>download</mat-icon>
     Preuzimanje
   </button>
