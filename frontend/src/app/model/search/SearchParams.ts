@@ -2,7 +2,7 @@ export class MetadataSearchParamsDTO {
   property: string;
   value: string = "";
   operator: string = "I";
-  searchForNeobradjeni: boolean;
+  status: string;
 }
 
 export class TextSearchDTO {

@@ -85,13 +85,13 @@ export class SearchComponent {
   }
 
   searchText() {
-    if (!this.validateTextSearch()) {
-      this._snackBar.open("Invalid search.", '', {
-        duration: 3000,
-        panelClass: ['snack-bar']
-      })
-      return;
-    }
+    // if (!this.validateTextSearch()) {
+    //   this._snackBar.open("Invalid search.", '', {
+    //     duration: 3000,
+    //     panelClass: ['snack-bar']
+    //   })
+    //   return;
+    // }
 
     this.rezultatiPretrage = [];
     let textSearchParams: TextSearchDTO = new TextSearchDTO();
@@ -117,7 +117,7 @@ export class SearchComponent {
     this.rezultatiPretrage = [];
     let metapodaciForSearch: MetadataSearchParamsDTO[] = this.mapVisibleMetadataNamesToFunctional();
     let metaParams: MetadataSearchParamsDTO = this.mapMetadataParamsToOneInstance(metapodaciForSearch);
-    metaParams.searchForNeobradjeni = this.statusZahteva === "neobradjeni";
+    metaParams.status = this.statusZahteva;
     console.log(metaParams);
     this.zahteviService.searchByMetadata(metaParams, this.vrstaZahteva).subscribe(data => {
       console.log(data);
