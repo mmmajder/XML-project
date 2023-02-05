@@ -182,7 +182,7 @@
                                         <xsl:attribute name="href">
                                             http://localhost:8000/patent/download/prilog/<xsl:value-of select="//pat:Putanja_do_priloga_podnosioca"/>
                                         </xsl:attribute>
-                                        Spisak robe i usluga
+                                        Izjavu o zajedničkom predstavniku
                                     </xsl:element>
                                 </xsl:otherwise>
                             </xsl:choose>
@@ -274,7 +274,7 @@
                                             <xsl:attribute name="href">
                                                 http://localhost:8000/patent/download/prilog/<xsl:value-of select="//pat:Putanja_do_primera"/>
                                             </xsl:attribute>
-                                            Spisak robe i usluga
+                                            Izjava podnosilaca prijave o osnovu sticanja prava
                                         </xsl:element>
                                     </xsl:otherwise>
                                 </xsl:choose>
