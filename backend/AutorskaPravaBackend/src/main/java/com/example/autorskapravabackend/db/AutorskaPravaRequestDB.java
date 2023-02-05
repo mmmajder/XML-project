@@ -79,7 +79,6 @@ public class AutorskaPravaRequestDB {
 
     public static List<XMLResource> getAllByStatus(EStatus status) {
         String xpathExp = "//aut:Status[text()='" + status + "']/ancestor::aut:Zahtev_za_unosenje_u_evidenciju_i_deponovanje_autorskih_dela";
-
         return getAllByFilter(xpathExp);
     }
 
