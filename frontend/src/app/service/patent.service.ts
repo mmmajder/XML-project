@@ -15,10 +15,10 @@ export class PatentService {
     this.patentUrl = 'http://localhost:8000/patent';
   }
 
-  public podnesiZahtev(zahtev: any): Observable<Object> {
-    let body = mapCreatePatent(zahtev)
+  public podnesiZahtev(zahtev: any, prilogPodnosioc: any, prilogPravoPriajve: any): Observable<any> {
+    let body = mapCreatePatent(zahtev, prilogPodnosioc, prilogPravoPriajve)
     console.log(body)
-    return this.http.post<Object>(this.patentUrl, body, AuthService.getHttpOptions());
+    return this.http.post<any>(this.patentUrl, body, AuthService.getXmlHttpOptions());
   }
 
   public postPrilog(brojPrijave: string, tipPrilog: string, file: any) {

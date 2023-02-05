@@ -20,8 +20,14 @@ export class PatentiComponent implements OnInit {
   save(): void {
     let xml = Xonomy.harvest();
     console.log(xml)
-    this.patentService.podnesiZahtev(xml).subscribe((res) => {
-      console.log(res)
+    this.patentService.podnesiZahtev(xml, this.prilogPodnosioc, this.prilogPravoPriajve).subscribe({
+      next: data => {
+        console.log(data)
+        let brojPrijavePatenta = data.getElementsByTagName("brojPrijave")[0].textContent;
+        this.uploadPrilogsForkJoin(brojPrijavePatenta);
+      },
+      error: () => {
+      }
     })
 
   }
@@ -407,8 +413,8 @@ export class PatentiComponent implements OnInit {
           })
         });
       });
-    if (undefined != this.prilogPravoPriajve)
-      this.patentService.postPrilog(brojPrijave, "PravoPriajve", this.prilogPravoPriajve).subscribe()
+    // if (undefined != this.prilogPravoPriajve)
+    //   this.patentService.postPrilog(brojPrijave, "PravoPriajve", this.prilogPravoPriajve).subscribe()
     this.patentService.saveAfterPrilogAddition(brojPrijave).subscribe(() => {
       this._snackBar.open("Vaš zahtev je uspešno podnet.", '', {
         duration: 3000,

@@ -4,6 +4,8 @@ import com.example.patentbackend.model.OsnovneInformacijeOZahtevuZaPriznanjePate
 import com.example.patentbackend.model.SadrzajZahtevaZaPriznanjePatenta;
 import lombok.*;
 
+import javax.xml.bind.annotation.XmlElement;
+
 @Getter
 @Setter
 @NoArgsConstructor
@@ -11,4 +13,6 @@ import lombok.*;
 public class ZahtevZaPriznanjePatentaDTO {
     private OsnovneInformacijeOZahtevuZaPriznanjePatentaDTO osnovneInformacijeOZahtevuZaPriznanjePatenta;
     private SadrzajZahtevaZaPriznanjePatentaDTO sadrzajZahtevaZaPriznanjePatenta;
+    private String putanjaDoPrilogaPodnosioca;
+    private String putanjaDoPrimera;
 }

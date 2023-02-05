@@ -113,13 +113,13 @@ public class ZahtevController {
         }
     }
 
-    @GetMapping("/save/{brojPrijaveZigaId}-{brojPrijaveZigaGodina}")
-    public ResponseEntity<String> saveAfterPrilogAddition(@PathVariable("brojPrijaveZigaId") String brojPrijaveZigaId,
-                                                          @PathVariable("brojPrijaveZigaGodina") String brojPrijaveZigaGodina) {
+    @GetMapping("/save/{godina}-{broj}")
+    public ResponseEntity<String> saveAfterPrilogAddition(@PathVariable("godina") String godina,
+                                                          @PathVariable("broj") String broj) {
         try {
-            String brojPrijaveZiga = brojPrijaveZigaId.trim().concat("/").concat(brojPrijaveZigaGodina.trim());
+            String brojPrijave = godina.trim().concat("/").concat(broj.trim());
 
-            if (!autorskaPravaService.saveZahtevAfterPrilogAddition(brojPrijaveZiga)) {
+            if (!autorskaPravaService.saveZahtevAfterPrilogAddition(brojPrijave)) {
                 return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
             }
 

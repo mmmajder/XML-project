@@ -59,7 +59,7 @@ public class PatentRepository {
         return getAllByStatus("OBUSTAVLJENO");
     }
 
-    private List<ZahtevZaPriznanjePatenta> getAllByStatus(String status) throws JAXBException, XMLDBException {
+    public List<ZahtevZaPriznanjePatenta> getAllByStatus(String status) throws JAXBException, XMLDBException {
         List<XMLResource> resources = PatentRequestDB.getAllByStatus(status);
 
         return getZahteviFromResources(resources);
@@ -72,7 +72,7 @@ public class PatentRepository {
 
     private List<ZahtevZaPriznanjePatenta> getZahteviFromResources(List<XMLResource> resources) throws JAXBException, XMLDBException {
         List<ZahtevZaPriznanjePatenta> zahtevi = new ArrayList<>();
-        for (XMLResource resource : resources){
+        for (XMLResource resource : resources) {
             zahtevi.add(Marshal.unmarshal(resource));
         }
         return zahtevi;
@@ -94,5 +94,9 @@ public class PatentRepository {
 
     public String generateJSON(String brojPrijave) throws Exception {
         return PatentFusekiDB.getJsonString(brojPrijave);
+    }
+
+    public void save(ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta) {
+        createPatentRequest(zahtevZaPriznanjePatenta);
     }
 }

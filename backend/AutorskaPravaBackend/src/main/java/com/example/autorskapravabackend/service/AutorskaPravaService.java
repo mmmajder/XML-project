@@ -87,7 +87,7 @@ public class AutorskaPravaService {
     }
 
     public ByteArrayInputStream getPrilog(String fileName) throws IOException {
-        return getFile(fileName);
+        return getFile("src/main/resources/uploadedFiles/" + fileName);
     }
 
     public ByteArrayInputStream getFile(String fullpath) throws IOException {
@@ -188,10 +188,10 @@ public class AutorskaPravaService {
         String fileName;
         if (prilogType.equals("OPIS")) {
             fileName = brojPrijave.replace('/', '_').concat("_OPIS.pdf");
-            ZahtevZaAutorskaPrava.setPutanjaDoOpisa("src/main/resources/uploadedFiles/" + fileName);
+            ZahtevZaAutorskaPrava.setPutanjaDoOpisa(fileName);
         } else {
             fileName = brojPrijave.replace('/', '_').concat("_PRIMER.pdf");
-            ZahtevZaAutorskaPrava.setPutanjaDoPrimera("src/main/resources/uploadedFiles/" + fileName);
+            ZahtevZaAutorskaPrava.setPutanjaDoPrimera(fileName);
         }
         return writeFile(fileName, uploadedFile);
     }
@@ -208,18 +208,18 @@ public class AutorskaPravaService {
         }
     }
 
-    public boolean saveZahtevAfterPrilogAddition(String brojPrijaveZiga) {
-        if (!prilogUpdatingZahtevs.containsKey(brojPrijaveZiga)) {
+    public boolean saveZahtevAfterPrilogAddition(String brojPrijave) {
+        if (!prilogUpdatingZahtevs.containsKey(brojPrijave)) {
             return false;
         }
 
-        ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = prilogUpdatingZahtevs.get(brojPrijaveZiga);
+        ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = prilogUpdatingZahtevs.get(brojPrijave);
         if (zahtevZaAutorskaPrava == null) {
             return false;
         }
 
         autorskaPravaRepository.save(zahtevZaAutorskaPrava);
-        prilogUpdatingZahtevs.remove(brojPrijaveZiga);
+        prilogUpdatingZahtevs.remove(brojPrijave);
 
         return true;
     }
