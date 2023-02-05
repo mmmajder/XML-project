@@ -1,0 +1,401 @@
+<app-navbar></app-navbar>
+<div class="gray-background">
+  <h2>Zahtev za priznavanje žiga</h2>
+  <mat-stepper orientation="vertical">
+
+    <mat-step>
+      <ng-template matStepLabel>Podaci o podnosiocu zahteva</ng-template>
+      <ng-template matStepContent>
+
+        <mat-radio-group [(ngModel)]="zahtevZaPriznanjeZigaDTO.podnosilacPrijave.tipLica">
+          <mat-radio-button value="fizickoLice">Podnosilac je fizičko lice</mat-radio-button>
+          <mat-radio-button value="pravnoLice">Podnosilac je pravno lice</mat-radio-button>
+        </mat-radio-group>
+
+        <div *ngIf="zahtevZaPriznanjeZigaDTO.podnosilacPrijave.tipLica == 'fizickoLice'">
+          <p>
+            <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+              <mat-label>Ime podnosioca</mat-label>
+              <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.podnosilacPrijave.ime" placeholder="Ime"
+                     [required]="zahtevZaPriznanjeZigaDTO.podnosilacPrijave.tipLica == 'fizickoLice'">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="width: 49%; float: right">
+              <mat-label>Prezime podnosioca</mat-label>
+              <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.podnosilacPrijave.prezime" placeholder="Prezime"
+                     [required]="zahtevZaPriznanjeZigaDTO.podnosilacPrijave.tipLica == 'fizickoLice'">
+            </mat-form-field>
+          </p>
+        </div>
+
+        <div *ngIf="zahtevZaPriznanjeZigaDTO.podnosilacPrijave.tipLica == 'pravnoLice'">
+          <p>
+            <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+              <mat-label>Poslovno ime</mat-label>
+              <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.podnosilacPrijave.poslovnoIme" placeholder="Poslovno ime"
+                     [required]="zahtevZaPriznanjeZigaDTO.podnosilacPrijave.tipLica == 'pravnoLice'">
+            </mat-form-field>
+          </p>
+        </div>
+
+        <p>
+          <mat-form-field appearance="outline" style="width: 29%; margin-right: 5px">
+            <mat-label>Ulica</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.podnosilacPrijave.adresa.ulica" placeholder="Ulica" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 10%; margin-right: 5px">
+            <mat-label>Broj</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.podnosilacPrijave.adresa.broj" placeholder="Broj" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 15%; margin-right: 5px">
+            <mat-label>Postanski broj</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.podnosilacPrijave.adresa.postanskiBroj" placeholder="Postanski broj" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 21%; margin-right: 5px">
+            <mat-label>Mesto</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.podnosilacPrijave.adresa.mesto" placeholder="Mesto" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 21%; margin-right: 5px">
+            <mat-label>Država</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.podnosilacPrijave.adresa.drzava" placeholder="Država" required>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="outline" style="width: 32%; margin-right: 5px">
+            <mat-label>Telefon</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.podnosilacPrijave.kontakt.telefon" placeholder="Telefon" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 32%; margin-right: 5px" >
+            <mat-label>Email adresa</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.podnosilacPrijave.kontakt.email" placeholder="Email adresa" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 32%; margin-right: 5px">
+            <mat-label>Faks</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.podnosilacPrijave.kontakt.faks" placeholder="Faks" required>
+          </mat-form-field>
+        </p>
+
+      </ng-template>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Podaci o punomoćniku</ng-template>
+      <ng-template matStepContent>
+
+        <mat-radio-group [(ngModel)]="zahtevZaPriznanjeZigaDTO.punomocnik.tipLica">
+          <mat-radio-button value="fizickoLice">Punomoćnik je fizičko lice</mat-radio-button>
+          <mat-radio-button value="pravnoLice">Punomoćnik je pravno lice</mat-radio-button>
+        </mat-radio-group>
+
+        <div *ngIf="zahtevZaPriznanjeZigaDTO.punomocnik.tipLica == 'fizickoLice'">
+          <p>
+            <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+              <mat-label>Ime podnosioca</mat-label>
+              <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.punomocnik.ime" placeholder="Ime"
+                     [required]="zahtevZaPriznanjeZigaDTO.punomocnik.tipLica == 'fizickoLice'">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="width: 49%; float: right">
+              <mat-label>Prezime podnosioca</mat-label>
+              <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.punomocnik.prezime" placeholder="Prezime"
+                     [required]="zahtevZaPriznanjeZigaDTO.punomocnik.tipLica == 'fizickoLice'">
+            </mat-form-field>
+          </p>
+        </div>
+
+        <div *ngIf="zahtevZaPriznanjeZigaDTO.punomocnik.tipLica == 'pravnoLice'">
+          <p>
+            <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+              <mat-label>Poslovno ime</mat-label>
+              <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.punomocnik.poslovnoIme" placeholder="Poslovno ime"
+                     [required]="zahtevZaPriznanjeZigaDTO.punomocnik.tipLica == 'pravnoLice'">
+            </mat-form-field>
+          </p>
+        </div>
+
+        <p>
+          <mat-form-field appearance="outline" style="width: 29%; margin-right: 5px">
+            <mat-label>Ulica</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.punomocnik.adresa.ulica" placeholder="Ulica" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 10%; margin-right: 5px">
+            <mat-label>Broj</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.punomocnik.adresa.broj" placeholder="Broj" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 15%; margin-right: 5px">
+            <mat-label>Postanski broj</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.punomocnik.adresa.postanskiBroj" placeholder="Postanski broj" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 21%; margin-right: 5px">
+            <mat-label>Mesto</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.punomocnik.adresa.mesto" placeholder="Mesto" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 21%; margin-right: 5px">
+            <mat-label>Država</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.punomocnik.adresa.drzava" placeholder="Država" required>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="outline" style="width: 32%; margin-right: 5px">
+            <mat-label>Telefon</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.punomocnik.kontakt.telefon" placeholder="Telefon" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 32%; margin-right: 5px" >
+            <mat-label>Email adresa</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.punomocnik.kontakt.email" placeholder="Email adresa" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 32%; margin-right: 5px">
+            <mat-label>Faks</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.punomocnik.kontakt.faks" placeholder="Faks" required>
+          </mat-form-field>
+        </p>
+
+        <mat-form-field appearance="outline" style="width: 32%; margin-right: 5px">
+          <mat-label>Dokaz o punomoćju</mat-label>
+          <mat-select [(value)]="zahtevZaPriznanjeZigaDTO.statusPrilogPunomocje" required >
+            <mat-option value="NIJE_PREDATO">Želim sada da priložim</mat-option>
+            <mat-option value="PREDATO_RANIJE">Predato ranije</mat-option>
+            <mat-option value="BICE_NAKNADNO_PREDATO">Biće predato kasnije</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="zahtevZaPriznanjeZigaDTO.statusPrilogPunomocje == 'NIJE_PREDATO'">
+          <label>
+            Priložite ugovor o punomoćju u PDF formatu.
+            <input #fileUploaderPunomocje type="file" (input)="selectPunomocjeUpload($event)" accept="application/pdf"/>
+          </label>
+        </div>
+
+      </ng-template>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Podaci o predstavniku</ng-template>
+      <ng-template matStepContent>
+
+        <mat-radio-group [(ngModel)]="zahtevZaPriznanjeZigaDTO.predstavnik.tipLica">
+          <mat-radio-button value="fizickoLice">Predstavnik je fizičko lice</mat-radio-button>
+          <mat-radio-button value="pravnoLice">Predstavnik je pravno lice</mat-radio-button>
+        </mat-radio-group>
+
+        <div *ngIf="zahtevZaPriznanjeZigaDTO.predstavnik.tipLica == 'fizickoLice'">
+          <p>
+            <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+              <mat-label>Ime podnosioca</mat-label>
+              <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.predstavnik.ime" placeholder="Ime"
+                     [required]="zahtevZaPriznanjeZigaDTO.predstavnik.tipLica == 'fizickoLice'">
+            </mat-form-field>
+
+            <mat-form-field appearance="outline" style="width: 49%; float: right">
+              <mat-label>Prezime podnosioca</mat-label>
+              <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.predstavnik.prezime" placeholder="Prezime"
+                     [required]="zahtevZaPriznanjeZigaDTO.predstavnik.tipLica == 'fizickoLice'">
+            </mat-form-field>
+          </p>
+        </div>
+
+        <div *ngIf="zahtevZaPriznanjeZigaDTO.predstavnik.tipLica == 'pravnoLice'">
+          <p>
+            <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+              <mat-label>Poslovno ime</mat-label>
+              <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.predstavnik.poslovnoIme" placeholder="Poslovno ime"
+                     [required]="zahtevZaPriznanjeZigaDTO.predstavnik.tipLica == 'pravnoLice'">
+            </mat-form-field>
+          </p>
+        </div>
+
+        <p>
+          <mat-form-field appearance="outline" style="width: 29%; margin-right: 5px">
+            <mat-label>Ulica</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.predstavnik.adresa.ulica" placeholder="Ulica" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 10%; margin-right: 5px">
+            <mat-label>Broj</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.predstavnik.adresa.broj" placeholder="Broj" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 15%; margin-right: 5px">
+            <mat-label>Postanski broj</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.predstavnik.adresa.postanskiBroj" placeholder="Postanski broj" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 21%; margin-right: 5px">
+            <mat-label>Mesto</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.predstavnik.adresa.mesto" placeholder="Mesto" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 21%; margin-right: 5px">
+            <mat-label>Država</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.predstavnik.adresa.drzava" placeholder="Država" required>
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="outline" style="width: 32%; margin-right: 5px">
+            <mat-label>Telefon</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.predstavnik.kontakt.telefon" placeholder="Telefon" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 32%; margin-right: 5px" >
+            <mat-label>Email adresa</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.predstavnik.kontakt.email" placeholder="Email adresa" required>
+          </mat-form-field>
+
+          <mat-form-field appearance="outline" style="width: 32%; margin-right: 5px">
+            <mat-label>Faks</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.predstavnik.kontakt.faks" placeholder="Faks" required>
+          </mat-form-field>
+        </p>
+
+      </ng-template>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Podaci o žigu</ng-template>
+      <ng-template matStepContent>
+        <mat-form-field appearance="outline" style="width: 32%; margin-right: 5px">
+          <mat-label>Tip žiga</mat-label>
+          <mat-select [(value)]="zahtevZaPriznanjeZigaDTO.zigDTO.tipZiga" required (selectionChange)="onTipZigSelectionChange($event.value)">
+            <mat-option value="INDIVIDUALNI_ZIG">Individualni žig</mat-option>
+            <mat-option value="KOLEKTIVNI_ZIG">Kolektivni žig</mat-option>
+            <mat-option value="ZIG_GARANCIJE">Žig garancije</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="zahtevZaPriznanjeZigaDTO.zigDTO.tipZiga == 'KOLEKTIVNI_ZIG' || zahtevZaPriznanjeZigaDTO.zigDTO.tipZiga == 'ZIG_GARANCIJE'">
+          <label>
+            Priložite opšti akto žigu u PDF formatu.
+            <input #fileUploaderOpstiAkt type="file" (input)="selectOpstiAktUpload($event)" accept="application/pdf"/>
+          </label>
+        </div>
+
+        <mat-form-field appearance="outline" style="width: 32%; margin-right: 5px">
+          <mat-label>Tip žiga</mat-label>
+          <mat-select [(value)]="zahtevZaPriznanjeZigaDTO.zigDTO.opisIzgledaZiga" required>
+            <mat-option value="VERBALNI_ZNAK">Verbalni znak</mat-option>
+            <mat-option value="GRAFICKI_ZNAK">Grafički znak</mat-option>
+            <mat-option value="KOMBINOVANI_ZNAK">Kombinovani znak</mat-option>
+            <mat-option value="TRODIMENZIONALNI_ZNAK">Trodimenzionalni znak</mat-option>
+            <mat-option value="DRUGA_VRSTA_ZNAKA">Druga vrsta znaka</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="zahtevZaPriznanjeZigaDTO.zigDTO.opisIzgledaZiga == 'DRUGA_VRSTA_ZNAKA'">
+          <p>
+            <mat-form-field appearance="outline" style="width: 49%; margin-right: 5px">
+              <mat-label>Opis znaka</mat-label>
+              <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.zigDTO.drugaVrstaZnakaOpis" placeholder="Opis znaka"
+                     [required]="zahtevZaPriznanjeZigaDTO.zigDTO.opisIzgledaZiga == 'DRUGA_VRSTA_ZNAKA'">
+            </mat-form-field>
+          </p>
+        </div>
+
+        <label>
+          Priložite željeni izgled znaka u JPG formatu.
+          <input #fileUploaderPrimerakZnaka type="file" (input)="selectPrimerakZnakaUpload($event)" accept="image/png, image/jpeg"/>
+        </label>
+
+        <mat-selection-list #izabraneBojeTaraba [(ngModel)]="izabraneBoje">
+          <mat-list-option  *ngFor="let mogucaBoja of moguceBoje" [value]="mogucaBoja">
+            {{mogucaBoja}}
+          </mat-list-option>
+        </mat-selection-list>
+
+        <p>
+          <mat-form-field appearance="outline" style="width: 80%; margin-right: 5px">
+            <mat-label>Transliteracija znaka</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.zigDTO.transliteracijaZnaka" placeholder="Transliteracija znaka">
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="outline" style="width: 80%; margin-right: 5px">
+            <mat-label>Prevod znaka</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.zigDTO.prevodZnaka" placeholder="Prevod znaka">
+          </mat-form-field>
+        </p>
+
+        <p>
+          <mat-form-field appearance="outline" style="width: 80%; margin-right: 5px">
+            <mat-label>Opis znaka</mat-label>
+            <input matInput [(ngModel)]="zahtevZaPriznanjeZigaDTO.zigDTO.opisZnaka" placeholder="Opis znaka">
+          </mat-form-field>
+        </p>
+      </ng-template>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Klase</ng-template>
+      <ng-template matStepContent>
+
+        <mat-selection-list #izabraneKlase [(ngModel)]="chosenKlasas">
+          <mat-list-option  *ngFor="let mogucaKlasa of moguceKlase" [value]="mogucaKlasa">
+            {{mogucaKlasa}}
+          </mat-list-option>
+        </mat-selection-list>
+
+        <label>
+          Priložite detaljan spisak robe i usluga u PDF formatu.
+          <input #fileUploaderSpisakRobeIUsluga type="file" (input)="selectSpisakRobeIUslugaUpload($event)" accept="application/pdf"/>
+        </label>
+
+      </ng-template>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Zatraženo pravo prvenstva i osnov</ng-template>
+      <ng-template matStepContent>
+
+        <mat-form-field appearance="outline" style="width: 32%; margin-right: 5px">
+          <mat-label>Zatraženo pravo prvenstva</mat-label>
+          <mat-select [(value)]="zahtevZaPriznanjeZigaDTO.zatrazenoPravoPrvenstvaIOsnov" (selectionChange)="onPravoPrvenstvaSelectionChange($event.value)">
+            <mat-option value="">Nijedno</mat-option>
+            <mat-option value="KONVENCIJSKO">Sajamsko pravo</mat-option>
+            <mat-option value="SAJAMSKO">Konvencijsko pravo</mat-option>
+          </mat-select>
+        </mat-form-field>
+
+        <div *ngIf="zahtevZaPriznanjeZigaDTO.zatrazenoPravoPrvenstvaIOsnov == 'KONVENCIJSKO' || zahtevZaPriznanjeZigaDTO.zatrazenoPravoPrvenstvaIOsnov == 'SAJAMSKO'">
+          <label>
+            Priložite dokaz o pravu prvenstva u PDF formatu.
+            <input #fileUploaderDokazOPravuPrvenstva type="file" (input)="selectDokazOPravuPrvenstvaUpload($event)" accept="application/pdf"/>
+          </label>
+        </div>
+
+      </ng-template>
+    </mat-step>
+
+    <mat-step>
+      <ng-template matStepLabel>Ostali prilozi</ng-template>
+      <ng-template matStepContent>
+
+        <label>
+          Priložite dokaz o uplati takse u PDF formatu.
+          <input #fileUploaderDokazOUplatiTakse type="file" (input)="selectDokazOUplatiTakseUpload($event)" accept="application/pdf"/>
+        </label>
+
+      </ng-template>
+    </mat-step>
+
+  </mat-stepper>
+
+  <button style="width: 100%; margin-top: 10px" color="primary" (click)="podnesiZahtev()" mat-raised-button>
+    Podnesi zahtev
+  </button>
+  <p *ngIf="!valid">Molimo da popunite sva obazna polja.</p>
+</div>

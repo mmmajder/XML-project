@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+    targetNamespace="http://www.ftn.uns.ac.rs/autorskoDelo"
+    xmlns:aut="http://www.ftn.uns.ac.rs/autorskoDelo">
+
+    <xs:element name="Zahtev_za_unosenje_u_evidenciju_i_deponovanje_autorskih_dela">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element ref="aut:Informacije_o_zahtevu"/>
+                <xs:element ref="aut:Sadrzaj_zahteva"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Sadrzaj_zahteva">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Podnosilac_zahteva">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Podnosilac_je_i_autor" type="xs:boolean"/>
+                            <xs:element name="Podaci_o_podnosiocu" type="aut:TLice"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element name="Podaci_o_punomoćniku" minOccurs="0">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element ref="aut:Osnovni_licni_podaci"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+                <xs:element maxOccurs="1" minOccurs="1" name="Autor" type="aut:Autor"/>
+                <xs:element name="Autorsko_delo">
+                    <xs:complexType>
+                        <xs:sequence>
+                            <xs:element name="Nacin_koriscenja_autorskog_dela" type="xs:string"/>
+                            <xs:element name="Forma_zapisa_autorskog_dela" type="xs:string"/>
+                            <xs:element name="Naslov_autorskog_dela" type="xs:string"/>
+                            <xs:element ref="aut:Zasnivano_delo"/>
+                            <xs:element name="Vrsta_autorskog_dela" type="xs:string"/>
+                            <xs:element name="Autosko_delo_stvoreno_u_radnom_odnosu"
+                                type="xs:boolean"/>
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="Informacije_o_zahtevu">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Broj_prijave" default="A-1/2022" type="xs:string"/>
+                <xs:element name="Datum_podnosenja" type="xs:date"/>
+                <xs:element name="Lista_priloga_koji_se_podnose_uz_zahtev">
+                    <xs:simpleType>
+                        <xs:list itemType="xs:string"/>
+                    </xs:simpleType>
+                </xs:element>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType abstract="true" name="TLice">
+        <xs:sequence>
+            <xs:element default="+381 61234567" name="Broj_telefona" type="aut:TBroj_telefona"/>
+            <xs:element default="default@gmail.com" name="Email" type="aut:TEmail"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="Adresa">
+        <xs:sequence>
+            <xs:element name="Ulica" type="xs:string"/>
+            <xs:element name="Broj_u_ulici" type="xs:positiveInteger"/>
+            <xs:element name="Postanski_broj">
+                <xs:simpleType>
+                    <xs:restriction base="xs:int">
+                        <xs:minInclusive value="11000"/>
+                        <xs:maxInclusive value="40000"/>
+                    </xs:restriction>
+                </xs:simpleType>
+            </xs:element>
+            <xs:element name="Mesto" type="xs:string"/>
+            <xs:element name="Drzava"/>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:complexType name="TFizicko_lice">
+        <xs:complexContent>
+            <xs:extension base="aut:TLice">
+                <xs:sequence>
+                    <xs:element name="Drzavljanstvo" type="xs:string"/>
+                    <xs:element ref="aut:Osnovni_licni_podaci"/>
+                    <xs:element minOccurs="0" name="Godina_smrti" type="xs:int"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:complexType name="TPravno_lice">
+        <xs:complexContent>
+            <xs:extension base="aut:TLice">
+                <xs:sequence>
+                    <xs:element name="Poslovno_ime" type="xs:string"/>
+                    <xs:element name="Sediste_nosioca_autoskog_prava" type="aut:Adresa"/>
+                </xs:sequence>
+            </xs:extension>
+        </xs:complexContent>
+    </xs:complexType>
+    <xs:simpleType name="TBroj_telefona">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="\+\d{3} \d{8,9}"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:simpleType name="TEmail">
+        <xs:restriction base="xs:string">
+            <xs:pattern value="[^@]+@[^\.]+\..+"/>
+        </xs:restriction>
+    </xs:simpleType>
+    <xs:element name="Osnovni_licni_podaci">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Ime" type="xs:string"/>
+                <xs:element name="Prezime" type="xs:string"/>
+                <xs:element name="Adresa" type="aut:Adresa"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:complexType name="Autor">
+        <xs:sequence>
+            <xs:element name="Anoniman" type="xs:boolean"/>
+            <xs:element name="Podaci_o_autoru">
+                <xs:complexType>
+                    <xs:sequence>
+                        <xs:element name="Pseudonim" type="xs:string"/>
+                        <xs:element name="Lice" type="aut:TLice"/>
+                    </xs:sequence>
+                </xs:complexType>
+            </xs:element>
+        </xs:sequence>
+    </xs:complexType>
+    <xs:element name="Zasnivano_delo">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="Naslov" type="xs:string"/>
+                <xs:element name="Autor" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+    <xs:element name="resenje_zahteva">
+        <xs:complexType>
+            <xs:sequence>
+                <xs:element name="broj_prijave" type="xs:string"/>
+                <xs:element name="ime_sluzbenika" type="xs:string"/>
+                <xs:element name="prezime_sluzbenika" type="xs:string"/>
+                <xs:element name="email_sluzbenika" type="xs:string"/>
+                <xs:element name="odbijen" type="xs:boolean"/>
+                <xs:element name="datum_obrade" type="xs:date"/>
+                <xs:element name="razlog_odbijanja" type="xs:string"/>
+                <xs:element name="sifra" type="xs:string"/>
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+</xs:schema>

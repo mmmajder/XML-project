@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Zahtev_za_unosenje_u_evidenciju_i_deponovanje_autorskih_dela xmlns="http://www.ftn.uns.ac.rs/autorskoDelo"
+                                                              xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                                                              xsi:schemaLocation="http://www.ftn.uns.ac.rs/autorskoDelo file:/C:/Users/Lenovo/Desktop/XML/Projekat/XML-project/Schema/A_Sema.xsd">
+    <Informacije_o_zahtevu>
+        <Broj_prijave>A-1/2022</Broj_prijave>
+        <Datum_podnosenja>2006-05-04</Datum_podnosenja>
+        <Lista_priloga_koji_se_podnose_uz_zahtev>prilog1</Lista_priloga_koji_se_podnose_uz_zahtev>
+    </Informacije_o_zahtevu>
+    <Sadrzaj_zahteva>
+        <Podnosilac_zahteva>
+            <Podnosilac_je_i_autor>false</Podnosilac_je_i_autor>
+            <Podaci_o_podnosiocu xmlns:aut="http://www.ftn.uns.ac.rs/autorskoDelo" xsi:type="aut:TFizicko_lice">
+                <Broj_telefona>+381 61234567</Broj_telefona>
+                <Email>default@gmail.com</Email>
+                <Drzavljanstvo>Drzavljanstvo0</Drzavljanstvo>
+                <Osnovni_licni_podaci>
+                    <Ime>Ime0</Ime>
+                    <Prezime>Prezime0</Prezime>
+                    <Adresa>
+                        <Ulica>Ulica0</Ulica>
+                        <Broj_u_ulici>50</Broj_u_ulici>
+                        <Postanski_broj>25500</Postanski_broj>
+                        <Mesto>Mesto0</Mesto>
+                        <Drzava>
+                        </Drzava>
+                    </Adresa>
+                </Osnovni_licni_podaci>
+            </Podaci_o_podnosiocu>
+        </Podnosilac_zahteva>
+        <Autori>
+            <Anoniman>false</Anoniman>
+            <Podaci_o_autoru>
+                <Pseudonim>Pseudonim0</Pseudonim>
+                <Autor xmlns:aut="http://www.ftn.uns.ac.rs/autorskoDelo" xsi:type="aut:TFizicko_lice">
+                    <Broj_telefona>+381 61234567</Broj_telefona>
+                    <Email>default@gmail.com</Email>
+                    <Drzavljanstvo>Drzavljanstvo1</Drzavljanstvo>
+                    <Osnovni_licni_podaci>
+                        <Ime>Ime1</Ime>
+                        <Prezime>Prezime1</Prezime>
+                        <Adresa>
+                            <Ulica>Ulica1</Ulica>
+                            <Broj_u_ulici>50</Broj_u_ulici>
+                            <Postanski_broj>25500</Postanski_broj>
+                            <Mesto>Mesto1</Mesto>
+                            <Drzava>
+                            </Drzava>
+                        </Adresa>
+                    </Osnovni_licni_podaci>
+                </Autor>
+            </Podaci_o_autoru>
+        </Autori>
+        <Autori>
+            <Anoniman>false</Anoniman>
+            <Podaci_o_autoru>
+                <Pseudonim>Pseudonim1</Pseudonim>
+                <Autor xmlns:aut="http://www.ftn.uns.ac.rs/autorskoDelo" xsi:type="aut:TFizicko_lice">
+                    <Broj_telefona>+381 61234567</Broj_telefona>
+                    <Email>default@gmail.com</Email>
+                    <Drzavljanstvo>Drzavljanstvo2</Drzavljanstvo>
+                    <Osnovni_licni_podaci>
+                        <Ime>Ime2</Ime>
+                        <Prezime>Prezime2</Prezime>
+                        <Adresa>
+                            <Ulica>Ulica2</Ulica>
+                            <Broj_u_ulici>50</Broj_u_ulici>
+                            <Postanski_broj>25500</Postanski_broj>
+                            <Mesto>Mesto2</Mesto>
+                            <Drzava>
+                            </Drzava>
+                        </Adresa>
+                    </Osnovni_licni_podaci>
+                </Autor>
+            </Podaci_o_autoru>
+        </Autori>
+        <Autorsko_delo>
+            <Nacin_koriscenja_autorskog_dela>Nacin_koriscenja_autorskog_dela0</Nacin_koriscenja_autorskog_dela>
+            <Forma_zapisa_autorskog_dela>Forma_zapisa_autorskog_dela0</Forma_zapisa_autorskog_dela>
+            <Naslov_autorskog_dela>Naslov_autorskog_dela0</Naslov_autorskog_dela>
+            <Zasnivano_delo>
+                <Naslov>Naslov0</Naslov>
+                <Autor>Autor0</Autor>
+            </Zasnivano_delo>
+            <Vrsta_autorskog_dela>Vrsta_autorskog_dela0</Vrsta_autorskog_dela>
+            <Autosko_delo_stvoreno_u_radnom_odnosu>false</Autosko_delo_stvoreno_u_radnom_odnosu>
+        </Autorsko_delo>
+    </Sadrzaj_zahteva>
+</Zahtev_za_unosenje_u_evidenciju_i_deponovanje_autorskih_dela>

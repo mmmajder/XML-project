@@ -1,0 +1,34 @@
+<app-navbar></app-navbar>
+<div id="patent"></div>
+<div style="margin: 10px">
+  <p>
+    Ako više lica podnosi prijavu, potrebno je odrediti jedno od tih lica kao zajedničkog predstavnika i dostaviti
+    izjavu o zajedničkom
+    predstavniku potpisanu od strane svih podnosilaca ili imenovati zajedničkog punomoćnika za zastupanje i dostaviti
+    punomoćje
+  </p>
+  <!--  <ng-template>-->
+  <p>
+    Izjavu o zajedničkom
+    predstavniku
+    <input #uploadPodnosilac type="file" (input)="addPrilogPodnosioc($event)"
+           accept="application/pdf"/>
+  </p>
+  <!--  </ng-template>-->
+  <p>
+    Ako svi podnosioci prijave nisu i pronalazači, dostavlja se izjava podnosilaca prijave o osnovu sticanja prava na
+    podnošenje
+    prijave u odnosu na pronalazače koji nisu i podnosioci prijave i u tom slučaju u polje broj III se unose podaci o
+    svim pronalazačim
+  </p>
+  <!--  <ng-template>-->
+  <p>
+    Izjava podnosilaca prijave o osnovu sticanja prava
+    <input #uploadPravo type="file" (input)="addPrilogPravoPrijave($event)"
+           accept="application/pdf"/>
+  </p>
+  <!--  </ng-template>-->
+</div>
+<button style="width: 100%; margin-top: 10px" color="primary" (click)="save()" mat-raised-button>
+  Podnesi zahtev
+</button>

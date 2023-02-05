@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Zahtev_za_priznanje_ziga xmlns="http://www.ftn.uns.ac.rs/zig"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.ftn.uns.ac.rs/zig file:/C:/Faks/VII/XML%20i%20veb%20servisi/XML-project/Schema/Z_sema.xsd"
+    
+    
+    >
+    <Podnosilac_prijave xsi:type="TFizicko_lice">
+        <Adresa xsi:type="TAdresa">
+            <Ulica>Petrovgradska</Ulica>
+            <Broj>3</Broj>
+            <Postanski_broj>17000</Postanski_broj>
+            <Mesto>Malenci</Mesto>
+            <Drzava>Srbija</Drzava>
+        </Adresa>
+        <Kontakt xsi:type="TKontakt">
+            <Telefon>068778987152</Telefon>
+            <Email>m@mail.com</Email>
+            <Faks> </Faks>
+        </Kontakt>
+        <Ime>Malen</Ime>
+        <Prezime>Malentijevic</Prezime>
+    </Podnosilac_prijave>
+    <Punomocnik xsi:type="TPravno_lice">
+        <Adresa xsi:type="TAdresa">
+            <Ulica>Glavna</Ulica>
+            <Broj>44</Broj>
+            <Postanski_broj>17000</Postanski_broj>
+            <Mesto>Malenci</Mesto>
+            <Drzava>Srbija</Drzava>
+        </Adresa>
+        <Kontakt xsi:type="TKontakt">
+            <Telefon>0674815998</Telefon>
+            <Email >pravnapomoc.malenci@mail.ml</Email>
+            <Faks> </Faks>
+        </Kontakt>
+        <Poslovno_ime>Pravna pomoc Malenci</Poslovno_ime>
+    </Punomocnik>
+    <Predstavnik xsi:type="TPravno_lice">
+        <Adresa xsi:type="TAdresa">
+            <Ulica>Glavna</Ulica>
+            <Broj>44</Broj>
+            <Postanski_broj>17000</Postanski_broj>
+            <Mesto>Malenci</Mesto>
+            <Drzava>Srbija</Drzava>
+        </Adresa>
+        <Kontakt>
+            <Telefon>0674815998</Telefon>
+            <Email>pravnapomoc.malenci@mail.ml</Email>
+            <Faks> </Faks>
+        </Kontakt>
+        <Poslovno_ime>Pravna pomoc Malenci</Poslovno_ime>
+    </Predstavnik>
+    <Zig>
+        <Tip_ziga xsi:type="ETip_ziga">INDIVIDUALNI_ZIG</Tip_ziga>
+        <Opis_izgleda_ziga xsi:type="EOpis_izgleda_ziga">KOMBINOVANI_ZNAK</Opis_izgleda_ziga>
+        <Izgled_putanja_do_slike>test_logo.jpg</Izgled_putanja_do_slike>
+        <Boja>ZELENA</Boja>
+        <Boja>NARANDZASTA</Boja>
+        <Boja>LJUBICASTA</Boja>
+        <Transliteracija_znaka>Ouch, my ankle!</Transliteracija_znaka>
+        <Prevod_znaka>Oh, moj zglob!</Prevod_znaka>
+        <Opis_znaka>
+            Znak graficki predstavlja nozni zglob koji je otekao usled sportske povrede.
+            Pored se nalazi i prikaz kreme koja ubrzava oporavak od povrede.
+        </Opis_znaka>
+    </Zig>
+    <Klasa xsi:type="TKlasa" >
+        <Id_klase>1</Id_klase>
+        <Pun_naziv_klase>Hemijski proizvodi</Pun_naziv_klase>
+    </Klasa>
+    <Klasa xsi:type="TKlasa" >
+        <Id_klase>13</Id_klase>
+        <Pun_naziv_klase>Vatreno oruzje</Pun_naziv_klase>
+    </Klasa>
+    
+    <Taksa xsi:type="TTaksa">
+        <Osnovna_taksa>250</Osnovna_taksa>
+        <Taksa_za_sve_klase>500</Taksa_za_sve_klase>
+        <Taksa_za_graficko_resenje>100</Taksa_za_graficko_resenje>
+    </Taksa>
+    <Prilog xsi:type="TPrilog">
+        <Tip_priloga>PRIMERAK_ZNAKA</Tip_priloga>
+        <Status_priloga>PREDATO</Status_priloga>
+        <Putanja_do_priloga>putanja</Putanja_do_priloga>
+    </Prilog>
+    <Prilog xsi:type="TPrilog">
+        <Tip_priloga>SPISAK_ROBE_I_USLUGA</Tip_priloga>
+        <Status_priloga>PREDATO</Status_priloga>
+        <Putanja_do_priloga>putanja</Putanja_do_priloga>
+    </Prilog>
+    <Prilog xsi:type="TPrilog">
+        <Tip_priloga>OPSTI_AKT_O_ZIGU</Tip_priloga>
+        <Status_priloga>PREDATO</Status_priloga>
+        <Putanja_do_priloga>putanja</Putanja_do_priloga>
+    </Prilog>
+    <Prilog xsi:type="TPrilog">
+        <Tip_priloga>DOKAZ_O_PRAVU_PRVENSTVA</Tip_priloga>
+        <Status_priloga>PREDATO</Status_priloga>
+        <Putanja_do_priloga>putanja</Putanja_do_priloga>
+    </Prilog>
+    <Prilog xsi:type="TPrilog">
+        <Tip_priloga>DOKAZ_O_UPLATI_TAKSE</Tip_priloga>
+        <Status_priloga>PREDATO</Status_priloga>
+        <Putanja_do_priloga>putanja</Putanja_do_priloga>
+    </Prilog>
+    <Prilog_punomocje xsi:type="TPrilog_punomocje">
+        <Status_priloga>NIJE_PREDATO</Status_priloga>
+        <Putanja_do_priloga></Putanja_do_priloga>
+    </Prilog_punomocje>
+    <Broj_prijave_ziga xsi:type="TBroj_prijave_ziga">Z-12345/22</Broj_prijave_ziga>
+    <Datum_podnosenja>2022-05-06</Datum_podnosenja>
+    <Status>PREDATO</Status>
+</Zahtev_za_priznanje_ziga>
