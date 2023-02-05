@@ -1,9 +1,7 @@
 package com.example.zigbackend.service;
 
-import com.example.zigbackend.dto.MetadataSearchParams;
-import com.example.zigbackend.dto.MetadataSearchParamsDTO;
-import com.example.zigbackend.dto.ZahtevZaPriznanjeZigaDTO;
-import com.example.zigbackend.dto.ZahteviZaPriznanjeZigaDTO;
+import com.example.zigbackend.dto.*;
+import com.example.zigbackend.fuseki.ZigFusekiDB;
 import com.example.zigbackend.mapper.ZigMapper;
 import com.example.zigbackend.model.*;
 import com.example.zigbackend.repository.ZigRepository;
@@ -437,6 +435,14 @@ public class ZigService {
             saveZahtev(zahtevZaPriznanjeZiga);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public ByteArrayInputStream generateIzvestaj(IzvestajRequest izvestajRequest) throws FileNotFoundException {
+        try {
+            return ZigFusekiDB.generateReport(izvestajRequest);
+        } catch (Exception e) {
+            throw new FileNotFoundException("Couldn't generate report");
         }
     }
 }
