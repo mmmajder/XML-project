@@ -1,4 +1,4 @@
-export function mapCreatePatent(req: String) {
+export function mapCreatePatent(req: String, prilogPodnosioc: any, prilogPravoPriajve: any) {
   req = req.replaceAll("Sadrzaj_zahteva_za_priznanje_patenta", "sadrzajZahtevaZaPriznanjePatenta")
     // .replaceAll("Naziv_pronalaska", "nazivPronalaska")
     // .replaceAll("")
@@ -44,7 +44,17 @@ export function mapCreatePatent(req: String) {
     .replaceAll("<imeprezime>", "")
     .replaceAll("</imeprezime>", "")
     .replaceAll("Poslovno_ime", "poslovnoIme")
+  let position = req.lastIndexOf("</");
+  if (prilogPodnosioc !== undefined){
+    req = [req.slice(0, position), "<putanjaDoPrilogaPodnosioca>" + prilogPodnosioc.name + "</putanjaDoPrilogaPodnosioca>", req.slice(position)].join('')
+  }
+  console.log(prilogPodnosioc)
+  console.log(prilogPravoPriajve)
+  if (prilogPravoPriajve !== undefined) {
+    req = [req.slice(0, position), "<putanjaDoPrimera>" + prilogPravoPriajve.name + "</putanjaDoPrimera>", req.slice(position)].join('')
 
+  }
+    // req += "<putanjaDoPrimera>" + prilogPravoPriajve.name + "</putanjaDoPrimera>"
   // let podnosilac = req.split("<ime_ili_poslovno_ime xml:space='preserve'>")[1].split("</ime_ili_poslovno_ime>")[0]
   // let punomocnik = req.split("<ime_ili_poslovno_ime xml:space='preserve'>")[2].split("</ime_ili_poslovno_ime>")[0]
   //

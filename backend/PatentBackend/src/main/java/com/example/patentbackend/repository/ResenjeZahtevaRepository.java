@@ -4,6 +4,7 @@ import com.example.patentbackend.db.ResenjeZahtevaDB;
 import com.example.patentbackend.resenje.ResenjeZahteva;
 import org.xmldb.api.base.XMLDBException;
 
+import javax.xml.bind.JAXBException;
 import java.io.IOException;
 import java.util.List;
 
@@ -13,7 +14,7 @@ public class ResenjeZahtevaRepository {
         ResenjeZahtevaDB.write(resenjeZahteva);
     }
 
-    public ResenjeZahteva dobaviPoBrojuPrijave(String brojPrijave) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public ResenjeZahteva dobaviPoBrojuPrijave(String brojPrijave) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, JAXBException {
         return ResenjeZahtevaDB.dobaviPoBrojuPrijave(brojPrijave);
     }
 
