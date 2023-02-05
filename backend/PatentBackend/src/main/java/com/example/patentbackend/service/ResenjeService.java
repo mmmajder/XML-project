@@ -10,31 +10,36 @@ import com.example.patentbackend.resenje.ResenjeZahteva;
 import com.example.patentbackend.transformer.PatentTransformer;
 import com.example.patentbackend.utils.Utils;
 import com.itextpdf.text.DocumentException;
+import org.apache.commons.io.FileUtils;
+import org.exist.http.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.xmldb.api.base.XMLDBException;
 
+import javax.xml.bind.JAXBException;
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.util.Date;
 
 @Service
 public class ResenjeService {
     private final ResenjeZahtevaRepository repository = new ResenjeZahtevaRepository();
-    private final PatentService service;
+    private final PatentService patentService;
 
     public ResenjeService(PatentService service) {
-        this.service = service;
+        this.patentService = service;
     }
 
-    public DetaljiOZahtevu getResenjeZahteva(String brojPrijave) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public DetaljiOZahtevu getResenjeZahteva(String brojPrijave) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, JAXBException {
         ResenjeZahteva resenje = repository.dobaviPoBrojuPrijave(brojPrijave);
-        ZahtevZaPriznanjePatenta zahtev = service.getZahtev(brojPrijave);
+        ZahtevZaPriznanjePatenta zahtev = patentService.getZahtev(brojPrijave);
 
         ZahtevDTO zahtevDTO = ZahtevDTO.builder()
                 .datumPodnosenja(Utils.formatDate(zahtev.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getPriznatiDatumPodnosenja()))
                 .brojPrijave(brojPrijave)
                 .build();
         SimpleUser sluzbenik = SimpleUser.builder()
-                .name(resenje.getImeSluzbenika() + " " + resenje.getPrezimeSluzbenika())
+                .name(resenje.getImeSluzbenika())
                 .email(resenje.getEmailSluzbenika())
                 .build();
         ObradaZahteva obrada = ObradaZahteva.builder()
@@ -62,6 +67,7 @@ public class ResenjeService {
         else
             resenjeZahteva.setSifra(obradaZahteva.getBrojPrijave() + "_" + Utils.formatDate(new Date()).replace('.', '_'));
         repository.kreiraj(resenjeZahteva);
+        patentService.setObradjen(obradaZahteva.getBrojPrijave(), obradaZahteva.isOdbijen());
     }
 
     public String generatePDF(ResenjeZahteva resenjeZahteva) {
@@ -69,6 +75,20 @@ public class ResenjeService {
             String title = "resenje_" + resenjeZahteva.getBrojPrijave().replace("/", "_");
             PatentTransformer.generateResenjePDF(resenjeZahteva, title);
             return title;
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ByteArrayInputStream generateResenje(String brojPrijave) {
+        try {
+            ResenjeZahteva resenjeZahteva = repository.dobaviPoBrojuPrijave(brojPrijave);
+            if (resenjeZahteva == null) {
+                throw new NotFoundException("Resenje ne postoji.");
+            }
+            String title = generatePDF(resenjeZahteva);
+            File pdfFile = new File("src/main/resources/gen/resenjaPDF/" + title + ".pdf");
+            return new ByteArrayInputStream(FileUtils.readFileToByteArray(pdfFile));
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

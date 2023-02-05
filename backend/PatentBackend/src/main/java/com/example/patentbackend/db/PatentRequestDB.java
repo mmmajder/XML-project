@@ -176,7 +176,8 @@ public class PatentRequestDB {
         }
 
         xpath = xpath.concat("]");
-
+        for (String word : words)
+            xpath = xpath.concat(" | //Naziv_pronalaska[contains(@Naziv, '" + word + "')]");
         return xpath;
     }
 
