@@ -69,11 +69,11 @@ export class ZahteviService {
       case "P":
         return "/patentResenje/obradiZahtev";
       default:
-        return this.zigoviUrl + "/zig/obradiZahtev";
+        return this.zigoviUrl + "/zigResenje/obradiZahtev";
     }
   }
 
-  obradiZahtev(obradaZahteva: ObradaZahtevaDTO) {
+  obradiZahtev(obradaZahteva: ObradaZahtevaDTO):  Observable<Blob>  {
     const xmlZahtev = JsonToXML.parse("obradaZahteva", obradaZahteva);
     console.log(xmlZahtev);
     console.log(this.getObradiZahtevUrl(obradaZahteva.brojPrijave))
