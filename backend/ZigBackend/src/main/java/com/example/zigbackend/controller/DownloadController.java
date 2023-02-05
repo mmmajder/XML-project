@@ -122,4 +122,15 @@ public class DownloadController {
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
     }
+
+    @GetMapping(path = "/zahtev/{broj}/{godinaPrijave}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> zahtev(@PathVariable String godinaPrijave, @PathVariable String broj) throws IOException {
+        String brojPrijave = broj + "/" + godinaPrijave;
+        String filename = zigService.generatePDF(brojPrijave);
+        ByteArrayInputStream byteFile = zigService.getGenerated(filename);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=zahtev" + godinaPrijave + "/" + broj + ".pdf");
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
+    }
 }

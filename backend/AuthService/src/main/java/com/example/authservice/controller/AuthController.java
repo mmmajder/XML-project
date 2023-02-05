@@ -25,19 +25,13 @@ public class AuthController {
     @PostMapping(path="/login", produces = "application/xml", consumes = "application/xml")
     public ResponseEntity<LoginResponseDTO> createAuthenticationToken(
             @RequestBody JwtAuthenticationRequest authenticationRequest) {
-        System.out.println("Evo usao");
-
         LoginResponseDTO loginResponseDTO = authentificationService.login(authenticationRequest);
+
         if (loginResponseDTO == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         return ResponseEntity.ok(loginResponseDTO);
-    }
-
-    @PostMapping("/logout")
-    public void logout(@RequestBody UserTokenState userTokenState) {
-        // TODO
     }
 
     @PostMapping(path="/register", produces = "application/xml", consumes = "application/xml")
@@ -51,7 +45,6 @@ public class AuthController {
 
     @GetMapping(path="/currently-logged-user", produces = "application/xml", consumes = "application/xml")
     public ResponseEntity<UserResponse> loggedUser(Authentication authentication) {
-        System.out.println("Usao u currently");
         User user = userService.getLoggedUser(authentication);
 
         if (user == null) {

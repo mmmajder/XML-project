@@ -55,6 +55,16 @@
                                     select="//aut:resenje_zahteva//aut:datum_obrade"/>
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="2">
+                            <xsl:element name="a">
+                                <xsl:attribute name="href">
+                                    http://localhost:8002/zig/download/zahtev/<xsl:value-of select="//aut:resenje_zahteva//aut:broj_prijave"/>
+                                </xsl:attribute>
+                                Referenca na zahtev
+                            </xsl:element>
+                        </td>
+                    </tr>
                 </table>
                 <br/>
                 <table>
