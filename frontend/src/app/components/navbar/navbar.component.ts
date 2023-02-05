@@ -23,6 +23,11 @@ export class NavbarComponent {
     this.route.navigate([page]);
   }
 
+  logout() {
+    localStorage.clear();
+    this.goToPage("/");
+  }
+
   generateReport() {
     this.dialog.open(GenerateReportsDialogComponent, {
       width: '400px',

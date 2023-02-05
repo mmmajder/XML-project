@@ -67,6 +67,16 @@ public class DownloadController {
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
     }
 
+    @GetMapping(path = "/zahtev/{godinaPrijave}/{broj}", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> zahtev(@PathVariable String godinaPrijave, @PathVariable String broj) {
+        ByteArrayInputStream byteFile = autorskaPravaService.generatePDF(godinaPrijave + "/" + broj);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=zahtev" + godinaPrijave + "/" + broj + ".pdf");
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
+    }
+
+
     @PostMapping(path = "/izvestaj", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> generateIzvestaj(@RequestBody IzvestajRequest izvestajRequest) throws FileNotFoundException {
         ByteArrayInputStream byteFile = autorskaPravaService.generateIzvestaj(izvestajRequest);
