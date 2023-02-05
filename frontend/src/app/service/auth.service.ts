@@ -29,7 +29,6 @@ export class AuthService {
 
   public register(user: RegisterCredentials): Observable<string> {
     const xmlZahtev = JsonToXML.parse("userDTO", user);
-    console.log(xmlZahtev)
     return this.http.post<string>(this.authUrl + '/register', xmlZahtev, AuthService.getHttpOptions());
   }
 
@@ -37,8 +36,8 @@ export class AuthService {
     return this.http.post(this.authUrl + '/logout', token, AuthService.getHttpOptions());
   }
 
-  public getCurrentlyLoggedUser(): Observable<User> {
-    return this.http.get<User>(this.authUrl + '/currently-logged-user', AuthService.getHttpOptions());
+  public getCurrentlyLoggedUser(): Observable<any> {
+    return this.http.get<any>(this.authUrl + '/currently-logged-user', AuthService.getXmlHttpOptions());
   }
 
   public static getHttpOptions() {

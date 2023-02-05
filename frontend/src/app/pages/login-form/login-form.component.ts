@@ -32,8 +32,6 @@ export class LoginFormComponent {
   }
 
   login() {
-    console.log(this.email)
-    console.log(this.password)
     this.authService.login({
       "email": this.email,
       "password": this.password
@@ -42,20 +40,20 @@ export class LoginFormComponent {
         let loginResponseDTO:LoginResponseDto = this.parseLoginResponse(data);
         localStorage.setItem('token', "Bearer " + loginResponseDTO.token.accessToken);
         this.router.navigate(['/home']);
-      }
-      // error: () => this._snackBar.open("Wrong email or password.", '', {
-      //   duration: 3000,
-      //   panelClass: ['snack-bar']
-      // })
+      },
+      error: () => this._snackBar.open("Wrong email or password.", '', {
+        duration: 3000,
+        panelClass: ['snack-bar']
+      })
     });
   }
 
   parseLoginResponse(data: any) {
     let loginResponseDTO:LoginResponseDto = new LoginResponseDto();
     loginResponseDTO.token = new UserTokenState();
-    loginResponseDTO.token.accessToken = data.getElementsByTagName("accessToken");
-    loginResponseDTO.token.expiresIn = data.getElementsByTagName("expiresIn");
-    loginResponseDTO.userRole = data.getElementsByTagName("userRole");
+    loginResponseDTO.token.accessToken = data.getElementsByTagName("accessToken")[0].textContent;
+    loginResponseDTO.token.expiresIn = data.getElementsByTagName("expiresIn")[0].textContent;
+    loginResponseDTO.userRole = data.getElementsByTagName("userRole")[0].textContent;
 
     return loginResponseDTO;
   }

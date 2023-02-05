@@ -174,7 +174,7 @@ public class ZigController {
         return resenjeService.getResenjeZahteva(brojPrijave.getBroj());
     }
 
-    @PostMapping(value = "obradiZahtev", consumes = MediaType.APPLICATION_XML_VALUE)
+    @PostMapping(value = "/obradiZahtev", consumes = MediaType.APPLICATION_XML_VALUE)
     public ResponseEntity<Void> obradiZahtev(@RequestBody ObradaZahteva obradaZahteva) {
         try {
             resenjeService.obradiZahtev(obradaZahteva);
