@@ -37,7 +37,7 @@
             </head>
             <body>
                 <center>
-                    <h3>Rešenje zahteva za unošenje u evidenciju i deponovanje autorskih prava</h3>
+                    <h3>Rešenje zahteva za unošenje u evidenciju i deponovanje žigova</h3>
                 </center>
 
                 <table>

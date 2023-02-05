@@ -6,7 +6,7 @@ import javax.xml.bind.annotation.XmlRegistry;
 public class ObjectFactory {
 
     /**
-     * Create a new ObjectFactory that can be used to create new instances of schema derived classes for package: com.example.autorskapravabackend.resenje
+     * Create a new ObjectFactory that can be used to create new instances of schema derived classes fo r package: com.example.autorskapravabackend.resenje
      */
     public ObjectFactory() {
     }

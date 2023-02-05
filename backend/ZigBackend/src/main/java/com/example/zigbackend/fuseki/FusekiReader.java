@@ -154,7 +154,10 @@ public class FusekiReader {
 			QuerySolution querySolution = results.next();
 			RDFNode idNode = querySolution.get(PREDICATE_ID_METADATA_NAME);
 			String id = idNode.toString();
-			idsDocuments.add(id);
+
+			if (!idsDocuments.contains(id)){
+				idsDocuments.add(id);
+			}
 		}
 
 		return idsDocuments;
