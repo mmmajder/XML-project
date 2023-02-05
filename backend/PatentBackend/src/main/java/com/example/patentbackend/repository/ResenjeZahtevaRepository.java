@@ -17,9 +17,4 @@ public class ResenjeZahtevaRepository {
     public ResenjeZahteva dobaviPoBrojuPrijave(String brojPrijave) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, JAXBException {
         return ResenjeZahtevaDB.dobaviPoBrojuPrijave(brojPrijave);
     }
-
-    public List<ResenjeZahteva> dobaviSve() throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
-        return ResenjeZahtevaDB.dobaviSvaResenja();
-    }
-
 }

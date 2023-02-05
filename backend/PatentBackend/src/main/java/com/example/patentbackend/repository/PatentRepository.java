@@ -66,7 +66,6 @@ public class PatentRepository {
     }
 
     public List<ZahtevZaPriznanjePatenta> getByText(List<String> words, boolean casesensitive) throws Exception {
-//        List<XMLResource> resources = PatentRequestDB.getAllByAtrr(words);
         List<XMLResource> resources = PatentRequestDB.searchResourcesForText(words, casesensitive);
         return getZahteviFromResources(resources);
     }

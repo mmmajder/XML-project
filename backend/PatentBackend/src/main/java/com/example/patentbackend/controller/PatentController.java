@@ -67,7 +67,7 @@ public class PatentController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<ZahtevZaPriznanjePatenta> zahtevi = patentService.getByMetadata(parsedSearchParams, metadataSearchParamsDTO.isSearchForNeobradjeni());
+        List<ZahtevZaPriznanjePatenta> zahtevi = patentService.getByMetadata(parsedSearchParams, metadataSearchParamsDTO.getStatus());
         List<SimpleZahtevDTO> simpleZahtevDTOs = Mapper.mapToSimpleZahtevs(zahtevi);
 
         return ResponseEntity.ok(simpleZahtevDTOs);
@@ -77,11 +77,7 @@ public class PatentController {
     public ResponseEntity<List<SimpleZahtevDTO>> getZahteviByTextSearch(@RequestBody TextSearchDTO textSearchDTO) throws Exception {
         String stripped = textSearchDTO.getTextSearch().trim();
 
-        if (stripped.trim().equals("")) {
-            return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
-        }
-
-        List<ZahtevZaPriznanjePatenta> zahtevi = patentService.getByText(stripped, textSearchDTO.isCasesensitive(), textSearchDTO.isSearchForNeobradjeni());
+        List<ZahtevZaPriznanjePatenta> zahtevi = patentService.getByText(stripped, textSearchDTO.isCasesensitive(), textSearchDTO.getStatus());
 
         if (zahtevi == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);

@@ -25,6 +25,10 @@ export class PatentiComponent implements OnInit {
         console.log(data)
         let brojPrijavePatenta = data.getElementsByTagName("brojPrijave")[0].textContent;
         this.uploadPrilogsForkJoin(brojPrijavePatenta);
+        this._snackBar.open("Vaš zahtev je uspešno podnet.", '', {
+          duration: 3000,
+          panelClass: ['snack-bar']
+        })
       },
       error: () => {
       }
