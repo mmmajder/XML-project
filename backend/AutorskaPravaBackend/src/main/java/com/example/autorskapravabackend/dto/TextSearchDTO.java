@@ -10,5 +10,5 @@ import lombok.Setter;
 public class TextSearchDTO {
     private String textSearch;
     private boolean casesensitive;
-    private boolean searchForNeobradjeni;
+    private String status;
 }

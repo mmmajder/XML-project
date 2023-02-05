@@ -20,10 +20,6 @@ public class AutorskaPravaRepository {
         return AutorskaPravaRequestDB.getZahtev(brojPrijave);
     }
 
-    public List<ZahtevZaAutorskaPrava> getZahtevi() {
-        return AutorskaPravaRequestDB.getZahtevi();
-    }
-
     public int getNumberOfRequests() {
         return AutorskaPravaRequestDB.getNumberOfRequests();
     }

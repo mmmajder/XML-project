@@ -15,7 +15,8 @@
         <mat-form-field *ngIf="role === 'SLUZBENIK'" appearance="outline" style="margin-left: 5px">
           <mat-label>Izaberite status zahteva</mat-label>
           <mat-select [(ngModel)]="statusZahteva">
-            <mat-option value="obradjeni">Obrađeni zahtevi</mat-option>
+            <mat-option value="prihvaceni">Prihvaćeni zahtevi</mat-option>
+            <mat-option value="odbijeni">Odbijeni zahtevi</mat-option>
             <mat-option value="neobradjeni">Neobrađeni zahtevi</mat-option>
           </mat-select>
         </mat-form-field>
@@ -26,9 +27,6 @@
             <mat-icon>search</mat-icon>
           </button>
         </mat-form-field>
-        <button matSuffix mat-icon-button color="primary" (click)="getAll()">
-          <mat-icon>search</mat-icon> Dobavi sve
-        </button>
       </p>
     </div>
   </mat-tab>
@@ -47,7 +45,8 @@
         <mat-form-field *ngIf="role === 'SLUZBENIK'" appearance="outline" style="margin-left: 5px; margin-right: 5px">
           <mat-label>Izaberite status zahteva</mat-label>
           <mat-select [(ngModel)]="statusZahteva">
-            <mat-option value="obradjeni">Obrađeni zahtevi</mat-option>
+            <mat-option value="prihvaceni">Prihvaćeni zahtevi</mat-option>
+            <mat-option value="odbijeni">Odbijeni zahtevi</mat-option>
             <mat-option value="neobradjeni">Neobrađeni zahtevi</mat-option>
           </mat-select>
         </mat-form-field>

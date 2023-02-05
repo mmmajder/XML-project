@@ -1,12 +1,12 @@
 package com.example.autorskapravabackend.mapper;
 
-import com.example.autorskapravabackend.dto.*;
+import com.example.autorskapravabackend.dto.AutorDTO;
+import com.example.autorskapravabackend.dto.PodnosilacDTO;
+import com.example.autorskapravabackend.dto.SimpleZahtevDTO;
+import com.example.autorskapravabackend.dto.ZahtevZaAutorskaPravaDTO;
 import com.example.autorskapravabackend.model.*;
 
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 public class Mapper {

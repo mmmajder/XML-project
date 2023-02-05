@@ -62,7 +62,7 @@ public class ZahtevController {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
         }
 
-        List<ZahtevZaAutorskaPrava> zahtevi = autorskaPravaService.getByMetadata(parsedSearchParams, metadataSearchParamsDTO.isSearchForNeobradjeni());
+        List<ZahtevZaAutorskaPrava> zahtevi = autorskaPravaService.getByMetadata(parsedSearchParams, metadataSearchParamsDTO.getStatus());
         List<SimpleZahtevDTO> simpleZahtevDTOs = Mapper.mapToSimpleZahtevs(zahtevi);
 
         return ResponseEntity.ok(simpleZahtevDTOs);
@@ -71,7 +71,7 @@ public class ZahtevController {
     @PutMapping(path = "/text-search", produces = "application/xml", consumes = "application/xml")
     public ResponseEntity<List<SimpleZahtevDTO>> getZahteviByTextSearch(@RequestBody TextSearchDTO textSearchDTO) throws Exception {
         String stripped = textSearchDTO.getTextSearch().trim();
-        List<ZahtevZaAutorskaPrava> zahtevi = autorskaPravaService.getByText(stripped, textSearchDTO.isCasesensitive(), textSearchDTO.isSearchForNeobradjeni());
+        List<ZahtevZaAutorskaPrava> zahtevi = autorskaPravaService.getByText(stripped, textSearchDTO.isCasesensitive(), textSearchDTO.getStatus());
 
         if (zahtevi == null) {
             return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
