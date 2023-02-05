@@ -8,5 +8,5 @@ export class MetadataSearchParamsDTO {
 export class TextSearchDTO {
   textSearch: string;
   casesensitive: boolean;
-  searchForNeobradjeni: boolean;
+  status: string;
 }

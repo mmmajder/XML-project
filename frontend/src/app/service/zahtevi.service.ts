@@ -136,8 +136,6 @@ export class ZahteviService {
 
   public searchByText(textSearchParams: TextSearchDTO, endpointChar: string): Observable<Zahtev> {
     const xmlZahtev = JsonToXML.parse("TextSearchDTO", textSearchParams);
-    console.log(xmlZahtev);
-    console.log(this.getUrl(endpointChar) + "/text-search")
     return this.http.put<Zahtev>(this.getUrl(endpointChar) + "/text-search", xmlZahtev, this.getXmlHttpOptions());
   }
 

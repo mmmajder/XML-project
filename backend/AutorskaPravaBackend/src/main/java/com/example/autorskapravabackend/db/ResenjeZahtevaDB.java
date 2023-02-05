@@ -5,18 +5,17 @@ import com.example.autorskapravabackend.resenje.ResenjeZahteva;
 import com.example.autorskapravabackend.utils.AuthenticationUtilities;
 import org.xml.sax.SAXException;
 import org.xmldb.api.DatabaseManager;
-import org.xmldb.api.base.*;
+import org.xmldb.api.base.Collection;
+import org.xmldb.api.base.Database;
+import org.xmldb.api.base.XMLDBException;
 import org.xmldb.api.modules.CollectionManagementService;
 import org.xmldb.api.modules.XMLResource;
-import org.xmldb.api.modules.XPathQueryService;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.transform.OutputKeys;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ResenjeZahtevaDB {
 

@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {Zahtev} from "../../model/shared/Zahtev";
 import {MetadataSearchParamsDTO, TextSearchDTO} from "../../model/search/SearchParams";
 import {ZahteviService} from "../../service/zahtevi.service";
-import {SimpleUser} from "../../model/shared/User";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {AuthService} from "../../service/auth.service";
 
@@ -57,11 +56,25 @@ export class SearchComponent {
   constructor(private zahteviService: ZahteviService, private _snackBar: MatSnackBar, private authService: AuthService) {
     this.authService.getCurrentlyLoggedUser().subscribe((data: any) => {
       this.role = data.getElementsByTagName("role")[0].textContent;
+      if (this.role === "GRADJANIN")
+        this.statusZahteva = "prihvaceni";
     });
   }
 
   removeMeta(i: number) {
     this.metapodaci.splice(i, 1);
+  }
+
+  getAll() {
+    let textSearchParams: TextSearchDTO = new TextSearchDTO();
+    textSearchParams.textSearch = "";
+    textSearchParams.status = this.statusZahteva;
+    textSearchParams.casesensitive = this.matchCase;
+
+    this.zahteviService.searchByText(textSearchParams, this.vrstaZahteva).subscribe(data => {
+      this.rezultatiPretrage = this.parseSimpleZahtevsDoc(data);
+      this.searched = true;
+    });
   }
 
   addMeta() {
@@ -83,13 +96,11 @@ export class SearchComponent {
     this.rezultatiPretrage = [];
     let textSearchParams: TextSearchDTO = new TextSearchDTO();
     textSearchParams.textSearch = this.simpleSearchText.trim();
-    textSearchParams.searchForNeobradjeni = this.statusZahteva === "neobradjeni";
+    textSearchParams.status = this.statusZahteva;
     textSearchParams.casesensitive = this.matchCase;
 
     this.zahteviService.searchByText(textSearchParams, this.vrstaZahteva).subscribe(data => {
-      console.log(data);
       this.rezultatiPretrage = this.parseSimpleZahtevsDoc(data);
-      this.simpleSearchText = "";
       this.searched = true;
     });
   }
