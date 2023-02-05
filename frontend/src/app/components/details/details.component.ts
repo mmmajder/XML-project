@@ -2,6 +2,9 @@ import {Component, Input, OnInit} from '@angular/core';
 import {DetaljiOZahtevu, ObradaZahtevaDTO} from "../../model/shared/Zahtev";
 import {ZahteviService} from "../../service/zahtevi.service";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {AuthService} from "../../service/auth.service";
+import {LoginResponseDto, UserTokenState} from "../../model/shared/LoginResponseDto";
+import {User} from "../../model/shared/User";
 import {bootstrapApplication} from "@angular/platform-browser";
 
 @Component({
@@ -9,7 +12,7 @@ import {bootstrapApplication} from "@angular/platform-browser";
   templateUrl: './details.component.html',
   styleUrls: ['./details.component.css']
 })
-export class DetailsComponent implements OnInit {
+export class DetailsComponent implements OnInit{
   @Input() brojPrijave: string;
   @Input() obradjen: boolean;
 
@@ -21,11 +24,35 @@ export class DetailsComponent implements OnInit {
   sluzbenikEmail = "";
   odbijen: boolean;
   blob: Blob = new Blob();
+  loggedUser: any;
 
-  constructor(private servis: ZahteviService, private _snackBar: MatSnackBar) {
+// <<<<<<< HEAD
+//   ngOnInit(): void {
+//     if (this.loggedUser === undefined){
+//       this.authService.getCurrentlyLoggedUser().subscribe( (data:any) => {
+//         this.loggedUser = this.parseUser(data);
+//       });
+//     }
+//   }
+
+  constructor(private servis: ZahteviService, private _snackBar: MatSnackBar, private authService: AuthService) {
+    // if (this.loggedUser === undefined) {
+    //   this.authService.getCurrentlyLoggedUser().subscribe((data: any) => {
+    //     this.loggedUser = this.parseUser(data);
+    //   });
+    // }
   }
+// =======
+//   constructor(private servis: ZahteviService, private _snackBar: MatSnackBar) {
+//   }
 
-  ngOnInit() {
+// >>>>>>> 4950a513047b8c26e09e31a349682ad5876909ba
+    ngOnInit() {
+      if (this.loggedUser === undefined){
+        this.authService.getCurrentlyLoggedUser().subscribe( (data:any) => {
+          this.loggedUser = this.parseUser(data);
+        });
+      }
     if (this.obradjen) {
       this.servis.getDetaljiOObradi(this.brojPrijave).subscribe({
         next: value => {
@@ -42,19 +69,19 @@ export class DetailsComponent implements OnInit {
   public obradiZahtev(odbijen: boolean) {
     let dto = new ObradaZahtevaDTO();
     dto.brojPrijave = this.brojPrijave;
-    dto.sluzbenik = {'name': 'Pera Peric', 'email': 'pera@gmail.com'}
+    dto.sluzbenik = {'name': this.loggedUser.name + " " + this.loggedUser.surname, 'email': this.loggedUser.email}
     dto.odbijen = odbijen;
     if (odbijen)
       dto.razlogOdbijanja = this.razlogOdbijanja;
-    this.servis.obradiZahtev(dto).subscribe({
-      next: () => {
+
+    console.log(dto);
+
+    this.servis.obradiZahtev(dto).subscribe(() => {
         this.servis.downloadResenje(dto.brojPrijave).subscribe({
           next: (data: Blob) => this.downloadFile(data, "resenje_", 'pdf', 'pdf'),
           error: () => this.snack()
         });
-      },
-      error: () => this.snack()
-    })
+      })
   }
 
   private snack() {
@@ -118,5 +145,16 @@ export class DetailsComponent implements OnInit {
     link.href = window.URL.createObjectURL(data);
     link.download = prefix + this.brojPrijave + "." + ekstenzija;
     link.click();
+  }
+
+  parseUser(data: any) {
+    let user = new User();
+    user.email = data.getElementsByTagName("email")[0].textContent;
+    user.name = data.getElementsByTagName("name")[0].textContent;
+    user.surname = data.getElementsByTagName("surname")[0].textContent;
+    user.phoneNumber = data.getElementsByTagName("phoneNumber")[0].textContent;
+    user.role = data.getElementsByTagName("role")[0].textContent;
+
+    return user;
   }
 }

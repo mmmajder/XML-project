@@ -19,6 +19,6 @@ public class UserAuth {
 
     private Boolean isEnabled = true;
     private Boolean deleted = false;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Role> roles;
 }

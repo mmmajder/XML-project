@@ -77,7 +77,9 @@ export class ZahteviService {
     const xmlZahtev = JsonToXML.parse("obradaZahteva", obradaZahteva);
     console.log(xmlZahtev);
     console.log(this.getObradiZahtevUrl(obradaZahteva.brojPrijave))
-    return this.http.post<Blob>(this.getObradiZahtevUrl(obradaZahteva.brojPrijave), xmlZahtev, AuthService.getHttpOptions());
+    let obradaZahtevaPath = this.getObradiZahtevUrl(obradaZahteva.brojPrijave);
+    console.log(obradaZahtevaPath)
+    return this.http.post<Blob>(obradaZahtevaPath, xmlZahtev, AuthService.getHttpOptions());
   }
 
   public downloadResenje(brojPrijave: string): Observable<Blob> {
@@ -134,14 +136,13 @@ export class ZahteviService {
 
   public searchByText(textSearchParams: TextSearchDTO, endpointChar: string): Observable<Zahtev> {
     const xmlZahtev = JsonToXML.parse("TextSearchDTO", textSearchParams);
-    console.log(textSearchParams);
     console.log(xmlZahtev);
+    console.log(this.getUrl(endpointChar) + "/text-search")
     return this.http.put<Zahtev>(this.getUrl(endpointChar) + "/text-search", xmlZahtev, this.getXmlHttpOptions());
   }
 
   public searchByMetadata(metaParams: MetadataSearchParamsDTO, endpointChar: string): Observable<Zahtev> {
     const xmlZahtev = JsonToXML.parse("MetadataSearchParamsDTO", metaParams);
-    console.log(xmlZahtev);
     return this.http.put<Zahtev>(this.getUrl(endpointChar) + "/metadata-search", xmlZahtev, this.getXmlHttpOptions());
   }
 
