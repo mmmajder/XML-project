@@ -6,7 +6,6 @@ import org.xmldb.api.base.XMLDBException;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
-import java.util.List;
 
 public class ResenjeZahtevaRepository {
 

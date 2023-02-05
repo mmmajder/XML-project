@@ -1,7 +1,7 @@
 <mat-toolbar color="primary">
   <span>Obrada zahteva za prava intelektualne svojine</span>
   <span class="example-spacer"></span>
-  <button mat-icon-button (click)="generateReport()" [matTooltip]="'Generisanje izveštaja'">
+  <button mat-icon-button *ngIf="role === 'SLUZBENIK'" (click)="generateReport()" [matTooltip]="'Generisanje izveštaja'">
     <mat-icon>event_note</mat-icon>
   </button>
   <button mat-icon-button (click)='goToPage("/search")' [matTooltip]="'Pretraga zahteva'">
