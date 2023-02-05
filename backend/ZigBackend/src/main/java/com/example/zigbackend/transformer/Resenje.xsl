@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-                xmlns:aut="http://www.ftn.uns.ac.rs/autorskoDelo" version="2.0">
+                xmlns:aut="http://www.ftn.uns.ac.rs/zig" version="2.0">
 
     <xsl:template match="/">
         <html>
             <head>
-                <title>Rešenje zahteva za unošenje u evidenciju i deponovanje autorskih prava</title>
+                <title>Rešenje zahteva za unošenje u evidenciju i deponovanje žigova</title>
                 <style type="text/css">
                     table {
                     font-family: serif;

@@ -92,8 +92,8 @@ public class ZigFusekiDB {
         document.open();
 
         document.add(new Paragraph("IZVEŠTAJ"));
-        document.add(new Paragraph("\nPočetni datum: " + izvestajRequest.getStart()));
-        document.add(new Paragraph("\nPočetni datum: " + izvestajRequest.getEnd()));
+        document.add(new Paragraph("\nPocetni datum: " + izvestajRequest.getStart()));
+        document.add(new Paragraph("\nPocetni datum: " + izvestajRequest.getEnd()));
         document.add(new Paragraph("\nTip dela: Zahtev za priznanje žiga"));
         document.add(new Paragraph("\n\n"));
 
@@ -113,7 +113,7 @@ public class ZigFusekiDB {
     }
 
     private static void addTableHeader(PdfPTable table) {
-        Stream.of("Broj podnetih zahteva", "Broj prihvaćenih zahteva", "Broj odbijenih zahteva")
+        Stream.of("Broj podnetih zahteva", "Broj prihvacenih zahteva", "Broj odbijenih zahteva")
                 .forEach(columnTitle -> {
                     PdfPCell header = new PdfPCell();
                     header.setBackgroundColor(BaseColor.WHITE);
