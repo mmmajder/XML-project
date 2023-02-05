@@ -57,7 +57,7 @@ export class ZahteviService {
       case "P":
         return this.patentiUrl + "/patentResenje/resenjeZahteva";
       default:
-        return this.zigoviUrl + "/obradiZahtev";
+        return this.zigoviUrl + "/zigResenje/resenjeZahteva";
     }
   }
 
@@ -136,8 +136,6 @@ export class ZahteviService {
 
   public searchByText(textSearchParams: TextSearchDTO, endpointChar: string): Observable<Zahtev> {
     const xmlZahtev = JsonToXML.parse("TextSearchDTO", textSearchParams);
-    console.log(xmlZahtev);
-    console.log(this.getUrl(endpointChar) + "/text-search")
     return this.http.put<Zahtev>(this.getUrl(endpointChar) + "/text-search", xmlZahtev, this.getXmlHttpOptions());
   }
 
@@ -165,7 +163,7 @@ export class ZahteviService {
       case "P":
         return this.patentiUrl + "/patentResenje/resenje";
       default:
-        return this.zigoviUrl + "/obradiZahtev";
+        return this.zigoviUrl + "/zigResenje/resenje";
     }
   }
 }

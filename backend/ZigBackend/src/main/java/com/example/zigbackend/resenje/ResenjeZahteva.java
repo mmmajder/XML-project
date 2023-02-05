@@ -30,8 +30,8 @@ public class ResenjeZahteva {
     @XmlElement(name = "email_sluzbenika")
     private String emailSluzbenika;
     @XmlElement(name = "datum_obrade")
-    @XmlSchemaType(name = "date")
-    private Date datumObrade;
+    @XmlSchemaType(name = "string")
+    private String datumObrade;
     @XmlElement(name = "odbijen")
     private boolean odbijen;
     @XmlElement(name = "razlog_odbijanja")

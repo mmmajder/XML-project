@@ -2,7 +2,6 @@ import {Component} from '@angular/core';
 import {Zahtev} from "../../model/shared/Zahtev";
 import {MetadataSearchParamsDTO, TextSearchDTO} from "../../model/search/SearchParams";
 import {ZahteviService} from "../../service/zahtevi.service";
-import {SimpleUser} from "../../model/shared/User";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {AuthService} from "../../service/auth.service";
 
@@ -48,7 +47,7 @@ export class SearchComponent {
   searched = false;
   selected: string = "A";
   vrstaZahteva: string = "A";
-  statusZahteva: string = "obradjeni";
+  statusZahteva: string = "prihvaceni";
   matchCase: boolean = false;
 
   role: string = "GRADJANIN";
@@ -67,28 +66,17 @@ export class SearchComponent {
     let metadata = new MetadataSearchParamsDTO();
     metadata.operator = "AND";
     this.metapodaci.push(new MetadataSearchParamsDTO());
-    console.log(this.metapodaci.length)
   }
 
   searchText() {
-    if (!this.validateTextSearch()) {
-      this._snackBar.open("Invalid search.", '', {
-        duration: 3000,
-        panelClass: ['snack-bar']
-      })
-      return;
-    }
-
     this.rezultatiPretrage = [];
     let textSearchParams: TextSearchDTO = new TextSearchDTO();
     textSearchParams.textSearch = this.simpleSearchText.trim();
-    textSearchParams.searchForNeobradjeni = this.statusZahteva === "neobradjeni";
+    textSearchParams.status = this.statusZahteva;
     textSearchParams.casesensitive = this.matchCase;
 
     this.zahteviService.searchByText(textSearchParams, this.vrstaZahteva).subscribe(data => {
-      console.log(data);
       this.rezultatiPretrage = this.parseSimpleZahtevsDoc(data);
-      this.simpleSearchText = "";
       this.searched = true;
     });
   }
@@ -105,10 +93,8 @@ export class SearchComponent {
     this.rezultatiPretrage = [];
     let metapodaciForSearch: MetadataSearchParamsDTO[] = this.mapVisibleMetadataNamesToFunctional();
     let metaParams: MetadataSearchParamsDTO = this.mapMetadataParamsToOneInstance(metapodaciForSearch);
-    metaParams.searchForNeobradjeni = this.statusZahteva === "neobradjeni";
-    console.log(metaParams);
+    metaParams.status = this.statusZahteva;
     this.zahteviService.searchByMetadata(metaParams, this.vrstaZahteva).subscribe(data => {
-      console.log(data);
       this.rezultatiPretrage = this.parseSimpleZahtevsDoc(data);
       this.searched = true;
     });
@@ -159,7 +145,7 @@ export class SearchComponent {
         return false;
       }
     }
-    return true;
+    return this.metapodaci.length != 0;
   }
 
   resetChosenParamsAndResultsAndPutPropperPossibleMetadata() {

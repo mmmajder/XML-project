@@ -79,7 +79,6 @@ public class AutorskaPravaRequestDB {
 
     public static List<XMLResource> getAllByStatus(EStatus status) {
         String xpathExp = "//aut:Status[text()='" + status + "']/ancestor::aut:Zahtev_za_unosenje_u_evidenciju_i_deponovanje_autorskih_dela";
-
         return getAllByFilter(xpathExp);
     }
 
@@ -91,7 +90,6 @@ public class AutorskaPravaRequestDB {
         return xpathService;
     }
 
-    // use this one
     private static Collection getCollection() throws XMLDBException, ClassNotFoundException, InstantiationException, IllegalAccessException, IOException {
         AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
         String collectionId = DBSetup.setupDBConnection(conn);
@@ -226,48 +224,5 @@ public class AutorskaPravaRequestDB {
         } else {
             return col;
         }
-    }
-
-    public static List<ZahtevZaAutorskaPrava> getZahtevi() {
-        try {
-            AuthenticationUtilities.ConnectionProperties conn = AuthenticationUtilities.loadProperties();
-            String collectionId = DBSetup.setupDBConnection(conn);
-            Collection col = getOrCreateCollection(collectionId, conn);
-
-            XPathQueryService xpathService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
-            xpathService.setProperty("indent", "yes");
-
-            // make the service aware of namespaces, using the default one
-            xpathService.setNamespace("aut", "http://www.ftn.uns.ac.rs/autorskoDelo");
-            String xpathExp = "aut:Zahtev_za_unosenje_u_evidenciju_i_deponovanje_autorskih_dela";
-
-            // execute xpath expression
-            System.out.println("[INFO] Invoking XPath query service for: " + xpathExp);
-            ResourceSet result = xpathService.query(xpathExp);
-
-            // handle the results
-            System.out.println("[INFO] Handling the results... ");
-
-            ResourceIterator i = result.getIterator();
-            Resource res = null;
-            while (i.hasMoreResources()) {
-
-                try {
-                    res = i.nextResource();
-                    System.out.println(res.getContent());
-
-                } finally {
-                    try {
-                        assert res != null;
-                        ((EXistResource) res).freeResources();
-                    } catch (XMLDBException xe) {
-                        xe.printStackTrace();
-                    }
-                }
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 }

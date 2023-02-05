@@ -10,10 +10,16 @@ import com.example.zigbackend.repository.ResenjeZahtevaRepository;
 import com.example.zigbackend.resenje.ResenjeZahteva;
 import com.example.zigbackend.transformer.ZigTransformer;
 import com.itextpdf.text.DocumentException;
+import org.apache.commons.io.FileUtils;
+import org.exist.http.NotFoundException;
 import org.springframework.stereotype.Service;
 import org.xmldb.api.base.XMLDBException;
 
+import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Service
@@ -46,7 +52,8 @@ public class ResenjeService {
         resenjeZahteva.setBrojPrijave(obradaZahteva.getBrojPrijave());
         resenjeZahteva.setImeSluzbenika(obradaZahteva.getSluzbenik().getName());
         resenjeZahteva.setEmailSluzbenika(obradaZahteva.getSluzbenik().getEmail());
-        resenjeZahteva.setDatumObrade(new Date());
+        Date now = new Date(System.currentTimeMillis());
+        resenjeZahteva.setDatumObrade(mapDateToString(now));
         resenjeZahteva.setOdbijen(obradaZahteva.isOdbijen());
 
         if (resenjeZahteva.isOdbijen()){
@@ -72,5 +79,25 @@ public class ResenjeService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+    }
+
+    public ByteArrayInputStream generateResenje(String brojPrijave) {
+        try {
+            ResenjeZahteva resenjeZahteva = repository.dobaviPoBrojuPrijave(brojPrijave);
+            if (resenjeZahteva == null) {
+                throw new NotFoundException("Resenje ne postoji.");
+            }
+            String title = generatePDF(resenjeZahteva);
+            File pdfFile = new File("src/main/resources/generatedFiles/resenja/" + title + ".pdf");
+            return new ByteArrayInputStream(FileUtils.readFileToByteArray(pdfFile));
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static String mapDateToString(Date date){
+        DateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy.");
+
+        return dateFormat.format(date);
     }
 }

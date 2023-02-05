@@ -2,11 +2,11 @@ export class MetadataSearchParamsDTO {
   property: string;
   value: string = "";
   operator: string = "I";
-  searchForNeobradjeni: boolean;
+  status: string = "prihvaceni";
 }
 
 export class TextSearchDTO {
-  textSearch: string;
+  textSearch: string = "";
   casesensitive: boolean;
-  searchForNeobradjeni: boolean;
+  status: string = "prihvaceni";
 }

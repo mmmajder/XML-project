@@ -1,9 +1,7 @@
 package com.example.zigbackend.service;
 
-import com.example.zigbackend.dto.MetadataSearchParams;
-import com.example.zigbackend.dto.MetadataSearchParamsDTO;
-import com.example.zigbackend.dto.ZahtevZaPriznanjeZigaDTO;
-import com.example.zigbackend.dto.ZahteviZaPriznanjeZigaDTO;
+import com.example.zigbackend.dto.*;
+import com.example.zigbackend.fuseki.ZigFusekiDB;
 import com.example.zigbackend.mapper.ZigMapper;
 import com.example.zigbackend.model.*;
 import com.example.zigbackend.repository.ZigRepository;
@@ -54,7 +52,7 @@ public class ZigService {
         return zigRepository.getZahtev(brojPrijave);
     }
 
-    private List<ZahtevZaPriznanjeZiga> getZahtevi(List<String> ids){
+    private List<ZahtevZaPriznanjeZiga> getZahtevi(List<String> ids) {
         return zigRepository.getZahteviByBrojPrijave(ids);
     }
 
@@ -79,12 +77,12 @@ public class ZigService {
         return zahtevZaPriznanjeZiga;
     }
 
-    private String getNewBrojPrijave(){
+    private String getNewBrojPrijave() {
         int currentYear = LocalDate.now().getYear();
         int numberOfZahtevi = getAllForYear(currentYear).size() + 1;
         String brojPrijave = Integer.toString(numberOfZahtevi);
 
-        while (brojPrijave.length() < 5){
+        while (brojPrijave.length() < 5) {
             brojPrijave = "0".concat(brojPrijave);
         }
 
@@ -93,7 +91,7 @@ public class ZigService {
         return brojPrijave;
     }
 
-    private void setTaksa(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga){
+    private void setTaksa(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga) {
         Taksa taksa = new Taksa();
         taksa.setOsnovnaTaksa(osnovnaTaksa);
         taksa.setTaksaZaSveKlase(taksaPoKlasi * zahtevZaPriznanjeZiga.getKlasa().size());
@@ -101,7 +99,7 @@ public class ZigService {
         zahtevZaPriznanjeZiga.setTaksa(taksa);
     }
 
-    private String getLastTwoYearChars(int year){
+    private String getLastTwoYearChars(int year) {
         String yearStr = Integer.toString(year);
         Character y1 = yearStr.charAt(2);
         Character y2 = yearStr.charAt(3);
@@ -109,7 +107,7 @@ public class ZigService {
         return y1.toString().concat(y2.toString());
     }
 
-    public List<XMLResource> getAllForYear(int year){
+    public List<XMLResource> getAllForYear(int year) {
         return zigRepository.getAllForYear(Integer.toString(year));
     }
 
@@ -117,7 +115,7 @@ public class ZigService {
         String filename = null;
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = getZahtev(brojPrijave);
 
-        if (zahtevZaPriznanjeZiga != null){
+        if (zahtevZaPriznanjeZiga != null) {
             filename = ZigTransformer.generateHTMLZig(zahtevZaPriznanjeZiga);
         }
 
@@ -128,45 +126,42 @@ public class ZigService {
         String filename = null;
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = getZahtev(brojPrijave);
 
-        if (zahtevZaPriznanjeZiga != null){
+        if (zahtevZaPriznanjeZiga != null) {
             filename = ZigTransformer.generatePDFZig(zahtevZaPriznanjeZiga);
         }
 
         return filename;
     }
 
-    private String getSupposedFileName(String brojPrijave){
+    private String getSupposedFileName(String brojPrijave) {
         return ZigTransformer.getSupposedFileName(brojPrijave);
     }
 
-    public List<ZahtevZaPriznanjeZiga> getByText(String text, boolean casesensitive, boolean isSearchForNeobradjeni) throws Exception {
+    public List<ZahtevZaPriznanjeZiga> getByText(String text, boolean casesensitive, String status) throws Exception {
         List<String> searchWords = Arrays.asList(text.split(" "));
-
-        if (searchWords.size() == 0){
-            return null;
-        }
-
         List<ZahtevZaPriznanjeZiga> zahtevi = zigRepository.getByText(searchWords, casesensitive);
 
-        if (isSearchForNeobradjeni){
-            return zahtevi.stream().filter(z -> z.getStatus() == EStatus.PREDATO).collect(Collectors.toList());
-        } else {
-            return zahtevi.stream().filter(z -> z.getStatus() != EStatus.PREDATO).collect(Collectors.toList());
-        }
+        return filterByStatus(zahtevi, status);
     }
 
-    public List<ZahtevZaPriznanjeZiga> getByMetadata(List<MetadataSearchParams> params, boolean isSearchForNeobradjeni) throws IOException {
+    public List<ZahtevZaPriznanjeZiga> getByMetadata(List<MetadataSearchParams> params, String status) throws IOException {
         List<ZahtevZaPriznanjeZiga> zahtevi;
-        if (params.size() == 1){
+        if (params.size() == 1) {
             zahtevi = zigRepository.getByMetadata(params.get(0));
         } else {
             zahtevi = zigRepository.getByMultipleMetadata(params);
         }
 
-        if (isSearchForNeobradjeni){
+        return filterByStatus(zahtevi, status);
+    }
+
+    private List<ZahtevZaPriznanjeZiga> filterByStatus(List<ZahtevZaPriznanjeZiga> zahtevi, String status){
+        if ("prihvaceni".equals(status)) {
+            return zahtevi.stream().filter(z -> z.getStatus() == EStatus.PRIHVACENO).collect(Collectors.toList());
+        } else if ("odbijeni".equals(status)) {
+            return zahtevi.stream().filter(z -> z.getStatus() == EStatus.ODBIJENO).collect(Collectors.toList());
+        } else { // predati
             return zahtevi.stream().filter(z -> z.getStatus() == EStatus.PREDATO).collect(Collectors.toList());
-        } else {
-            return zahtevi.stream().filter(z -> z.getStatus() != EStatus.PREDATO).collect(Collectors.toList());
         }
     }
 
@@ -186,14 +181,14 @@ public class ZigService {
         return zigRepository.getAllDenied();
     }
 
-    public ZahteviZaPriznanjeZigaDTO mapToZahtevi(List<ZahtevZaPriznanjeZiga> zahteviList){
+    public ZahteviZaPriznanjeZigaDTO mapToZahtevi(List<ZahtevZaPriznanjeZiga> zahteviList) {
         ZahteviZaPriznanjeZigaDTO zahtevi = new ZahteviZaPriznanjeZigaDTO();
         zahtevi.setZahtevi(zahteviList);
 
         return zahtevi;
     }
 
-    public boolean isMetadataDTOEmpty(MetadataSearchParamsDTO metadataSearchParamsDTO){
+    public boolean isMetadataDTOEmpty(MetadataSearchParamsDTO metadataSearchParamsDTO) {
         String strippedProperty = metadataSearchParamsDTO.getProperty().trim();
         String strippedValue = metadataSearchParamsDTO.getValue().trim();
         String strippedOperator = metadataSearchParamsDTO.getOperator().trim();
@@ -201,7 +196,7 @@ public class ZigService {
         return "".equals(strippedProperty) || "".equals(strippedValue) || "".equals(strippedOperator);
     }
 
-    public boolean isMetadataDTOOfInequalLength(MetadataSearchParamsDTO metadataSearchParamsDTO){
+    public boolean isMetadataDTOOfInequalLength(MetadataSearchParamsDTO metadataSearchParamsDTO) {
         String strippedProperty = metadataSearchParamsDTO.getProperty().trim();
         String strippedValue = metadataSearchParamsDTO.getValue().trim();
         String strippedOperator = metadataSearchParamsDTO.getOperator().trim();
@@ -209,18 +204,18 @@ public class ZigService {
         return "".equals(strippedProperty) || "".equals(strippedValue) || "".equals(strippedOperator);
     }
 
-    public List<MetadataSearchParams> parseMetadataDTO(MetadataSearchParamsDTO metadataSearchParamsDTO){
+    public List<MetadataSearchParams> parseMetadataDTO(MetadataSearchParamsDTO metadataSearchParamsDTO) {
         String[] properties = metadataSearchParamsDTO.getProperty().trim().split("\\|");
         String[] values = metadataSearchParamsDTO.getValue().trim().split("\\|");
         String[] operators = metadataSearchParamsDTO.getOperator().trim().split("\\|");
 
-        if ( this.isMetadataDTOOfInequalLength(metadataSearchParamsDTO) || (properties.length != values.length || properties.length != operators.length)){
+        if (this.isMetadataDTOOfInequalLength(metadataSearchParamsDTO) || (properties.length != values.length || properties.length != operators.length)) {
             return null;
         }
 
         List<MetadataSearchParams> parsedSearchParams = new ArrayList<>();
 
-        for (int i = 0 ; i < properties.length ; i++){
+        for (int i = 0; i < properties.length; i++) {
             MetadataSearchParams mp = new MetadataSearchParams(properties[i], values[i], operators[i]);
             parsedSearchParams.add(mp);
         }
@@ -228,7 +223,7 @@ public class ZigService {
         return parsedSearchParams;
     }
 
-    public boolean addPrilog(String brojPrijaveZiga, String prilogType,  MultipartFile uploadedFile) throws IOException, JAXBException, XMLDBException {
+    public boolean addPrilog(String brojPrijaveZiga, String prilogType, MultipartFile uploadedFile) throws IOException, JAXBException, XMLDBException {
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = getZahtevForPrilogAddition(brojPrijaveZiga);
         if (zahtevZaPriznanjeZiga == null) {
             return false;
@@ -237,7 +232,7 @@ public class ZigService {
         ETip_priloga tipPriloga = ETip_priloga.valueOf(prilogType);
         String fileName = brojPrijaveZiga.replace('/', '_').concat("_").concat(prilogType);
 
-        if (ETip_priloga.PRIMERAK_ZNAKA == tipPriloga){
+        if (ETip_priloga.PRIMERAK_ZNAKA == tipPriloga) {
             fileName = fileName.concat(".jpg");
         } else {
             fileName = fileName.concat(".pdf");
@@ -246,14 +241,13 @@ public class ZigService {
         System.out.println(fileName);
 
         boolean isOkay = writeFile(fileName, uploadedFile);
-        if (!isOkay)
-        {
+        if (!isOkay) {
             return false;
         }
 
         setPrilogDetails(zahtevZaPriznanjeZiga, fileName, tipPriloga);
 
-        if (ETip_priloga.PRIMERAK_ZNAKA == tipPriloga){
+        if (ETip_priloga.PRIMERAK_ZNAKA == tipPriloga) {
             zahtevZaPriznanjeZiga.getZig().setIzgledPutanjaDoSlike(fileName);
             zahtevZaPriznanjeZiga.getTaksa().setTaksaZaGrafickoResenje(0);
         }
@@ -264,12 +258,12 @@ public class ZigService {
     }
 
     public boolean saveZahtevAfterPrilogAddition(String brojPrijaveZiga) throws JAXBException, XMLDBException, IOException {
-        if (!prilogUpdatingZahtevs.containsKey(brojPrijaveZiga)){
+        if (!prilogUpdatingZahtevs.containsKey(brojPrijaveZiga)) {
             return false;
         }
 
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = prilogUpdatingZahtevs.get(brojPrijaveZiga);
-        if (zahtevZaPriznanjeZiga == null){
+        if (zahtevZaPriznanjeZiga == null) {
             return false;
         }
 
@@ -279,15 +273,15 @@ public class ZigService {
         return true;
     }
 
-    private ZahtevZaPriznanjeZiga getZahtevForPrilogAddition(String brojPrijaveZiga){
+    private ZahtevZaPriznanjeZiga getZahtevForPrilogAddition(String brojPrijaveZiga) {
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = null;
 
         prilogUpdatingZahtevsLock.lock();
-        try{
-            if (!prilogUpdatingZahtevs.containsKey(brojPrijaveZiga)){
+        try {
+            if (!prilogUpdatingZahtevs.containsKey(brojPrijaveZiga)) {
                 zahtevZaPriznanjeZiga = getZahtev(brojPrijaveZiga);
 
-                if (zahtevZaPriznanjeZiga == null){
+                if (zahtevZaPriznanjeZiga == null) {
                     return null;
                 }
 
@@ -302,13 +296,13 @@ public class ZigService {
         return zahtevZaPriznanjeZiga;
     }
 
-    private void setPrilogDetails(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga, String fileName, ETip_priloga prilogType){
-        if (ETip_priloga.PUNOMOCJE == prilogType){
+    private void setPrilogDetails(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga, String fileName, ETip_priloga prilogType) {
+        if (ETip_priloga.PUNOMOCJE == prilogType) {
             zahtevZaPriznanjeZiga.getPrilogPunomocje().setStatusPriloga(EStatus_prilog_punomocje.PREDATO);
             zahtevZaPriznanjeZiga.getPrilogPunomocje().setPutanjaDoPriloga(fileName);
         } else {
-            for (Prilog p : zahtevZaPriznanjeZiga.getPrilog()){
-                if (p.getTipPriloga() == prilogType){
+            for (Prilog p : zahtevZaPriznanjeZiga.getPrilog()) {
+                if (p.getTipPriloga() == prilogType) {
                     p.setStatusPriloga(EStatus_priloga.PREDATO);
                     p.setPutanjaDoPriloga(fileName);
                     break;
@@ -343,28 +337,28 @@ public class ZigService {
 
     public ByteArrayInputStream getFile(String fullpath) throws IOException {
         File file = new File(fullpath);
-        if(file.exists() && !file.isDirectory()) {
+        if (file.exists() && !file.isDirectory()) {
             return new ByteArrayInputStream(FileUtils.readFileToByteArray(file));
         } else {
             return null;
         }
     }
 
-    public void addQr(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga){
+    public void addQr(ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga) {
         String brojPrijaveZiga = zahtevZaPriznanjeZiga.getBrojPrijaveZiga();
         String qrFileName = generateQR(brojPrijaveZiga);
 
-        if (qrFileName != null){
+        if (qrFileName != null) {
             Prilog qrPrilog = null;
 
-            for (Prilog prilog : zahtevZaPriznanjeZiga.getPrilog()){
-                if (prilog.getTipPriloga() == ETip_priloga.QR){
+            for (Prilog prilog : zahtevZaPriznanjeZiga.getPrilog()) {
+                if (prilog.getTipPriloga() == ETip_priloga.QR) {
                     qrPrilog = prilog;
                     break;
                 }
             }
 
-            if (qrPrilog == null){
+            if (qrPrilog == null) {
                 qrPrilog = new Prilog();
                 qrPrilog.setTipPriloga(ETip_priloga.QR);
                 zahtevZaPriznanjeZiga.getPrilog().add(qrPrilog);
@@ -375,7 +369,7 @@ public class ZigService {
         }
     }
 
-    public String generateQR(String brojPrijaveZiga){
+    public String generateQR(String brojPrijaveZiga) {
         String httpBrojPrijaveZiga = brojPrijaveZiga.replace('/', '-');
         String fileNameBrojPrijaveZiga = brojPrijaveZiga.replace('/', '_').concat("_").concat("QR");
 
@@ -416,18 +410,18 @@ public class ZigService {
         }
     }
 
-    public void acceptZahtev(String brojPrijavZahteva){
+    public void acceptZahtev(String brojPrijavZahteva) {
         obradiZahtev(brojPrijavZahteva, true);
     }
 
-    public void declineZahtev(String brojPrijavZahteva){
+    public void declineZahtev(String brojPrijavZahteva) {
         obradiZahtev(brojPrijavZahteva, false);
     }
 
-    private void obradiZahtev(String brojPrijavZahteva, boolean isAccepted){
+    private void obradiZahtev(String brojPrijavZahteva, boolean isAccepted) {
         ZahtevZaPriznanjeZiga zahtevZaPriznanjeZiga = getZahtev(brojPrijavZahteva);
 
-        if (isAccepted){
+        if (isAccepted) {
             zahtevZaPriznanjeZiga.setStatus(EStatus.PRIHVACENO);
         } else {
             zahtevZaPriznanjeZiga.setStatus(EStatus.ODBIJENO);
@@ -437,6 +431,14 @@ public class ZigService {
             saveZahtev(zahtevZaPriznanjeZiga);
         } catch (Exception e) {
             e.printStackTrace();
+        }
+    }
+
+    public ByteArrayInputStream generateIzvestaj(IzvestajRequest izvestajRequest) throws FileNotFoundException {
+        try {
+            return ZigFusekiDB.generateReport(izvestajRequest);
+        } catch (Exception e) {
+            throw new FileNotFoundException("Couldn't generate report");
         }
     }
 }

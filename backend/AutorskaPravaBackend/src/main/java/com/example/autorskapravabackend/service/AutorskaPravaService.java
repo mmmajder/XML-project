@@ -142,19 +142,20 @@ public class AutorskaPravaService {
         return "".equals(strippedProperty) || "".equals(strippedValue) || "".equals(strippedOperator);
     }
 
-    public List<ZahtevZaAutorskaPrava> getByMetadata(List<MetadataSearchParams> params, boolean searchForNeobradjeni) throws IOException {
-        List<ZahtevZaAutorskaPrava> zahtevi;
+    public List<ZahtevZaAutorskaPrava> getByMetadata(List<MetadataSearchParams> params, String status) throws IOException {
         if (params.size() == 1) {
-            zahtevi = autorskaPravaRepository.getByMetadata(params.get(0));
-        } else {
-            zahtevi = autorskaPravaRepository.getByMultipleMetadata(params);
+            return getByStatus(status, autorskaPravaRepository.getByMetadata(params.get(0)));
         }
+        return getByStatus(status, autorskaPravaRepository.getByMultipleMetadata(params));
+    }
 
-        if (searchForNeobradjeni) {
-            return zahtevi.stream().filter(z -> z.getStatus() == EStatus.PREDATO).collect(Collectors.toList());
-        } else {
-            return zahtevi.stream().filter(z -> z.getStatus() != EStatus.PREDATO).collect(Collectors.toList());
+    private List<ZahtevZaAutorskaPrava> getByStatus(String status, List<ZahtevZaAutorskaPrava> zahtevi) {
+        if ("prihvaceni".equals(status)) {
+            return zahtevi.stream().filter(z -> z.getStatus() == EStatus.PRIHVACENO).collect(Collectors.toList());
+        } else if ("odbijeni".equals(status)) {
+            return zahtevi.stream().filter(z -> z.getStatus() == EStatus.ODBIJENO).collect(Collectors.toList());
         }
+        return zahtevi.stream().filter(z -> z.getStatus() == EStatus.PREDATO).collect(Collectors.toList());
     }
 
     private ZahtevZaAutorskaPrava getZahtevForPrilogAddition(String brojPrijave) {
@@ -212,32 +213,21 @@ public class AutorskaPravaService {
         if (!prilogUpdatingZahtevs.containsKey(brojPrijave)) {
             return false;
         }
-
         ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = prilogUpdatingZahtevs.get(brojPrijave);
         if (zahtevZaAutorskaPrava == null) {
             return false;
         }
-
         autorskaPravaRepository.save(zahtevZaAutorskaPrava);
         prilogUpdatingZahtevs.remove(brojPrijave);
-
         return true;
     }
 
-    public List<ZahtevZaAutorskaPrava> getByText(String text, boolean casesensitive, boolean searchForNeobradjeni) throws Exception {
+    public List<ZahtevZaAutorskaPrava> getByText(String text, boolean casesensitive, String status) throws Exception {
         List<String> searchWords = Arrays.asList(text.split(" "));
-
         if (searchWords.size() == 0) {
             return null;
         }
-
-        List<ZahtevZaAutorskaPrava> zahtevi = autorskaPravaRepository.getByText(searchWords, casesensitive);
-
-        if (searchForNeobradjeni) {
-            return zahtevi.stream().filter(z -> z.getStatus() == EStatus.PREDATO).collect(Collectors.toList());
-        } else {
-            return zahtevi.stream().filter(z -> z.getStatus() != EStatus.PREDATO).collect(Collectors.toList());
-        }
+        return getByStatus(status, autorskaPravaRepository.getByText(searchWords, casesensitive));
     }
 
     public ByteArrayInputStream generateIzvestaj(IzvestajRequest izvestajRequest) throws FileNotFoundException {
@@ -250,7 +240,7 @@ public class AutorskaPravaService {
 
     public void setObradjen(String brojPrijave, boolean odbijen) {
         ZahtevZaAutorskaPrava zahtevZaAutorskaPrava = autorskaPravaRepository.getZahtev(brojPrijave);
-        if(odbijen) {
+        if (odbijen) {
             zahtevZaAutorskaPrava.setStatus(EStatus.ODBIJENO);
         } else {
             zahtevZaAutorskaPrava.setStatus(EStatus.PRIHVACENO);

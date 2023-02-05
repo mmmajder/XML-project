@@ -13,5 +13,5 @@ public class MetadataSearchParamsDTO {
     private String property;
     private String value;
     private String operator;
-    private boolean searchForNeobradjeni;
+    private String status;
 }

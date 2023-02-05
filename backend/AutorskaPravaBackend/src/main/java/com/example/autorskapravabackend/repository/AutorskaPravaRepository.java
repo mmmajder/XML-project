@@ -20,10 +20,6 @@ public class AutorskaPravaRepository {
         return AutorskaPravaRequestDB.getZahtev(brojPrijave);
     }
 
-    public List<ZahtevZaAutorskaPrava> getZahtevi() {
-        return AutorskaPravaRequestDB.getZahtevi();
-    }
-
     public int getNumberOfRequests() {
         return AutorskaPravaRequestDB.getNumberOfRequests();
     }
@@ -59,7 +55,6 @@ public class AutorskaPravaRepository {
 
     public List<ZahtevZaAutorskaPrava> getAllByStatus(EStatus status) throws JAXBException, XMLDBException {
         List<XMLResource> resources = AutorskaPravaRequestDB.getAllByStatus(status);
-
         return getZahteviFromResources(resources);
     }
 

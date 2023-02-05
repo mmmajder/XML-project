@@ -1,35 +1,22 @@
 package com.example.autorskapravabackend.rdf;
 
-import com.example.autorskapravabackend.db.ResenjeZahtevaDB;
 import com.example.autorskapravabackend.dto.IzvestajRequest;
 import com.example.autorskapravabackend.dto.MetadataSearchParams;
 import com.example.autorskapravabackend.model.EStatus;
 import com.example.autorskapravabackend.model.ZahtevZaAutorskaPrava;
 import com.example.autorskapravabackend.repository.AutorskaPravaRepository;
-import com.example.autorskapravabackend.resenje.ResenjeZahteva;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.commons.io.FileUtils;
-import org.apache.jena.query.*;
 import org.apache.jena.rdf.model.Model;
-import org.xmldb.api.base.XMLDBException;
 
-import javax.xml.bind.JAXBException;
-import javax.xml.datatype.DatatypeConfigurationException;
-import javax.xml.datatype.DatatypeFactory;
-import javax.xml.datatype.XMLGregorianCalendar;
 import java.io.*;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Stream;
-
-import static com.example.autorskapravabackend.utils.Utils.dateToXMLGregorian;
-import static com.example.autorskapravabackend.utils.Utils.stringToXMLGregorian;
 
 public class AutorskaPravaFusekiDB {
     public static void save(ZahtevZaAutorskaPrava zahtev) {
@@ -68,8 +55,11 @@ public class AutorskaPravaFusekiDB {
             AutorskaPravaRepository autorskaPravaRepository = new AutorskaPravaRepository();
             Date start = new SimpleDateFormat("yyyy-MM-dd").parse(izvestajRequest.getStart());
             Date end = new SimpleDateFormat("yyyy-MM-dd").parse(izvestajRequest.getEnd());
+            System.out.println("START: " + izvestajRequest.getStart());
+            System.out.println("END: " + izvestajRequest.getEnd());
 
             for (ZahtevZaAutorskaPrava zahtev : autorskaPravaRepository.getAllByStatus(EStatus.ODBIJENO)) {
+                System.out.println("BROJ PRIJAVE ODBIJENI: " + zahtev.getInformacijeOZahtevu().getBrojPrijave());
                 Date predato = zahtev.getInformacijeOZahtevu().getDatumPodnosenja();
                 if (predato.before(end) && predato.after(start)) {
                     odbijeniZahtevi += 1;
@@ -77,6 +67,7 @@ public class AutorskaPravaFusekiDB {
             }
 
             for (ZahtevZaAutorskaPrava zahtev : autorskaPravaRepository.getAllByStatus(EStatus.PRIHVACENO)) {
+                System.out.println("BROJ PRIJAVE PRIHVACENO: " + zahtev.getInformacijeOZahtevu().getBrojPrijave());
                 Date predato = zahtev.getInformacijeOZahtevu().getDatumPodnosenja();
                 if (predato.before(end) && predato.after(start)) {
                     prihvaceniZahtevi += 1;
@@ -84,6 +75,7 @@ public class AutorskaPravaFusekiDB {
             }
 
             for (ZahtevZaAutorskaPrava zahtev : autorskaPravaRepository.getAllByStatus(EStatus.PREDATO)) {
+                System.out.println("BROJ PRIJAVE PREDATO: " + zahtev.getInformacijeOZahtevu().getBrojPrijave());
                 Date predato = zahtev.getInformacijeOZahtevu().getDatumPodnosenja();
                 if (predato.before(end) && predato.after(start)) {
                     zahtevi += 1;
@@ -92,6 +84,7 @@ public class AutorskaPravaFusekiDB {
             zahtevi += prihvaceniZahtevi;
             zahtevi += odbijeniZahtevi;
         } catch (Exception ignore) {
+            System.out.println("PUKAO JE");
         }
 
         String fileName = createDocument(zahtevi, prihvaceniZahtevi, odbijeniZahtevi, izvestajRequest);
