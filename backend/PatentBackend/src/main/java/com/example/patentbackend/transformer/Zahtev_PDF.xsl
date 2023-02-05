@@ -59,13 +59,13 @@
                     <tr>
                         <td style="border-left-width:1px;">Datum prijema</td>
                         <td>
-                            <xsl:value-of select="//pat:Datum_prijema"/>
+                            <xsl:value-of select="substring(//pat:Datum_prijema, 0, 11)"/>
                         </td>
                     </tr>
                     <tr>
                         <td style="border-left-width:1px;">Priznati datum podnosenja</td>
                         <td>
-                            <xsl:value-of select="//pat:Priznati_datum_podnosenja"/>
+                            <xsl:value-of select="substring(//pat:Priznati_datum_podnosenja, 0, 11)"/>
                         </td>
                     </tr>
                     <tr>
@@ -186,13 +186,6 @@
                                     </xsl:element>
                                 </xsl:otherwise>
                             </xsl:choose>
-<!--                            <xsl:element name="a">-->
-<!--                                <xsl:attribute name="href">-->
-<!--                                    http://localhost:8001/autorskaPrava/download/prilog/<xsl:value-of-->
-<!--                                        select="//pat:Podaci_o_podnosiocu_prijave//pat:Putanja_do_priloga_podnosioca"/>-->
-<!--                                </xsl:attribute>-->
-<!--                                Izjavu o zajedničkom predstavniku-->
-<!--                            </xsl:element>-->
                         </td>
                     </tr>
                 </table>
@@ -278,14 +271,6 @@
                                         </xsl:element>
                                     </xsl:otherwise>
                                 </xsl:choose>
-<!--                                <xsl:element name="a">-->
-<!--                                    <xsl:attribute name="href">-->
-<!--                                        http://localhost:8001/autorskaPrava/download/prilog/<xsl:value-of-->
-<!--                                            select="//pat:Podaci_o_podnosiocu_prijave//pat:Putanja_do_primera"/>-->
-<!--                                    </xsl:attribute>-->
-<!--                                    Izjava podnosilaca prijave o osnovu sticanja prava-->
-<!--                                </xsl:element>-->
-
                             </td>
                         </tr>
                     </xsl:if>
@@ -410,20 +395,6 @@
                     </tr>
                     <tr>
                         <td style="border-left-width:1px;">
-                            <xsl:if test="//pat:Nacin_dostave[text()='ELEKTRONSKIM_PUTEM']">
-                                Podnosilac prijave je saglasan da Zavod vrsi dostavljanje pismena iskljucivo
-                                elektronskim putem u formi elektronskog dokumenta
-                            </xsl:if>
-                            <xsl:if test="//pat:Nacin_dostave[text()='PAPIRNA_FORM']"> <!-- postoji typo u testnom primeru -->
-                                Podnosilac prijave je saglasan da Zavod vrsi dostavljanje pismena u papirnoj formi
-                            </xsl:if>
-                            <xsl:if test="//pat:Nacin_dostave[text()='PAPIRNA_FORMA']">
-                                Podnosilac prijave je saglasan da Zavod vrsi dostavljanje pismena u papirnoj formi
-                            </xsl:if>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td style="border-left-width:1px;">
                             Broj prvobitne prijave / osnovne prijave, odnosno osnovnog patenta:
                             <xsl:value-of select="//pat:Broj_osnovne_prijave"/>
                         </td>
@@ -431,7 +402,7 @@
                     <tr>
                         <td style="border-left-width:1px;">
                             Datum podnosenja prvobitne prijave / osnovne prijave:
-                            <xsl:value-of select="//pat:Datum_podnosenja_prijave"/>
+                            <xsl:value-of select="substring(//pat:Datum_podnosenja_prijave, 0, 11)"/>
                         </td>
                     </tr>
                 </table>
@@ -459,7 +430,7 @@
                                     <xsl:value-of select="pat:Broj_ranije_prijave"/>
                                 </td>
                                 <td colspan="3">
-                                    <xsl:value-of select="pat:Datum_podnosenja_priave"/>
+                                    <xsl:value-of select="substring(pat:Datum_podnosenja_priave, 0, 11)"/>
                                 </td>
                                 <td colspan="2">
                                     <xsl:value-of select="pat:Dvoslovna_oznaka"/>

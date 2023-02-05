@@ -55,7 +55,7 @@ export class ZahteviService {
       case "A":
         return this.autorskaPravaUrl + "/autorskaPravaResenje/resenjeZahteva";
       case "P":
-        return this.patentiUrl + "/obradiZahtev";
+        return this.patentiUrl + "/patentResenje/resenjeZahteva";
       default:
         return this.zigoviUrl + "/obradiZahtev";
     }
@@ -67,7 +67,7 @@ export class ZahteviService {
       case "A":
         return this.autorskaPravaUrl + "/autorskaPravaResenje/obradiZahtev";
       case "P":
-        return "/patentResenje/obradiZahtev";
+        return this.patentiUrl + "/patentResenje/obradiZahtev";
       default:
         return this.zigoviUrl + "/zig/obradiZahtev";
     }
@@ -163,7 +163,7 @@ export class ZahteviService {
       case "A":
         return this.autorskaPravaUrl + "/autorskaPravaResenje/resenje";
       case "P":
-        return this.patentiUrl + "/obradiZahtev";
+        return this.patentiUrl + "/patentResenje/resenje";
       default:
         return this.zigoviUrl + "/obradiZahtev";
     }

@@ -1,6 +1,7 @@
 package com.example.patentbackend.controller;
 
 import com.example.patentbackend.dto.BrojPrijaveDTO;
+import com.example.patentbackend.dto.IzvestajRequest;
 import com.example.patentbackend.service.PatentService;
 import lombok.AllArgsConstructor;
 import org.springframework.core.io.InputStreamResource;
@@ -10,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 @AllArgsConstructor
@@ -61,6 +63,15 @@ public class DownloadController {
         ByteArrayInputStream byteFile = patentService.getPrilog(fileName);
         HttpHeaders headers = new HttpHeaders();
         headers.add("Content-Disposition", "inline; filename=" + fileName);
+
+        return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
+    }
+
+    @PostMapping(path = "/izvestaj", produces = MediaType.APPLICATION_PDF_VALUE)
+    public ResponseEntity<InputStreamResource> generateIzvestaj(@RequestBody IzvestajRequest izvestajRequest) throws FileNotFoundException {
+        ByteArrayInputStream byteFile = patentService.generateIzvestaj(izvestajRequest);
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=izvestaj_" + izvestajRequest.toString() + ".pdf");
 
         return ResponseEntity.ok().headers(headers).contentType(MediaType.APPLICATION_PDF).body(new InputStreamResource(byteFile));
     }

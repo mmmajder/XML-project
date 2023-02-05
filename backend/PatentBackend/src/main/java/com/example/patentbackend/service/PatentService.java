@@ -1,12 +1,10 @@
 package com.example.patentbackend.service;
 
-import com.example.patentbackend.dto.MetadataSearchParams;
-import com.example.patentbackend.dto.MetadataSearchParamsDTO;
-import com.example.patentbackend.dto.NazivPrijaveDTO;
-import com.example.patentbackend.dto.ZahtevZaPriznanjePatentaDTO;
+import com.example.patentbackend.dto.*;
 import com.example.patentbackend.mapper.Mapper;
 import com.example.patentbackend.model.OsnovneInformacijeOZahtevuZaPriznanjePatenta;
 import com.example.patentbackend.model.ZahtevZaPriznanjePatenta;
+import com.example.patentbackend.rdf.PatentFusekiDB;
 import com.example.patentbackend.repository.PatentRepository;
 import com.example.patentbackend.transformer.PatentTransformer;
 import org.apache.commons.io.FileUtils;
@@ -226,18 +224,18 @@ public class PatentService {
         }
     }
 
-    public boolean saveZahtevAfterPrilogAddition(String brojPrijaveZiga) {
-        if (!prilogUpdatingZahtevs.containsKey(brojPrijaveZiga)) {
+    public boolean saveZahtevAfterPrilogAddition(String brojPrijave) {
+        if (!prilogUpdatingZahtevs.containsKey(brojPrijave)) {
             return false;
         }
 
-        ZahtevZaPriznanjePatenta zahtev = prilogUpdatingZahtevs.get(brojPrijaveZiga);
+        ZahtevZaPriznanjePatenta zahtev = prilogUpdatingZahtevs.get(brojPrijave);
         if (zahtev == null) {
             return false;
         }
 
         patentRepository.createPatentRequest(zahtev);
-        prilogUpdatingZahtevs.remove(brojPrijaveZiga);
+        prilogUpdatingZahtevs.remove(brojPrijave);
 
         return true;
     }
@@ -264,7 +262,22 @@ public class PatentService {
 
         return zahtev;
     }
-//    public List<ZahtevZaPriznanjePatenta> getAllZahtevZaPriznanjePatenta() {
-//        return patentRepository.getAll();
-//    }
+
+    public void setObradjen(String brojPrijave, boolean odbijen) {
+        ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta = patentRepository.getZahtev(brojPrijave);
+        if(odbijen) {
+            zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().setStanje("ODBIJENO");
+        } else {
+            zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().setStanje("USPESNO");
+        }
+        patentRepository.save(zahtevZaPriznanjePatenta);
+    }
+
+    public ByteArrayInputStream generateIzvestaj(IzvestajRequest izvestajRequest) throws FileNotFoundException {
+        try {
+            return PatentFusekiDB.generateReport(izvestajRequest);
+        } catch (Exception e) {
+            throw new FileNotFoundException("Couldn't generate report");
+        }
+    }
 }

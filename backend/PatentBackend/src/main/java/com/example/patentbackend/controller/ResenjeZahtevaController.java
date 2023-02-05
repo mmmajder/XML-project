@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.xmldb.api.base.XMLDBException;
 
+import javax.xml.bind.JAXBException;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 
@@ -25,7 +26,7 @@ public class ResenjeZahtevaController {
     private ResenjeService resenjeService;
 
     @PostMapping(path = "/resenjeZahteva", consumes = "application/xml", produces = "application/xml")
-    public DetaljiOZahtevu getResenjeZahteva(@RequestBody BrojPrijaveDTO brojPrijave) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException {
+    public DetaljiOZahtevu getResenjeZahteva(@RequestBody BrojPrijaveDTO brojPrijave) throws XMLDBException, IOException, ClassNotFoundException, InstantiationException, IllegalAccessException, JAXBException {
         return resenjeService.getResenjeZahteva(brojPrijave.getBroj());
     }
 
