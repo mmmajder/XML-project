@@ -153,16 +153,14 @@
                     <tr>
                         <td colspan="3" style="border-left-width:1px;">
                             <xsl:choose>
-                                <xsl:when test="//pat:Putanja_do_priloga_podnosioca[text()='']">
-                                </xsl:when>
-                                <xsl:otherwise>
+                                <xsl:when test="//pat:Putanja_do_priloga_podnosioca">
                                     <xsl:element name="a">
                                         <xsl:attribute name="href">
                                             http://localhost:8000/patent/download/prilog/<xsl:value-of select="//pat:Putanja_do_priloga_podnosioca"/>
                                         </xsl:attribute>
                                         Izjavu o zajedničkom predstavniku
                                     </xsl:element>
-                                </xsl:otherwise>
+                                </xsl:when>
                             </xsl:choose>
                         </td>
                     </tr>
@@ -233,16 +231,14 @@
                         <tr>
                             <td colspan="3" style="border-left-width:1px;">
                                 <xsl:choose>
-                                    <xsl:when test="//pat:Putanja_do_primera[text()='']">
-                                    </xsl:when>
-                                    <xsl:otherwise>
+                                    <xsl:when test="//pat:Putanja_do_primera">
                                         <xsl:element name="a">
                                             <xsl:attribute name="href">
                                                 http://localhost:8000/patent/download/prilog/<xsl:value-of select="//pat:Putanja_do_primera"/>
                                             </xsl:attribute>
                                             Izjava podnosilaca prijave o osnovu sticanja prava
                                         </xsl:element>
-                                    </xsl:otherwise>
+                                    </xsl:when>
                                 </xsl:choose>
                             </td>
                         </tr>

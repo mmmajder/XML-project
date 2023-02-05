@@ -123,50 +123,50 @@ public class ResenjeZahtevaDB {
         return (ResenjeZahteva) unmarshaller.unmarshal(res.getContentAsDOM());
     }
 
-    public static List<ResenjeZahteva> dobaviSvaResenja() throws ClassNotFoundException, IOException, InstantiationException, IllegalAccessException, XMLDBException {
-        ExistAuthenticationUtilities.ConnectionProperties conn = ExistAuthenticationUtilities.loadProperties();
-
-        String collectionId = "/db/XWS-PROJECT/resenja";
-        Class<?> cl = Class.forName(conn.driver);
-
-        Database database = (Database) cl.newInstance();
-        database.setProperty("create-database", "true");
-
-        DatabaseManager.registerDatabase(database);
-
-        Collection col = null;
-        ResenjeZahteva resenjeZahteva;
-        List<ResenjeZahteva> resenjaZahteva = null;
-        try {
-            // get the collection
-            System.out.println("[INFO] Retrieving the collection: " + collectionId);
-            col = DatabaseManager.getCollection(conn.uri + collectionId);
-            XPathQueryService xPathQueryService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
-            xPathQueryService.setProperty("indent", "yes");
-
-            String xPathExp = "//resenje_zahteva";
-            ResourceSet result = xPathQueryService.query(xPathExp);
-            ResourceIterator i = result.getIterator();
-            XMLResource res;
-            resenjaZahteva = new ArrayList<>();
-            while (i.hasMoreResources()) {
-                res = (XMLResource) i.nextResource();
-                JAXBContext context = JAXBContext.newInstance(ResenjeZahteva.class);
-                Unmarshaller unmarshaller = context.createUnmarshaller();
-                resenjeZahteva = (ResenjeZahteva) unmarshaller.unmarshal(res.getContentAsDOM());
-                resenjaZahteva.add(resenjeZahteva);
-            }
-        } catch (JAXBException e) {
-            e.printStackTrace();
-        } finally {
-            if (col != null) {
-                try {
-                    col.close();
-                } catch (XMLDBException xe) {
-                    xe.printStackTrace();
-                }
-            }
-        }
-        return resenjaZahteva;
-    }
+//    public static List<ResenjeZahteva> dobaviSvaResenja() throws ClassNotFoundException, IOException, InstantiationException, IllegalAccessException, XMLDBException {
+//        ExistAuthenticationUtilities.ConnectionProperties conn = ExistAuthenticationUtilities.loadProperties();
+//
+//        String collectionId = "/db/XWS-PROJECT/resenja";
+//        Class<?> cl = Class.forName(conn.driver);
+//
+//        Database database = (Database) cl.newInstance();
+//        database.setProperty("create-database", "true");
+//
+//        DatabaseManager.registerDatabase(database);
+//
+//        Collection col = null;
+//        ResenjeZahteva resenjeZahteva;
+//        List<ResenjeZahteva> resenjaZahteva = null;
+//        try {
+//            // get the collection
+//            System.out.println("[INFO] Retrieving the collection: " + collectionId);
+//            col = DatabaseManager.getCollection(conn.uri + collectionId);
+//            XPathQueryService xPathQueryService = (XPathQueryService) col.getService("XPathQueryService", "1.0");
+//            xPathQueryService.setProperty("indent", "yes");
+//
+//            String xPathExp = "//resenje_zahteva";
+//            ResourceSet result = xPathQueryService.query(xPathExp);
+//            ResourceIterator i = result.getIterator();
+//            XMLResource res;
+//            resenjaZahteva = new ArrayList<>();
+//            while (i.hasMoreResources()) {
+//                res = (XMLResource) i.nextResource();
+//                JAXBContext context = JAXBContext.newInstance(ResenjeZahteva.class);
+//                Unmarshaller unmarshaller = context.createUnmarshaller();
+//                resenjeZahteva = (ResenjeZahteva) unmarshaller.unmarshal(res.getContentAsDOM());
+//                resenjaZahteva.add(resenjeZahteva);
+//            }
+//        } catch (JAXBException e) {
+//            e.printStackTrace();
+//        } finally {
+//            if (col != null) {
+//                try {
+//                    col.close();
+//                } catch (XMLDBException xe) {
+//                    xe.printStackTrace();
+//                }
+//            }
+//        }
+//        return resenjaZahteva;
+//    }
 }

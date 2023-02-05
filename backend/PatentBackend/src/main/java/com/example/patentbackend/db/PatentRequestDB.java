@@ -76,6 +76,18 @@ public class PatentRequestDB {
         return getAllByFilter(xpathExp);
     }
 
+    public static List<XMLResource> getAllByAtrr(List<String> words) {
+        String xpathExp = "";
+        for (int i=0; i<words.size(); i++) {
+            if (i==0) {
+                xpathExp = "//pat:Naziv_pronalaska[contains(@Naziv, '" + words.get(i) + "')]/ancestor::pat:Zahtev_za_priznanje_patenta";
+            } else {
+                xpathExp = " and //pat:Naziv_pronalaska[contains(@Naziv, '" + words.get(i) + "')]/ancestor::pat:Zahtev_za_priznanje_patenta";
+            }
+        }
+        return getAllByFilter(xpathExp);
+    }
+
     private static List<XMLResource> getAllByFilter(String xpathExp) {
         List<XMLResource> resources = new ArrayList<>();
 
@@ -176,8 +188,8 @@ public class PatentRequestDB {
         }
 
         xpath = xpath.concat("]");
-        for (String word : words)
-            xpath = xpath.concat(" | //Naziv_pronalaska[contains(@Naziv, '" + word + "')]");
+//        for (String word : words)
+//            xpath = xpath.concat(" | //pat:Naziv_pronalaska[contains(@Naziv, '" + word + "')]");
         return xpath;
     }
 

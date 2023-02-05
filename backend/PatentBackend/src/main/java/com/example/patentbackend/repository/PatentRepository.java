@@ -73,7 +73,16 @@ public class PatentRepository {
     private List<ZahtevZaPriznanjePatenta> getZahteviFromResources(List<XMLResource> resources) throws JAXBException, XMLDBException {
         List<ZahtevZaPriznanjePatenta> zahtevi = new ArrayList<>();
         for (XMLResource resource : resources) {
-            zahtevi.add(Marshal.unmarshal(resource));
+            ZahtevZaPriznanjePatenta newZahtev = Marshal.unmarshal(resource);
+            boolean shouldAdd = true;
+            for (ZahtevZaPriznanjePatenta zahtevZaPriznanjePatenta : zahtevi) {
+                if (zahtevZaPriznanjePatenta.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave().equals(newZahtev.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getBrojPrijave())) {
+                    shouldAdd = false;
+                    break;
+                }
+            }
+            if (shouldAdd)
+                zahtevi.add(newZahtev);
         }
         return zahtevi;
     }

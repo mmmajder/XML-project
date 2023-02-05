@@ -157,7 +157,7 @@ public class PatentService {
         return parsedSearchParams;
     }
 
-    public List<ZahtevZaPriznanjePatenta> getByMetadata(List<MetadataSearchParams> params, boolean searchForNeobradjeni) throws IOException {
+    public List<ZahtevZaPriznanjePatenta> getByMetadata(List<MetadataSearchParams> params, String status) throws IOException {
         List<ZahtevZaPriznanjePatenta> zahtevi;
         if (params.size() == 1) {
             zahtevi = patentRepository.getByMetadata(params.get(0));
@@ -165,10 +165,21 @@ public class PatentService {
             zahtevi = patentRepository.getByMultipleMetadata(params);
         }
 
-        if (searchForNeobradjeni) {
-            return zahtevi.stream().filter(z -> Objects.equals(z.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getStanje(), "NA_CEKANJU")).collect(Collectors.toList());
-        } else {
-            return zahtevi.stream().filter(z -> !Objects.equals(z.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getStanje(), "NA_CEKANJU")).collect(Collectors.toList());
+        return filterByStatus(zahtevi, status);
+    }
+
+    private List<ZahtevZaPriznanjePatenta> filterByStatus(List<ZahtevZaPriznanjePatenta> zahtevi, String status){
+//        if (searchForNeobradjeni) {
+//            return zahtevi.stream().filter(z -> Objects.equals(z.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getStanje(), "NA_CEKANJU")).collect(Collectors.toList());
+//        } else {
+//            return zahtevi.stream().filter(z -> !Objects.equals(z.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getStanje(), "NA_CEKANJU")).collect(Collectors.toList());
+//        }
+        if ("prihvaceni".equals(status)) {
+            return zahtevi.stream().filter(z -> "USPESNO".equals(z.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getStanje())).collect(Collectors.toList());
+        } else if ("odbijeni".equals(status)) {
+            return zahtevi.stream().filter(z -> "ODBIJENO".equals(z.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getStanje())).collect(Collectors.toList());
+        } else { // predati
+            return zahtevi.stream().filter(z -> "NA_CEKANJU".equals(z.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getStanje())).collect(Collectors.toList());
         }
     }
 
@@ -180,20 +191,11 @@ public class PatentService {
         return "".equals(strippedProperty) || "".equals(strippedValue) || "".equals(strippedOperator);
     }
 
-    public List<ZahtevZaPriznanjePatenta> getByText(String text, boolean casesensitive, boolean searchForNeobradjeni) throws Exception {
+    public List<ZahtevZaPriznanjePatenta> getByText(String text, boolean casesensitive, String status) throws Exception {
         List<String> searchWords = Arrays.asList(text.split(" "));
-
-        if (searchWords.size() == 0) {
-            return null;
-        }
-
         List<ZahtevZaPriznanjePatenta> zahtevi = patentRepository.getByText(searchWords, casesensitive);
 
-        if (searchForNeobradjeni) {
-            return zahtevi.stream().filter(z -> Objects.equals(z.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getStanje(), "NA_CEKANJU")).collect(Collectors.toList());
-        } else {
-            return zahtevi.stream().filter(z -> !Objects.equals(z.getOsnovneInformacijeOZahtevuZaPriznanjePatenta().getStanje(), "NA_CEKANJU")).collect(Collectors.toList());
-        }
+        return filterByStatus(zahtevi, status);
     }
 
     public boolean addPrilog(String brojPrijave, String prilogType, MultipartFile uploadedFile) {

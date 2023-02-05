@@ -55,6 +55,16 @@
                                     select="substring(//pat:resenje_zahteva//pat:datum_obrade, 0, 11)"/>
                         </td>
                     </tr>
+                    <tr>
+                        <td colspan="2">
+                            <xsl:element name="a">
+                                <xsl:attribute name="href">
+                                    http://localhost:8000/patent/download/zahtev/<xsl:value-of select="//pat:resenje_zahteva//pat:broj_prijave"/>
+                                </xsl:attribute>
+                                Referenca na zahtev
+                            </xsl:element>
+                        </td>
+                    </tr>
                 </table>
                 <br/>
                 <table>
