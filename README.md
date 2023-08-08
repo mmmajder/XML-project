@@ -1,5 +1,3 @@
-![XML_and_WEB_Services (1)](https://github.com/mmmajder/XML-project/assets/91467463/a7ee0fd1-ade3-45d0-aa1f-01e26ba5261c)
-
 # XML-project
 
 ## Project setup
