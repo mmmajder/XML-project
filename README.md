@@ -1,9 +1,6 @@
-# XML-project
+![XML_and_WEB_Services (1)](https://github.com/mmmajder/XML-project/assets/91467463/a7ee0fd1-ade3-45d0-aa1f-01e26ba5261c)
 
-## Developers
-- Anđela Mišković SW33/2019
-- Milan Ajder SW31/2019
-- Aleksa Stanivuk SW29/2019
+# XML-project
 
 ## Project setup
 
@@ -24,3 +21,11 @@ Run project:
 6. In backend folder run ZigBackend (it will run on port 8002)
 7. In backend folder run AuthService (it will run on port 8003)
 8. In frontend folder run `npm install` and then `ng serve`
+
+   
+## Developers
+- Anđela Mišković SW33/2019
+- Milan Ajder SW31/2019
+- Aleksa Stanivuk SW29/2019
+
+
