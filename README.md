@@ -1,4 +1,4 @@
-# XML-project
+# XML and Web Services project
 
 ## Project setup
 
